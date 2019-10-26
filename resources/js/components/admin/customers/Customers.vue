@@ -1,5 +1,8 @@
 <template>
     <div class="container">
+        <p class="bg-green-500 text-white rounded-lg text-md">
+            {{ message }}
+        </p>
     	<form @submit.prevent="searchCustomer">
     		<input @input="status = false" type="text" name="" v-model="keyword" class="px-2 py-2 bg-blue-500 text-white">
     		<button type="submit">Search</button>
@@ -7,11 +10,11 @@
     	</form >
     	<div v-if="status">
     		<div v-for="customer in customerArray">
-	    		<div class="flex flex-wrap items-center justify-between">
-	    			<span>{{ customer.id }}</span>
+	    		<div class="flex flex-wrap items-center justify-between group border-2 border-tranparent hover:border-green-500" @click="redirectTo(customer)">
+	    			<!-- <span>{{ customer.id }}</span> -->
 	    			<img class="h-24 w-24 rounded-full" :src="`/storage/${customer.avatar}`">
 		    		<h4>{{ customer.name }}</h4>
-		            <button type="submit" @click="filterCustomer(customer)">Drop</button>
+		            <button type="submit" @click="filterCustomer(customer); dropCostumer(customer)">Drop</button>
 	    		</div>
 	    	</div>
 	    	<div class="flex">
@@ -26,11 +29,10 @@
                 <span :class="(searchError) ? 'border-red-500 border-2' : ''">{{ (resultTotal) ? (resultTotal) : 0 }} results found for {{ keyword }}</span>   
             </div>
     		<div v-for="customer in searchArray">
-    			<div class="flex flex-wrap items-center justify-between">
-	    			<span>{{ customer.id }}</span>
+    			<div class="flex flex-wrap items-center justify-between group border-2 border-tranparent hover:border-green-500" >
 	    			<img class="h-24 w-24 rounded-full" :src="`/storage/${customer.avatar}`">
 		    		<h4>{{ customer.name }}</h4>
-		            <button type="submit" @click="filterCustomer(customer)">Drop</button>
+		            <button type="submit" @click="filterCustomer(customer); dropCostumer(customer)">Drop</button>
 	    		</div>
 	    	</div>
     	</div>
@@ -50,7 +52,9 @@
         		status : true,
         		searchArray: [],
         		searchError: '',
-        		resultTotal : false
+        		resultTotal : false,
+                message: null,
+                error: null
         	}
         },
         mounted() {
@@ -91,7 +95,7 @@
         			.then((res) => {
         				// console.log(res.data.customers);
         				let ctms = res.data.customers;
-                        this.resultTotal = ctms.length;
+                        this.resultTotal = res.data.total;
         				if(ctms.length > 0){
         					this.searchArray = ctms;
                             this.searchError = false;
@@ -103,7 +107,20 @@
         			}).catch((error) => {
         				this.searchError = error.data;
         			})
-        	}
+        	},
+            dropCostumer(customer){
+                axios.post(`/customers/${customer.id}`, {})
+                    .then(res=>{
+                        if(res.status == 204){
+                        this.message = 'Product dropped.';                            
+                        }
+                    }).catch((error) => {
+                        this.error = error.data;
+                    });
+            },
+            redirectTo(customer){
+                window.location = `http://localhost:8000/customers/${customer.id}-${customer.name}`;   
+            }
         }
     }
 </script>

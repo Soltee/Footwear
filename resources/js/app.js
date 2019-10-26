@@ -7,6 +7,9 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import PortalVue from 'portal-vue';
+
+Vue.use(PortalVue);
 
 /**
  * The following block of code may be used to automatically register your
@@ -19,9 +22,20 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('search-all-view', require('./components/SearchAll.vue').default);
-Vue.component('products-view', require('./components/Products.vue').default);
-Vue.component('customers-view', require('./components/Customers.vue').default);
+/****** Components For Administrator ******/
+Vue.component('search-all-view', require('./components/admin/SearchAll.vue').default);
+//Products
+Vue.component('add-product', require('./components/admin/products/AddProduct.vue').default);
+Vue.component('products-view', require('./components/admin/products/Products.vue').default);
+Vue.component('show-product', require('./components/admin/products/ShowProduct.vue').default);
+
+//Customers
+Vue.component('customers-view', require('./components/admin/customers/Customers.vue').default);
+Vue.component('show-customer', require('./components/admin/customers/ShowCustomer.vue').default);
+
+
+/***** Components for Customers ******/
+Vue.component('add-to-cart', require('./components/customer/AddToCart.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

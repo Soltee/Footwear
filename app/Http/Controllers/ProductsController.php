@@ -48,6 +48,8 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
+
+        // dd($request->all());
         $data = $this->validate($request, [
             'category' => ['required', 'int', 'min:1'],
             'name' => ['required','string', 'min:2', 'unique:products'],
@@ -84,7 +86,8 @@ class ProductsController extends Controller
      */
     public function show(Products $products, $slug)
     {
-        dd($products->id);   
+        return view('products.show', compact('products'));
+        // dd($products->id);   
     }
 
     /**
@@ -157,10 +160,11 @@ class ProductsController extends Controller
     public function destroy(Products $products)
     {
         // dd(Storage::path($products->imageUrl));
-        ($products->imageUrl) ? File::delete($products->imageUrl) : '' ;
+        // ($products->imageUrl) ? File::delete($products->imageUrl) : '' ;
         // ($products->imageUrl) ?? Storage::disk('local')->delete([$products->imageUrl]);
         // $products->delete();
-        return redirect()->route('administrator-dashboard')->with('success', 'Product dropped.');
+        return response()->json(['success' => 'true'], 204);
+        // return redirect()->route('administrator-dashboard')->with('success', 'Product dropped.');
   
     }
 }

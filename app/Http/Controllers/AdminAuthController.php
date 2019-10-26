@@ -12,7 +12,7 @@ class AdminAuthController extends Controller
 	use AuthenticatesUsers;
 
     public function loginView(){
-    	return view('administrator.login');
+    	return view('auth.admin-login');
     }
 
     protected function attemptLogin(Request $request)
@@ -29,7 +29,7 @@ class AdminAuthController extends Controller
         $this->clearLoginAttempts($request);
 
         return $this->authenticated($request, $this->guard()->user())
-                ?: redirect()->route('administrator-dashboard')->with('success', 'Logged in.');
+                ?: redirect()->route('administrator-dashboard')->with('success', 'Logged in');
     }
     /**
      * Log the user out of the application.
@@ -43,7 +43,7 @@ class AdminAuthController extends Controller
 
         $request->session()->invalidate();
 
-        return $this->loggedOut($request) ?: redirect('/')->with('success', 'Logged out.');
+        return $this->loggedOut($request) ?: redirect('/')->with('success', 'Logged out');
     }
 
     protected function guard()

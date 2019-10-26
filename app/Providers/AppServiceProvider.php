@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Cart\Cart;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton('cart', function($app)
+        {
+            return new Cart(
+                null,
+                'cart',
+                '4yTlTDKu3oJOfzD'
+            );
+        });
     }
 
     /**

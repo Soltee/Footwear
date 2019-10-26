@@ -12,7 +12,7 @@
 	        </div>
 	        <div class="flex-1 flex flex-row justify-between">
 	        	<div class="flex-1 overflow-hidden px-4">
-
+					<a href="{{ route('products') }}">Back</a>
 	        		<form method="POST" action="{{ url('/products/'. $products->id . '/update' ) }}" enctype="multipart/form-data">
 	        		@csrf
 	        		@method('PATCH')

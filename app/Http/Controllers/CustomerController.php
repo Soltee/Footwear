@@ -54,30 +54,8 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer, $slug)
     {
-        dd($customer->id);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        return view('customers.show', compact('customer'));
+        // dd($customer->id);
     }
 
     /**
@@ -88,8 +66,9 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        ($customer->avatar) ? File::delete($customer->avatar) : '' ;
-        $customer->delete();
-        return redirect()->back()->with('success', 'Customer removed.');
+        // ($customer->avatar) ? File::delete($customer->avatar) : '' ;
+        // $customer->delete();
+        return response()->json(['success'=>true], 204);
+        // return redirect()->back()->with('success', 'Customer removed.');
     }
 }
