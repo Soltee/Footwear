@@ -5,91 +5,99 @@ namespace App\Http\Controllers;
 use Cart;
 use App\Products;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-    public function __construct()
-	{
-		return $this->middleware('customer');
+	public function isProductAlreadyAdded(Products $products){
+		return response()->json(['isAdded' => Cart::session(auth('customer')->user()->id)->get($products->id) ?? false  ], 200);
+	} 
+
+	public function getCartProducts(){
+
+		
+		return response()->json([
+			'cartProducts' => $this->getContent(),
+			'totalQty' => Cart::session($this->guard()->id)->getTotalQuantity() ,
+			'grandTotal' => Cart::session($this->guard()->id)->getTotal()
+		], 200);
+	
+	}    
+
+	public function show(){
+		$products = Cart::session($this->guard()->id)->getContent();
+		$subTotal = (Cart::session($this->guard()->id)->getSubTotal()) ?? false;
+		$grandTotal = (Cart::session($this->guard()->id)->getTotal()) ?? false;
+		// dd($products);
+		return view('home.cart', compact('products', 'subTotal', 'grandTotal'));
 	}
 
-	public function index()
+	public function getContent(){
+		$collection = Cart::session($this->guard()->id)->getContent();
+		$products = [];
+		foreach($collection as $product)
+		{			
+			array_push($products, $product);
+		};
+		return $products;
+	}
+
+    public function addProduct(Products $products)
     {
 
-  		// Cart::clear();
-		// Cart::session(auth()->user()->id)->clear();
-    	$cartCollection = Cart::session(auth()->user()->id)->getContent();
-    	$shipping = (Cart::session(auth()->user()->id)->getCondition('Express Shipping $15')) ? Cart::session(auth()->user()->id)->getCondition('Express Shipping $15') : 0;
-		// $shipping->getTarget(); // the target of which the condition was applied
-		// $shipping->getName(); // the name of the condition
-		// $shipping->getType(); // the type
-		// $shipping->getValue(); // the value of the condition
-		// $shipping->getAttributes();
-
-    	return view('cart', compact('cartCollection', 'shipping'));
-    }
-
-    public function add(Products $products)
-    {
-		return (Cart::session(auth()->user()->id)->get($products->id)) ? $this->updateItem($item) : $this->addItem($item);
-
-    }
-
-    public function addItem($products)
-    {
-
-		Cart::session(auth()->user()->id);    
+		Cart::session($this->guard()->id);    
     	Cart::add([
-		    'id' => $item->id,
-		    'name' => $item->name,
-		    'price' => $item->price - Helper::setPriceAfterDiscount($item->price, $item->discount),
+		    'id' => $products->id,
+		    'name' => $products->name,
+		    'price' => $products->price,
 		    'quantity' => 1,
 		    'attributes' => [
-		    		'image' => $item->image,
-		    		'discount' => $item->discount,
+		    		'imageUrl' => $products->imageUrl
 		    	]
 		]);	
 
-
-		$discountCondition = new \Darryldecode\Cart\CartCondition(array(
-		    'name' => 'Express Shipping $15',
-		    'type' => 'shipping',
-		    'target' => 'total', // this condition will be applied to cart's subtotal when getSubTotal() is called.
-		    'value' => '+15',
-		    'order' => 1
-		));
-
-		Cart::session(auth()->user()->id)->condition($discountCondition);
-
-    	return redirect()->back()->with('success', 'Item Added To Cart!');
+    	return response()->json(['success' => 'Ok'], 200);
     }
 
-    public function updateItem(Products $products)
+    public function updateProduct(Products $products)
     {
-		$found = Cart::session(auth()->user()->id)->get($item->id); 
+		$found = Cart::session($this->guard()->id)->get($products->id); 
 		if($found && request('quantity') > 0)
 		{
-			Cart::session(auth()->user()->id)->update($found->id, [
+			Cart::session($this->guard()->id)->update($found->id, [
 				    'quantity' => array(
 					        'relative' => false,
 					        'value' => request('quantity')
 						),
 			]);
-    		return redirect()->back()->with('success', 'Item updated to your Cart.');
+    		return response()->json(['success' => 'Ok'], 200);
 		} else {
-			Cart::session(auth()->user()->id)->remove($found->id);
-    		return redirect()->back()->with('success', 'Item is completely removed from the cart.');
+			Cart::session($this->guard()->id)->remove($found->id);
+    		return response()->json(['success' => 'Ok'], 204);
 		}
+     	// return response()->json(['success' => 'Ok'], 204);
+   	
+    }
+
+    public function removeProduct(Products $products)
+    {
+
+		$found = Cart::session($this->guard()->id)->get($products->id);  
+		Cart::session($this->guard()->id)->remove($found->id); 
+
+    	return response()->json(['success' => 'Ok'], 204);
     	
     }
 
-    public function removeItem($item)
+    public function clearCart()
     {
+    	// return response()->json(['success' => 'Ok'], 204);
+    	return (Cart::session($this->guard()->id)->clear()) ? response()->json(['success' => 'Ok'], 204) : '';
 
-		$found = Cart::session(auth()->user()->id)->get($item);  
-		Cart::session(auth()->user()->id)->remove($found->id); 
+    }
 
-    	return redirect()->back()->with('success', 'Item removed from the card!');
-    	
+    public function guard()
+    {
+    	return Auth::guard('customer')->user();
     }
 }

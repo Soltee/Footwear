@@ -10,16 +10,14 @@
                         <img style="height: 100px; width:100px; object-fit: cover;" src="/storage/{{ $product->imageUrl }}">
                         <h3>{{ $product->name }}</h3>
                         <h3>$ {{ $product->price }}</h3>
-                        <!-- <span>
-                            <button class="btn btn-success">
-                            </button>
-                        </span> -->
+            
                         @auth('customer')
                             
                             
-                            <add-to-cart /> 
+                            <add-to-cart :product="{{ $product }}"   /> 
 
-                                
+                        @else
+
                         @endauth
                     </div>
                     @empty

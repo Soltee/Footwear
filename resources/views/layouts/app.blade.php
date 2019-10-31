@@ -28,15 +28,24 @@
                         @endauth
                     </div>
                     <div class="flex flex-row items-center text-right">
-                        <portal-target name="CartTotal"></portal-target>
-                        @guest
+                        <cart-qty ></cart-qty>
+                        @auth('customer')
+                            <span class="text-gray-300 text-sm pr-4">{{ auth('customer')->user()->name }}</span>
+                            <a href="{{ route('customer-logout') }}"
+                                   class="no-underline hover:underline text-gray-300 text-sm p-3"
+                                   onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                            <form id="logout-form" action="{{ route('customer-logout') }}" method="POST" class="hidden">
+                                {{ csrf_field() }}
+                            </form>
+                        @else
                             <a class="no-underline hover:underline text-gray-300 text-sm p-3" href="{{ route('login') }}">{{ __('Login') }}</a>
                             @if (Route::has('register'))
                                 <a class="no-underline hover:underline text-gray-300 text-sm p-3" href="{{ route('register') }}">{{ __('Register') }}</a>
                             @endif
-                        @else
-                            <span class="text-gray-300 text-sm pr-4">{{ Auth::user()->name }}</span>
-                            @auth('administrator')
+                        @endauth
+                            
+                            <!-- @auth('administrator')
 
                                 <a href="{{ route('administrator-logout') }}"
                                    class="no-underline hover:underline text-gray-300 text-sm p-3"
@@ -46,18 +55,9 @@
                                     {{ csrf_field() }}
                                 </form>
 
-                            @endauth
+                            @endauth  -->
 
-                            @auth('customer')
-                                <a href="{{ route('customer-logout') }}"
-                                   class="no-underline hover:underline text-gray-300 text-sm p-3"
-                                   onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
-                                <form id="logout-form" action="{{ route('customer-logout') }}" method="POST" class="hidden">
-                                    {{ csrf_field() }}
-                                </form>
-                            @endauth
-                        @endguest
+                    
                     </div>
                 </div>
             </div>

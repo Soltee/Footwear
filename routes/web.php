@@ -3,6 +3,15 @@
 
 Route::get('/', 'WelcomeController@index')->name('welcome');
 
+//Cart
+Route::get('/add-to-cart/{products}', 'CartController@addProduct')->middleware('auth:customer');
+Route::get('/getCartProducts', 'CartController@getCartProducts')->middleware('auth:customer');
+Route::get('/is-already-added/{products}', 'CartController@isProductAlreadyAdded')->middleware('auth:customer');
+Route::post('/clear-cart', 'CartController@clearCart')->middleware('auth:customer');
+Route::post('/remove-from-cart/{products}', 'CartController@removeProduct')->middleware('auth:customer');
+Route::post('/update-cart/{products}', 'CartController@updateProduct')->middleware('auth:customer');
+
+
 /*Administrator*/
 Route::get('/board-login', 'AdminAuthController@loginView')->name('board-login-view');
 Route::post('/board-login', 'AdminAuthController@login')->name('board-login');
@@ -15,6 +24,8 @@ Route::get('/customer-profile', 'HomeController@profile')->name('customer-profil
 Route::patch('/customer-profile/{customer}', 'HomeController@updateProfile')->name('customer-update');
 Route::post('/customer-logout', 'Auth\LoginController@logout')->name('customer-logout');
 
+//Customer Cart 
+Route::get('/cart-details', 'CartController@show')->name('cart.show');
 
 //Dashboard
 Route::get('/administrator-dashboard', 'AdministratorController@index')->name('administrator-dashboard');

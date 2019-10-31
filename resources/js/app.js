@@ -7,9 +7,9 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-import PortalVue from 'portal-vue';
+export const serverBus = new Vue();// import PortalVue from 'portal-vue';
 
-Vue.use(PortalVue);
+// Vue.use(PortalVue);
 
 /**
  * The following block of code may be used to automatically register your
@@ -35,7 +35,9 @@ Vue.component('show-customer', require('./components/admin/customers/ShowCustome
 
 
 /***** Components for Customers ******/
-Vue.component('add-to-cart', require('./components/customer/AddToCart.vue').default);
+Vue.component('add-to-cart', require('./components/customer/Product.vue').default);
+Vue.component('cart-qty', require('./components/customer/CartQty.vue').default);
+Vue.component('cart-view', require('./components/customer/Cart.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
