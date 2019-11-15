@@ -16,7 +16,7 @@
                         <div class="flex flex-row">
                             <img class="h-24 w-24 rounded-full" :src="`/storage/${product.imageUrl}`">
                             <h4 class="m-0">{{ product.name }}</h4>
-                            <a :href="`/products-edit/${product.id}-${product.name}`">Edit Product</a>
+                            <a :href="`/zero/products-edit/${product.id}-${product.name}`">Edit Product</a>
                             <button type="submit"
                          @click="filterProduct(product); dropProduct(product)">Drop</button>   
                         </div>      
@@ -98,7 +98,7 @@
             searchProducts(){
                 this.status = false;
                 if(!this.keyword){return;}
-                axios.get(`searchProducts/${this.keyword}`)
+                axios.get(`/zero/searchProducts/${this.keyword}`)
                     .then((res) => {
                         // console.log(res.data.customers);
                         let pdts = res.data.products;
@@ -117,7 +117,7 @@
             },
             dropProduct(product){
                 console.log(product);
-                axios.post(`/products/${product.id}`, {})
+                axios.post(`/zero/products/${product.id}`, {})
                     .then(res=>{
                         if(res.status == 204){
                         this.message = 'Product dropped.';                            
@@ -127,7 +127,7 @@
                     });
             },
             redirectTo(product){
-                window.location = `http://localhost:8000/products/${product.id}-${product.name}`;   
+                window.location = `http://localhost:8000/zero/products/${product.id}-${product.name}`;   
             }
         }
     }

@@ -9,10 +9,22 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
+	/**
+	 	* Check if The Product is Already Added in the Cart
+	 	* Used in Product.vue
+	*/
 	public function isProductAlreadyAdded(Products $products){
 		return response()->json(['isAdded' => Cart::session(auth('customer')->user()->id)->get($products->id) ?? false  ], 200);
 	} 
 
+
+	/**
+	 	* Return @json
+	 	   * Products added to the CART
+	 	   * Total Quantity
+	 	   * And Grand Total Cost
+	 	* Used in Product.vue
+	*/
 	public function getCartProducts(){
 
 		
@@ -24,14 +36,24 @@ class CartController extends Controller
 	
 	}    
 
+	/**
+	 	* CART PAGE OF CUSTOMER
+	 	* Return @view CART
+	*/
 	public function show(){
 		$products = Cart::session($this->guard()->id)->getContent();
+		$totalQuantity = Cart::session($this->guard()->id)->getTotalQuantity();
 		$subTotal = (Cart::session($this->guard()->id)->getSubTotal()) ?? false;
 		$grandTotal = (Cart::session($this->guard()->id)->getTotal()) ?? false;
 		// dd($products);
-		return view('home.cart', compact('products', 'subTotal', 'grandTotal'));
+		return view('home.cart', compact('products', 'totalQuantity', 'subTotal', 'grandTotal'));
 	}
 
+	/**
+	 	* Get Cart Products according to Logged in User
+	 	* Loops all the products, push to new array AND 
+	 		returns the @ARRAY
+	*/
 	public function getContent(){
 		$collection = Cart::session($this->guard()->id)->getContent();
 		$products = [];
@@ -42,6 +64,10 @@ class CartController extends Controller
 		return $products;
 	}
 
+	/**
+	 	* Adds the product to the cart
+	 	* Return json RESPONSE
+	*/
     public function addProduct(Products $products)
     {
 
@@ -59,6 +85,13 @@ class CartController extends Controller
     	return response()->json(['success' => 'Ok'], 200);
     }
 
+    /**
+	 	* Update the CART
+	 	* Conditions
+	 	  * If the Quantity is less than 0, the products is removed
+	 	    * If not then , it is Updated
+	 	  * Return json RESPONSE
+	*/
     public function updateProduct(Products $products)
     {
 		$found = Cart::session($this->guard()->id)->get($products->id); 
@@ -75,10 +108,13 @@ class CartController extends Controller
 			Cart::session($this->guard()->id)->remove($found->id);
     		return response()->json(['success' => 'Ok'], 204);
 		}
-     	// return response()->json(['success' => 'Ok'], 204);
    	
     }
 
+    /**
+	 	* Remove the PRODUCT from the CART of the particular Customer
+	 	* Returns json RESPONSE
+	*/
     public function removeProduct(Products $products)
     {
 
@@ -89,15 +125,29 @@ class CartController extends Controller
     	
     }
 
+    /**
+		* Clear the CART completely
+		* Returns 204 json RESPONSE
+    */
     public function clearCart()
     {
-    	// return response()->json(['success' => 'Ok'], 204);
     	return (Cart::session($this->guard()->id)->clear()) ? response()->json(['success' => 'Ok'], 204) : '';
 
     }
 
+    /*
+		* Return the subTotal 
+    */
+	public function getUpdatedData(){
+    	return response()->json(['success' => 'Ok', 'subTotal' =>  Cart::session($this->guard()->id)->getSubTotal(), 'updatedQty' => Cart::session($this->guard()->id)->getTotalQuantity()], 200);
+	}
+
+    /**
+		* Returns the Authenticated USER via 'guard'
+    */
     public function guard()
     {
     	return Auth::guard('customer')->user();
     }
+
 }

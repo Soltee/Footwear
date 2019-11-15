@@ -3,8 +3,7 @@
 @section('content')
     <div class="flex flex-row  items-center">
         
-            
-        <cart-view :products="{{ $products->toJson() }}" :sub="{{ $subTotal }}" :grand="{{ $grandTotal }}"></cart-view>
+        <cart-view :products="{{ $products->toJson() }}" :cart="{{ $totalQuantity }}" :sub="{{ $subTotal }}" :grand="{{ $grandTotal }}" ></cart-view>
             
 
     </div>

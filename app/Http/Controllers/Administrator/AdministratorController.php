@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Administrator;
 
 use App\Products;
 use App\Customer;
 use App\Categories;
 use App\Administrator;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class AdministratorController extends Controller
@@ -36,13 +37,12 @@ class AdministratorController extends Controller
             'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
-
-        // dd($request->all());
-        if($request->hasFile('avatar')){
+         // dd($request->all());
+       if($request->hasFile('avatar')){
             $this->validate($request, [
-                'avatar' => ['string','image']
+                'avatar' => ['image']
             ]);
-            $avatarUrl = $request->file('imageUrl')->store('administrator', 'public');
+            $avatarUrl = $request->file('avatar')->store('administrator', 'public');
             $avatarPath = ['avatar' => $avatarUrl];
         }
 

@@ -87,7 +87,7 @@
         	searchAll(){
         		this.status = true;
                 if(!this.keyword){return;}
-        		axios.get(`/searchall/${this.keyword}`)
+        		axios.get(`/zero/searchall/${this.keyword}`)
         			.then((res) => {
         				let data = res.data;
                         this.resultTotal = data.total;
@@ -124,7 +124,7 @@
                 this.search = false;
             },
             redirectTo(c, name){
-                window.location = `http://localhost:8000/${name}/${c.id}-${c.name}`;   
+                window.location = `http://localhost:8000/zero/${name}/${c.id}-${c.name}`;   
             }
         }
     }

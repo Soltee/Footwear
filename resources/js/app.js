@@ -7,9 +7,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-export const serverBus = new Vue();// import PortalVue from 'portal-vue';
-
-// Vue.use(PortalVue);
+export const serverBus = new Vue();
 
 /**
  * The following block of code may be used to automatically register your
@@ -37,6 +35,7 @@ Vue.component('show-customer', require('./components/admin/customers/ShowCustome
 /***** Components for Customers ******/
 Vue.component('add-to-cart', require('./components/customer/Product.vue').default);
 Vue.component('cart-qty', require('./components/customer/CartQty.vue').default);
+Vue.component('cart-checkout', require('./components/customer/Checkout.vue').default);
 Vue.component('cart-view', require('./components/customer/Cart.vue').default);
 
 /**

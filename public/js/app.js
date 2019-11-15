@@ -1942,7 +1942,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      axios.get("/searchall/".concat(this.keyword)).then(function (res) {
+      axios.get("/zero/searchall/".concat(this.keyword)).then(function (res) {
         var data = res.data;
         _this.resultTotal = data.total;
 
@@ -1976,7 +1976,7 @@ __webpack_require__.r(__webpack_exports__);
       this.search = false;
     },
     redirectTo: function redirectTo(c, name) {
-      window.location = "http://localhost:8000/".concat(name, "/").concat(c.id, "-").concat(c.name);
+      window.location = "http://localhost:8000/zero/".concat(name, "/").concat(c.id, "-").concat(c.name);
     }
   }
 });
@@ -2094,7 +2094,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      axios.get("searchCustomers/".concat(this.keyword)).then(function (res) {
+      axios.get("/zero/searchCustomers/".concat(this.keyword)).then(function (res) {
         // console.log(res.data.customers);
         var ctms = res.data.customers;
         _this2.resultTotal = res.data.total;
@@ -2113,7 +2113,7 @@ __webpack_require__.r(__webpack_exports__);
     dropCostumer: function dropCostumer(customer) {
       var _this3 = this;
 
-      axios.post("/customers/".concat(customer.id), {}).then(function (res) {
+      axios.post("/zero/customers/".concat(customer.id), {}).then(function (res) {
         if (res.status == 204) {
           _this3.message = 'Product dropped.';
         }
@@ -2122,7 +2122,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     redirectTo: function redirectTo(customer) {
-      window.location = "http://localhost:8000/customers/".concat(customer.id, "-").concat(customer.name);
+      window.location = "http://localhost:8000/zero/customers/".concat(customer.id, "-").concat(customer.name);
     }
   }
 });
@@ -2173,11 +2173,11 @@ __webpack_require__.r(__webpack_exports__);
     dropCostumer: function dropCostumer(customer) {
       var _this = this;
 
-      axios.post("/customers/".concat(customer.id), {}).then(function (res) {
+      axios.post("/zero/customers/".concat(customer.id), {}).then(function (res) {
         if (res.status == 204) {
           _this.message = 'Product dropped.';
           setTimeout(function () {
-            window.location = "http://localhost:8000/customers";
+            window.location = "http://localhost:8000/zero/customers";
           }, 3000);
         }
       })["catch"](function (error) {
@@ -2298,7 +2298,7 @@ __webpack_require__.r(__webpack_exports__);
     addCategory: function addCategory() {
       var _this2 = this;
 
-      axios.post("/category/store", {
+      axios.post("/zero/category/store", {
         name: this.name
       }).then(function (res) {
         console.log(res.data); // console.log(res.data.customers);
@@ -2441,7 +2441,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      axios.get("searchProducts/".concat(this.keyword)).then(function (res) {
+      axios.get("/zero/searchProducts/".concat(this.keyword)).then(function (res) {
         // console.log(res.data.customers);
         var pdts = res.data.products;
         _this2.resultTotal = res.data.total;
@@ -2461,7 +2461,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       console.log(product);
-      axios.post("/products/".concat(product.id), {}).then(function (res) {
+      axios.post("/zero/products/".concat(product.id), {}).then(function (res) {
         if (res.status == 204) {
           _this3.message = 'Product dropped.';
         }
@@ -2470,7 +2470,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     redirectTo: function redirectTo(product) {
-      window.location = "http://localhost:8000/products/".concat(product.id, "-").concat(product.name);
+      window.location = "http://localhost:8000/zero/products/".concat(product.id, "-").concat(product.name);
     }
   }
 });
@@ -2520,11 +2520,11 @@ __webpack_require__.r(__webpack_exports__);
     dropCostumer: function dropCostumer(product) {
       var _this = this;
 
-      axios.post("/products/".concat(product.id), {}).then(function (res) {
+      axios.post("/zero/products/".concat(product.id), {}).then(function (res) {
         if (res.status == 204) {
           _this.message = 'Product dropped.';
           setTimeout(function () {
-            window.location = "http://localhost:8000/products";
+            window.location = "http://localhost:8000/zero/products";
           }, 3000);
         }
       })["catch"](function (error) {
@@ -2604,14 +2604,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'cart-view',
-  props: ['products', 'sub', 'grand'],
+  props: ['products', 'cart', 'sub', 'grand'],
   data: function data() {
     return {
       productsArr: [],
       qty: "",
+      updatedQty: this.cart,
       subTotal: this.sub,
       grandTotal: this.grand,
       selected: null,
@@ -2664,12 +2680,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                // let obj = this.productsArr.find(obj => obj.id == p.id);
-                // obj.quantity = this.qty;
-                // console.log(this.productsArr);
-                // this.productsArr = this.productsArr.filter((state) => {
-                //         return state.id !== p.id;
-                // });
                 qty = this.qty;
                 axios.post("/update-cart/".concat(p.id), {
                   quantity: qty
@@ -2691,6 +2701,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       }
                     });
 
+                    _this.getUpdatedData();
+
                     _this.removeMessage();
 
                     _app_js__WEBPACK_IMPORTED_MODULE_1__["serverBus"].$emit('cart-updated', {
@@ -2706,6 +2718,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _this.productsArr = _this.productsArr.filter(function (state) {
                       return state.id !== p.id;
                     });
+
+                    _this.getUpdatedData();
+
                     _this.status = false;
                     _this.message = 'Product removed from cart.';
 
@@ -2748,6 +2763,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _this2.productsArr = _this2.productsArr.filter(function (state) {
                       return state.id !== p.id;
                     });
+
+                    _this2.getUpdatedData();
+
                     _this2.status = true;
                     _this2.message = 'Product has been removed from my cart.';
 
@@ -2774,8 +2792,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return removeCart;
     }(),
-    clearCart: function () {
-      var _clearCart = _asyncToGenerator(
+    getUpdatedData: function () {
+      var _getUpdatedData = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var _this3 = this;
@@ -2784,16 +2802,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                axios.post('/clear-cart', {}).then(function (res) {
-                  if (res.status == 204) {
-                    _app_js__WEBPACK_IMPORTED_MODULE_1__["serverBus"].$emit('cart-cleared');
-                    _this3.productsArr = [];
-                    _this3.subTotal = 0;
-                    _this3.grandTotal = 0;
-                    _this3.status = true;
-                    _this3.message = 'My cart has been cleared.';
-
-                    _this3.removeMessage();
+                axios.get('/getUpdatedData').then(function (res) {
+                  if (res.status == 200) {
+                    _this3.subTotal = res.data.subTotal;
+                    _this3.updatedQty = res.data.updatedQty;
                   }
                 })["catch"](function (err) {
                   _this3.status = false;
@@ -2810,6 +2822,49 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee4);
       }));
 
+      function getUpdatedData() {
+        return _getUpdatedData.apply(this, arguments);
+      }
+
+      return getUpdatedData;
+    }(),
+    clearCart: function () {
+      var _clearCart = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var _this4 = this;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                axios.post('/clear-cart', {}).then(function (res) {
+                  if (res.status == 204) {
+                    _app_js__WEBPACK_IMPORTED_MODULE_1__["serverBus"].$emit('cart-cleared');
+                    _this4.productsArr = [];
+                    _this4.updatedQty = 0;
+                    _this4.subTotal = 0;
+                    _this4.grandTotal = 0;
+                    _this4.status = true;
+                    _this4.message = 'My cart has been cleared.';
+
+                    _this4.removeMessage();
+                  }
+                })["catch"](function (err) {
+                  _this4.status = false;
+                  _this4.err = "There has been some error.";
+
+                  _this4.removeMessage();
+                });
+
+              case 1:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }));
+
       function clearCart() {
         return _clearCart.apply(this, arguments);
       }
@@ -2819,24 +2874,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     removeMessage: function () {
       var _removeMessage = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var _this4 = this;
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var _this5 = this;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
                 setTimeout(function () {
-                  _this4.message = null;
-                  _this4.err = null;
+                  _this5.message = null;
+                  _this5.err = null;
                 }, 3000);
 
               case 1:
               case "end":
-                return _context5.stop();
+                return _context6.stop();
             }
           }
-        }, _callee5);
+        }, _callee6);
       }));
 
       function removeMessage() {
@@ -2975,6 +3030,189 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return getCartProducts;
+    }()
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/customer/Checkout.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/customer/Checkout.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var khalti_web__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! khalti-web */ "./node_modules/khalti-web/lib/index.js");
+/* harmony import */ var khalti_web__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(khalti_web__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'cart-checkout',
+  props: ['products', 'cart', 'sub', 'grand'],
+  data: function data() {
+    return {
+      productsArr: [],
+      updatedQty: this.cart,
+      subTotal: this.sub,
+      grandTotal: this.grand,
+      message: null,
+      err: null
+    };
+  },
+  mounted: function mounted() {
+    this.pushProducts();
+  },
+  methods: {
+    pushProducts: function () {
+      var _pushProducts = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var _i, _Object$entries, _Object$entries$_i, key, value;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                for (_i = 0, _Object$entries = Object.entries(this.products); _i < _Object$entries.length; _i++) {
+                  _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2), key = _Object$entries$_i[0], value = _Object$entries$_i[1];
+                  this.productsArr.push(value);
+                }
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function pushProducts() {
+        return _pushProducts.apply(this, arguments);
+      }
+
+      return pushProducts;
+    }(),
+    payment: function () {
+      var _payment = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var config, checkout;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                config = {
+                  // replace this key with yours
+                  "publicKey": "test_public_key_4585cb4b36ca4d6585b766b3706ff651",
+                  "productIdentity": "1234567890",
+                  "productName": "Drogon",
+                  "productUrl": "http://gameofthrones.com/buy/Dragons",
+                  "eventHandler": {
+                    onSuccess: function onSuccess(payload) {
+                      var _this = this;
+
+                      // hit merchant api for initiating verfication
+                      console.log(payload);
+                      axios.post("/checkout-server", {
+                        payload: payload
+                      }).then(function (res) {
+                        console.log(res.data.response);
+                      })["catch"](function (err) {
+                        _this.status = false;
+                        _this.err = 'There was some error. Please try again.';
+
+                        _this.removeMessage();
+                      });
+                    },
+                    // onError handler is optional
+                    onError: function onError(error) {
+                      // handle errors
+                      console.log(error);
+                    },
+                    onClose: function onClose() {
+                      console.log('widget is closing');
+                    }
+                  }
+                };
+                console.log(config);
+                checkout = new khalti_web__WEBPACK_IMPORTED_MODULE_1___default.a(config);
+                checkout.show({
+                  amount: 1000
+                });
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function payment() {
+        return _payment.apply(this, arguments);
+      }
+
+      return payment;
+    }(),
+    removeMessage: function () {
+      var _removeMessage = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var _this2 = this;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                setTimeout(function () {
+                  _this2.message = null;
+                  _this2.err = null;
+                }, 3000);
+
+              case 1:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function removeMessage() {
+        return _removeMessage.apply(this, arguments);
+      }
+
+      return removeMessage;
     }()
   }
 });
@@ -3152,6 +3390,466 @@ module.exports = function isBuffer (obj) {
   return obj != null && obj.constructor != null &&
     typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
 }
+
+
+/***/ }),
+
+/***/ "./node_modules/khalti-web/lib/index.js":
+/*!**********************************************!*\
+  !*** ./node_modules/khalti-web/lib/index.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function unwrapExports (x) {
+	return x && x.__esModule ? x['default'] : x;
+}
+
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
+}
+
+var lib = createCommonjsModule(function (module, exports) {
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+var SkipValidation = exports.SkipValidation = function SkipValidation(message) {
+	this.name = "SkipValidation";
+	this.message = message;
+};
+
+var validateSingle = exports.validateSingle = function validateSingle(data, validators, multipleErrors, all, key) {
+	var errors = [];
+
+	if (typeof validators === "function") {
+		validators = [validators];
+	}
+
+	for (var i = 0; i < validators.length; i++) {
+		try {
+			var error = validators[i](data, all);
+			if (typeof error === "string") {
+				errors.push(error.replace("{value}", data).replace("{key}", key));
+			}
+		} catch (err) {
+			if (err instanceof SkipValidation) {
+				break;
+			}
+		}
+	}
+
+	if (multipleErrors === true) return errors;
+
+	if (errors.length > 0) return errors[0];
+};
+
+var validate = exports.validate = function validate(data, validators, multipleErrors) {
+	if (!validators) return;
+
+	var errors = {};
+	var noError = true;
+
+	if ((typeof validators === "undefined" ? "undefined" : _typeof(validators)) === "object" && !validators.length) {
+		for (var prop in validators) {
+			if (validators.hasOwnProperty(prop)) {
+				var error = validateSingle(data[prop], validators[prop], multipleErrors, data, prop);
+
+				if (error !== undefined) {
+					noError = false;
+				}
+
+				errors[prop] = error;
+			}
+		}
+
+		return noError ? undefined : errors;
+	}
+
+	errors = validateSingle(data, validators, multipleErrors);
+	return errors;
+};
+
+var required = exports.required = function required(flag, error) {
+	function isNullLike(value) {
+		return value === undefined || value === "" || value === null;
+	}
+
+	return function (value) {
+		if (flag && isNullLike(value)) {
+			return error || "This field is required.";
+		} else if (!flag && isNullLike(value)) {
+			// skip rest of the validators
+			throw new SkipValidation();
+		}
+	};
+};
+
+var isNumber = exports.isNumber = function isNumber(error) {
+	return function (value) {
+		if (typeof value !== "number" || isNaN(value)) {
+			return error || "'{value}' is not a valid number.";
+		}
+	};
+};
+
+var isString = exports.isString = function isString(error) {
+	return function (value) {
+		if (typeof value !== "string") {
+			return error || "'{value}' is not a valid string.";
+		}
+	};
+};
+
+var isFunction = exports.isFunction = function isFunction(error) {
+	return function (value) {
+		if (typeof value !== "function") {
+			return error || "Expected a function.";
+		}
+	};
+};
+
+var isObject = exports.isObject = function isObject(error) {
+	return function (value) {
+		if (value !== Object(value)) {
+			return error || "Expected an object.";
+		}
+	};
+};
+
+var isArray = exports.isArray = function isArray(error) {
+	return function (value) {
+		if (Object.prototype.toString.call(value) !== "[object Array]") {
+			return error || "Expected an array.";
+		}
+	};
+};
+
+var length = exports.length = function length(_length, error) {
+	return function (value) {
+		var str = value + "";
+		if (str.length !== _length) {
+			return error || "It must be " + _length + " characters long.";
+		}
+	};
+};
+
+var isEmail = exports.isEmail = function isEmail(error) {
+	return function (value) {
+		var pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		if (!pattern.test(value)) {
+			return error || "Invalid email id.";
+		}
+	};
+};
+
+var equalsTo = exports.equalsTo = function equalsTo(key, error) {
+	return function (value, all) {
+		if (value !== all[key]) {
+			return error || "'{key}' and '" + key + "' do not match.";
+		}
+	};
+};
+
+var minLength = exports.minLength = function minLength(length, error) {
+	return function (value) {
+		var str = value + "";
+		if (str.length < length) {
+			return error || "It must be at least " + length + " characters long.";
+		}
+	};
+};
+
+var maxLength = exports.maxLength = function maxLength(length, error) {
+	return function (value) {
+		var str = value + "";
+		if (str.length > length) {
+			return error || "It must be at most " + length + " characters long.";
+		}
+	};
+};
+
+var isBoolean = exports.isBoolean = function isBoolean(error) {
+	return function (value) {
+		if (value !== true && value !== false) {
+			return error || "Invalid boolean value.";
+		}
+	};
+};
+
+var within = exports.within = function within(list, error) {
+	return function (value) {
+		if (!(value instanceof Array)) {
+			value = [value];
+		}
+
+		var odds = [];
+
+		for (var index = 0; index < value.length; index++) {
+			if (list.indexOf(value[index]) === -1) {
+				odds.push(value[index]);
+			}
+		}
+
+		if (odds.length > 0) {
+			return error || "[" + odds + "] do not fall under the allowed list.";
+		}
+	};
+};
+
+var excludes = exports.excludes = function excludes(list, error) {
+	return function (value) {
+		if (!(value instanceof Array)) {
+			value = [value];
+		}
+
+		var odds = [];
+
+		for (var index = 0; index < value.length; index++) {
+			if (list.indexOf(value[index]) !== -1) {
+				odds.push(value[index]);
+			}
+		}
+
+		if (odds.length > 0) {
+			return error || "[" + odds + "] fall under restricted values.";
+		}
+	};
+};
+
+var pattern = exports.pattern = function pattern(regex, error) {
+	return function (value) {
+		if (!regex.test(value)) {
+			return error || "'{value}' does not match with the pattern.";
+		}
+	};
+};
+});
+
+unwrapExports(lib);
+var lib_1 = lib.SkipValidation;
+var lib_2 = lib.validateSingle;
+var lib_3 = lib.validate;
+var lib_4 = lib.required;
+var lib_5 = lib.isNumber;
+var lib_6 = lib.isString;
+var lib_7 = lib.isFunction;
+var lib_8 = lib.isObject;
+var lib_9 = lib.isArray;
+var lib_10 = lib.length;
+var lib_11 = lib.isEmail;
+var lib_12 = lib.equalsTo;
+var lib_13 = lib.minLength;
+var lib_14 = lib.maxLength;
+var lib_15 = lib.isBoolean;
+var lib_16 = lib.within;
+var lib_17 = lib.excludes;
+var lib_18 = lib.pattern;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var WIDGET_URL = undefined || "https://khalti.com/payment/widget/";
+
+var forEach = function forEach(data, iteratee) {
+	if (Array.isArray(data)) {
+		return data.forEach(iteratee);
+	}
+	return Object.keys(data).map(function (key) {
+		return iteratee(data[key], key);
+	});
+};
+
+var clone = function clone(data) {
+	if (!data) return data;
+	return JSON.parse(JSON.stringify(data));
+};
+
+var eventHandlerSchema = {
+	onSuccess: [lib_4(true), lib_7()],
+	onError: [lib_4(false), lib_7()],
+	onClose: [lib_4(false), lib_7()]
+};
+
+var configSchema = {
+	publicKey: lib_4(true),
+	productUrl: lib_4(true),
+	productIdentity: lib_4(true),
+	productName: lib_4(true),
+	eventHandler: lib_4(true),
+	amount: lib_4(true),
+	merchantData: [lib_4(false), lib_8()]
+};
+
+var KhaltiCheckout = function () {
+	function KhaltiCheckout(config) {
+		_classCallCheck(this, KhaltiCheckout);
+
+		this._widgetId = "khalti-widget-" + Date.now();
+		this._config = config;
+		this._widget = this.attachWidget();
+		this.listenToWidget();
+	}
+
+	_createClass(KhaltiCheckout, [{
+		key: "listenToWidget",
+		value: function listenToWidget() {
+			var _this = this;
+
+			window.addEventListener("message", function (e) {
+				if (!e.data.realm) return;
+				if (e.data.realm === 'widgetInit') {
+					_this.widgetInit(e.data.payload);
+				} else if (!e.data.payload || e.data.payload.widget_id !== _this._widgetId) {
+					return;
+				} else {
+					var handler = "handle_msg_" + e.data.realm;
+					_this[handler](e.data.payload);
+				}
+			}, false);
+		}
+	}, {
+		key: "msgWidget",
+		value: function msgWidget(realm, payload) {
+			payload = clone(payload);
+			payload.widgetId = this._widgetId;
+			this._widget.contentWindow.postMessage({ realm: realm, payload: payload }, "*");
+		}
+	}, {
+		key: "handle_msg_widgetInit",
+		value: function handle_msg_widgetInit() {
+			this.widgetInit();
+		}
+	}, {
+		key: "widgetInit",
+		value: function widgetInit() {
+			var paymentInfo = clone(this._config);
+			delete paymentInfo.eventHandler;
+			this.msgWidget("paymentInfo", paymentInfo);
+		}
+	}, {
+		key: "validateConfig",
+		value: function validateConfig() {
+			var errors = lib_3(this._config, configSchema);
+			if (errors) {
+				throw new Error(JSON.stringify(errors));
+			} else {
+				var _errors = lib_3(this._config.eventHandler, eventHandlerSchema);
+				if (_errors) {
+					throw new Error(JSON.stringify({ eventHandler: _errors }));
+				}
+			}
+		}
+	}, {
+		key: "handle_msg_walletPaymentVerification",
+		value: function handle_msg_walletPaymentVerification(paymentInfo) {
+			this._config.eventHandler.onSuccess(paymentInfo);
+			this.hide();
+		}
+	}, {
+		key: "handle_msg_widgetError",
+		value: function handle_msg_widgetError(error) {
+			var errorHandler = this._config.eventHandler.onError;
+			errorHandler && errorHandler(error);
+		}
+	}, {
+		key: "disableParentScrollbar",
+		value: function disableParentScrollbar() {
+			this.parentOverflowValue = window.document.body.style.overflowY;
+			window.document.body.style.overflowY = "hidden";
+		}
+	}, {
+		key: "enableParentScrollbar",
+		value: function enableParentScrollbar() {
+			window.document.body.style.overflowY = this.parentOverflowValue;
+			this.parentOverflowValue = null;
+		}
+	}, {
+		key: "show",
+		value: function show(updates) {
+			this._config.source = "web";
+			this._widget.setAttribute("src", WIDGET_URL);
+			Object.assign(this._config, updates);
+			this.validateConfig();
+			this.disableParentScrollbar();
+			this._widget.style.display = "block";
+			this.widgetInit();
+		}
+	}, {
+		key: "handle_msg_hide",
+		value: function handle_msg_hide() {
+			this.hide();
+			var closeHandler = this._config.eventHandler.onClose;
+			closeHandler && closeHandler();
+		}
+	}, {
+		key: "hide",
+		value: function hide() {
+			this.enableParentScrollbar();
+			this._widget.style.display = "none";
+		}
+	}, {
+		key: "attachWidget",
+		value: function attachWidget() {
+			var widget = window.document.createElement("iframe");
+			widget.setAttribute("id", this._widgetId);
+			widget.style.position = "fixed";
+			widget.style.display = "none";
+			widget.style.top = "0";
+			widget.style.left = "0";
+			widget.width = "100%";
+			widget.height = window.innerHeight + "px";
+			// widget.setAttribute("src", undefined);
+			widget.style.zIndex = 999999999;
+			widget.setAttribute("frameborder", 0);
+			widget.setAttribute("allowtransparency", true);
+
+			window.document.body.appendChild(widget);
+
+			return widget;
+		}
+	}, {
+		key: "postAtURL",
+		value: function postAtURL(payload) {
+			var khaltiEbankingFormId = "khalti-ebanking-form-" + Date.now();
+			// remove earlier form if exists
+			if (this.ebankingForm) window.document.body.removeChild(this.ebankingForm);
+
+			// create new form
+			var form = window.document.createElement("form");
+			form.setAttribute("id", khaltiEbankingFormId);
+			form.setAttribute("action", payload.url);
+			form.setAttribute("target", "_blank");
+			form.setAttribute("method", "POST");
+			form.style.display = "none";
+
+			// attach inputs to form
+			forEach(payload.paymentInfo, function (value, key) {
+				var input = window.document.createElement("input");
+				input.setAttribute("name", key);
+				input.value = value;
+				form.appendChild(input);
+			});
+
+			// attach form to body
+			window.document.body.appendChild(form);
+			this.ebankingForm = form;
+
+			form.submit();
+		}
+	}]);
+
+	return KhaltiCheckout;
+}();
+
+module.exports = KhaltiCheckout;
 
 
 /***/ }),
@@ -21955,7 +22653,12 @@ var render = function() {
                   "div",
                   {
                     staticClass:
-                      "flex flex-wrap items-center justify-between group border-2 border-tranparent hover:border-green-500"
+                      "flex flex-wrap items-center justify-between group border-2 border-tranparent hover:border-green-500",
+                    on: {
+                      click: function($event) {
+                        return _vm.redirectTo(customer)
+                      }
+                    }
                   },
                   [
                     _c("img", {
@@ -22105,7 +22808,7 @@ var render = function() {
         {
           attrs: {
             method: "POST",
-            action: "/products",
+            action: "/zero/products",
             enctype: "multipart/form-data"
           }
         },
@@ -22193,7 +22896,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "form",
-        { attrs: { action: "/products", method: "POST" } },
+        { attrs: { action: "/zero/products", method: "POST" } },
         [
           _c("input", {
             attrs: { type: "hidden", name: "_token" },
@@ -22483,7 +23186,7 @@ var render = function() {
                         {
                           attrs: {
                             href:
-                              "/products-edit/" +
+                              "/zero/products-edit/" +
                               product.id +
                               "-" +
                               product.name
@@ -22706,144 +23409,212 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container " },
-    [
-      _vm.message
-        ? _c(
-            "p",
-            {
-              staticClass: "rounded-lg text-md font-medium  text-white",
-              class: _vm.status ? "bg-green-500" : "bg-red-500"
-            },
-            [_vm._v("\n        " + _vm._s(_vm.message) + "\n    ")]
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _c("div", [
-        _c(
-          "form",
+  return _c("div", { staticClass: "container " }, [
+    _vm.message
+      ? _c(
+          "p",
           {
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.clearCart($event)
-              }
-            }
+            staticClass: "rounded-lg text-md font-medium  text-white",
+            class: _vm.status ? "bg-green-500" : "bg-red-500"
           },
-          [
-            _c(
-              "button",
-              {
-                staticClass:
-                  "p-3 bg-red-500 rounded-lg text-lg font-medium text-white",
-                attrs: { type: "submit" }
-              },
-              [_vm._v("Clear Cart")]
-            )
-          ]
+          [_vm._v("\n        " + _vm._s(_vm.message) + "\n    ")]
         )
-      ]),
-      _vm._v(" "),
-      _vm._l(_vm.productsArr, function(p) {
-        return _c("div", [
-          _c(
-            "div",
-            { staticClass: "flex flex-row justify-between items-center" },
-            [
-              _c("img", {
-                staticClass: "h-10 w-10 rounded-lg object-cover object-center",
-                attrs: { src: "/storage/" + p.attributes.imageUrl }
-              }),
-              _vm._v(" "),
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.updatedQty > 0
+      ? _c(
+          "div",
+          [
+            _c("div", [
               _c(
-                "div",
-                { staticClass: "flex flex-col items-left justify-start pl-2" },
-                [
-                  _c("h3", { staticClass: "m-0" }, [_vm._v(_vm._s(p.name))]),
-                  _vm._v(" "),
-                  _c("h3", { staticClass: "m-0" }, [
-                    _vm._v("$ " + _vm._s(p.price))
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("div", [
-                _c(
-                  "form",
-                  {
-                    on: {
-                      submit: function($event) {
-                        $event.preventDefault()
-                        return _vm.updateCart(p)
-                      }
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.clearCart($event)
                     }
-                  },
+                  }
+                },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "p-3 bg-red-500 rounded-lg text-lg font-medium text-white",
+                      attrs: { type: "submit" }
+                    },
+                    [_vm._v("Clear Cart")]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.productsArr, function(p) {
+              return _c("div", [
+                _c(
+                  "div",
+                  { staticClass: "flex flex-row justify-between items-center" },
                   [
+                    _c("img", {
+                      staticClass:
+                        "h-10 w-10 rounded-lg object-cover object-center",
+                      attrs: { src: "/storage/" + p.attributes.imageUrl }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "flex flex-col items-left justify-start pl-2"
+                      },
+                      [
+                        _c("h3", { staticClass: "m-0" }, [
+                          _vm._v(_vm._s(p.name))
+                        ]),
+                        _vm._v(" "),
+                        _c("h3", { staticClass: "m-0" }, [
+                          _vm._v("$ " + _vm._s(p.price))
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
                     _c("div", [
-                      _c("input", {
-                        attrs: { type: "text", name: "" },
-                        domProps: {
-                          value:
-                            "" + (_vm.selected == p.id ? _vm.qty : p.quantity)
-                        },
-                        on: {
-                          input: function($event) {
-                            _vm.qty = $event.target.value
-                            _vm.selected = p.id
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
                       _c(
-                        "button",
+                        "form",
                         {
-                          staticClass: "p-3 rounded-lg text-blue-900 text-md ",
-                          attrs: { type: "submit" }
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              return _vm.updateCart(p)
+                            }
+                          }
                         },
                         [
-                          _vm._v(
-                            "\n                            Update\n                        "
+                          _c("div", [
+                            _c("input", {
+                              attrs: { type: "text", name: "" },
+                              domProps: {
+                                value:
+                                  "" +
+                                  (_vm.selected == p.id ? _vm.qty : p.quantity)
+                              },
+                              on: {
+                                input: function($event) {
+                                  _vm.qty = $event.target.value
+                                  _vm.selected = p.id
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "p-3 rounded-lg text-blue-900 text-md ",
+                                attrs: { type: "submit" }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                Update\n                            "
+                                )
+                              ]
+                            )
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "form",
+                        {
+                          on: {
+                            submit: function($event) {
+                              $event.preventDefault()
+                              return _vm.removeCart(p)
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "p-3 rounded-lg text-blue-900 text-md "
+                            },
+                            [_vm._v("Drop Product")]
                           )
                         ]
                       )
                     ])
                   ]
-                ),
-                _vm._v(" "),
+                )
+              ])
+            }),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "flex flex-col items-right ml-auto w-48" },
+              [
                 _c(
-                  "form",
+                  "div",
                   {
-                    on: {
-                      submit: function($event) {
-                        $event.preventDefault()
-                        return _vm.removeCart(p)
-                      }
-                    }
+                    staticClass:
+                      "flex items-center border-green-600 border-2 rounded-lg p-3 mb-3"
                   },
                   [
                     _c(
-                      "button",
-                      { staticClass: "p-3 rounded-lg text-blue-900 text-md " },
-                      [_vm._v("Drop Product")]
+                      "span",
+                      {
+                        staticClass:
+                          "text-bold text-lg text-green-600 rounded-lg mr-2"
+                      },
+                      [_vm._v("SubTotal")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      { staticClass: "text-lg text-bold text-green-500" },
+                      [_vm._v("$ " + _vm._s(_vm.subTotal))]
                     )
                   ]
-                )
-              ])
-            ]
-          )
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "flex items-center " }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass:
+                        "text-bold text-lg bg-green-900 text-white p-3 rounded-lg",
+                      attrs: { href: "/checkout" }
+                    },
+                    [_vm._v("Checkout")]
+                  )
+                ])
+              ]
+            )
+          ],
+          2
+        )
+      : _c("div", [
+          _c("div", { staticClass: "flex items-center" }, [
+            _c(
+              "p",
+              { staticClass: "text-medium font-semibold text-blue-500" },
+              [_vm._v("Oh! My cart is empty.")]
+            ),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass:
+                  "text-bold text-lg bg-green-900 text-white p-3 rounded-lg",
+                attrs: { href: "/" }
+              },
+              [_vm._v("Continue My Shopping")]
+            )
+          ])
         ])
-      }),
-      _vm._v(" "),
-      _c("div", { staticClass: "flex flex-col items-center" }, [
-        _c("span", [_vm._v("$ " + _vm._s(_vm.subTotal))]),
-        _vm._v(" "),
-        _c("span", [_vm._v("$ " + _vm._s(_vm.grandTotal))])
-      ])
-    ],
-    2
-  )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -22972,6 +23743,56 @@ var render = function() {
           2
         )
       : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/customer/Checkout.vue?vue&type=template&id=3ef41388&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/customer/Checkout.vue?vue&type=template&id=3ef41388&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container " }, [
+    _vm.message
+      ? _c(
+          "p",
+          {
+            staticClass: "rounded-lg text-md font-medium  text-white",
+            class: _vm.status ? "bg-green-500" : "bg-red-500"
+          },
+          [_vm._v("\n        " + _vm._s(_vm.message) + "\n    ")]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _c("div", [
+      _c(
+        "button",
+        {
+          staticClass: "p-3 text-lg text-white bg-green-800",
+          on: {
+            click: function($event) {
+              return _vm.payment()
+            }
+          }
+        },
+        [_vm._v("Khalti Payment")]
+      )
+    ])
   ])
 }
 var staticRenderFns = []
@@ -35206,9 +36027,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-var serverBus = new Vue(); // import PortalVue from 'portal-vue';
-// Vue.use(PortalVue);
-
+var serverBus = new Vue();
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -35233,6 +36052,7 @@ Vue.component('show-customer', __webpack_require__(/*! ./components/admin/custom
 
 Vue.component('add-to-cart', __webpack_require__(/*! ./components/customer/Product.vue */ "./resources/js/components/customer/Product.vue")["default"]);
 Vue.component('cart-qty', __webpack_require__(/*! ./components/customer/CartQty.vue */ "./resources/js/components/customer/CartQty.vue")["default"]);
+Vue.component('cart-checkout', __webpack_require__(/*! ./components/customer/Checkout.vue */ "./resources/js/components/customer/Checkout.vue")["default"]);
 Vue.component('cart-view', __webpack_require__(/*! ./components/customer/Cart.vue */ "./resources/js/components/customer/Cart.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -35841,6 +36661,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/customer/Checkout.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/customer/Checkout.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Checkout_vue_vue_type_template_id_3ef41388_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Checkout.vue?vue&type=template&id=3ef41388&scoped=true& */ "./resources/js/components/customer/Checkout.vue?vue&type=template&id=3ef41388&scoped=true&");
+/* harmony import */ var _Checkout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Checkout.vue?vue&type=script&lang=js& */ "./resources/js/components/customer/Checkout.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Checkout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Checkout_vue_vue_type_template_id_3ef41388_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Checkout_vue_vue_type_template_id_3ef41388_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "3ef41388",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/customer/Checkout.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/customer/Checkout.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/customer/Checkout.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Checkout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Checkout.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/customer/Checkout.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Checkout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/customer/Checkout.vue?vue&type=template&id=3ef41388&scoped=true&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/customer/Checkout.vue?vue&type=template&id=3ef41388&scoped=true& ***!
+  \**************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Checkout_vue_vue_type_template_id_3ef41388_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Checkout.vue?vue&type=template&id=3ef41388&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/customer/Checkout.vue?vue&type=template&id=3ef41388&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Checkout_vue_vue_type_template_id_3ef41388_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Checkout_vue_vue_type_template_id_3ef41388_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/customer/Product.vue":
 /*!******************************************************!*\
   !*** ./resources/js/components/customer/Product.vue ***!
@@ -35928,8 +36817,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\board\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\board\resources\scss\app.scss */"./resources/scss/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\alpha\progress\board\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\alpha\progress\board\resources\scss\app.scss */"./resources/scss/app.scss");
 
 
 /***/ })

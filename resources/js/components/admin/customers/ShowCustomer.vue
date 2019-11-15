@@ -27,12 +27,12 @@
         data(){return{message:null,error:null}},
         methods: {
         	dropCostumer(customer){
-                axios.post(`/customers/${customer.id}`, {})
+                axios.post(`/zero/customers/${customer.id}`, {})
                     .then(res=>{
                         if(res.status == 204){
                         	this.message = 'Product dropped.';    
                         	setTimeout(() => {
-                        		window.location = `http://localhost:8000/customers`;
+                        		window.location = `http://localhost:8000/zero/customers`;
                         	}, 3000);
                         }
                     }).catch((error) => {

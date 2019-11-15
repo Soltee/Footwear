@@ -29,7 +29,7 @@
                 <span :class="(searchError) ? 'border-red-500 border-2' : ''">{{ (resultTotal) ? (resultTotal) : 0 }} results found for {{ keyword }}</span>   
             </div>
     		<div v-for="customer in searchArray">
-    			<div class="flex flex-wrap items-center justify-between group border-2 border-tranparent hover:border-green-500" >
+    			<div class="flex flex-wrap items-center justify-between group border-2 border-tranparent hover:border-green-500" @click="redirectTo(customer)">
 	    			<img class="h-24 w-24 rounded-full" :src="`/storage/${customer.avatar}`">
 		    		<h4>{{ customer.name }}</h4>
 		            <button type="submit" @click="filterCustomer(customer); dropCostumer(customer)">Drop</button>
@@ -91,7 +91,7 @@
         	searchCustomer(){
         		this.status = false;
                 if(!this.keyword){return;}
-        		axios.get(`searchCustomers/${this.keyword}`)
+        		axios.get(`/zero/searchCustomers/${this.keyword}`)
         			.then((res) => {
         				// console.log(res.data.customers);
         				let ctms = res.data.customers;
@@ -109,7 +109,7 @@
         			})
         	},
             dropCostumer(customer){
-                axios.post(`/customers/${customer.id}`, {})
+                axios.post(`/zero/customers/${customer.id}`, {})
                     .then(res=>{
                         if(res.status == 204){
                         this.message = 'Product dropped.';                            
@@ -119,7 +119,7 @@
                     });
             },
             redirectTo(customer){
-                window.location = `http://localhost:8000/customers/${customer.id}-${customer.name}`;   
+                window.location = `http://localhost:8000/zero/customers/${customer.id}-${customer.name}`;   
             }
         }
     }

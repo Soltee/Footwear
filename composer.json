@@ -12,6 +12,7 @@
         "consoletvs/charts": "6.*",
         "darryldecode/cart": "~4.0",
         "fideloper/proxy": "^4.0",
+        "guzzlehttp/guzzle": "^6.4",
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0"
     },

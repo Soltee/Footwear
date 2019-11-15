@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
     <div class="container mx-auto">
@@ -49,7 +49,12 @@
                             </label>
 
                             <input id="password" type="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight bg-blue-700 focus:outline-none focus:shadow-outline{{ $errors->has('password') ? ' border-red-500' : '' }}" name="password" required>
-
+							
+							 @if ($errors->has('password'))
+                                <p class="text-red-500 text-xs italic mt-4">
+                                    {{ $errors->first('password') }}
+                                </p>
+                            @endif
         
 		        		</div>
 

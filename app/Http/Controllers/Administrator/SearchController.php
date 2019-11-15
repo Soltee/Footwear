@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Administrator;
 
 use App\Customer;
 use App\Products;
 use App\Categories;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class SearchController extends Controller
 {
