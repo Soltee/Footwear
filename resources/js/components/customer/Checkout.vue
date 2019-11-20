@@ -46,7 +46,7 @@ import KhaltiCheckout from "khalti-web";
                     "eventHandler": {
                         onSuccess (payload) {
                             // hit merchant api for initiating verfication
-                            console.log(payload);
+                            // console.log(payload);
                             axios.post(`/checkout-server`, {
                                 payload : payload
                             }).then(res => {
@@ -68,7 +68,7 @@ import KhaltiCheckout from "khalti-web";
                     }
                 };
 
-                console.log(config);
+                // console.log(config);
                 let checkout = new KhaltiCheckout(config);
                 checkout.show({amount: 1000});
                             

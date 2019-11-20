@@ -1906,6 +1906,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'search-all-view',
   directives: {
@@ -2945,6 +2979,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'cart-qty',
@@ -3143,7 +3181,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       var _this = this;
 
                       // hit merchant api for initiating verfication
-                      console.log(payload);
+                      // console.log(payload);
                       axios.post("/checkout-server", {
                         payload: payload
                       }).then(function (res) {
@@ -3164,14 +3202,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       console.log('widget is closing');
                     }
                   }
-                };
-                console.log(config);
+                }; // console.log(config);
+
                 checkout = new khalti_web__WEBPACK_IMPORTED_MODULE_1___default.a(config);
                 checkout.show({
                   amount: 1000
                 });
 
-              case 4:
+              case 3:
               case "end":
                 return _context2.stop();
             }
@@ -22195,21 +22233,98 @@ var render = function() {
       ? _c(
           "svg",
           {
-            staticClass: "h-6 w-6 text-white cursor-pointer",
+            staticClass: "h-10 w-10 text-white cursor-pointer",
             attrs: {
               fill: "currentColor",
-              xmlns: "http://www.w3.org/2000/svg",
-              viewBox: "0 0 20 20"
+              viewBox: "0 0 61 55",
+              xmlns: "http://www.w3.org/2000/svg"
             },
             on: { click: _vm.focusInput }
           },
           [
-            _c("path", {
+            _c("g", { attrs: { filter: "url(#filter0_d)" } }, [
+              _c("path", {
+                attrs: {
+                  "fill-rule": "evenodd",
+                  "clip-rule": "evenodd",
+                  d:
+                    "M37.2309 34.1598C38.9903 31.1823 40 27.709 40 24C40 12.9543 31.0457 4 20 4C8.9543 4 0 12.9543 0 24C0 35.0457 8.9543 44 20 44C23.709 44 27.1823 42.9904 30.1598 41.2309L37.7487 48.8198C39.7014 50.7724 42.8672 50.7724 44.8198 48.8198C46.7724 46.8672 46.7724 43.7014 44.8198 41.7487L37.2309 34.1598Z",
+                  fill: "#201E16"
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("circle", {
               attrs: {
-                d:
-                  "M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"
+                opacity: "0.3",
+                cx: "20",
+                cy: "24",
+                r: "15",
+                fill: "white"
               }
-            })
+            }),
+            _vm._v(" "),
+            _c("defs", [
+              _c(
+                "filter",
+                {
+                  attrs: {
+                    id: "filter0_d",
+                    x: "0",
+                    y: "0",
+                    width: "60.2843",
+                    height: "54.2843",
+                    filterUnits: "userSpaceOnUse",
+                    "color-interpolation-filters": "sRGB"
+                  }
+                },
+                [
+                  _c("feFlood", {
+                    attrs: {
+                      "flood-opacity": "0",
+                      result: "BackgroundImageFix"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("feColorMatrix", {
+                    attrs: {
+                      in: "SourceAlpha",
+                      type: "matrix",
+                      values: "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("feOffset", { attrs: { dx: "10" } }),
+                  _vm._v(" "),
+                  _c("feGaussianBlur", { attrs: { stdDeviation: "2" } }),
+                  _vm._v(" "),
+                  _c("feColorMatrix", {
+                    attrs: {
+                      type: "matrix",
+                      values: "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("feBlend", {
+                    attrs: {
+                      mode: "normal",
+                      in2: "BackgroundImageFix",
+                      result: "effect1_dropShadow"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("feBlend", {
+                    attrs: {
+                      mode: "normal",
+                      in: "SourceGraphic",
+                      in2: "effect1_dropShadow",
+                      result: "shape"
+                    }
+                  })
+                ],
+                1
+              )
+            ])
           ]
         )
       : _vm._e(),
@@ -22249,20 +22364,105 @@ var render = function() {
                           _c(
                             "svg",
                             {
-                              staticClass: "h-6 w-6 text-blue-900",
+                              staticClass: "h-10 w-10 text-blue-900",
                               attrs: {
                                 fill: "currentColor",
-                                xmlns: "http://www.w3.org/2000/svg",
-                                viewBox: "0 0 20 20"
+                                viewBox: "0 0 61 55",
+                                xmlns: "http://www.w3.org/2000/svg"
                               }
                             },
                             [
-                              _c("path", {
+                              _c(
+                                "g",
+                                { attrs: { filter: "url(#filter0_d)" } },
+                                [
+                                  _c("path", {
+                                    attrs: {
+                                      "fill-rule": "evenodd",
+                                      "clip-rule": "evenodd",
+                                      d:
+                                        "M37.2309 34.1598C38.9903 31.1823 40 27.709 40 24C40 12.9543 31.0457 4 20 4C8.9543 4 0 12.9543 0 24C0 35.0457 8.9543 44 20 44C23.709 44 27.1823 42.9904 30.1598 41.2309L37.7487 48.8198C39.7014 50.7724 42.8672 50.7724 44.8198 48.8198C46.7724 46.8672 46.7724 43.7014 44.8198 41.7487L37.2309 34.1598Z",
+                                      fill: "#201E16"
+                                    }
+                                  })
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("circle", {
                                 attrs: {
-                                  d:
-                                    "M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"
+                                  opacity: "0.3",
+                                  cx: "20",
+                                  cy: "24",
+                                  r: "15",
+                                  fill: "white"
                                 }
-                              })
+                              }),
+                              _vm._v(" "),
+                              _c("defs", [
+                                _c(
+                                  "filter",
+                                  {
+                                    attrs: {
+                                      id: "filter0_d",
+                                      x: "0",
+                                      y: "0",
+                                      width: "60.2843",
+                                      height: "54.2843",
+                                      filterUnits: "userSpaceOnUse",
+                                      "color-interpolation-filters": "sRGB"
+                                    }
+                                  },
+                                  [
+                                    _c("feFlood", {
+                                      attrs: {
+                                        "flood-opacity": "0",
+                                        result: "BackgroundImageFix"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("feColorMatrix", {
+                                      attrs: {
+                                        in: "SourceAlpha",
+                                        type: "matrix",
+                                        values:
+                                          "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("feOffset", { attrs: { dx: "10" } }),
+                                    _vm._v(" "),
+                                    _c("feGaussianBlur", {
+                                      attrs: { stdDeviation: "2" }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("feColorMatrix", {
+                                      attrs: {
+                                        type: "matrix",
+                                        values:
+                                          "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("feBlend", {
+                                      attrs: {
+                                        mode: "normal",
+                                        in2: "BackgroundImageFix",
+                                        result: "effect1_dropShadow"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("feBlend", {
+                                      attrs: {
+                                        mode: "normal",
+                                        in: "SourceGraphic",
+                                        in2: "effect1_dropShadow",
+                                        result: "shape"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ])
                             ]
                           )
                         ]
@@ -23640,7 +23840,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "relative flex items-center" }, [
     _c(
-      "div",
+      "li",
       {
         staticClass: "relative flex items-center cursor-pointer",
         on: {
@@ -23653,31 +23853,55 @@ var render = function() {
         _c(
           "svg",
           {
-            staticClass: "h-4 w-4 text-gray-300 font-medium text-md",
+            staticClass: "icon",
             attrs: {
-              fill: "currentColor",
-              xmlns: "http://www.w3.org/2000/svg",
-              viewBox: "0 0 20 20"
+              fill: "",
+              viewBox: "0 0 59 57",
+              xmlns: "http://www.w3.org/2000/svg"
             }
           },
           [
             _c("path", {
               attrs: {
+                opacity: "0.8",
                 d:
-                  "M4 2h16l-3 9H4a1 1 0 1 0 0 2h13v2H4a3 3 0 0 1 0-6h.33L3 5 2 2H0V0h3a1 1 0 0 1 1 1v1zm1 18a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm10 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"
+                  "M3 3H12.538L18.9285 35.1297C19.1465 36.2344 19.7437 37.2268 20.6156 37.933C21.4875 38.6393 22.5784 39.0145 23.6975 38.9929H46.8748C47.9938 39.0145 49.0848 38.6393 49.9566 37.933C50.8285 37.2268 51.4257 36.2344 51.6438 35.1297L55.459 14.9976H14.9225",
+                stroke: "white",
+                "stroke-width": "6",
+                "stroke-linecap": "round",
+                "stroke-linejoin": "round"
+              }
+            }),
+            _vm._v(" "),
+            _c("path", {
+              attrs: {
+                opacity: "0.8",
+                d:
+                  "M21.7961 53.3901C23.0033 53.3901 23.9819 52.3158 23.9819 50.9906C23.9819 49.6653 23.0033 48.591 21.7961 48.591C20.589 48.591 19.6104 49.6653 19.6104 50.9906C19.6104 52.3158 20.589 53.3901 21.7961 53.3901Z",
+                stroke: "white",
+                "stroke-width": "6",
+                "stroke-linecap": "round",
+                "stroke-linejoin": "round"
+              }
+            }),
+            _vm._v(" "),
+            _c("path", {
+              attrs: {
+                opacity: "0.8",
+                d:
+                  "M45.842 53.3901C47.0492 53.3901 48.0278 52.3158 48.0278 50.9906C48.0278 49.6653 47.0492 48.591 45.842 48.591C44.6349 48.591 43.6562 49.6653 43.6562 50.9906C43.6562 52.3158 44.6349 53.3901 45.842 53.3901Z",
+                stroke: "white",
+                "stroke-width": "6",
+                "stroke-linecap": "round",
+                "stroke-linejoin": "round"
               }
             })
           ]
         ),
         _vm._v(" "),
-        _c(
-          "span",
-          {
-            staticClass:
-              "ml-2 p-1 text-md text-white font-bold bg-red-600 rounded-lg"
-          },
-          [_vm._v(_vm._s(_vm.cartTotalQty))]
-        )
+        _c("span", { staticClass: "cart-text" }, [
+          _vm._v(_vm._s(_vm.cartTotalQty))
+        ])
       ]
     ),
     _vm._v(" "),

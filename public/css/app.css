@@ -11410,6 +11410,10 @@ video {
   z-index: auto;
 }
 
+.-z-10 {
+  z-index: -1;
+}
+
 /**
  * Here you would add any custom utilities you need that don't come out of the
  * box with Tailwind.
@@ -11424,6 +11428,11 @@ video {
  * @import "utilities/background-patterns";
  * @import "utilities/skew-transforms";
  */
+
+.icon {
+  height: 30px;
+  width: 30px;
+}
 
 @media (min-width: 640px) {
   .sm\:sr-only {
@@ -22158,6 +22167,10 @@ video {
 
   .sm\:z-auto {
     z-index: auto;
+  }
+
+  .sm\:-z-10 {
+    z-index: -1;
   }
 }
 
@@ -32895,6 +32908,10 @@ video {
   .md\:z-auto {
     z-index: auto;
   }
+
+  .md\:-z-10 {
+    z-index: -1;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -43631,6 +43648,10 @@ video {
   .lg\:z-auto {
     z-index: auto;
   }
+
+  .lg\:-z-10 {
+    z-index: -1;
+  }
 }
 
 @media (min-width: 1280px) {
@@ -54366,5 +54387,9 @@ video {
 
   .xl\:z-auto {
     z-index: auto;
+  }
+
+  .xl\:-z-10 {
+    z-index: -1;
   }
 }
