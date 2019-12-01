@@ -12,7 +12,7 @@
         
             <div v-for="p in productsArr">
                 <div class="flex flex-row justify-between items-center">
-                    <img class="h-10 w-10 rounded-lg object-cover object-center" :src="`/storage/${p.attributes.imageUrl}`">
+                    <img class="h-10 w-10 rounded-lg object-cover object-center" :src="`/storage/products/${p.attributes.imageUrl}`">
                     <div class="flex flex-col items-left justify-start pl-2">
                         <h3 class="m-0">{{ p.name }}</h3>
                         <h3 class="m-0">$ {{ p.price }}</h3>

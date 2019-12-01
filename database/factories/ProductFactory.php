@@ -11,7 +11,11 @@ $factory->define(Products::class, function (Faker $faker) {
     	'category_id' => function(){
     		return Categories::inRandomOrder()->get();
     	},
-    	'imageUrl' => '1.jpg',
+    	'imageUrl' => function(){
+            foreach ([1,2,3,4,5] as $n) {
+                return   $n . ".jpg";
+            }
+        },
     	'name' => $faker->title,
     	'price' => $faker->unique()->numberBetween(1, 100),
         'qty' => $faker->unique()->numberBetween(1, 100),

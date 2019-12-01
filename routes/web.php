@@ -5,14 +5,19 @@ Route::get('/', 'WelcomeController@index')->name('welcome');
 
 //Cart
 
-Route::get('/add-to-cart/{products}', 'CartController@addProduct')->middleware('auth:customer');
-Route::get('/getCartProducts', 'CartController@getCartProducts')->middleware('auth:customer');
-Route::get('/getUpdatedData', 'CartController@getUpdatedData')->middleware('auth:customer');
+Route::get('/add-to-cart/{products}', 'CartController@addProduct');
 
-Route::get('/is-already-added/{products}', 'CartController@isProductAlreadyAdded')->middleware('auth:customer');
-Route::post('/clear-cart', 'CartController@clearCart')->middleware('auth:customer');
-Route::post('/remove-from-cart/{products}', 'CartController@removeProduct')->middleware('auth:customer');
-Route::post('/update-cart/{products}', 'CartController@updateProduct')->middleware('auth:customer');
+Route::get('/getCartProducts', 'CartController@getCartProducts');
+
+Route::get('/getUpdatedData', 'CartController@getUpdatedData');
+
+Route::get('/is-already-added/{products}', 'CartController@isProductAlreadyAdded');
+
+Route::post('/clear-cart', 'CartController@clearCart');
+
+Route::post('/remove-from-cart/{products}', 'CartController@removeProduct');
+
+Route::post('/update-cart/{products}', 'CartController@updateProduct');
 
 
 //Customer
@@ -29,7 +34,7 @@ Route::post('/checkout-server', 'CheckoutController@payment');
 
 
 //Dashboard
-Route::prefix('zero')->group(function () {
+Route::prefix('management')->group(function () {
 
 	/*Administrator*/
 	Route::get('/board-login', 'Administrator\AdminAuthController@loginView')->name('board-login-view');

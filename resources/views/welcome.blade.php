@@ -1,26 +1,38 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="pt-8 lg:pt-32 container px-6  lg:px-12 z-10 flex flex-col md:flex-row items-center content-between">
+        <div class="flex flex-col items-left justify-around flex-1 w-full">
+            <h1 class="text-3xl md:text-4xl lg:text-5xl text-custom-gray leading-tight font-bold">
+                Branded Shoes
+                </br >
+                <span class="text-custom-red-light">Affordable Price</span>
+            </h1>
+            <p class="text-md md:text-lg text-custom-gray-lighter mt-6 font-bold">Get branded shoes for your next wear.</p>
+            <a href="#" class="w-48 px-4 py-3 text-center mt-6 text-lg text-custom-gray bg-custom-red-darker hover:bg-custom-red-lighter rounded-full">
+                Grab Now
+            </a>
+        </div>
 
-    <div class="container mx-auto">
+        <div class="relative flex-1 md:-mt-8  lg:-mt-16 -z-10 w-full">
+            <img class="absolute inset-0 md:-mt-48 lg:-mt-64 bg-cover bg-center " src="{{ asset('/img/hero.svg') }}" alt="Hero Svg">
+        </div>
+    </div>
+
+    <welcome-view :products="{{ $products->toJson() }}"></welcome-view>
+    <!-- <div class="container mx-auto text-black font-bold">
         <div class="flex flex-wrap justify-center">
             <div class="flex-1">
                 <div class="flex flex-wrap ">
                     @forelse($products as $product)
                     <div class=" bg-gray text-align p-4">
-                        <img style="height: 100px; width:100px; object-fit: cover;" src="/storage/{{ $product->imageUrl }}">
+                        <img style="height: 100px; width:100px; object-fit: cover;" src="/storage/products/{{ $product->imageUrl }}">
                         
                         <h3>{{ $product->name }}</h3>
                         <h3>$ {{ $product->price }}</h3>
-            
-                        @auth('customer')
-                            
-                            
-                            <add-to-cart :product="{{ $product }}"   /> 
+                
+                        <add-to-cart :product="{{ $product }}"   /> 
 
-                        @else
-
-                        @endauth
                     </div>
                     @empty
                         <div class="alert alert-error">
@@ -34,5 +46,5 @@
             </div>
             
         </div>
-    </div>
+    </div> -->
 @endsection

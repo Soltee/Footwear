@@ -4,11 +4,16 @@ module.exports = {
       zIndex: {
         '-10': '-1',
       },
-    	color:{
-        'red-darker': '#CF1D1D',
-        'red-lighter': '#D72626',
-        'gray-custom' : '#CCCCCC',
-    	}
+      colors:{
+        custom: {
+          'gray': '#CCCCCC',
+          'gray-light': '#4e4d38',
+          'gray-lighter' : '#424041',
+          'red-darker': '#cf1d1d',
+          'red-lighter' : '#f43838',
+          'red-light' : '#8a3231',
+        }
+      },
     }
   },
   variants: {},

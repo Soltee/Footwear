@@ -11,6 +11,8 @@
     },
     "devDependencies": {
         "axios": "^0.19",
+        "browser-sync": "^2.26.7",
+        "browser-sync-webpack-plugin": "^2.0.1",
         "cross-env": "^5.1",
         "laravel-mix": "^4.0.14",
         "laravel-mix-purgecss": "^4.1",
@@ -21,6 +23,7 @@
         "sass-loader": "^7.1.0",
         "tailwindcss": "^1.0",
         "vue": "^2.5.17",
+        "vue-owl-carousel": "^2.0.3",
         "vue-template-compiler": "^2.6.4"
     },
     "dependencies": {
