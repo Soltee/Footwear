@@ -19,14 +19,14 @@
         </div>
     </div>
 
-    <welcome-view :products="{{ $products->toJson() }}"></welcome-view>
-    <!-- <div class="container mx-auto text-black font-bold">
+    <!-- <welcome-view :products="{{ $products->toJson() }}"></welcome-view> -->
+    <div class="container mx-auto text-black font-bold mt-12">
         <div class="flex flex-wrap justify-center">
             <div class="flex-1">
                 <div class="flex flex-wrap ">
                     @forelse($products as $product)
                     <div class=" bg-gray text-align p-4">
-                        <img style="height: 100px; width:100px; object-fit: cover;" src="/storage/products/{{ $product->imageUrl }}">
+                        <img style="height: 100px; width:100px; object-fit: cover;" src="/storage/{{ $product->imageUrl }}">
                         
                         <h3>{{ $product->name }}</h3>
                         <h3>$ {{ $product->price }}</h3>
@@ -46,5 +46,5 @@
             </div>
             
         </div>
-    </div> -->
+    </div>
 @endsection

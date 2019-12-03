@@ -3,6 +3,10 @@
 
 Route::get('/', 'WelcomeController@index')->name('welcome');
 
+Route::get('/categories', 'WelcomeController@categories');
+Route::get('/searchShoes/{shoes}', 'WelcomeController@searchShoes');
+Route::get('/shoes', 'WelcomeController@shoes')->name('shoes');
+
 //Cart
 
 Route::get('/add-to-cart/{products}', 'CartController@addProduct');

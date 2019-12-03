@@ -5,12 +5,20 @@
 use App\Products;
 use Faker\Generator as Faker;
 use App\Categories;
+use App\Subcategories;
 
 $factory->define(Products::class, function (Faker $faker) {
     return [
     	'category_id' => function(){
-    		return Categories::inRandomOrder()->get();
+    		foreach ([1,2,3,4] as $n) {
+                return   $n;
+            }
     	},
+        'subcategory_id' => function(){
+            foreach ([1,2,3,4] as $n) {
+                return   $n;
+            }
+        },
     	'imageUrl' => function(){
             foreach ([1,2,3,4,5] as $n) {
                 return   $n . ".jpg";
@@ -19,8 +27,6 @@ $factory->define(Products::class, function (Faker $faker) {
     	'name' => $faker->title,
     	'price' => $faker->unique()->numberBetween(1, 100),
         'qty' => $faker->unique()->numberBetween(1, 100),
-        'excerpt' => $faker->sentence,
-        'description' => $faker->text,
         'visible' => collect([true, false])->random()
     ];
 });

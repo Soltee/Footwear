@@ -3,10 +3,16 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Categories;
+use App\Subcategories;
 use Faker\Generator as Faker;
 
 $factory->define(Categories::class, function (Faker $faker) {
     return [
-        'name' => $faker->name
+    	
+    ];
+});
+
+$factory->define(Subcategories::class, function (Faker $faker) {
+    return [
     ];
 });

@@ -4,12 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Categories extends Model
+class Subcategories extends Model
 {
     protected $fillable = [
-       'name',
+      'category_id',  'name',
     ];
-
 
     protected $hidden = [
         
@@ -17,7 +16,6 @@ class Categories extends Model
 
     public function products()
     {
-    	return $this->hasMany(Products::class);
+    	return $this->belongsTo(Products::class);
     }
-  
 }

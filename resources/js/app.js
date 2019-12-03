@@ -33,10 +33,8 @@ Vue.component('show-customer', require('./components/admin/customers/ShowCustome
 
 
 /***** Components for Customers ******/
-Vue.component('welcome-view', require('./components/customer/Welcome.vue').default);
-Vue.component('search', require('./components/customer/Search.vue').default);
+Vue.component('Navmenu', require('./components/customer/Navmenu.vue').default);
 Vue.component('add-to-cart', require('./components/customer/Product.vue').default);
-Vue.component('cart-qty', require('./components/customer/CartQty.vue').default);
 Vue.component('cart-checkout', require('./components/customer/Checkout.vue').default);
 Vue.component('cart-view', require('./components/customer/Cart.vue').default);
 

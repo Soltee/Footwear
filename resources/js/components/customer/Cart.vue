@@ -1,23 +1,29 @@
 <template>
-    <div class="container ">
-        <p v-if="message" :class="(status) ? 'bg-green-500' : 'bg-red-500' " class="rounded-lg text-md font-medium  text-white">
-            {{ message }}
-        </p>
-        <div v-if="updatedQty > 0">
-            <div>
+    <div class="relative  w-full px-6  lg:px-12 flex flex-col bg-gray-300 my-6">
+
+        <div v-if="message"  :class="(status) ? 'bg-green-500' : 'bg-red-500' " class="absolute top-0 right-0 rounded-lg text-md flex flex-row justify-between items-center font-medium  text-white p-3 mb-2">
+            <span class="mr-6 w-64">{{ message }}</span>
+            <svg @click="message = null" class="cursor-pointer text-custom-red-darker  w-6 h-6"  viewBox="0 0 43 43" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <rect x="7.07129" width="50" height="10" rx="5" transform="rotate(45 7.07129 0)" fill="currentColor"/>
+                <rect y="35.3553" width="50" height="10" rx="5" transform="rotate(-45 0 35.3553)" fill="currentColor"/>
+            </svg>
+        </div>
+        <div v-if="updatedQty > 0" class="w-full">
+            <div class="flex justify-between items-center">
+                <h4 class="font-bold text-lg text-black">My Cart</h4>
                 <form @submit.prevent="clearCart">
                     <button type="submit" class="p-3 bg-red-500 rounded-lg text-lg font-medium text-white">Clear Cart</button>
                 </form>
             </div>
         
             <div v-for="p in productsArr">
-                <div class="flex flex-row justify-between items-center">
-                    <img class="h-10 w-10 rounded-lg object-cover object-center" :src="`/storage/products/${p.attributes.imageUrl}`">
+                <div class="mt-4 flex flex-row justify-between items-center mb-3">
+                    <img class="h-40 w-40 rounded-lg object-cover object-center" :src="`/storage/${p.attributes.imageUrl}`">
                     <div class="flex flex-col items-left justify-start pl-2">
                         <h3 class="m-0">{{ p.name }}</h3>
                         <h3 class="m-0">$ {{ p.price }}</h3>
                     </div>
-                    <div>
+                    <div class="flex justify-around items-center">
                         <form @submit.prevent="updateCart(p)">
                             <div>
                                 <input type="text" name="" @input="qty = $event.target.value; selected = p.id"  :value="`${(selected == p.id) ? qty : p.quantity}`">
@@ -34,7 +40,7 @@
                 </div>
             </div>
 
-            <div class="flex flex-col items-right ml-auto w-48">
+            <div class="mt-4 flex flex-col items-right ml-auto w-48">
                 <div class="flex items-center border-green-600 border-2 rounded-lg p-3 mb-3">
                     <span class="text-bold text-lg text-green-600 rounded-lg mr-2">SubTotal</span>
                     <span class="text-lg text-bold text-green-500">$ {{ subTotal }}</span>
@@ -47,7 +53,7 @@
         <div v-else>
             <div class="flex items-center">
                 <p class="text-medium font-semibold text-blue-500">Oh! My cart is empty.</p>
-                <a :href="`/`" class="text-bold text-lg bg-green-900 text-white p-3 rounded-lg">Continue My Shopping</a>
+                <a :href="`/shoes`" class="ml-4 text-bold text-lg bg-green-900 text-white p-3 rounded-lg">Continue My Shopping</a>
 
             </div>
         </div>
