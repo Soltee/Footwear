@@ -23,18 +23,19 @@ class WelcomeController extends Controller
     }
 
     public function categories(){
-        return response()->json(['brands' => Categories::all(), 'subcategories' => Subcategories::all()], 200);
+        return response()->json(['categories' => Categories::orderBy('name')->with('subcategories')->get()], 200);
     }
 
     public function searchShoes($key){
         $shoes = Products::where('name', 'LIKE', $key . '%')->get();
-        $countResult = ($shoes->count() > 0) ? true : false;
-         return response()->json(['shoes' => $shoes, 'countResult' => $countResult], 200);
+        $count = $shoes->count();
+        $countResult = ($count > 0) ? true : false;
+         return response()->json(['shoes' => $shoes, 'count' => $count, 'countResult' => $countResult], 200);
     }
 
     public function shoes()
     {
-        $categories = Categories::all();
+        $categories = Categories::orderBy('name')->with('subcategories')->get();
 
         if(request()->category){
             $products = Products::where('category_id', request()->id)->paginate(8);

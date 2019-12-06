@@ -5,22 +5,27 @@
         
         <!-- Categories -->
        <div class="w-48 px-3 py-3">
-       		<form>
-       			@csrf
-       			<input type="text" name="" class="px-3 py-2 w-full rounded-full text-center">
-       		</form>
+            <ul class="flex flex-col items-left ml-2">
+              @forelse($categories as $category)
 
-            <ul class="mt-6 flex flex-col items-left ml-2">
-              <h4 class="text-lg font-bold mb-3 ">Brands</h4>
-            	@forelse($categories as $category)
-                <li class="mb-2">
-                    <a href="/shoes?id={{ $category->id }}&category={{$category->name}}" class="text-custom-gray-lighter hover:opacity-75">
-                        {{ $category->name }}
-                    </a>
-                </li>               
-                @empty 
+                <a class="mt-3 " href="{{ route('shoes', ['id' => $category->id , 'category' => $category->name]) }}" class="text-black hover:opacity-75">
+                  <h4 class="text-lg font-bold mb-3 ">{{ $category->name }}</h4>
+                </a>
 
-                @endforelse
+                <ul class="mt-2 flex flex-col items-left ml-2">
+                  @forelse($category->subcategories as $subcategory)
+            
+                  <li class="mb-2">
+                        <a href="{{ route('shoes', ['id' => $subcategory->id , 'subcategory' => $subcategory->name]) }}">
+                            {{ $subcategory->name }}
+                        </a>
+                  </li> 
+                  @empty  
+                  @endforelse
+                </ul>              
+              @empty 
+
+              @endforelse
             </ul>
        </div>
 

@@ -12,27 +12,21 @@
                     <svg v-if="megaMenustatus" @click="megaMenustatus = false" class="ml-2 h-8 w-8 text-custom-gray cursor-pointer hover:text-custom-gray-light" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10.707 7.05L10 6.343 4.343 12l1.414 1.414L10 9.172l4.243 4.242L15.657 12z"/></svg>
                     <svg v-else @click="megaMenustatus = true" class="ml-2 h-8 w-8 text-custom-gray cursor-pointer hover:text-custom-gray-light" fill="currentColor"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                 </div>
-                <div v-if="megaMenustatus" class="md:absolute bg-black p-3 rouneded-lg top-0 right-0 m-0 md:mt-10 ml-0 flex flex-col md:flex-row justify-around">
-                    <div class="md:mr-6">
-                        <h4 class="text-lg text-gray-light font-bold mb-4">Brands</h4>
-                        <ul v-for="brand in brands" class="flex flex-col items-left">
+                <div v-if="megaMenustatus" class="md:absolute bg-black p-3 rounded-lg top-0 right-0 m-0 md:mt-10 ml-0 flex flex-col md:flex-row justify-around ">
+                    <div v-for="category in categories" class="mt-2 md:mr-6 flex flex-col items-left rouneded-lg">
+                        <a :href="`/shoes?id=${category.id}&category=${category.name}`" class="text-custom-gray hover:opacity-75">
+                            <h4 class="text-lg text-gray-light font-bold mb-4">{{ category.name }}</h4>
+                        </a>
+                        <ul v-for="subcategory in category.subcategories" class="flex flex-col items-left">
                             <li class="mb-2">
-                                <a :href="`/shoes?id=${brand.id}&category=${brand.name}`" class="text-custom-gray hover:opacity-75">
-                                    {{brand.name}}
+                                <a :href="`/shoes?id=${subcategory.id}&subcategory=${subcategory.name}`" class="text-custom-gray hover:opacity-75">
+
+                                    {{subcategory.name}}
                                 </a>
                             </li>
                         </ul>
                     </div>
-                    <div class="mt-3 md:mt-0">
-                        <h4 class="text-lg text-custom-gray font-bold mb-4">Type</h4>
-                            <ul v-for="subcategory in subcategories" class="flex flex-col items-left">
-                                <li class="mb-2">
-                                    <a :href="`/shoes?id=${subcategory.id}&subcategory=${subcategory.name}`" class="text-custom-gray hover:opacity-75">
-                                        {{subcategory.name}}
-                                    </a>
-                                </li>
-                            </ul>
-                    </div>
+                    
                 </div>
             </span>
         </li>
@@ -82,6 +76,7 @@
 <script>
 import search from './Search';
 import cartQty from './CartQty';
+import request from '../../helpers.js';
 
     export default {
         name : 'ListItems',
@@ -94,8 +89,7 @@ import cartQty from './CartQty';
                 userStatus : false,
                 menuStatus : false,
                 megaMenustatus: false,
-                brands     : null,
-                subcategories : null,
+                categories : null,
                 err        : null,
                 csrf       : document.head.querySelector('meta[name="csrf-token"]').content
         	}
@@ -105,11 +99,11 @@ import cartQty from './CartQty';
         },
         methods: {
             async getCategories(){
-                axios.get('/categories')
-                .then(res => {
-                    let data = res.data;
-                    this.brands = data.brands;
-                    this.subcategories = data.subcategories;
+                console.log(request);
+                request('/categories').then(res => {
+                    if(res.status = 200){
+                        this.categories = res.data.categories;
+                    }
                 }).catch((err) => {
                     this.err = err.data;
                 });

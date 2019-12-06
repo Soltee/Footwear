@@ -1,6 +1,9 @@
 module.exports = {
   theme: {
     extend: {
+      screens:{
+        'cm' : '400px'
+      },
       zIndex: {
         '-10': '-1',
       },
@@ -14,6 +17,9 @@ module.exports = {
           'red-light' : '#8a3231',
         }
       },
+      maxHeight: {
+        '24' : '24rem'
+      } 
     }
   },
   variants: {},

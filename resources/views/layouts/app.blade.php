@@ -47,15 +47,7 @@
         @yield('content')
         </main>
 
-        <footer class="relative">
-            <img  class="background footer-blob -z-10 -mt-16 md:mt-0" src="/img/blob.svg" alt="background">
-
-            <div class="flex flex-col md:flex-row items-center ">
-                <ul>
-                    
-                </ul>
-            </div>
-        </footer>
+        <footer-view></footer-view>
     </div>
 
     <!-- Scripts -->
