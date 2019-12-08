@@ -11,6 +11,14 @@ li{list-style-type: none;}
 	top: -300px;
 	height: 900px;
 }
+
+
+
+/* Create a custom radio button */
+
+
+
+
 .footer-blob{
 	transform: rotateX(180deg);
 	height: 500px;

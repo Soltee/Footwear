@@ -2704,40 +2704,37 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           switch (_context2.prev = _context2.next) {
             case 0:
               qty = this.qty;
-              axios.post("/update-cart/".concat(p.id), {
+              axios.post("/update-cart/".concat(p.rowId), {
                 quantity: qty
               }).then(function (res) {
                 if (res.status == 200) {
                   _this.status = true;
+                  _app_js__WEBPACK_IMPORTED_MODULE_1__["serverBus"].$emit('cart-updated', {
+                    p: p,
+                    qty: qty
+                  });
                   _this.message = 'Cart updated.';
                   _this.productsArr = _this.productsArr.filter(function (state) {
-                    return state.id !== p.id;
+                    return state.rowId !== p.rowId;
                   });
 
                   _this.productsArr.unshift({
                     id: p.id,
+                    rowId: p.rowId,
                     name: p.name,
                     price: p.price,
-                    quantity: qty,
-                    attributes: {
-                      imageUrl: p.attributes.imageUrl
+                    qty: qty,
+                    options: {
+                      imageUrl: p.options.imageUrl
                     }
-                  });
+                  }); // this.getUpdatedData();
 
-                  _this.getUpdatedData();
 
                   _this.removeMessage();
-
-                  _app_js__WEBPACK_IMPORTED_MODULE_1__["serverBus"].$emit('cart-updated', {
-                    p: {
-                      p: p,
-                      qty: qty
-                    }
-                  });
                 }
 
                 if (res.status == 204) {
-                  _app_js__WEBPACK_IMPORTED_MODULE_1__["serverBus"].$emit('product-removed', p);
+                  _app_js__WEBPACK_IMPORTED_MODULE_1__["serverBus"].$emit('product-removed', p.qty);
                   _this.productsArr = _this.productsArr.filter(function (state) {
                     return state.id !== p.id;
                   });
@@ -2770,9 +2767,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
-              axios.post("/remove-from-cart/".concat(p.id), {}).then(function (res) {
+              axios.post("/remove-from-cart/".concat(p.rowId)).then(function (res) {
                 if (res.status = 204) {
-                  _app_js__WEBPACK_IMPORTED_MODULE_1__["serverBus"].$emit('product-removed', p);
+                  _app_js__WEBPACK_IMPORTED_MODULE_1__["serverBus"].$emit('product-removed', p.qty);
                   _this2.productsArr = _this2.productsArr.filter(function (state) {
                     return state.id !== p.id;
                   });
@@ -2908,24 +2905,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'cartQty',
   data: function data() {
     return {
-      cartModal: false,
       cartTotalQty: 0,
-      products: [],
       grandTotal: 0,
       err: null
     };
@@ -2933,28 +2918,14 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    _app_js__WEBPACK_IMPORTED_MODULE_1__["serverBus"].$on('product-added-to-cart', function (p) {
+    _app_js__WEBPACK_IMPORTED_MODULE_1__["serverBus"].$on('product-added-to-cart', function () {
       _this.cartTotalQty += 1;
-
-      _this.products.unshift(p);
     });
     _app_js__WEBPACK_IMPORTED_MODULE_1__["serverBus"].$on('cart-updated', function (p) {
-      // console.log(p.p.p); 
-      var product = p.p.p;
-      _this.products = _this.products.filter(function (state) {
-        return state.id !== product.id;
-      });
-      _this.cartTotalQty += Number(p.p.qty) - product.quantity;
-
-      _this.products.unshift(product);
+      _this.cartTotalQty += Number(p.qty) - p.p.qty;
     });
-    _app_js__WEBPACK_IMPORTED_MODULE_1__["serverBus"].$on('product-removed', function (p) {
-      // console.log(qty);
-      // let product = p.p.p;  
-      _this.cartTotalQty -= p.quantity;
-      _this.products = _this.products.filter(function (state) {
-        return state.id !== p.id;
-      });
+    _app_js__WEBPACK_IMPORTED_MODULE_1__["serverBus"].$on('product-removed', function (qty) {
+      _this.cartTotalQty -= qty;
     });
     _app_js__WEBPACK_IMPORTED_MODULE_1__["serverBus"].$on('cart-cleared', function () {
       // console.log('Yes');
@@ -3035,6 +3006,34 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'cart-checkout',
@@ -3044,9 +3043,12 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       productsArr: [],
       updatedQty: this.cart,
       subTotal: this.sub,
+      method: "",
+      selected: null,
       grandTotal: this.grand,
       message: null,
-      err: null
+      err: null,
+      csrf: document.head.querySelector('meta[name="csrf-token"]').content
     };
   },
   mounted: function mounted() {
@@ -3072,11 +3074,97 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         }
       }, null, this);
     },
-    payment: function payment() {
-      var config, checkout;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function payment$(_context2) {
+    paymentOption: function paymentOption(param) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function paymentOption$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
+            case 0:
+              this.method = param;
+
+              if (this.method === "stripe") {
+                setTimeout(function () {
+                  // Create a Stripe client.
+                  // alert(process.env.MIX_STRIPE_APP_KEY);
+                  var key = "pk_test_KY4IHYTDTK84YZpcpb5x9Cia";
+                  var stripe = Stripe(key); // Create an instance of Elements.
+
+                  var elements = stripe.elements(); // Custom styling can be passed to options when creating an Element.
+                  // (Note that this demo uses a wider set of styles than the guide below.)
+
+                  var style = {
+                    base: {
+                      color: '#32325d',
+                      fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                      fontSmoothing: 'antialiased',
+                      fontSize: '16px',
+                      '::placeholder': {
+                        color: '#aab7c4'
+                      }
+                    },
+                    invalid: {
+                      color: '#fa755a',
+                      iconColor: '#fa755a'
+                    }
+                  }; // Create an instance of the card Element.
+
+                  var card = elements.create('card', {
+                    style: style
+                  }); // Add an instance of the card Element into the `card-element` <div>.
+
+                  card.mount('#card-element'); // Handle real-time validation errors from the card Element.
+
+                  card.addEventListener('change', function (event) {
+                    var displayError = document.getElementById('card-errors');
+
+                    if (event.error) {
+                      displayError.textContent = event.error.message;
+                    } else {
+                      displayError.textContent = '';
+                    }
+                  }); // Handle form submission.
+
+                  var form = document.getElementById('payment-form');
+                  form.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    stripe.createToken(card).then(function (result) {
+                      if (result.error) {
+                        // Inform the user if there was an error.
+                        var errorElement = document.getElementById('card-errors');
+                        errorElement.textContent = result.error.message;
+                      } else {
+                        // Send the token to your server.
+                        stripeTokenHandler(result.token);
+                      }
+                    });
+                  }); // Submit the form with the token ID.
+
+                  function stripeTokenHandler(token) {
+                    // Insert the token ID into the form so it gets submitted to the server
+                    var form = document.getElementById('payment-form');
+                    var hiddenInput = document.createElement('input');
+                    hiddenInput.setAttribute('type', 'hidden');
+                    hiddenInput.setAttribute('name', 'stripeToken');
+                    hiddenInput.setAttribute('value', token.id);
+                    form.appendChild(hiddenInput); // Submit the form
+                    // alert(token);
+
+                    form.submit();
+                  }
+                }, 300);
+              } else if (this.method === "paypal") {}
+
+            case 2:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, null, this);
+    },
+    payment: function payment() {
+      var config, checkout;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function payment$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
             case 0:
               config = {
                 // replace this key with yours
@@ -3119,7 +3207,18 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
             case 3:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
+          }
+        }
+      });
+    },
+    selectedMethod: function selectedMethod() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function selectedMethod$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+            case "end":
+              return _context4.stop();
           }
         }
       });
@@ -3127,9 +3226,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
     removeMessage: function removeMessage() {
       var _this2 = this;
 
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function removeMessage$(_context3) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function removeMessage$(_context5) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context5.prev = _context5.next) {
             case 0:
               setTimeout(function () {
                 _this2.message = null;
@@ -3138,7 +3237,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
             case 1:
             case "end":
-              return _context3.stop();
+              return _context5.stop();
           }
         }
       });
@@ -3457,7 +3556,7 @@ __webpack_require__.r(__webpack_exports__);
             case 0:
               axios.get("/add-to-cart/".concat(this.product.id)).then(function (res) {
                 if (res.status == 200) {
-                  _app_js__WEBPACK_IMPORTED_MODULE_1__["serverBus"].$emit('product-added-to-cart', _this.product);
+                  _app_js__WEBPACK_IMPORTED_MODULE_1__["serverBus"].$emit('product-added-to-cart');
                   _this.isAdded = true;
                   _this.message = "Product added to my cart";
 
@@ -3664,14 +3763,14 @@ __webpack_require__.r(__webpack_exports__);
               key = this.key;
               axios.get("/searchShoes/".concat(key)).then(function (res) {
                 if (res.status == 200) {
-                  var searching = false;
+                  var _searching = false;
                   var searchModal = true;
                   var data = res.data;
                   var shoes = data.shoes;
                   var count = data.count;
                   var countResult = data.countResult;
                   _app_js__WEBPACK_IMPORTED_MODULE_1__["serverBus"].$emit('search', {
-                    searching: searching,
+                    searching: _searching,
                     searchModal: searchModal,
                     shoes: shoes,
                     count: count,
@@ -3681,6 +3780,9 @@ __webpack_require__.r(__webpack_exports__);
                   cosole.log('emitting'); // serverBus.$emit('searchClose',  { close : false }); 
                 }
               })["catch"](function (err) {
+                _app_js__WEBPACK_IMPORTED_MODULE_1__["serverBus"].$emit('searchError', {
+                  searching: searching
+                });
                 _this.err = "There has been some error.";
 
                 _this.removeMessage();
@@ -24803,7 +24905,7 @@ var render = function() {
                       _c("img", {
                         staticClass:
                           "h-40 w-40 rounded-lg object-cover object-center",
-                        attrs: { src: "/storage/" + p.attributes.imageUrl }
+                        attrs: { src: "/storage/" + p.options.imageUrl }
                       }),
                       _vm._v(" "),
                       _c(
@@ -24844,9 +24946,7 @@ var render = function() {
                                   domProps: {
                                     value:
                                       "" +
-                                      (_vm.selected == p.id
-                                        ? _vm.qty
-                                        : p.quantity)
+                                      (_vm.selected == p.id ? _vm.qty : p.qty)
                                   },
                                   on: {
                                     input: function($event) {
@@ -24994,164 +25094,70 @@ var render = function() {
       "li",
       {
         staticClass:
-          "relative flex items-center cursor-pointer mb-3 md:mb-0 md:ml-4 hover:text-custom-gray-lighter",
-        on: {
-          click: function($event) {
-            _vm.cartModal = !_vm.cartModal
-          }
-        }
+          "relative flex items-center cursor-pointer mb-3 md:mb-0 md:ml-4 hover:text-custom-gray-lighter"
       },
       [
-        _c(
-          "svg",
-          {
-            staticClass: "icon",
-            attrs: {
-              fill: "",
-              viewBox: "0 0 59 57",
-              xmlns: "http://wwwp.w3.org/2000/svg"
-            }
-          },
-          [
-            _c("path", {
+        _c("a", { attrs: { href: "/cart-details" } }, [
+          _c(
+            "svg",
+            {
+              staticClass: "icon",
               attrs: {
-                opacity: "0.8",
-                d:
-                  "M3 3H12.538L18.9285 35.1297C19.1465 36.2344 19.7437 37.2268 20.6156 37.933C21.4875 38.6393 22.5784 39.0145 23.6975 38.9929H46.8748C47.9938 39.0145 49.0848 38.6393 49.9566 37.933C50.8285 37.2268 51.4257 36.2344 51.6438 35.1297L55.459 14.9976H14.9225",
-                stroke: "white",
-                "stroke-width": "6",
-                "stroke-linecap": "round",
-                "stroke-linejoin": "round"
+                fill: "",
+                viewBox: "0 0 59 57",
+                xmlns: "http://wwwp.w3.org/2000/svg"
               }
-            }),
-            _vm._v(" "),
-            _c("path", {
-              attrs: {
-                opacity: "0.8",
-                d:
-                  "M21.7961 53.3901C23.0033 53.3901 23.9819 52.3158 23.9819 50.9906C23.9819 49.6653 23.0033 48.591 21.7961 48.591C20.589 48.591 19.6104 49.6653 19.6104 50.9906C19.6104 52.3158 20.589 53.3901 21.7961 53.3901Z",
-                stroke: "white",
-                "stroke-width": "6",
-                "stroke-linecap": "round",
-                "stroke-linejoin": "round"
-              }
-            }),
-            _vm._v(" "),
-            _c("path", {
-              attrs: {
-                opacity: "0.8",
-                d:
-                  "M45.842 53.3901C47.0492 53.3901 48.0278 52.3158 48.0278 50.9906C48.0278 49.6653 47.0492 48.591 45.842 48.591C44.6349 48.591 43.6562 49.6653 43.6562 50.9906C43.6562 52.3158 44.6349 53.3901 45.842 53.3901Z",
-                stroke: "white",
-                "stroke-width": "6",
-                "stroke-linecap": "round",
-                "stroke-linejoin": "round"
-              }
-            })
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "span",
-          {
-            staticClass:
-              "absolute top-0 right-0 -mt-2 -mr-2 text-custom-red-lighter p-1 bg-custom-gray rounded-full"
-          },
-          [_vm._v(_vm._s(_vm.cartTotalQty))]
-        )
+            },
+            [
+              _c("path", {
+                attrs: {
+                  opacity: "0.8",
+                  d:
+                    "M3 3H12.538L18.9285 35.1297C19.1465 36.2344 19.7437 37.2268 20.6156 37.933C21.4875 38.6393 22.5784 39.0145 23.6975 38.9929H46.8748C47.9938 39.0145 49.0848 38.6393 49.9566 37.933C50.8285 37.2268 51.4257 36.2344 51.6438 35.1297L55.459 14.9976H14.9225",
+                  stroke: "white",
+                  "stroke-width": "6",
+                  "stroke-linecap": "round",
+                  "stroke-linejoin": "round"
+                }
+              }),
+              _vm._v(" "),
+              _c("path", {
+                attrs: {
+                  opacity: "0.8",
+                  d:
+                    "M21.7961 53.3901C23.0033 53.3901 23.9819 52.3158 23.9819 50.9906C23.9819 49.6653 23.0033 48.591 21.7961 48.591C20.589 48.591 19.6104 49.6653 19.6104 50.9906C19.6104 52.3158 20.589 53.3901 21.7961 53.3901Z",
+                  stroke: "white",
+                  "stroke-width": "6",
+                  "stroke-linecap": "round",
+                  "stroke-linejoin": "round"
+                }
+              }),
+              _vm._v(" "),
+              _c("path", {
+                attrs: {
+                  opacity: "0.8",
+                  d:
+                    "M45.842 53.3901C47.0492 53.3901 48.0278 52.3158 48.0278 50.9906C48.0278 49.6653 47.0492 48.591 45.842 48.591C44.6349 48.591 43.6562 49.6653 43.6562 50.9906C43.6562 52.3158 44.6349 53.3901 45.842 53.3901Z",
+                  stroke: "white",
+                  "stroke-width": "6",
+                  "stroke-linecap": "round",
+                  "stroke-linejoin": "round"
+                }
+              })
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              staticClass:
+                "absolute top-0 right-0 -mt-2 -mr-2 text-custom-red-lighter p-1 bg-custom-gray rounded-full"
+            },
+            [_vm._v(_vm._s(_vm.cartTotalQty))]
+          )
+        ])
       ]
-    ),
-    _vm._v(" "),
-    _vm.cartModal
-      ? _c(
-          "div",
-          {
-            staticClass:
-              "absolute right-0 top-0 mt-8 p-3 w-full md:w-64 bg- rounded-lg text-white z-20 bg-custom-gray-light"
-          },
-          [
-            _c(
-              "a",
-              {
-                staticClass: "font-bold text-md flex items-center",
-                attrs: { href: "/cart-details" }
-              },
-              [
-                _c("span", { staticClass: "hover:opacity-75 text-md" }, [
-                  _vm._v("Go To Cart")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "svg",
-                  {
-                    staticClass:
-                      "ml-2 h-8 w-8 text-custom-gray cursor-pointer ",
-                    attrs: {
-                      fill: "currentColor",
-                      xmlns: "http://www.w3.org/2000/svg",
-                      viewBox: "0 0 20 20"
-                    }
-                  },
-                  [
-                    _c("path", {
-                      attrs: {
-                        d:
-                          "M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"
-                      }
-                    })
-                  ]
-                ),
-                _vm._v(" "),
-                _c("span", { staticClass: "ml-2" }, [
-                  _vm._v("(" + _vm._s(_vm.products.length) + ")")
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _vm._l(_vm.products, function(product) {
-              return _vm.products.length > 0
-                ? _c(
-                    "div",
-                    { staticClass: "flex flex-row jusify-start mt-2" },
-                    [
-                      _c("img", {
-                        staticClass:
-                          "h-10 w-10 rounded-lg object-cover object-center",
-                        attrs: {
-                          src:
-                            "/storage/" +
-                            (product.imageUrl
-                              ? product.imageUrl
-                              : product.attributes.imageUrl)
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "flex flex-col items-left justify-start pl-2"
-                        },
-                        [
-                          _c("h3", { staticClass: "m-0" }, [
-                            _vm._v(_vm._s(product.name))
-                          ])
-                        ]
-                      )
-                    ]
-                  )
-                : _c("div", [
-                    _c(
-                      "p",
-                      { staticClass: "p-2 rounded-lg bg-red-500 text-white" },
-                      [_vm._v("My cart is empty.")]
-                    )
-                  ])
-            })
-          ],
-          2
-        )
-      : _vm._e()
+    )
   ])
 }
 var staticRenderFns = []
@@ -25176,35 +25182,194 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container " }, [
-    _vm.message
-      ? _c(
-          "p",
+  return _c(
+    "div",
+    { staticClass: "px-3 md:px-6 lg:px-12 z-10 py-3 md:py-8 " },
+    [
+      _vm.message
+        ? _c(
+            "p",
+            {
+              staticClass: "rounded-lg text-md font-medium  text-white",
+              class: _vm.status ? "bg-green-500" : "bg-red-500"
+            },
+            [_vm._v("\n        " + _vm._s(_vm.message) + "\n    ")]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "flex flex-row items-center my-6 mx-3  " }, [
+        _c(
+          "div",
           {
-            staticClass: "rounded-lg text-md font-medium  text-white",
-            class: _vm.status ? "bg-green-500" : "bg-red-500"
-          },
-          [_vm._v("\n        " + _vm._s(_vm.message) + "\n    ")]
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _c("div", [
-      _c(
-        "button",
-        {
-          staticClass: "p-3 text-lg text-white bg-green-800",
-          on: {
-            click: function($event) {
-              return _vm.payment()
+            staticClass:
+              "flex items-center p-4 rounded-lg mr-12 border-2 border-gray-300 group hover:border-green-600 checkbox cursor-pointer",
+            class: _vm.method === "stripe" ? "border-green-600" : "",
+            on: {
+              click: function($event) {
+                return _vm.paymentOption("stripe")
+              }
             }
-          }
-        },
-        [_vm._v("Khalti Payment")]
-      )
-    ])
-  ])
+          },
+          [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.method,
+                  expression: "method"
+                }
+              ],
+              attrs: { type: "checkbox" },
+              domProps: {
+                checked: Array.isArray(_vm.method)
+                  ? _vm._i(_vm.method, null) > -1
+                  : _vm.method
+              },
+              on: {
+                change: function($event) {
+                  var $$a = _vm.method,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = null,
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 && (_vm.method = $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        (_vm.method = $$a
+                          .slice(0, $$i)
+                          .concat($$a.slice($$i + 1)))
+                    }
+                  } else {
+                    _vm.method = $$c
+                  }
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "text-lg ml-8 font-bold text-black" }, [
+              _vm._v("Stripe")
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "flex items-center p-4 rounded-lg mr-12 border-2 border-gray-300 group hover:border-green-600 checkbox cursor-pointer",
+            class: _vm.method === "paypal" ? "border-green-600" : "",
+            on: {
+              click: function($event) {
+                return _vm.paymentOption("paypal")
+              }
+            }
+          },
+          [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.method,
+                  expression: "method"
+                }
+              ],
+              attrs: { type: "checkbox" },
+              domProps: {
+                checked: Array.isArray(_vm.method)
+                  ? _vm._i(_vm.method, null) > -1
+                  : _vm.method
+              },
+              on: {
+                change: function($event) {
+                  var $$a = _vm.method,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = null,
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 && (_vm.method = $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        (_vm.method = $$a
+                          .slice(0, $$i)
+                          .concat($$a.slice($$i + 1)))
+                    }
+                  } else {
+                    _vm.method = $$c
+                  }
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "text-lg ml-8 font-bold text-black" }, [
+              _vm._v("Paypal")
+            ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", {}, [
+        _vm.method === "stripe"
+          ? _c(
+              "form",
+              {
+                attrs: { action: "/charge", method: "post", id: "payment-form" }
+              },
+              [
+                _c("div", { staticClass: "ml-3" }, [
+                  _c("input", {
+                    attrs: { type: "hidden", name: "_token" },
+                    domProps: { value: _vm.csrf }
+                  }),
+                  _vm._v(" "),
+                  _c("input", {
+                    attrs: { type: "hidden", name: "_type", value: "stripe" }
+                  }),
+                  _vm._v(" "),
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "px-6 py-4 hover:bg-green-500 rounded-full text-white font-bold text-lg bg-green-600"
+                    },
+                    [_vm._v("Submit Payment")]
+                  )
+                ])
+              ]
+            )
+          : _vm._e()
+      ])
+    ]
+  )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex flex-col" }, [
+      _c(
+        "label",
+        {
+          staticClass: "mb-4 py-2 px-2 font-bold text-lg",
+          attrs: { for: "card-element" }
+        },
+        [_vm._v("\n                      Credit details\n                    ")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "mb-3", attrs: { id: "card-element" } }),
+      _vm._v(" "),
+      _c("div", { attrs: { id: "card-errors", role: "alert" } })
+    ])
+  }
+]
 render._withStripped = true
 
 

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Cart;
 use App\Products;
+use App\Helpers\Helpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CartController extends Controller
 {
@@ -14,7 +15,7 @@ class CartController extends Controller
 	 	* Used in Product.vue
 	*/
 	public function isProductAlreadyAdded(Products $products){
-		return response()->json(['isAdded' => ($this->guard()) ? Cart::session($this->guard()->id)->get($products->id) : Cart::get($products->id) ], 200);
+		return response()->json(['isAdded' => Cart::get($products->id) ], 200);
 	} 
 
 
@@ -27,11 +28,12 @@ class CartController extends Controller
 	*/
 	public function getCartProducts(){
 
-		
+
 		return response()->json([
-			'cartProducts' => $this->getContent(),
-			'totalQty' => ($this->guard()) ? Cart::session($this->guard()->id)->getTotalQuantity() : Cart::getTotalQuantity() ,
-			'grandTotal' => ($this->guard()) ? Cart::session($this->guard()->id)->getTotal() : Cart::getTotal()
+			'cartProducts' => Cart::content(),
+			'totalQty' => Cart::instance('default')->count() ,
+			'grandTotal' => Cart::total(),
+
 		], 200);
 	
 	}    
@@ -41,10 +43,10 @@ class CartController extends Controller
 	 	* Return @view CART
 	*/
 	public function show(){
-		$products = ($this->guard()) ? Cart::session($this->guard()->id)->getContent() : Cart::getContent();
-		$totalQuantity = ($this->guard()) ? Cart::session($this->guard()->id)->getTotalQuantity() : Cart::getTotalQuantity();
-		$subTotal = ($this->guard()) ? (Cart::session($this->guard()->id)->getSubTotal()) : Cart::getSubTotal();
-		$grandTotal = ($this->guard()) ? (Cart::session($this->guard()->id)->getTotal()) : Cart::getTotal();
+		$products = Cart::content();
+		$totalQuantity = 	Cart::instance('default')->count();
+		$subTotal = Cart::subtotal();
+		$grandTotal = Cart::total();
 		// dd($products);
 		return view('home.cart', compact('products', 'totalQuantity', 'subTotal', 'grandTotal'));
 	}
@@ -72,19 +74,18 @@ class CartController extends Controller
 	*/
     public function addProduct(Products $products)
     {
-    	if($this->guard()){
-    		Cart::session($this->guard()->id);  
-    	}
 
-    	Cart::add([
-		    'id' => $products->id,
-		    'name' => $products->name,
-		    'price' => $products->price,
-		    'quantity' => 1,
-		    'attributes' => [
-		    		'imageUrl' => $products->imageUrl
-		    	]
-		]);	
+    	$duplicates = Cart::search(function ($cartItem, $rowId) use ($products) {
+
+            return $cartItem->id === $products->id;
+        });
+
+        if ($duplicates->isNotEmpty()) {
+            return redirect()->route('cart.index')->with('success_message', 'Item is already in your cart!');
+        }
+
+        Cart::add($products->id, $products->name, 1, $products->price, ['imageUrl' => $products->imageUrl])
+            ->associate('App\Products');
 
     	return response()->json(['success' => 'Ok'], 200);
     }
@@ -96,30 +97,16 @@ class CartController extends Controller
 	 	    * If not then , it is Updated
 	 	  * Return json RESPONSE
 	*/
-    public function updateProduct(Products $products)
+    public function updateProduct($rowId)
     {
-		$found = ($this->guard()) ? Cart::session($this->guard()->id)->get($products->id) : Cart::get($products->id); 
-		if($found && request('quantity') > 0)
+        $data = request()->quantity;
+		if($data && $data > 0)
 		{
-			if($this->guard()){
-				Cart::session($this->guard()->id)->update($found->id, [
-				    'quantity' => array(
-					        'relative' => false,
-					        'value' => request('quantity')
-						),
-				]);
-			} else {
-				Cart::update($found->id, [
-				    'quantity' => array(
-					        'relative' => false,
-					        'value' => request('quantity')
-						),
-				]);
-			}
+			Cart::update($rowId, request()->quantity);
 			
     		return response()->json(['success' => 'Ok'], 200);
 		} else {
-			($this->guard()) ? Cart::session($this->guard()->id)->remove($found->id) : Cart::remove($found->id);
+			Cart::remove($rowId);
     		return response()->json(['success' => 'Ok'], 204);
 		}
    	
@@ -129,11 +116,10 @@ class CartController extends Controller
 	 	* Remove the PRODUCT from the CART of the particular Customer
 	 	* Returns json RESPONSE
 	*/
-    public function removeProduct(Products $products)
+    public function removeProduct($rowId)
     {
 
-		$found = ($this->guard()) ? Cart::session($this->guard()->id)->get($products->id) : Cart::get($products->id);  
-		($this->guard()) ? Cart::session($this->guard()->id)->remove($found->id) : Cart::remove($found->id); 
+		$found = Cart::remove($rowId); 
 
     	return response()->json(['success' => 'Ok'], 204);
     	
@@ -146,7 +132,7 @@ class CartController extends Controller
     public function clearCart()
     {
 
-    	return  (Cart::session($this->guard()->id)->clear()) ? response()->json(['success' => 'Ok'], 204) : '';
+    	return  (Cart::destroy()) ? response()->json(['success' => 'Ok'], 204) : '';
 
     }
 
@@ -154,7 +140,7 @@ class CartController extends Controller
 		* Return the subTotal 
     */
 	public function getUpdatedData(){
-    	return response()->json(['success' => 'Ok', 'subTotal' => ($this->guard()) ? Cart::session($this->guard()->id)->getSubTotal() : Cart::getSubTotal(), 'updatedQty' => ($this->guard()) ? Cart::session($this->guard()->id)->getTotalQuantity() : Cart::getTotalQuantity()], 200);
+    	return response()->json(['success' => 'Ok', 'subTotal' => Cart::subtotal() , 'updatedQty' => Cart::instance('default')->count()], 200);
 	}
 
     /**

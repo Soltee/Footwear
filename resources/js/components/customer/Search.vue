@@ -105,6 +105,7 @@ import searchResult from './SearchResult';
                         // serverBus.$emit('searchClose',  { close : false }); 
                     }
                 }).catch(err => {
+                    serverBus.$emit('searchError',  { searching });
                     this.err = "There has been some error.";
                     this.removeMessage();
                 });

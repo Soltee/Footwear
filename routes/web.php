@@ -21,7 +21,7 @@ Route::post('/clear-cart', 'CartController@clearCart');
 
 Route::post('/remove-from-cart/{products}', 'CartController@removeProduct');
 
-Route::post('/update-cart/{products}', 'CartController@updateProduct');
+Route::post('/update-cart/{rowId}', 'CartController@updateProduct');
 
 
 //Customer
@@ -34,7 +34,7 @@ Route::post('/customer-logout', 'Auth\LoginController@logout')->name('customer-l
 //Customer Checkout Process 
 Route::get('/cart-details', 'CartController@show')->name('cart.show');
 Route::get('/checkout', 'CheckoutController@checkout')->name('cart.checkout');
-Route::post('/checkout-server', 'CheckoutController@payment');
+Route::post('/charge', 'CheckoutController@charge')->name('cart.charge');
 
 
 //Dashboard

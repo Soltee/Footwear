@@ -15,10 +15,10 @@
                     <button type="submit" class="p-3 bg-red-500 rounded-lg text-lg font-medium text-white">Clear Cart</button>
                 </form>
             </div>
-        
+            
             <div v-for="p in productsArr">
                 <div class="mt-4 flex flex-row justify-between items-center mb-3">
-                    <img class="h-40 w-40 rounded-lg object-cover object-center" :src="`/storage/${p.attributes.imageUrl}`">
+                    <img class="h-40 w-40 rounded-lg object-cover object-center" :src="`/storage/${p.options.imageUrl}`">
                     <div class="flex flex-col items-left justify-start pl-2">
                         <h3 class="m-0">{{ p.name }}</h3>
                         <h3 class="m-0">$ {{ p.price }}</h3>
@@ -26,7 +26,7 @@
                     <div class="flex justify-around items-center">
                         <form @submit.prevent="updateCart(p)">
                             <div>
-                                <input type="text" name="" @input="qty = $event.target.value; selected = p.id"  :value="`${(selected == p.id) ? qty : p.quantity}`">
+                                <input type="text" name="" @input="qty = $event.target.value; selected = p.id"  :value="`${(selected == p.id) ? qty : p.qty}`">
                                 <button type="submit" class="p-3 rounded-lg text-blue-900 text-md ">
                                     Update
                                 </button>
@@ -90,32 +90,33 @@ import { serverBus } from '../../app.js';
             async updateCart(p){
     
                 let qty = this.qty;
-                axios.post(`/update-cart/${p.id}`, {
+                axios.post(`/update-cart/${p.rowId}`, {
                     quantity : qty
                 }).then(res => {
 
                     if(res.status == 200){
                         this.status = true;
+                        serverBus.$emit('cart-updated',  { p, qty });  
                         this.message = 'Cart updated.';
                         this.productsArr = this.productsArr.filter((state) => {
-                            return state.id !== p.id;
+                            return state.rowId !== p.rowId;
                         });
                         this.productsArr.unshift({
                             id : p.id,
+                            rowId : p.rowId,
                             name : p.name,
                             price : p.price,
-                            quantity : qty,
-                            attributes: {
-                                imageUrl : p.attributes.imageUrl
+                            qty : qty,
+                            options: {
+                                imageUrl : p.options.imageUrl
                             }
                         });
-                        this.getUpdatedData();
+                        // this.getUpdatedData();
                         this.removeMessage(); 
-                        serverBus.$emit('cart-updated',  { p : {p, qty} });  
                     }
                     if(res.status == 204) {
 
-                        serverBus.$emit('product-removed', p);  
+                        serverBus.$emit('product-removed', p.qty);  
                         this.productsArr = this.productsArr.filter((state) => {
                             return state.id !== p.id;
                         });
@@ -132,10 +133,10 @@ import { serverBus } from '../../app.js';
                 });
             },
             async removeCart(p){
-                axios.post(`/remove-from-cart/${p.id}`, {})
+                axios.post(`/remove-from-cart/${p.rowId}`)
                 .then(res => {
                     if(res.status = 204){
-                        serverBus.$emit('product-removed', p);
+                        serverBus.$emit('product-removed', p.qty);
                         this.productsArr = this.productsArr.filter((state) => {
                             return state.id !== p.id;
                         });
@@ -189,7 +190,7 @@ import { serverBus } from '../../app.js';
                 }, 3000);
             }
         }
-    }
+    };
 </script>
 <style scoped>
     

@@ -34,7 +34,7 @@ import { serverBus } from '../../app.js';
                 axios.get(`/add-to-cart/${this.product.id}`)
                     .then((res) => {
                         if(res.status == 200){
-                            serverBus.$emit('product-added-to-cart', this.product );
+                            serverBus.$emit('product-added-to-cart');
                             this.isAdded = true;
                             this.message = "Product added to my cart";
                             this.removeMessage();
