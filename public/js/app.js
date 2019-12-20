@@ -3034,6 +3034,50 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'cart-checkout',
@@ -3042,10 +3086,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
     return {
       productsArr: [],
       updatedQty: this.cart,
-      subTotal: this.sub,
       method: "",
       selected: null,
-      grandTotal: this.grand,
+      subTotal: this.sub,
+      total: this.grand,
       message: null,
       err: null,
       csrf: document.head.querySelector('meta[name="csrf-token"]').content
@@ -3075,17 +3119,19 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       }, null, this);
     },
     paymentOption: function paymentOption(param) {
+      var form;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function paymentOption$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
               this.method = param;
+              form = document.getElementById('payment-form');
 
               if (this.method === "stripe") {
                 setTimeout(function () {
                   // Create a Stripe client.
                   // alert(process.env.MIX_STRIPE_APP_KEY);
-                  var key = "pk_test_KY4IHYTDTK84YZpcpb5x9Cia";
+                  var key = process.env.MIX_STRIPE_APP_KEY;
                   var stripe = Stripe(key); // Create an instance of Elements.
 
                   var elements = stripe.elements(); // Custom styling can be passed to options when creating an Element.
@@ -3151,93 +3197,176 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                     form.submit();
                   }
                 }, 300);
-              } else if (this.method === "paypal") {}
+              } else if (this.method === 'braintree') {
+                this.braintreePayment(form);
+              } else if (this.method === 'paypal') {
+                axios.post('/braintree-token', {}).then(function (res) {
+                  if (res.status == 200) {
+                    braintree.client.create({
+                      authorization: "".concat(res.data.token)
+                    }, function (clientErr, clientInstance) {
+                      if (clientErr) {
+                        console.error(clientErr);
+                        return;
+                      } // Create a PayPal Checkout component.
 
-            case 2:
+
+                      braintree.paypalCheckout.create({
+                        client: clientInstance
+                      }, function (paypalCheckoutErr, paypalCheckoutInstance) {
+                        // Stop if there was a problem creating PayPal Checkout.
+                        // This could happen if there was a network error or if it's incorrectly
+                        // configured.
+                        if (paypalCheckoutErr) {
+                          console.error('Error creating PayPal Checkout:', paypalCheckoutErr);
+                          return;
+                        } // Set up PayPal with the checkout.js library
+
+
+                        paypal.Button.render({
+                          env: 'sandbox',
+                          // or 'production'
+                          commit: true,
+                          payment: function payment() {
+                            return paypalCheckoutInstance.createPayment({
+                              // Your PayPal options here. For available options, see
+                              // http://braintree.github.io/braintree-web/current/PayPalCheckout.html#createPayment
+                              flow: 'checkout',
+                              // Required
+                              amount: 13.00,
+                              // Required
+                              currency: 'USD' // Required
+
+                            });
+                          },
+                          onAuthorize: function onAuthorize(data, actions) {
+                            return paypalCheckoutInstance.tokenizePayment(data, function (err, payload) {
+                              // Submit `payload.nonce` to your server.
+                              document.querySelector('#nonce').value = payload.nonce;
+                              form.submit();
+                            });
+                          },
+                          onCancel: function onCancel(data) {
+                            console.log('checkout.js payment cancelled', JSON.stringify(data, 0, 2));
+                          },
+                          onError: function onError(err) {
+                            console.error('checkout.js error', err);
+                          }
+                        }, '#paypal-button').then(function () {// The PayPal button will be rendered in an html element with the id
+                          // `paypal-button`. This function will be called when the PayPal button
+                          // is set up and ready to be used.
+                        });
+                      });
+                    });
+                  }
+                })["catch"](function (err) {
+                  console.log(err);
+                });
+              }
+
+            case 3:
             case "end":
               return _context2.stop();
           }
         }
       }, null, this);
     },
-    payment: function payment() {
-      var config, checkout;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function payment$(_context3) {
+    braintreePayment: function braintreePayment(form) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function braintreePayment$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
-              config = {
-                // replace this key with yours
-                "publicKey": process.env.MIX_KHALTI_PUBLIC_KEY,
-                "productIdentity": "1234567890",
-                "productName": "Drogon",
-                "productUrl": "http://gameofthrones.com/buy/Dragons",
-                "eventHandler": {
-                  onSuccess: function onSuccess(payload) {
-                    var _this = this;
+              axios.post('/braintree-token', {}).then(function (res) {
+                if (res.status == 200) {
+                  braintree.client.create({
+                    authorization: "".concat(res.data.token)
+                  }, function (clientErr, clientInstance) {
+                    if (clientErr) {
+                      console.error(clientErr);
+                      return;
+                    } // This example shows Hosted Fields, but you can also use this
+                    // client instance to create additional components here, such as
+                    // PayPal or Data Collector.
 
-                    // hit merchant api for initiating verfication
-                    // console.log(payload);
-                    axios.post("/checkout-server", {
-                      payload: payload
-                    }).then(function (res) {
-                      console.log(res.data.response);
-                    })["catch"](function (err) {
-                      _this.status = false;
-                      _this.err = 'There was some error. Please try again.';
 
-                      _this.removeMessage();
+                    braintree.hostedFields.create({
+                      client: clientInstance,
+                      styles: {
+                        'input': {
+                          'font-size': '14px'
+                        },
+                        'input.invalid': {
+                          'color': 'red'
+                        },
+                        'input.valid': {
+                          'color': 'green'
+                        }
+                      },
+                      fields: {
+                        number: {
+                          selector: '#card-number',
+                          placeholder: '4111 1111 1111 1111'
+                        },
+                        cvv: {
+                          selector: '#cvv',
+                          placeholder: '123'
+                        },
+                        expirationDate: {
+                          selector: '#expiration-date',
+                          placeholder: '10/2019'
+                        }
+                      }
+                    }, function (hostedFieldsErr, hostedFieldsInstance) {
+                      if (hostedFieldsErr) {
+                        console.error(hostedFieldsErr);
+                        return;
+                      } // submit.removeAttribute('disabled');
+
+
+                      form.addEventListener('submit', function (event) {
+                        event.preventDefault();
+                        hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
+                          if (tokenizeErr) {
+                            console.error(tokenizeErr);
+                            return;
+                          } // If this was a real integration, this is where you would
+                          // send the nonce to your server.
+                          // console.log('Got a nonce: ' + payload.nonce);
+
+
+                          document.querySelector('#nonce').value = payload.nonce;
+                          form.submit();
+                        });
+                      }, false);
                     });
-                  },
-                  // onError handler is optional
-                  onError: function onError(error) {
-                    // handle errors
-                    console.log(error);
-                  },
-                  onClose: function onClose() {
-                    console.log('widget is closing');
-                  }
+                  });
                 }
-              }; // console.log(config);
-
-              checkout = new khalti_web__WEBPACK_IMPORTED_MODULE_1___default.a(config);
-              checkout.show({
-                amount: 1000
+              })["catch"](function (err) {
+                console.log(err);
               });
 
-            case 3:
+            case 1:
             case "end":
               return _context3.stop();
           }
         }
       });
     },
-    selectedMethod: function selectedMethod() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function selectedMethod$(_context4) {
+    removeMessage: function removeMessage() {
+      var _this = this;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function removeMessage$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-            case "end":
-              return _context4.stop();
-          }
-        }
-      });
-    },
-    removeMessage: function removeMessage() {
-      var _this2 = this;
-
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function removeMessage$(_context5) {
-        while (1) {
-          switch (_context5.prev = _context5.next) {
-            case 0:
               setTimeout(function () {
-                _this2.message = null;
-                _this2.err = null;
+                _this.message = null;
+                _this.err = null;
               }, 3000);
 
             case 1:
             case "end":
-              return _context5.stop();
+              return _context4.stop();
           }
         }
       });
@@ -25197,155 +25326,233 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _c("div", { staticClass: "flex flex-row items-center my-6 mx-3  " }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "flex items-center p-4 rounded-lg mr-12 border-2 border-gray-300 group hover:border-green-600 checkbox cursor-pointer",
-            class: _vm.method === "stripe" ? "border-green-600" : "",
-            on: {
-              click: function($event) {
-                return _vm.paymentOption("stripe")
-              }
-            }
-          },
-          [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.method,
-                  expression: "method"
-                }
-              ],
-              attrs: { type: "checkbox" },
-              domProps: {
-                checked: Array.isArray(_vm.method)
-                  ? _vm._i(_vm.method, null) > -1
-                  : _vm.method
-              },
-              on: {
-                change: function($event) {
-                  var $$a = _vm.method,
-                    $$el = $event.target,
-                    $$c = $$el.checked ? true : false
-                  if (Array.isArray($$a)) {
-                    var $$v = null,
-                      $$i = _vm._i($$a, $$v)
-                    if ($$el.checked) {
-                      $$i < 0 && (_vm.method = $$a.concat([$$v]))
-                    } else {
-                      $$i > -1 &&
-                        (_vm.method = $$a
-                          .slice(0, $$i)
-                          .concat($$a.slice($$i + 1)))
-                    }
-                  } else {
-                    _vm.method = $$c
-                  }
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "text-lg ml-8 font-bold text-black" }, [
-              _vm._v("Stripe")
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "flex items-center p-4 rounded-lg mr-12 border-2 border-gray-300 group hover:border-green-600 checkbox cursor-pointer",
-            class: _vm.method === "paypal" ? "border-green-600" : "",
-            on: {
-              click: function($event) {
-                return _vm.paymentOption("paypal")
-              }
-            }
-          },
-          [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.method,
-                  expression: "method"
-                }
-              ],
-              attrs: { type: "checkbox" },
-              domProps: {
-                checked: Array.isArray(_vm.method)
-                  ? _vm._i(_vm.method, null) > -1
-                  : _vm.method
-              },
-              on: {
-                change: function($event) {
-                  var $$a = _vm.method,
-                    $$el = $event.target,
-                    $$c = $$el.checked ? true : false
-                  if (Array.isArray($$a)) {
-                    var $$v = null,
-                      $$i = _vm._i($$a, $$v)
-                    if ($$el.checked) {
-                      $$i < 0 && (_vm.method = $$a.concat([$$v]))
-                    } else {
-                      $$i > -1 &&
-                        (_vm.method = $$a
-                          .slice(0, $$i)
-                          .concat($$a.slice($$i + 1)))
-                    }
-                  } else {
-                    _vm.method = $$c
-                  }
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "text-lg ml-8 font-bold text-black" }, [
-              _vm._v("Paypal")
-            ])
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", {}, [
-        _vm.method === "stripe"
-          ? _c(
-              "form",
+      _c(
+        "form",
+        { attrs: { action: "/charge", method: "post", id: "payment-form" } },
+        [
+          _c("input", {
+            attrs: { type: "hidden", name: "_token" },
+            domProps: { value: _vm.csrf }
+          }),
+          _vm._v(" "),
+          _c("input", {
+            attrs: { name: "amount", type: "hidden" },
+            domProps: { value: 100 }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "flex flex-row items-center my-6 mx-3  " }, [
+            _c(
+              "div",
               {
-                attrs: { action: "/charge", method: "post", id: "payment-form" }
+                staticClass:
+                  "flex items-center p-4 rounded-lg mr-12 border-2 border-gray-300 group hover:border-green-600 checkbox cursor-pointer",
+                class: _vm.method === "braintree" ? "border-green-600" : "",
+                on: {
+                  click: function($event) {
+                    return _vm.paymentOption("braintree")
+                  }
+                }
               },
               [
-                _c("div", { staticClass: "ml-3" }, [
-                  _c("input", {
-                    attrs: { type: "hidden", name: "_token" },
-                    domProps: { value: _vm.csrf }
-                  }),
-                  _vm._v(" "),
-                  _c("input", {
-                    attrs: { type: "hidden", name: "_type", value: "stripe" }
-                  }),
-                  _vm._v(" "),
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _c(
-                    "button",
+                _c("input", {
+                  directives: [
                     {
-                      staticClass:
-                        "px-6 py-4 hover:bg-green-500 rounded-full text-white font-bold text-lg bg-green-600"
-                    },
-                    [_vm._v("Submit Payment")]
-                  )
-                ])
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.method,
+                      expression: "method"
+                    }
+                  ],
+                  attrs: { type: "checkbox" },
+                  domProps: {
+                    checked: Array.isArray(_vm.method)
+                      ? _vm._i(_vm.method, null) > -1
+                      : _vm.method
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$a = _vm.method,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.method = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.method = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.method = $$c
+                      }
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  { staticClass: "text-lg ml-8 font-bold text-black" },
+                  [_vm._v("Braintree")]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "flex items-center p-4 rounded-lg mr-12 border-2 border-gray-300 group hover:border-green-600 checkbox cursor-pointer",
+                class: _vm.method === "stripe" ? "border-green-600" : "",
+                on: {
+                  click: function($event) {
+                    return _vm.paymentOption("stripe")
+                  }
+                }
+              },
+              [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.method,
+                      expression: "method"
+                    }
+                  ],
+                  attrs: { type: "checkbox" },
+                  domProps: {
+                    checked: Array.isArray(_vm.method)
+                      ? _vm._i(_vm.method, null) > -1
+                      : _vm.method
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$a = _vm.method,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.method = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.method = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.method = $$c
+                      }
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  { staticClass: "text-lg ml-8 font-bold text-black" },
+                  [_vm._v("Stripe")]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "flex items-center p-4 rounded-lg mr-12 border-2 border-gray-300 group hover:border-green-600 checkbox cursor-pointer",
+                class: _vm.method === "paypal" ? "border-green-600" : "",
+                on: {
+                  click: function($event) {
+                    return _vm.paymentOption("paypal")
+                  }
+                }
+              },
+              [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.method,
+                      expression: "method"
+                    }
+                  ],
+                  attrs: { type: "checkbox" },
+                  domProps: {
+                    checked: Array.isArray(_vm.method)
+                      ? _vm._i(_vm.method, null) > -1
+                      : _vm.method
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$a = _vm.method,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.method = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.method = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.method = $$c
+                      }
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  { staticClass: "text-lg ml-8 font-bold text-black" },
+                  [_vm._v("Paypal")]
+                )
               ]
             )
-          : _vm._e()
-      ])
+          ]),
+          _vm._v(" "),
+          _vm.method === "braintree"
+            ? _c("div", [
+                _c("input", {
+                  attrs: { type: "hidden", name: "_type", value: "braintree" }
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: {
+                    id: "nonce",
+                    name: "payment_method_nonce",
+                    type: "hidden"
+                  }
+                }),
+                _vm._v(" "),
+                _vm._m(0)
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.method === "stripe" ? _c("div", [_vm._m(1)]) : _vm._e(),
+          _vm._v(" "),
+          _vm.method === "paypal"
+            ? _c("div", [_c("div", { attrs: { id: "paypal-button" } })])
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass:
+                "px-6 py-4 hover:bg-green-500 rounded-full text-white font-bold text-lg bg-green-600"
+            },
+            [_vm._v("Submit Payment")]
+          )
+        ]
+      )
     ]
   )
 }
@@ -25354,19 +25561,62 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex flex-col" }, [
-      _c(
-        "label",
-        {
-          staticClass: "mb-4 py-2 px-2 font-bold text-lg",
-          attrs: { for: "card-element" }
-        },
-        [_vm._v("\n                      Credit details\n                    ")]
-      ),
+    return _c("div", { staticClass: "flex flex-row items-center" }, [
+      _c("div", { staticClass: "flex flex-col" }, [
+        _c("label", { staticClass: "mb-2", attrs: { for: "cc_number" } }, [
+          _vm._v("Credit Card Number")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group", attrs: { id: "card-number" } })
+      ]),
       _vm._v(" "),
-      _c("div", { staticClass: "mb-3", attrs: { id: "card-element" } }),
+      _c("div", { staticClass: "flex flex-col" }, [
+        _c("label", { staticClass: "mb-2", attrs: { for: "expiry" } }, [
+          _vm._v("Expiry")
+        ]),
+        _vm._v(" "),
+        _c("div", {
+          staticClass: "form-group",
+          attrs: { id: "expiration-date" }
+        })
+      ]),
       _vm._v(" "),
-      _c("div", { attrs: { id: "card-errors", role: "alert" } })
+      _c("div", { staticClass: "flex flex-col" }, [
+        _c("label", { staticClass: "mb-2", attrs: { for: "cvv" } }, [
+          _vm._v("CVV")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group", attrs: { id: "cvv" } })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ml-3" }, [
+      _c("input", {
+        attrs: { type: "hidden", name: "_type", value: "stripe" }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "flex flex-col" }, [
+        _c(
+          "label",
+          {
+            staticClass: "mb-4 py-2 px-2 font-bold text-lg",
+            attrs: { for: "card-element" }
+          },
+          [
+            _vm._v(
+              "\n                      Credit details\n                    "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "mb-3", attrs: { id: "card-element" } }),
+        _vm._v(" "),
+        _c("div", { attrs: { id: "card-errors", role: "alert" } })
+      ])
     ])
   }
 ]
@@ -39867,8 +40117,8 @@ var request = function request(param) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/soltee/Projects/laravel-shop/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/soltee/Projects/laravel-shop/resources/scss/app.scss */"./resources/scss/app.scss");
+__webpack_require__(/*! /home/soltee/Projects/larashop/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/soltee/Projects/larashop/resources/scss/app.scss */"./resources/scss/app.scss");
 
 
 /***/ })

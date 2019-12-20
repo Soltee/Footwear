@@ -16,12 +16,24 @@ class CheckoutController extends Controller
     	$products = Cart::content();
 		$totalQuantity = Cart::instance('default')->count();
 		$subTotal = Cart::subtotal();
-		$grandTotal = ($this->guard()) ? (Cart::session($this->guard()->id)->getTotal()) : Cart::total();
-		// dd($products);
+		$grandTotal = Cart::total();
 		return view('home.checkout', compact('products', 'totalQuantity', 'subTotal', 'grandTotal'));
     }
 
+    /*
+        * Create Authorization Token for Braintree
+    */
+    public function braintreeToken()
+    {
+        $gateway = new \Braintree\Gateway([
+            'environment' => config('services.braintree.environment'),
+            'merchantId' => config('services.braintree.merchantId'),
+            'publicKey' => config('services.braintree.publicKey'),
+            'privateKey' => config('services.braintree.privateKey')
+        ]);
 
+        return response()->json(['token' => $gateway->ClientToken()->generate()], 200);
+    }
     /**
         * Successful Payment
         * Use Guzzle to send post request to khalti server for server verification
@@ -30,30 +42,58 @@ class CheckoutController extends Controller
     public function charge(Request $request){
 
         // dd(request()->all());
-        // $request->validate([
-        //     'token' => 'required|string',
-        //     'amount' => 'required|integer',
-        //     'idx' => 'required'
-        // ]);
-        // $headers = ['Authorization: Key ' . env('KHALTI_SECRET_KEY')];
-        // $url = "https://khalti.com/api/v2/payment/verify/";
-        
-        if(request()->_type === 'khalti'){
-            // try {
-            //     $client = new \GuzzleHttp\Client();
-            //     $response = $client->post($url, [
-            //         'headers' => $headers,
-            //         'form_params' => [
-            //             'token' => request('token'),
-            //             'amount' => request('amount')
-            //         ]
-            //     ]);
 
-            //     return response()->json(['success' => 'ok', 'response' =>  $response->getBody()], 201);
-            // }
-            // catch (Exception $e) {
-            //     return response()->json([], 404);
-            // }
+        if(request()->_type === 'braintree'){
+                $gateway = new \Braintree\Gateway([
+                    'environment' => config('services.braintree.environment'),
+                    'merchantId' => config('services.braintree.merchantId'),
+                    'publicKey' => config('services.braintree.publicKey'),
+                    'privateKey' => config('services.braintree.privateKey')
+                ]);
+                $amount = $request->amount;
+                $nonce = $request->payment_method_nonce;
+                $result = $gateway->transaction()->sale([
+                    'amount' => $amount,
+                    'paymentMethodNonce' => $nonce,
+                    'customer' => [
+                        'firstName' => 'Tony',
+                        'lastName' => 'Stark',
+                        'email' => 'tony@avengers.com',
+                    ],
+                    'options' => [
+                        'submitForSettlement' => true
+                    ]
+                ]);
+                if ($result->success) {
+                    $transaction = $result->transaction;
+                    return back()->with('success', 'Transaction successful. The ID is:'. $transaction->id);
+                } else {
+                    $errorString = "";
+                    foreach ($result->errors->deepAll() as $error) {
+                        $errorString .= 'Error: ' . $error->code . ": " . $error->message . "\n";
+                    }
+                    return back()->with('error', 'An error occurred with the message: '.$result->message);
+                }
+
+            
+        } elseif(request()->_type === "khalti"){
+            try {
+            $headers = ['Authorization: Key ' . config('services.khalti.secretKey')];
+            $url = "https://khalti.com/api/v2/payment/verify/";
+                $client = new \GuzzleHttp\Client();
+                $response = $client->post($url, [
+                    'headers' => $headers,
+                    'form_params' => [
+                        'token' => request('token'),
+                        'amount' => request('amount')
+                    ]
+                ]);
+
+                return response()->json(['success' => 'ok', 'response' =>  $response->getBody()], 201);
+            }
+            catch (Exception $e) {
+                return response()->json([], 404);
+            }
         } else {
             try {
                 $stripe = Stripe::charges()->create([

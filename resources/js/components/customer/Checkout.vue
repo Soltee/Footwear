@@ -3,21 +3,61 @@
         <p v-if="message" :class="(status) ? 'bg-green-500' : 'bg-red-500' " class="rounded-lg text-md font-medium  text-white">
             {{ message }}
         </p>
-        
-        <div class="flex flex-row items-center my-6 mx-3  ">
-            <div @click="paymentOption('stripe')" class="flex items-center p-4 rounded-lg mr-12 border-2 border-gray-300 group hover:border-green-600 checkbox cursor-pointer" :class="(method === 'stripe') ? 'border-green-600' : ''">
-                <input  type="checkbox"  class="" v-model="method" >
-                <span class="text-lg ml-8 font-bold text-black" >Stripe</span>
+
+        <form :action="`/charge`" :method="`post`" id="payment-form">
+            <input type="hidden" name="_token" :value="csrf">
+            <input name="amount" type="hidden" :value="100" />
+
+            <div class="flex flex-row items-center my-6 mx-3  ">
+                <div @click="paymentOption('braintree')" class="flex items-center p-4 rounded-lg mr-12 border-2 border-gray-300 group hover:border-green-600 checkbox cursor-pointer" :class="(method === 'braintree') ? 'border-green-600' : ''">
+                    <input  type="checkbox" class=""  v-model="method">
+                    <span class="text-lg ml-8 font-bold text-black" >Braintree</span>
+                </div>
+                <div @click="paymentOption('stripe')" class="flex items-center p-4 rounded-lg mr-12 border-2 border-gray-300 group hover:border-green-600 checkbox cursor-pointer" :class="(method === 'stripe') ? 'border-green-600' : ''">
+                    <input  type="checkbox"  class="" v-model="method" >
+                    <span class="text-lg ml-8 font-bold text-black" >Stripe</span>
+                </div>
+                <div @click="paymentOption('paypal')" class="flex items-center p-4 rounded-lg mr-12 border-2 border-gray-300 group hover:border-green-600 checkbox cursor-pointer" :class="(method === 'paypal') ? 'border-green-600' : ''">
+                    <input  type="checkbox"  class="" v-model="method" >
+                    <span class="text-lg ml-8 font-bold text-black" >Paypal</span>
+                </div>
+
             </div>
-            <div @click="paymentOption('paypal')" class="flex items-center p-4 rounded-lg mr-12 border-2 border-gray-300 group hover:border-green-600 checkbox cursor-pointer" :class="(method === 'paypal') ? 'border-green-600' : ''">
-                <input  type="checkbox" class=""  v-model="method">
-                <span class="text-lg ml-8 font-bold text-black" >Paypal</span>
+            <div v-if="method === 'braintree'">
+                <input type="hidden" name="_type" value="braintree">
+                <input id="nonce" name="payment_method_nonce" type="hidden" />
+
+                <div class="flex flex-row items-center">
+
+                    <div class="flex flex-col">
+                        <label class="mb-2" for="cc_number">Credit Card Number</label>
+
+                        <div class="form-group" id="card-number">
+
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label class="mb-2" for="expiry">Expiry</label>
+
+                        <div class="form-group" id="expiration-date">
+
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label class="mb-2" for="cvv">CVV</label>
+
+                        <div class="form-group" id="cvv">
+
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
-        </div>
-        <div class="">
-            <form v-if="method === 'stripe'" :action="`/charge`" :method="`post`" id="payment-form">
+            <div v-if="method === 'stripe'">
                 <div class="ml-3">
-                    <input type="hidden" name="_token" :value="csrf">
                     <input type="hidden" name="_type" value="stripe">
                     <div class="flex flex-col">
                         <label for="card-element" class="mb-4 py-2 px-2 font-bold text-lg">
@@ -31,10 +71,14 @@
                         <div id="card-errors" role="alert"></div>
                     </div>
 
-                    <button class="px-6 py-4 hover:bg-green-500 rounded-full text-white font-bold text-lg bg-green-600">Submit Payment</button>
                 </div>
-            </form>
-        </div>
+            </div>
+            <div v-if="method === 'paypal'">
+                <div id="paypal-button"></div>                
+            </div>
+            <button class="px-6 py-4 hover:bg-green-500 rounded-full text-white font-bold text-lg bg-green-600">Submit Payment</button>
+
+        </form>
         
     </div>
 </template>
@@ -44,15 +88,15 @@ import KhaltiCheckout from "khalti-web";
 
     export default {
         name : 'cart-checkout',
-        props : ['products', 'cart', 'sub', 'grand'],
+        props : ['products', 'cart','sub', 'grand'],
         data(){
         	return {
                 productsArr : [],
                 updatedQty : this.cart,
-                subTotal : this.sub,
                 method : "",
                 selected : null,
-                grandTotal : this.grand,
+                subTotal : this.sub,
+                total : this.grand,
                 message   : null,
                 err       : null,
                 csrf : document.head.querySelector('meta[name="csrf-token"]').content
@@ -60,7 +104,6 @@ import KhaltiCheckout from "khalti-web";
         },
         mounted() {
             this.pushProducts();
-
         },
         methods: {
             async pushProducts(){
@@ -70,6 +113,7 @@ import KhaltiCheckout from "khalti-web";
             }, 
             async paymentOption(param){
                 this.method = param;
+                const form = document.getElementById('payment-form');
                 if(this.method === "stripe"){
                     setTimeout(() => {
                          // Create a Stripe client.
@@ -147,49 +191,135 @@ import KhaltiCheckout from "khalti-web";
                         }
                     }, 300);
                    
-                } else if(this.method === "paypal"){
+                }  else if(this.method === 'braintree'){
+                    this.braintreePayment(form);
+                } else if(this.method === 'paypal') {
 
+                    axios.post('/braintree-token', {}).then((res) => {
+                        if(res.status == 200){
+                            braintree.client.create({
+                                authorization: `${res.data.token}`
+                            }, function (clientErr, clientInstance) {
+                            if (clientErr) {
+                              console.error(clientErr);
+                              return;
+                            }
+                            // Create a PayPal Checkout component.
+                            braintree.paypalCheckout.create({
+                                    client: clientInstance
+                                }, function (paypalCheckoutErr, paypalCheckoutInstance) {
+                                // Stop if there was a problem creating PayPal Checkout.
+                                // This could happen if there was a network error or if it's incorrectly
+                                // configured.
+                                if (paypalCheckoutErr) {
+                                  console.error('Error creating PayPal Checkout:', paypalCheckoutErr);
+                                  return;
+                                }
+                                // Set up PayPal with the checkout.js library
+                                paypal.Button.render({
+                                  env: 'sandbox', // or 'production'
+                                  commit: true,
+                                  payment: function () {
+                                    return paypalCheckoutInstance.createPayment({
+                                      // Your PayPal options here. For available options, see
+                                      // http://braintree.github.io/braintree-web/current/PayPalCheckout.html#createPayment
+                                      flow: 'checkout', // Required
+                                      amount: 13.00, // Required
+                                      currency: 'USD', // Required
+                                    });
+                                  },
+                                  onAuthorize: function (data, actions) {
+                                    return paypalCheckoutInstance.tokenizePayment(data, function (err, payload) {
+                                      // Submit `payload.nonce` to your server.
+                                      document.querySelector('#nonce').value = payload.nonce;
+                                      form.submit();
+                                    });
+                                  },
+                                  onCancel: function (data) {
+                                    console.log('checkout.js payment cancelled', JSON.stringify(data, 0, 2));
+                                  },
+                                  onError: function (err) {
+                                    console.error('checkout.js error', err);
+                                  }
+                                }, '#paypal-button').then(function () {
+                                  // The PayPal button will be rendered in an html element with the id
+                                  // `paypal-button`. This function will be called when the PayPal button
+                                  // is set up and ready to be used.
+                                });
+                            });
+                            });
+                        }
+                     }).catch(err => {
+                        console.log(err);
+                    }); 
                 }
             },
-            async payment(){
-                let config = {
-                // replace this key with yours
-                    "publicKey": process.env.MIX_KHALTI_PUBLIC_KEY,
-                    "productIdentity": "1234567890",
-                    "productName": "Drogon",
-                    "productUrl": "http://gameofthrones.com/buy/Dragons",
-                    "eventHandler": {
-                        onSuccess (payload) {
-                            // hit merchant api for initiating verfication
-                            // console.log(payload);
-                            axios.post(`/checkout-server`, {
-                                payload : payload
-                            }).then(res => {
-                                console.log(res.data.response);
-                            }).catch(err => {
-                                this.status = false;
-                                this.err = 'There was some error. Please try again.';
-                                this.removeMessage();
+            async braintreePayment(form){
+                axios.post('/braintree-token', {}).then((res) => {
+                    if(res.status == 200){
+                        braintree.client.create({
+                            authorization: `${res.data.token}`
+                          }, function (clientErr, clientInstance) {
+                            if (clientErr) {
+                              console.error(clientErr);
+                              return;
+                            }
+                            // This example shows Hosted Fields, but you can also use this
+                            // client instance to create additional components here, such as
+                            // PayPal or Data Collector.
+                            braintree.hostedFields.create({
+                              client: clientInstance,
+                              styles: {
+                                'input': {
+                                  'font-size': '14px'
+                                },
+                                'input.invalid': {
+                                  'color': 'red'
+                                },
+                                'input.valid': {
+                                  'color': 'green'
+                                }
+                              },
+                              fields: {
+                                number: {
+                                  selector: '#card-number',
+                                  placeholder: '4111 1111 1111 1111'
+                                },
+                                cvv: {
+                                  selector: '#cvv',
+                                  placeholder: '123'
+                                },
+                                expirationDate: {
+                                  selector: '#expiration-date',
+                                  placeholder: '10/2019'
+                                }
+                              }
+                            }, function (hostedFieldsErr, hostedFieldsInstance) {
+                              if (hostedFieldsErr) {
+                                console.error(hostedFieldsErr);
+                                return;
+                              }
+                              // submit.removeAttribute('disabled');
+                              form.addEventListener('submit', function (event) {
+                                event.preventDefault();
+                                hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
+                                  if (tokenizeErr) {
+                                    console.error(tokenizeErr);
+                                    return;
+                                  }
+                                  // If this was a real integration, this is where you would
+                                  // send the nonce to your server.
+                                  // console.log('Got a nonce: ' + payload.nonce);
+                                  document.querySelector('#nonce').value = payload.nonce;
+                                  form.submit();
+                                });
+                              }, false);
                             });
-                        },
-                        // onError handler is optional
-                        onError (error) {
-                            // handle errors
-                            console.log(error);
-                        },
-                        onClose () {
-                            console.log('widget is closing');
-                        }
+                        });
                     }
-                };
-
-                // console.log(config);
-                let checkout = new KhaltiCheckout(config);
-                checkout.show({amount: 1000});
-                            
-            },
-            async selectedMethod(){
-
+                }).catch(err => {
+                    console.log(err);
+                }); 
             },
             async removeMessage(){
                 setTimeout(() => {

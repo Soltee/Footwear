@@ -13,8 +13,14 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     @if(Route::currentRouteName() == 'cart.checkout')
-        <script src="https://js.stripe.com/v3/"></script>
-        <style type="text/css">
+      <script src="https://js.braintreegateway.com/web/3.56.0/js/client.min.js"></script>
+      <script src="https://js.braintreegateway.com/web/3.56.0/js/hosted-fields.min.js"></script>
+      <script src="https://www.paypalobjects.com/api/checkout.js" data-version-4 log-level="warn"></script>
+
+      <!-- Load the PayPal Checkout component. -->
+      <script src="https://js.braintreegateway.com/web/3.56.0/js/paypal-checkout.min.js"></script>
+      <script src="https://js.stripe.com/v3/"></script>
+      <style type="text/css">
             /**
              * The CSS shown here will not be introduced in the Quickstart guide, but shows
              * how you can use CSS to style your Element's container.
@@ -46,7 +52,7 @@
             .StripeElement--webkit-autofill {
               background-color: #fefde5 !important;
             }
-        </style>
+      </style>
     @endif
     <!--   <link href="{{ asset('css/sm.css') }}" rel="stylesheet"> -->
 </head>

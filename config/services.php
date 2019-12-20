@@ -33,6 +33,18 @@ return [
         'modal' => App\Customer::class,
         'key' => env('STRIPE_PUBLIC_KEY'),
         'secret' => env('STRIPE_SECRET_KEY')
+    ],
+    'braintree' => [
+        'environment' => env('BT_ENVIRONMENT', 'sandbox'),
+        'merchantId' => env('BT_MERCHANT_ID'),
+        'publicKey' => env('BT_PUBLIC_KEY'),
+        'privateKey' => env('BT_PRIVATE_KEY'),
+    ],
+    'khalti' => [
+        'environment' => env('KHALTI_ENV'),
+        'publicKey' => env('KHALTI_PUBLIC_KEY'),
+        'secretKey' => env('KHALTI_SECRET_KEY'),       
     ]
+
 
 ];
