@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Coupon;
 use App\Products;
 use App\Helpers\Helpers;
 use Illuminate\Http\Request;
@@ -46,9 +47,9 @@ class CartController extends Controller
 		$products = Cart::content();
 		$totalQuantity = 	Cart::instance('default')->count();
 		$subTotal = Cart::subtotal();
+		$tax = Cart::tax();
 		$grandTotal = Cart::total();
-		// dd($products);
-		return view('home.cart', compact('products', 'totalQuantity', 'subTotal', 'grandTotal'));
+		return view('home.cart', compact('products', 'totalQuantity', 'subTotal', 'tax', 'grandTotal'));
 	}
 
 	/**
@@ -131,16 +132,15 @@ class CartController extends Controller
     */
     public function clearCart()
     {
-
-    	return  (Cart::destroy()) ? response()->json(['success' => 'Ok'], 204) : '';
-
+    	Cart::destroy();
+    	return  response()->json(['success' => 'Ok'], 204); 
     }
 
     /*
 		* Return the subTotal 
     */
 	public function getUpdatedData(){
-    	return response()->json(['success' => 'Ok', 'subTotal' => Cart::subtotal() , 'updatedQty' => Cart::instance('default')->count()], 200);
+    	return response()->json(['success' => 'Ok', 'subTotal' => Cart::subtotal(), 'tax' => Cart::tax(), 'grand' => Cart::total() ,  'updatedQty' => Cart::instance('default')->count()], 200);
 	}
 
     /**

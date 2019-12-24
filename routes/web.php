@@ -1,3 +1,4 @@
+
 <?php
 
 
@@ -22,7 +23,7 @@ Route::post('/clear-cart', 'CartController@clearCart');
 Route::post('/remove-from-cart/{products}', 'CartController@removeProduct');
 
 Route::post('/update-cart/{rowId}', 'CartController@updateProduct');
-
+Route::post('/coupon-redeem', 'CouponController@redeem');
 
 //Customer
 Auth::routes();
@@ -34,8 +35,8 @@ Route::post('/customer-logout', 'Auth\LoginController@logout')->name('customer-l
 //Customer Checkout Process 
 Route::get('/cart-details', 'CartController@show')->name('cart.show');
 Route::get('/checkout', 'CheckoutController@checkout')->name('cart.checkout');
-Route::post('/braintree-token', 'CheckoutController@braintreeToken');
 Route::post('/charge', 'CheckoutController@charge')->name('cart.charge');
+Route::get('/thank-you', 'CheckoutController@thankyou')->name('thank-you');
 
 
 //Dashboard

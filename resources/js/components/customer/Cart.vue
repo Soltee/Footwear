@@ -1,5 +1,5 @@
 <template>
-    <div class="relative  w-full px-6  lg:px-12 flex flex-col bg-gray-300 my-6">
+    <div class="relative  w-full px-6  lg:px-12 flex flex-col bg-gray-300 py-6" :class="(modal) ? 'bg-gray-400' : ''">
 
         <div v-if="message"  :class="(status) ? 'bg-green-500' : 'bg-red-500' " class="absolute top-0 right-0 rounded-lg text-md flex flex-row justify-between items-center font-medium  text-white p-3 mb-2">
             <span class="mr-6 w-64">{{ message }}</span>
@@ -11,22 +11,22 @@
         <div v-if="updatedQty > 0" class="w-full">
             <div class="flex justify-between items-center">
                 <h4 class="font-bold text-lg text-black">My Cart</h4>
-                <form @submit.prevent="clearCart">
-                    <button type="submit" class="p-3 bg-red-500 rounded-lg text-lg font-medium text-white">Clear Cart</button>
-                </form>
+                <!-- <form @submit.prevent="clearCart"> -->
+                    <button @click="modal = true;" type="submit" class="p-3 bg-red-500 rounded-lg text-lg font-medium text-white">Clear Cart</button>
+                <!-- </form> -->
             </div>
             
             <div v-for="p in productsArr">
                 <div class="mt-4 flex flex-row justify-between items-center mb-3">
-                    <img class="h-40 w-40 rounded-lg object-cover object-center" :src="`/storage/${p.options.imageUrl}`">
+                    <img class="h-16 w-16 rounded-lg object-cover object-center" :src="`/storage/${p.options.imageUrl}`">
                     <div class="flex flex-col items-left justify-start pl-2">
                         <h3 class="m-0">{{ p.name }}</h3>
                         <h3 class="m-0">$ {{ p.price }}</h3>
                     </div>
-                    <div class="flex justify-around items-center">
+                    <div class="flex items-center">
                         <form @submit.prevent="updateCart(p)">
                             <div>
-                                <input type="text" name="" @input="qty = $event.target.value; selected = p.id"  :value="`${(selected == p.id) ? qty : p.qty}`">
+                                <input class="px-4 py-3 w-16 text-center rounded-lg" type="text" name="" @input="qty = $event.target.value; selected = p.id"  :value="`${(selected == p.id) ? qty : p.qty}`">
                                 <button type="submit" class="p-3 rounded-lg text-blue-900 text-md ">
                                     Update
                                 </button>
@@ -40,14 +40,43 @@
                 </div>
             </div>
 
-            <div class="mt-4 flex flex-col items-right ml-auto w-48">
-                <div class="flex items-center border-green-600 border-2 rounded-lg p-3 mb-3">
-                    <span class="text-bold text-lg text-green-600 rounded-lg mr-2">SubTotal</span>
-                    <span class="text-lg text-bold text-green-500">$ {{ subTotal }}</span>
+            <div class="mt-6 mb-3 flex flex-row justify-between w-auto">
+                <form @submit.prevent="redeemDiscount"> 
+                    <h3 class="mb-3 text-lg font-bold text-black">Redeem your Coupon</h3>
+                    <div class="flex items-center">
+                        <input type="text" v-model="code" class="px-4 py-3 rounded-l-lg bg-gray-100">
+                        <button type="submit"  class="px-4 py-3 rounded-r-lg bg-black text-white font-bold text-lg">Redeem</button>
+                    </div>
+                </form>
+                <div class="flex flex-col  rounded-lg p-3 mb-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-bold text-lg text-black-600 rounded-lg mr-2">SubTotal</span>
+                        <span class="text-bold text-lg text-black-600 rounded-lg mr-2">$ {{ subTotal }}</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-bold text-lg text-black-600 rounded-lg mr-2">Discount</span>
+                        <span class="text-bold text-lg text-black-600 rounded-lg mr-2">$ {{ discount }}</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-bold text-lg text-black-600 rounded-lg mr-2">SubTotal After Discount</span>
+                        <span class="text-bold text-lg text-black-600 rounded-lg mr-2">$ {{ (subAfterDis) ? subAfterDis : subTotal }}</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-bold text-lg text-black-600 rounded-lg mr-2">Tax</span>
+                        <span class="text-bold text-lg text-black-600 rounded-lg mr-2">$ {{ tax }}</span>
+                    </div>
+                   
+                    <div class="flex items-center justify-between">
+                        <span class="text-bold text-lg text-black-600 rounded-lg mr-2">Grand Total</span>
+                        <span class="text-bold text-lg text-black-600 rounded-lg mr-2">$ {{ grandTotal }}</span>
+                    </div>
                 </div>
-                <div class="flex items-center ">
-                    <a :href="`/checkout`" class="text-bold text-lg bg-green-900 text-white p-3 rounded-lg">Checkout</a>
-                </div>
+                
+            </div>
+            <div class="flex items-center text-right justify-end">
+                <a :href="`/shoes`" class="mr-4 text-bold text-lg bg-gray-100 text-gray-900 p-3 rounded-lg">Continue My Shopping</a>
+
+                <a :href="`/checkout`" class="text-bold text-lg bg-green-900 hover:bg-green-500 text-white p-3 rounded-lg">Checkout</a>
             </div>
         </div>
         <div v-else>
@@ -55,6 +84,28 @@
                 <p class="text-medium font-semibold text-blue-500">Oh! My cart is empty.</p>
                 <a :href="`/shoes`" class="ml-4 text-bold text-lg bg-green-900 text-white p-3 rounded-lg">Continue My Shopping</a>
 
+            </div>
+        </div>
+        <!--Clear Cart Modal-->
+        <div v-if="modal" class="fixed w-full h-full top-0 left-0 flex items-center justify-center"
+        id="exampleModal" tabindex="-1" role="dialog"
+        >
+            <div class="bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg overflow-y-auto max-w-lg rounded-lg p-6">
+                <div class="flex justify-end rounded-t-lg">
+                    <button @click="modal = false; " type="button" class="px-4 py-3 cursor-pointer" data-dismiss="modal" aria-label="Close">
+                        <svg class="fill-current text-gray-900" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                          <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                        </svg>
+                    </button>
+
+                </div>
+                <div class="">
+                    <p class="px-2 py-2 text-lg mb-2"> Are you sure ? </p>
+                </div>
+                <div class="flex justify-end pt-2">
+                  <button @click="modal = false; " class="px-4 cursor-pointer bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2">Cancel</button>
+                  <button @click="clearCart" class="modal-close cursor-pointer px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400" data-dismiss="modal">Yes</button>
+                </div>
             </div>
         </div>
         
@@ -65,29 +116,35 @@
 import { serverBus } from '../../app.js';    
     export default {
         name : 'cart-view',
-        props : ['products', 'cart', 'sub', 'grand'],
+        props : ['products', 'cart', 'sub','tax', 'grand'],
         data(){
         	return {
-                productsArr : [],qty: "",
+                productsArr : [],
+                code : '',
+                qty: "",
                 updatedQty : this.cart,
                 subTotal : this.sub,
+                discount : 0,
+                subAfterDis : 0,
+                tax : this.tax,
                 grandTotal : this.grand,
                 selected: null,
                 status : false,
                 message   : null,
-                err       : null
+                err       : null,
+                modal :false,
         	}
         },
         mounted() {
             this.pushProducts();
         },
         methods: {
-            async pushProducts(){
+            pushProducts(){
                 for (let [key, value] of Object.entries(this.products)) {
                     this.productsArr.push(value);
                 }
             },
-            async updateCart(p){
+            updateCart(p){
     
                 let qty = this.qty;
                 axios.post(`/update-cart/${p.rowId}`, {
@@ -111,7 +168,7 @@ import { serverBus } from '../../app.js';
                                 imageUrl : p.options.imageUrl
                             }
                         });
-                        // this.getUpdatedData();
+                        this.getUpdatedData();
                         this.removeMessage(); 
                     }
                     if(res.status == 204) {
@@ -132,7 +189,7 @@ import { serverBus } from '../../app.js';
                     this.removeMessage(); 
                 });
             },
-            async removeCart(p){
+            removeCart(p){
                 axios.post(`/remove-from-cart/${p.rowId}`)
                 .then(res => {
                     if(res.status = 204){
@@ -151,11 +208,13 @@ import { serverBus } from '../../app.js';
                     this.removeMessage();
                 })
             },
-            async getUpdatedData(){
+            getUpdatedData(){
                 axios.get('/getUpdatedData')
                 .then(res => {
                     if(res.status == 200){
                         this.subTotal = res.data.subTotal;
+                        this.tax = res.data.tax;
+                        this.grandTotal = res.data.grand;
                         this.updatedQty = res.data.updatedQty;
                     }
                 }).catch(err => {
@@ -164,7 +223,7 @@ import { serverBus } from '../../app.js';
                     this.removeMessage();
                 });
             },
-            async clearCart(){
+            clearCart(){
                 axios.post('/clear-cart', {})
                 .then(res => {
                     if(res.status == 204){
@@ -174,6 +233,7 @@ import { serverBus } from '../../app.js';
                         this.subTotal = 0;
                         this.grandTotal = 0;
                         this.status = true;
+                        this.modal = false;
                         this.message = 'My cart has been cleared.';
                         this.removeMessage();
                     }
@@ -182,8 +242,30 @@ import { serverBus } from '../../app.js';
                     this.err = "There has been some error.";
                     this.removeMessage();
                 });
+            },
+            redeemDiscount(){
+                let code = this.code;
+                axios.post('/coupon-redeem', {
+                    code : code
+                })
+                .then(res => {
+                    let data = res.data;
+                    if(res.status == 200){
+                        this.status = true;
+                        this.discount = data.discount;
+                        this.subAfterDis = data.subAfterDis;
+                        this.tax = data.tax;
+                        this.grandTotal = data.grand;
+                        this.message = 'My coupon has been accepted.';
+                        this.removeMessage();
+                    }
+                }).catch(err => {
+                    this.status = false;
+                    this.err = "There has been some error.";
+                    this.removeMessage();
+                });
             },  
-            async removeMessage(){
+            removeMessage(){
                 setTimeout(() => {
                     this.message = null;
                     this.err = null;

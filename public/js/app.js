@@ -1976,7 +1976,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      axios.get("/zero/searchall/".concat(this.keyword)).then(function (res) {
+      axios.get("/management/searchall/".concat(this.keyword)).then(function (res) {
         var data = res.data;
         _this.resultTotal = data.total;
 
@@ -2128,7 +2128,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      axios.get("/zero/searchCustomers/".concat(this.keyword)).then(function (res) {
+      axios.get("/management/searchCustomers/".concat(this.keyword)).then(function (res) {
         // console.log(res.data.customers);
         var ctms = res.data.customers;
         _this2.resultTotal = res.data.total;
@@ -2147,7 +2147,7 @@ __webpack_require__.r(__webpack_exports__);
     dropCostumer: function dropCostumer(customer) {
       var _this3 = this;
 
-      axios.post("/zero/customers/".concat(customer.id), {}).then(function (res) {
+      axios.post("/management/customers/".concat(customer.id), {}).then(function (res) {
         if (res.status == 204) {
           _this3.message = 'Product dropped.';
         }
@@ -2156,7 +2156,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     redirectTo: function redirectTo(customer) {
-      window.location = "http://localhost:8000/zero/customers/".concat(customer.id, "-").concat(customer.name);
+      window.location = "http://localhost:8000/management/customers/".concat(customer.id, "-").concat(customer.name);
     }
   }
 });
@@ -2207,11 +2207,11 @@ __webpack_require__.r(__webpack_exports__);
     dropCostumer: function dropCostumer(customer) {
       var _this = this;
 
-      axios.post("/zero/customers/".concat(customer.id), {}).then(function (res) {
+      axios.post("/management/customers/".concat(customer.id), {}).then(function (res) {
         if (res.status == 204) {
           _this.message = 'Product dropped.';
           setTimeout(function () {
-            window.location = "http://localhost:8000/zero/customers";
+            window.location = "http://localhost:8000/management/customers";
           }, 3000);
         }
       })["catch"](function (error) {
@@ -2332,7 +2332,7 @@ __webpack_require__.r(__webpack_exports__);
     addCategory: function addCategory() {
       var _this2 = this;
 
-      axios.post("/zero/category/store", {
+      axios.post("/management/category/store", {
         name: this.name
       }).then(function (res) {
         console.log(res.data); // console.log(res.data.customers);
@@ -2475,7 +2475,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      axios.get("/zero/searchProducts/".concat(this.keyword)).then(function (res) {
+      axios.get("/management/searchProducts/".concat(this.keyword)).then(function (res) {
         // console.log(res.data.customers);
         var pdts = res.data.products;
         _this2.resultTotal = res.data.total;
@@ -2495,7 +2495,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       console.log(product);
-      axios.post("/zero/products/".concat(product.id), {}).then(function (res) {
+      axios.post("/management/products/".concat(product.id), {}).then(function (res) {
         if (res.status == 204) {
           _this3.message = 'Product dropped.';
         }
@@ -2504,7 +2504,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     redirectTo: function redirectTo(product) {
-      window.location = "http://localhost:8000/zero/products/".concat(product.id, "-").concat(product.name);
+      window.location = "http://localhost:8000/management/products/".concat(product.id, "-").concat(product.name);
     }
   }
 });
@@ -2554,11 +2554,11 @@ __webpack_require__.r(__webpack_exports__);
     dropCostumer: function dropCostumer(product) {
       var _this = this;
 
-      axios.post("/zero/products/".concat(product.id), {}).then(function (res) {
+      axios.post("/management/products/".concat(product.id), {}).then(function (res) {
         if (res.status == 204) {
           _this.message = 'Product dropped.';
           setTimeout(function () {
-            window.location = "http://localhost:8000/zero/products";
+            window.location = "http://localhost:8000/management/products";
           }, 3000);
         }
       })["catch"](function (error) {
@@ -2579,11 +2579,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _app_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../app.js */ "./resources/js/app.js");
-
-
+/* harmony import */ var _app_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../app.js */ "./resources/js/app.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -2655,21 +2651,77 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'cart-view',
-  props: ['products', 'cart', 'sub', 'grand'],
+  props: ['products', 'cart', 'sub', 'tax', 'grand'],
   data: function data() {
     return {
       productsArr: [],
+      code: '',
       qty: "",
       updatedQty: this.cart,
       subTotal: this.sub,
+      discount: 0,
+      subAfterDis: 0,
+      tax: this.tax,
       grandTotal: this.grand,
       selected: null,
       status: false,
       message: null,
-      err: null
+      err: null,
+      modal: false
     };
   },
   mounted: function mounted() {
@@ -2677,201 +2729,165 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
   },
   methods: {
     pushProducts: function pushProducts() {
-      var _i, _Object$entries, _Object$entries$_i, key, value;
+      for (var _i = 0, _Object$entries = Object.entries(this.products); _i < _Object$entries.length; _i++) {
+        var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+            key = _Object$entries$_i[0],
+            value = _Object$entries$_i[1];
 
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function pushProducts$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              for (_i = 0, _Object$entries = Object.entries(this.products); _i < _Object$entries.length; _i++) {
-                _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2), key = _Object$entries$_i[0], value = _Object$entries$_i[1];
-                this.productsArr.push(value);
-              }
-
-            case 1:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, null, this);
+        this.productsArr.push(value);
+      }
     },
     updateCart: function updateCart(p) {
       var _this = this;
 
-      var qty;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function updateCart$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              qty = this.qty;
-              axios.post("/update-cart/".concat(p.rowId), {
-                quantity: qty
-              }).then(function (res) {
-                if (res.status == 200) {
-                  _this.status = true;
-                  _app_js__WEBPACK_IMPORTED_MODULE_1__["serverBus"].$emit('cart-updated', {
-                    p: p,
-                    qty: qty
-                  });
-                  _this.message = 'Cart updated.';
-                  _this.productsArr = _this.productsArr.filter(function (state) {
-                    return state.rowId !== p.rowId;
-                  });
+      var qty = this.qty;
+      axios.post("/update-cart/".concat(p.rowId), {
+        quantity: qty
+      }).then(function (res) {
+        if (res.status == 200) {
+          _this.status = true;
+          _app_js__WEBPACK_IMPORTED_MODULE_0__["serverBus"].$emit('cart-updated', {
+            p: p,
+            qty: qty
+          });
+          _this.message = 'Cart updated.';
+          _this.productsArr = _this.productsArr.filter(function (state) {
+            return state.rowId !== p.rowId;
+          });
 
-                  _this.productsArr.unshift({
-                    id: p.id,
-                    rowId: p.rowId,
-                    name: p.name,
-                    price: p.price,
-                    qty: qty,
-                    options: {
-                      imageUrl: p.options.imageUrl
-                    }
-                  }); // this.getUpdatedData();
+          _this.productsArr.unshift({
+            id: p.id,
+            rowId: p.rowId,
+            name: p.name,
+            price: p.price,
+            qty: qty,
+            options: {
+              imageUrl: p.options.imageUrl
+            }
+          });
 
+          _this.getUpdatedData();
 
-                  _this.removeMessage();
-                }
-
-                if (res.status == 204) {
-                  _app_js__WEBPACK_IMPORTED_MODULE_1__["serverBus"].$emit('product-removed', p.qty);
-                  _this.productsArr = _this.productsArr.filter(function (state) {
-                    return state.id !== p.id;
-                  });
-
-                  _this.getUpdatedData();
-
-                  _this.status = false;
-                  _this.message = 'Product removed from cart.';
-
-                  _this.removeMessage();
-                }
-              })["catch"](function (err) {
-                _this.status = false;
-                _this.err = "There has been some error.";
-
-                _this.removeMessage();
-              });
-
-            case 2:
-            case "end":
-              return _context2.stop();
-          }
+          _this.removeMessage();
         }
-      }, null, this);
+
+        if (res.status == 204) {
+          _app_js__WEBPACK_IMPORTED_MODULE_0__["serverBus"].$emit('product-removed', p.qty);
+          _this.productsArr = _this.productsArr.filter(function (state) {
+            return state.id !== p.id;
+          });
+
+          _this.getUpdatedData();
+
+          _this.status = false;
+          _this.message = 'Product removed from cart.';
+
+          _this.removeMessage();
+        }
+      })["catch"](function (err) {
+        _this.status = false;
+        _this.err = "There has been some error.";
+
+        _this.removeMessage();
+      });
     },
     removeCart: function removeCart(p) {
       var _this2 = this;
 
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function removeCart$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              axios.post("/remove-from-cart/".concat(p.rowId)).then(function (res) {
-                if (res.status = 204) {
-                  _app_js__WEBPACK_IMPORTED_MODULE_1__["serverBus"].$emit('product-removed', p.qty);
-                  _this2.productsArr = _this2.productsArr.filter(function (state) {
-                    return state.id !== p.id;
-                  });
+      axios.post("/remove-from-cart/".concat(p.rowId)).then(function (res) {
+        if (res.status = 204) {
+          _app_js__WEBPACK_IMPORTED_MODULE_0__["serverBus"].$emit('product-removed', p.qty);
+          _this2.productsArr = _this2.productsArr.filter(function (state) {
+            return state.id !== p.id;
+          });
 
-                  _this2.getUpdatedData();
+          _this2.getUpdatedData();
 
-                  _this2.status = true;
-                  _this2.message = 'Product has been removed from my cart.';
+          _this2.status = true;
+          _this2.message = 'Product has been removed from my cart.';
 
-                  _this2.removeMessage();
-                }
-              })["catch"](function (err) {
-                _this2.status = false;
-                _this2.err = 'There has been some error.';
-
-                _this2.removeMessage();
-              });
-
-            case 1:
-            case "end":
-              return _context3.stop();
-          }
+          _this2.removeMessage();
         }
+      })["catch"](function (err) {
+        _this2.status = false;
+        _this2.err = 'There has been some error.';
+
+        _this2.removeMessage();
       });
     },
     getUpdatedData: function getUpdatedData() {
       var _this3 = this;
 
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function getUpdatedData$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              axios.get('/getUpdatedData').then(function (res) {
-                if (res.status == 200) {
-                  _this3.subTotal = res.data.subTotal;
-                  _this3.updatedQty = res.data.updatedQty;
-                }
-              })["catch"](function (err) {
-                _this3.status = false;
-                _this3.err = "There has been some error.";
-
-                _this3.removeMessage();
-              });
-
-            case 1:
-            case "end":
-              return _context4.stop();
-          }
+      axios.get('/getUpdatedData').then(function (res) {
+        if (res.status == 200) {
+          _this3.subTotal = res.data.subTotal;
+          _this3.tax = res.data.tax;
+          _this3.grandTotal = res.data.grand;
+          _this3.updatedQty = res.data.updatedQty;
         }
+      })["catch"](function (err) {
+        _this3.status = false;
+        _this3.err = "There has been some error.";
+
+        _this3.removeMessage();
       });
     },
     clearCart: function clearCart() {
       var _this4 = this;
 
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function clearCart$(_context5) {
-        while (1) {
-          switch (_context5.prev = _context5.next) {
-            case 0:
-              axios.post('/clear-cart', {}).then(function (res) {
-                if (res.status == 204) {
-                  _app_js__WEBPACK_IMPORTED_MODULE_1__["serverBus"].$emit('cart-cleared');
-                  _this4.productsArr = [];
-                  _this4.updatedQty = 0;
-                  _this4.subTotal = 0;
-                  _this4.grandTotal = 0;
-                  _this4.status = true;
-                  _this4.message = 'My cart has been cleared.';
+      axios.post('/clear-cart', {}).then(function (res) {
+        if (res.status == 204) {
+          _app_js__WEBPACK_IMPORTED_MODULE_0__["serverBus"].$emit('cart-cleared');
+          _this4.productsArr = [];
+          _this4.updatedQty = 0;
+          _this4.subTotal = 0;
+          _this4.grandTotal = 0;
+          _this4.status = true;
+          _this4.modal = false;
+          _this4.message = 'My cart has been cleared.';
 
-                  _this4.removeMessage();
-                }
-              })["catch"](function (err) {
-                _this4.status = false;
-                _this4.err = "There has been some error.";
-
-                _this4.removeMessage();
-              });
-
-            case 1:
-            case "end":
-              return _context5.stop();
-          }
+          _this4.removeMessage();
         }
+      })["catch"](function (err) {
+        _this4.status = false;
+        _this4.err = "There has been some error.";
+
+        _this4.removeMessage();
+      });
+    },
+    redeemDiscount: function redeemDiscount() {
+      var _this5 = this;
+
+      var code = this.code;
+      axios.post('/coupon-redeem', {
+        code: code
+      }).then(function (res) {
+        var data = res.data;
+
+        if (res.status == 200) {
+          _this5.status = true;
+          _this5.discount = data.discount;
+          _this5.subAfterDis = data.subAfterDis;
+          _this5.tax = data.tax;
+          _this5.grandTotal = data.grand;
+          _this5.message = 'My coupon has been accepted.';
+
+          _this5.removeMessage();
+        }
+      })["catch"](function (err) {
+        _this5.status = false;
+        _this5.err = "There has been some error.";
+
+        _this5.removeMessage();
       });
     },
     removeMessage: function removeMessage() {
-      var _this5 = this;
+      var _this6 = this;
 
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function removeMessage$(_context6) {
-        while (1) {
-          switch (_context6.prev = _context6.next) {
-            case 0:
-              setTimeout(function () {
-                _this5.message = null;
-                _this5.err = null;
-              }, 3000);
-
-            case 1:
-            case "end":
-              return _context6.stop();
-          }
-        }
-      });
+      setTimeout(function () {
+        _this6.message = null;
+        _this6.err = null;
+      }, 3000);
     }
   }
 });
@@ -2979,12 +2995,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var khalti_web__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! khalti-web */ "./node_modules/khalti-web/lib/index.js");
-/* harmony import */ var khalti_web__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(khalti_web__WEBPACK_IMPORTED_MODULE_1__);
-
-
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var khalti_web__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! khalti-web */ "./node_modules/khalti-web/lib/index.js");
+/* harmony import */ var khalti_web__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(khalti_web__WEBPACK_IMPORTED_MODULE_0__);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -3078,10 +3090,70 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'cart-checkout',
-  props: ['products', 'cart', 'sub', 'grand'],
+  props: ['products', 'cart', 'sub', 'dis', 'afterdis', 'tax', 'grand', 'token'],
   data: function data() {
     return {
       productsArr: [],
@@ -3090,6 +3162,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       selected: null,
       subTotal: this.sub,
       total: this.grand,
+      status: false,
       message: null,
       err: null,
       csrf: document.head.querySelector('meta[name="csrf-token"]').content
@@ -3100,276 +3173,227 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
   },
   methods: {
     pushProducts: function pushProducts() {
-      var _i, _Object$entries, _Object$entries$_i, key, value;
+      for (var _i = 0, _Object$entries = Object.entries(this.products); _i < _Object$entries.length; _i++) {
+        var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+            key = _Object$entries$_i[0],
+            value = _Object$entries$_i[1];
 
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function pushProducts$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              for (_i = 0, _Object$entries = Object.entries(this.products); _i < _Object$entries.length; _i++) {
-                _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2), key = _Object$entries$_i[0], value = _Object$entries$_i[1];
-                this.productsArr.push(value);
-              }
-
-            case 1:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, null, this);
+        this.productsArr.push(value);
+      }
     },
     paymentOption: function paymentOption(param) {
-      var form;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function paymentOption$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              this.method = param;
-              form = document.getElementById('payment-form');
+      this.method = param;
+      var grand = this.total;
+      var form = document.getElementById('payment-form');
 
-              if (this.method === "stripe") {
-                setTimeout(function () {
-                  // Create a Stripe client.
-                  // alert(process.env.MIX_STRIPE_APP_KEY);
-                  var key = process.env.MIX_STRIPE_APP_KEY;
-                  var stripe = Stripe(key); // Create an instance of Elements.
+      if (this.method === "stripe") {
+        setTimeout(function () {
+          // Create a Stripe client.
+          // alert(process.env.MIX_STRIPE_APP_KEY);
+          var key = process.env.MIX_STRIPE_APP_KEY;
+          var stripe = Stripe(key); // Create an instance of Elements.
 
-                  var elements = stripe.elements(); // Custom styling can be passed to options when creating an Element.
-                  // (Note that this demo uses a wider set of styles than the guide below.)
+          var elements = stripe.elements(); // Custom styling can be passed to options when creating an Element.
+          // (Note that this demo uses a wider set of styles than the guide below.)
 
-                  var style = {
-                    base: {
-                      color: '#32325d',
-                      fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-                      fontSmoothing: 'antialiased',
-                      fontSize: '16px',
-                      '::placeholder': {
-                        color: '#aab7c4'
-                      }
-                    },
-                    invalid: {
-                      color: '#fa755a',
-                      iconColor: '#fa755a'
-                    }
-                  }; // Create an instance of the card Element.
-
-                  var card = elements.create('card', {
-                    style: style
-                  }); // Add an instance of the card Element into the `card-element` <div>.
-
-                  card.mount('#card-element'); // Handle real-time validation errors from the card Element.
-
-                  card.addEventListener('change', function (event) {
-                    var displayError = document.getElementById('card-errors');
-
-                    if (event.error) {
-                      displayError.textContent = event.error.message;
-                    } else {
-                      displayError.textContent = '';
-                    }
-                  }); // Handle form submission.
-
-                  var form = document.getElementById('payment-form');
-                  form.addEventListener('submit', function (event) {
-                    event.preventDefault();
-                    stripe.createToken(card).then(function (result) {
-                      if (result.error) {
-                        // Inform the user if there was an error.
-                        var errorElement = document.getElementById('card-errors');
-                        errorElement.textContent = result.error.message;
-                      } else {
-                        // Send the token to your server.
-                        stripeTokenHandler(result.token);
-                      }
-                    });
-                  }); // Submit the form with the token ID.
-
-                  function stripeTokenHandler(token) {
-                    // Insert the token ID into the form so it gets submitted to the server
-                    var form = document.getElementById('payment-form');
-                    var hiddenInput = document.createElement('input');
-                    hiddenInput.setAttribute('type', 'hidden');
-                    hiddenInput.setAttribute('name', 'stripeToken');
-                    hiddenInput.setAttribute('value', token.id);
-                    form.appendChild(hiddenInput); // Submit the form
-                    // alert(token);
-
-                    form.submit();
-                  }
-                }, 300);
-              } else if (this.method === 'braintree') {
-                this.braintreePayment(form);
-              } else if (this.method === 'paypal') {
-                axios.post('/braintree-token', {}).then(function (res) {
-                  if (res.status == 200) {
-                    braintree.client.create({
-                      authorization: "".concat(res.data.token)
-                    }, function (clientErr, clientInstance) {
-                      if (clientErr) {
-                        console.error(clientErr);
-                        return;
-                      } // Create a PayPal Checkout component.
-
-
-                      braintree.paypalCheckout.create({
-                        client: clientInstance
-                      }, function (paypalCheckoutErr, paypalCheckoutInstance) {
-                        // Stop if there was a problem creating PayPal Checkout.
-                        // This could happen if there was a network error or if it's incorrectly
-                        // configured.
-                        if (paypalCheckoutErr) {
-                          console.error('Error creating PayPal Checkout:', paypalCheckoutErr);
-                          return;
-                        } // Set up PayPal with the checkout.js library
-
-
-                        paypal.Button.render({
-                          env: 'sandbox',
-                          // or 'production'
-                          commit: true,
-                          payment: function payment() {
-                            return paypalCheckoutInstance.createPayment({
-                              // Your PayPal options here. For available options, see
-                              // http://braintree.github.io/braintree-web/current/PayPalCheckout.html#createPayment
-                              flow: 'checkout',
-                              // Required
-                              amount: 13.00,
-                              // Required
-                              currency: 'USD' // Required
-
-                            });
-                          },
-                          onAuthorize: function onAuthorize(data, actions) {
-                            return paypalCheckoutInstance.tokenizePayment(data, function (err, payload) {
-                              // Submit `payload.nonce` to your server.
-                              document.querySelector('#nonce').value = payload.nonce;
-                              form.submit();
-                            });
-                          },
-                          onCancel: function onCancel(data) {
-                            console.log('checkout.js payment cancelled', JSON.stringify(data, 0, 2));
-                          },
-                          onError: function onError(err) {
-                            console.error('checkout.js error', err);
-                          }
-                        }, '#paypal-button').then(function () {// The PayPal button will be rendered in an html element with the id
-                          // `paypal-button`. This function will be called when the PayPal button
-                          // is set up and ready to be used.
-                        });
-                      });
-                    });
-                  }
-                })["catch"](function (err) {
-                  console.log(err);
-                });
+          var style = {
+            base: {
+              color: '#32325d',
+              fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+              fontSmoothing: 'antialiased',
+              fontSize: '16px',
+              '::placeholder': {
+                color: '#aab7c4'
               }
+            },
+            invalid: {
+              color: '#fa755a',
+              iconColor: '#fa755a'
+            }
+          }; // Create an instance of the card Element.
 
-            case 3:
-            case "end":
-              return _context2.stop();
+          var card = elements.create('card', {
+            style: style
+          }); // Add an instance of the card Element into the `card-element` <div>.
+
+          card.mount('#card-element'); // Handle real-time validation errors from the card Element.
+
+          card.addEventListener('change', function (event) {
+            var displayError = document.getElementById('card-errors');
+
+            if (event.error) {
+              displayError.textContent = event.error.message;
+            } else {
+              displayError.textContent = '';
+            }
+          }); // Handle form submission.
+
+          var form = document.getElementById('payment-form');
+          form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            stripe.createToken(card).then(function (result) {
+              if (result.error) {
+                // Inform the user if there was an error.
+                var errorElement = document.getElementById('card-errors');
+                errorElement.textContent = result.error.message;
+              } else {
+                // Send the token to your server.
+                stripeTokenHandler(result.token);
+              }
+            });
+          }); // Submit the form with the token ID.
+
+          function stripeTokenHandler(token) {
+            // Insert the token ID into the form so it gets submitted to the server
+            var form = document.getElementById('payment-form');
+            var hiddenInput = document.createElement('input');
+            hiddenInput.setAttribute('type', 'hidden');
+            hiddenInput.setAttribute('name', 'stripeToken');
+            hiddenInput.setAttribute('value', token.id);
+            form.appendChild(hiddenInput);
+            form.submit();
           }
-        }
-      }, null, this);
+        }, 300);
+      } else if (this.method === 'braintree') {
+        this.braintreePayment(form);
+      } else if (this.method === 'paypal') {
+        braintree.client.create({
+          authorization: "".concat(this.token)
+        }, function (clientErr, clientInstance) {
+          if (clientErr) {
+            console.error(clientErr);
+            return;
+          } // Create a PayPal Checkout component.
+
+
+          braintree.paypalCheckout.create({
+            client: clientInstance
+          }, function (paypalCheckoutErr, paypalCheckoutInstance) {
+            // Stop if there was a problem creating PayPal Checkout.
+            // This could happen if there was a network error or if it's incorrectly
+            // configured.
+            if (paypalCheckoutErr) {
+              console.error('Error creating PayPal Checkout:', paypalCheckoutErr);
+              return;
+            } // Set up PayPal with the checkout.js library
+
+
+            paypal.Button.render({
+              env: 'sandbox',
+              // or 'production'
+              commit: true,
+              payment: function payment() {
+                return paypalCheckoutInstance.createPayment({
+                  // Your PayPal options here. For available options, see
+                  // http://braintree.github.io/braintree-web/current/PayPalCheckout.html#createPayment
+                  flow: 'checkout',
+                  // Required
+                  amount: grand,
+                  // Required
+                  currency: 'USD' // Required
+
+                });
+              },
+              onAuthorize: function onAuthorize(data, actions) {
+                return paypalCheckoutInstance.tokenizePayment(data, function (err, payload) {
+                  // Submit `payload.nonce` to your server.
+                  document.querySelector('#nonce').value = payload.nonce; // form.submit();
+                });
+              },
+              onCancel: function onCancel(data) {
+                this.status = false;
+                this.message = 'Your payment was cancelled.';
+                this.removeMessage();
+                console.log();
+              },
+              onError: function onError(err) {
+                this.status = false;
+                this.message = "There was some error. Please try again later";
+                this.removeMessage();
+              }
+            }, '#paypal-button').then(function () {// The PayPal button will be rendered in an html element with the id
+              // `paypal-button`. This function will be called when the PayPal button
+              // is set up and ready to be used.
+            });
+          });
+        });
+      }
     },
     braintreePayment: function braintreePayment(form) {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function braintreePayment$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              axios.post('/braintree-token', {}).then(function (res) {
-                if (res.status == 200) {
-                  braintree.client.create({
-                    authorization: "".concat(res.data.token)
-                  }, function (clientErr, clientInstance) {
-                    if (clientErr) {
-                      console.error(clientErr);
-                      return;
-                    } // This example shows Hosted Fields, but you can also use this
-                    // client instance to create additional components here, such as
-                    // PayPal or Data Collector.
+      braintree.client.create({
+        authorization: "".concat(this.token)
+      }, function (clientErr, clientInstance) {
+        if (clientErr) {
+          console.error(clientErr);
+          return;
+        } // This example shows Hosted Fields, but you can also use this
+        // client instance to create additional components here, such as
+        // PayPal or Data Collector.
 
 
-                    braintree.hostedFields.create({
-                      client: clientInstance,
-                      styles: {
-                        'input': {
-                          'font-size': '14px'
-                        },
-                        'input.invalid': {
-                          'color': 'red'
-                        },
-                        'input.valid': {
-                          'color': 'green'
-                        }
-                      },
-                      fields: {
-                        number: {
-                          selector: '#card-number',
-                          placeholder: '4111 1111 1111 1111'
-                        },
-                        cvv: {
-                          selector: '#cvv',
-                          placeholder: '123'
-                        },
-                        expirationDate: {
-                          selector: '#expiration-date',
-                          placeholder: '10/2019'
-                        }
-                      }
-                    }, function (hostedFieldsErr, hostedFieldsInstance) {
-                      if (hostedFieldsErr) {
-                        console.error(hostedFieldsErr);
-                        return;
-                      } // submit.removeAttribute('disabled');
-
-
-                      form.addEventListener('submit', function (event) {
-                        event.preventDefault();
-                        hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
-                          if (tokenizeErr) {
-                            console.error(tokenizeErr);
-                            return;
-                          } // If this was a real integration, this is where you would
-                          // send the nonce to your server.
-                          // console.log('Got a nonce: ' + payload.nonce);
-
-
-                          document.querySelector('#nonce').value = payload.nonce;
-                          form.submit();
-                        });
-                      }, false);
-                    });
-                  });
-                }
-              })["catch"](function (err) {
-                console.log(err);
-              });
-
-            case 1:
-            case "end":
-              return _context3.stop();
+        braintree.hostedFields.create({
+          client: clientInstance,
+          styles: {
+            'input': {
+              'font-size': '14px'
+            },
+            'input.invalid': {
+              'color': 'red'
+            },
+            'input.valid': {
+              'color': 'green'
+            }
+          },
+          fields: {
+            number: {
+              selector: '#card-number',
+              placeholder: '4111 1111 1111 1111'
+            },
+            cvv: {
+              selector: '#cvv',
+              placeholder: '123'
+            },
+            expirationDate: {
+              selector: '#expiration-date',
+              placeholder: '10/2019'
+            }
           }
-        }
+        }, function (hostedFieldsErr, hostedFieldsInstance) {
+          if (hostedFieldsErr) {
+            this.status = false;
+            this.message = "There was some error. Please try again later";
+            this.removeMessage();
+            return;
+          } // submit.removeAttribute('disabled');
+
+
+          form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
+              if (tokenizeErr) {
+                this.status = false;
+                this.message = "There was some error. Please try again later";
+                this.removeMessage();
+                return;
+              } // If this was a real integration, this is where you would
+              // send the nonce to your server.
+              // console.log('Got a nonce: ' + payload.nonce);
+
+
+              document.querySelector('#nonce').value = payload.nonce;
+              form.submit();
+            });
+          }, false);
+        });
       });
     },
     removeMessage: function removeMessage() {
       var _this = this;
 
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function removeMessage$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              setTimeout(function () {
-                _this.message = null;
-                _this.err = null;
-              }, 3000);
-
-            case 1:
-            case "end":
-              return _context4.stop();
-          }
-        }
-      });
+      setTimeout(function () {
+        _this.message = null;
+        _this.err = null;
+      }, 3000);
     }
   }
 });
@@ -24324,7 +24348,7 @@ var render = function() {
         {
           attrs: {
             method: "POST",
-            action: "/zero/products",
+            action: "/management/products",
             enctype: "multipart/form-data"
           }
         },
@@ -24412,7 +24436,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "form",
-        { attrs: { action: "/zero/products", method: "POST" } },
+        { attrs: { action: "/management/products", method: "POST" } },
         [
           _c("input", {
             attrs: { type: "hidden", name: "_token" },
@@ -24702,7 +24726,7 @@ var render = function() {
                         {
                           attrs: {
                             href:
-                              "/zero/products-edit/" +
+                              "/management/products-edit/" +
                               product.id +
                               "-" +
                               product.name
@@ -24872,7 +24896,7 @@ var render = function() {
       },
       [
         _c("p", { staticClass: "bg-red-500 text-white rounded-lg text-md" }, [
-          _vm._v("\n            " + _vm._s(_vm.erro) + "\n        ")
+          _vm._v("\n            " + _vm._s(_vm.error) + "\n        ")
         ])
       ]
     ),
@@ -24929,7 +24953,8 @@ var render = function() {
     "div",
     {
       staticClass:
-        "relative  w-full px-6  lg:px-12 flex flex-col bg-gray-300 my-6"
+        "relative  w-full px-6  lg:px-12 flex flex-col bg-gray-300 py-6",
+      class: _vm.modal ? "bg-gray-400" : ""
     },
     [
       _vm.message
@@ -24999,26 +25024,18 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c(
-                  "form",
+                  "button",
                   {
+                    staticClass:
+                      "p-3 bg-red-500 rounded-lg text-lg font-medium text-white",
+                    attrs: { type: "submit" },
                     on: {
-                      submit: function($event) {
-                        $event.preventDefault()
-                        return _vm.clearCart($event)
+                      click: function($event) {
+                        _vm.modal = true
                       }
                     }
                   },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "p-3 bg-red-500 rounded-lg text-lg font-medium text-white",
-                        attrs: { type: "submit" }
-                      },
-                      [_vm._v("Clear Cart")]
-                    )
-                  ]
+                  [_vm._v("Clear Cart")]
                 )
               ]),
               _vm._v(" "),
@@ -25033,7 +25050,7 @@ var render = function() {
                     [
                       _c("img", {
                         staticClass:
-                          "h-40 w-40 rounded-lg object-cover object-center",
+                          "h-16 w-16 rounded-lg object-cover object-center",
                         attrs: { src: "/storage/" + p.options.imageUrl }
                       }),
                       _vm._v(" "),
@@ -25054,77 +25071,75 @@ var render = function() {
                         ]
                       ),
                       _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "flex justify-around items-center" },
-                        [
-                          _c(
-                            "form",
-                            {
-                              on: {
-                                submit: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.updateCart(p)
-                                }
+                      _c("div", { staticClass: "flex items-center" }, [
+                        _c(
+                          "form",
+                          {
+                            on: {
+                              submit: function($event) {
+                                $event.preventDefault()
+                                return _vm.updateCart(p)
                               }
-                            },
-                            [
-                              _c("div", [
-                                _c("input", {
-                                  attrs: { type: "text", name: "" },
-                                  domProps: {
-                                    value:
-                                      "" +
-                                      (_vm.selected == p.id ? _vm.qty : p.qty)
-                                  },
-                                  on: {
-                                    input: function($event) {
-                                      _vm.qty = $event.target.value
-                                      _vm.selected = p.id
-                                    }
+                            }
+                          },
+                          [
+                            _c("div", [
+                              _c("input", {
+                                staticClass:
+                                  "px-4 py-3 w-16 text-center rounded-lg",
+                                attrs: { type: "text", name: "" },
+                                domProps: {
+                                  value:
+                                    "" +
+                                    (_vm.selected == p.id ? _vm.qty : p.qty)
+                                },
+                                on: {
+                                  input: function($event) {
+                                    _vm.qty = $event.target.value
+                                    _vm.selected = p.id
                                   }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "p-3 rounded-lg text-blue-900 text-md ",
-                                    attrs: { type: "submit" }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                Update\n                            "
-                                    )
-                                  ]
-                                )
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "form",
-                            {
-                              on: {
-                                submit: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.removeCart(p)
                                 }
-                              }
-                            },
-                            [
+                              }),
+                              _vm._v(" "),
                               _c(
                                 "button",
                                 {
                                   staticClass:
-                                    "p-3 rounded-lg text-blue-900 text-md "
+                                    "p-3 rounded-lg text-blue-900 text-md ",
+                                  attrs: { type: "submit" }
                                 },
-                                [_vm._v("Drop Product")]
+                                [
+                                  _vm._v(
+                                    "\n                                Update\n                            "
+                                  )
+                                ]
                               )
-                            ]
-                          )
-                        ]
-                      )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "form",
+                          {
+                            on: {
+                              submit: function($event) {
+                                $event.preventDefault()
+                                return _vm.removeCart(p)
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "p-3 rounded-lg text-blue-900 text-md "
+                              },
+                              [_vm._v("Drop Product")]
+                            )
+                          ]
+                        )
+                      ])
                     ]
                   )
                 ])
@@ -25132,43 +25147,223 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "mt-4 flex flex-col items-right ml-auto w-48" },
+                {
+                  staticClass: "mt-6 mb-3 flex flex-row justify-between w-auto"
+                },
                 [
                   _c(
-                    "div",
+                    "form",
                     {
-                      staticClass:
-                        "flex items-center border-green-600 border-2 rounded-lg p-3 mb-3"
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.redeemDiscount($event)
+                        }
+                      }
                     },
                     [
                       _c(
-                        "span",
-                        {
-                          staticClass:
-                            "text-bold text-lg text-green-600 rounded-lg mr-2"
-                        },
-                        [_vm._v("SubTotal")]
+                        "h3",
+                        { staticClass: "mb-3 text-lg font-bold text-black" },
+                        [_vm._v("Redeem your Coupon")]
                       ),
                       _vm._v(" "),
-                      _c(
-                        "span",
-                        { staticClass: "text-lg text-bold text-green-500" },
-                        [_vm._v("$ " + _vm._s(_vm.subTotal))]
-                      )
+                      _c("div", { staticClass: "flex items-center" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.code,
+                              expression: "code"
+                            }
+                          ],
+                          staticClass: "px-4 py-3 rounded-l-lg bg-gray-100",
+                          attrs: { type: "text" },
+                          domProps: { value: _vm.code },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.code = $event.target.value
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "px-4 py-3 rounded-r-lg bg-black text-white font-bold text-lg",
+                            attrs: { type: "submit" }
+                          },
+                          [_vm._v("Redeem")]
+                        )
+                      ])
                     ]
                   ),
                   _vm._v(" "),
-                  _c("div", { staticClass: "flex items-center " }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass:
-                          "text-bold text-lg bg-green-900 text-white p-3 rounded-lg",
-                        attrs: { href: "/checkout" }
-                      },
-                      [_vm._v("Checkout")]
-                    )
-                  ])
+                  _c(
+                    "div",
+                    { staticClass: "flex flex-col  rounded-lg p-3 mb-3" },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "flex items-center justify-between" },
+                        [
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "text-bold text-lg text-black-600 rounded-lg mr-2"
+                            },
+                            [_vm._v("SubTotal")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "text-bold text-lg text-black-600 rounded-lg mr-2"
+                            },
+                            [_vm._v("$ " + _vm._s(_vm.subTotal))]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "flex items-center justify-between" },
+                        [
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "text-bold text-lg text-black-600 rounded-lg mr-2"
+                            },
+                            [_vm._v("Discount")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "text-bold text-lg text-black-600 rounded-lg mr-2"
+                            },
+                            [_vm._v("$ " + _vm._s(_vm.discount))]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "flex items-center justify-between" },
+                        [
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "text-bold text-lg text-black-600 rounded-lg mr-2"
+                            },
+                            [_vm._v("SubTotal After Discount")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "text-bold text-lg text-black-600 rounded-lg mr-2"
+                            },
+                            [
+                              _vm._v(
+                                "$ " +
+                                  _vm._s(
+                                    _vm.subAfterDis
+                                      ? _vm.subAfterDis
+                                      : _vm.subTotal
+                                  )
+                              )
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "flex items-center justify-between" },
+                        [
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "text-bold text-lg text-black-600 rounded-lg mr-2"
+                            },
+                            [_vm._v("Tax")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "text-bold text-lg text-black-600 rounded-lg mr-2"
+                            },
+                            [_vm._v("$ " + _vm._s(_vm.tax))]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "flex items-center justify-between" },
+                        [
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "text-bold text-lg text-black-600 rounded-lg mr-2"
+                            },
+                            [_vm._v("Grand Total")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "text-bold text-lg text-black-600 rounded-lg mr-2"
+                            },
+                            [_vm._v("$ " + _vm._s(_vm.grandTotal))]
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "flex items-center text-right justify-end" },
+                [
+                  _c(
+                    "a",
+                    {
+                      staticClass:
+                        "mr-4 text-bold text-lg bg-gray-100 text-gray-900 p-3 rounded-lg",
+                      attrs: { href: "/shoes" }
+                    },
+                    [_vm._v("Continue My Shopping")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass:
+                        "text-bold text-lg bg-green-900 hover:bg-green-500 text-white p-3 rounded-lg",
+                      attrs: { href: "/checkout" }
+                    },
+                    [_vm._v("Checkout")]
+                  )
                 ]
               )
             ],
@@ -25192,11 +25387,113 @@ var render = function() {
                 [_vm._v("Continue My Shopping")]
               )
             ])
-          ])
+          ]),
+      _vm._v(" "),
+      _vm.modal
+        ? _c(
+            "div",
+            {
+              staticClass:
+                "fixed w-full h-full top-0 left-0 flex items-center justify-center",
+              attrs: { id: "exampleModal", tabindex: "-1", role: "dialog" }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg overflow-y-auto max-w-lg rounded-lg p-6"
+                },
+                [
+                  _c("div", { staticClass: "flex justify-end rounded-t-lg" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "px-4 py-3 cursor-pointer",
+                        attrs: {
+                          type: "button",
+                          "data-dismiss": "modal",
+                          "aria-label": "Close"
+                        },
+                        on: {
+                          click: function($event) {
+                            _vm.modal = false
+                          }
+                        }
+                      },
+                      [
+                        _c(
+                          "svg",
+                          {
+                            staticClass: "fill-current text-gray-900",
+                            attrs: {
+                              xmlns: "http://www.w3.org/2000/svg",
+                              width: "18",
+                              height: "18",
+                              viewBox: "0 0 18 18"
+                            }
+                          },
+                          [
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "flex justify-end pt-2" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "px-4 cursor-pointer bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2",
+                        on: {
+                          click: function($event) {
+                            _vm.modal = false
+                          }
+                        }
+                      },
+                      [_vm._v("Cancel")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "modal-close cursor-pointer px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400",
+                        attrs: { "data-dismiss": "modal" },
+                        on: { click: _vm.clearCart }
+                      },
+                      [_vm._v("Yes")]
+                    )
+                  ])
+                ]
+              )
+            ]
+          )
+        : _vm._e()
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", {}, [
+      _c("p", { staticClass: "px-2 py-2 text-lg mb-2" }, [
+        _vm._v(" Are you sure ? ")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -25337,8 +25634,72 @@ var render = function() {
           _vm._v(" "),
           _c("input", {
             attrs: { name: "amount", type: "hidden" },
-            domProps: { value: 100 }
+            domProps: { value: _vm.total }
           }),
+          _vm._v(" "),
+          _c(
+            "h3",
+            { staticClass: "text-lg font-semibold text-gray-900 mb-6 " },
+            [_vm._v("Fill Personal Info")]
+          ),
+          _vm._v(" "),
+          _vm._m(0),
+          _vm._v(" "),
+          _vm._m(1),
+          _vm._v(" "),
+          _c("div", { staticClass: "flex flex-wrap -mx-3 mb-6" }, [
+            _c("div", { staticClass: "w-full md:w-1/3 px-3 mb-6 md:mb-0" }, [
+              _c(
+                "label",
+                {
+                  staticClass:
+                    "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+                  attrs: { for: "grid-city" }
+                },
+                [_vm._v("\n              City\n            ")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "relative" }, [
+                _vm._m(2),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "fill-current h-4 w-4",
+                        attrs: {
+                          xmlns: "http://www.w3.org/2000/svg",
+                          viewBox: "0 0 20 20"
+                        }
+                      },
+                      [
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                          }
+                        })
+                      ]
+                    )
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(3)
+          ]),
+          _vm._v(" "),
+          _c(
+            "h3",
+            { staticClass: "text-lg font-semibold text-gray-900 mb-6 " },
+            [_vm._v("Select Payment Method")]
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "flex flex-row items-center my-6 mx-3  " }, [
             _c(
@@ -25533,21 +25894,36 @@ var render = function() {
                   }
                 }),
                 _vm._v(" "),
-                _vm._m(0)
+                _vm._m(4)
               ])
             : _vm._e(),
           _vm._v(" "),
-          _vm.method === "stripe" ? _c("div", [_vm._m(1)]) : _vm._e(),
+          _vm.method === "stripe" ? _c("div", [_vm._m(5)]) : _vm._e(),
           _vm._v(" "),
           _vm.method === "paypal"
-            ? _c("div", [_c("div", { attrs: { id: "paypal-button" } })])
+            ? _c("div", { staticClass: "mb-3" }, [
+                _c("input", {
+                  attrs: { type: "hidden", name: "_type", value: "paypal" }
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: {
+                    id: "nonce",
+                    name: "payment_method_nonce",
+                    type: "hidden"
+                  }
+                }),
+                _vm._v(" "),
+                _c("div", { attrs: { id: "paypal-button" } })
+              ])
             : _vm._e(),
           _vm._v(" "),
           _c(
             "button",
             {
               staticClass:
-                "px-6 py-4 hover:bg-green-500 rounded-full text-white font-bold text-lg bg-green-600"
+                "mt-5 px-6 py-4 hover:bg-green-500 rounded-full text-white font-bold text-lg bg-green-800 ",
+              attrs: { type: "submit" }
             },
             [_vm._v("Submit Payment")]
           )
@@ -25561,13 +25937,135 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex items-center mb-6" }, [
+      _c("div", { staticClass: "mb-4 mr-2 flex-1" }, [
+        _c(
+          "label",
+          {
+            staticClass: "block text-gray-700 text-sm font-bold mb-2",
+            attrs: { for: "firstname" }
+          },
+          [_vm._v("\n              First Name\n            ")]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          staticClass:
+            "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+          attrs: {
+            id: "firstname",
+            name: "firstname",
+            type: "text",
+            placeholder: "firstname"
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "mb-4 flex-1" }, [
+        _c(
+          "label",
+          {
+            staticClass: "block text-gray-700 text-sm font-bold mb-2",
+            attrs: { for: "lastname" }
+          },
+          [_vm._v("\n              Last Name\n            ")]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          staticClass:
+            "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+          attrs: {
+            id: "lastname",
+            name: "lastname",
+            type: "text",
+            placeholder: "lastname"
+          }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mb-6" }, [
+      _c(
+        "label",
+        {
+          staticClass: "block text-gray-700 text-sm font-bold mb-2",
+          attrs: { for: "email" }
+        },
+        [_vm._v("\n            Email\n          ")]
+      ),
+      _vm._v(" "),
+      _c("input", {
+        staticClass:
+          "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+        attrs: {
+          id: "email",
+          name: "email",
+          type: "email",
+          placeholder: "email"
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "select",
+      {
+        staticClass:
+          "block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+        attrs: { id: "grid-city", name: "city" }
+      },
+      [_c("option", [_vm._v("Pokhara")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "w-full md:w-1/3 px-3 mb-6 md:mb-0" }, [
+      _c(
+        "label",
+        {
+          staticClass:
+            "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+          attrs: { for: "street" }
+        },
+        [_vm._v("\n              Street Address\n            ")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "relative" }, [
+        _c("input", {
+          staticClass:
+            "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+          attrs: {
+            id: "street",
+            type: "text",
+            placeholder: "Albuquerque",
+            name: "address"
+          }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "flex flex-row items-center" }, [
       _c("div", { staticClass: "flex flex-col" }, [
         _c("label", { staticClass: "mb-2", attrs: { for: "cc_number" } }, [
           _vm._v("Credit Card Number")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "form-group", attrs: { id: "card-number" } })
+        _c("div", {
+          staticClass: "px-4 py-3 rounded-lg h-16",
+          attrs: { id: "card-number" }
+        })
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "flex flex-col" }, [
@@ -25576,7 +26074,7 @@ var staticRenderFns = [
         ]),
         _vm._v(" "),
         _c("div", {
-          staticClass: "form-group",
+          staticClass: "px-4 py-3 rounded-lg h-16",
           attrs: { id: "expiration-date" }
         })
       ]),
@@ -25586,7 +26084,10 @@ var staticRenderFns = [
           _vm._v("CVV")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "form-group", attrs: { id: "cvv" } })
+        _c("div", {
+          staticClass: "px-4 py-3 rounded-lg h-16",
+          attrs: { id: "cvv" }
+        })
       ])
     ])
   },

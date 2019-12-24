@@ -7,7 +7,7 @@
 		</div>
 		<div v-show="error">
 			<p class="bg-red-500 text-white rounded-lg text-md">
-	            {{ erro }}
+	            {{ error }}
 	        </p>
 		</div>
 		<div class="flex flex-row">
@@ -26,12 +26,12 @@
         data(){return{message:null,error:null}},
         methods: {
         	dropCostumer(product){
-                axios.post(`/zero/products/${product.id}`, {})
+                axios.post(`/management/products/${product.id}`, {})
                     .then(res=>{
                         if(res.status == 204){
                         	this.message = 'Product dropped.';    
                         	setTimeout(() => {
-                        		window.location = `http://localhost:8000/zero/products`;
+                        		window.location = `http://localhost:8000/management/products`;
                         	}, 3000);
                         }
                     }).catch((error) => {

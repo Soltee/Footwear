@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Cart;
 use App\Products;
+use App\Orders;
+use App\Order_Items;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Cartalyst\Stripe\Laravel\Facades\Stripe;
@@ -13,18 +15,7 @@ class CheckoutController extends Controller
 {
 
     public function checkout(){
-    	$products = Cart::content();
-		$totalQuantity = Cart::instance('default')->count();
-		$subTotal = Cart::subtotal();
-		$grandTotal = Cart::total();
-		return view('home.checkout', compact('products', 'totalQuantity', 'subTotal', 'grandTotal'));
-    }
 
-    /*
-        * Create Authorization Token for Braintree
-    */
-    public function braintreeToken()
-    {
         $gateway = new \Braintree\Gateway([
             'environment' => config('services.braintree.environment'),
             'merchantId' => config('services.braintree.merchantId'),
@@ -32,8 +23,19 @@ class CheckoutController extends Controller
             'privateKey' => config('services.braintree.privateKey')
         ]);
 
-        return response()->json(['token' => $gateway->ClientToken()->generate()], 200);
+
+    	$products = Cart::content();
+		$totalQuantity = Cart::instance('default')->count();
+		$subTotal = Cart::subtotal();
+        $discount = (session('discount'))?? 0;
+        $subAfterDis = (session('subAfterDis'))?? 0;
+        $tax = Cart::tax();
+		$grandTotal = (session('discount'))? session('grand') : Cart::total();
+        $token = $gateway->ClientToken()->generate();
+		return view('home.checkout', compact('products', 'totalQuantity', 'subTotal', 'discount', 'subAfterDis', 'tax', 'grandTotal', 'token'));
     }
+
+
     /**
         * Successful Payment
         * Use Guzzle to send post request to khalti server for server verification
@@ -41,9 +43,15 @@ class CheckoutController extends Controller
     */
     public function charge(Request $request){
 
-        // dd(request()->all());
+        $firstName = request()->firstname;
+        $lastName = request()->lastname;
+        $email = request()->email;
+        $city = request()->city;
+        $address = request()->address;
+        $paymentType = request()->_type;
+        $amt = (session('discount'))? session('grand') : Cart::total();
 
-        if(request()->_type === 'braintree'){
+        if($paymentType === 'braintree' || $paymentType === 'paypal'){
                 $gateway = new \Braintree\Gateway([
                     'environment' => config('services.braintree.environment'),
                     'merchantId' => config('services.braintree.merchantId'),
@@ -53,12 +61,12 @@ class CheckoutController extends Controller
                 $amount = $request->amount;
                 $nonce = $request->payment_method_nonce;
                 $result = $gateway->transaction()->sale([
-                    'amount' => $amount,
+                    'amount' => $amt,
                     'paymentMethodNonce' => $nonce,
                     'customer' => [
-                        'firstName' => 'Tony',
-                        'lastName' => 'Stark',
-                        'email' => 'tony@avengers.com',
+                        'firstName' => $firstName,
+                        'lastName' => $lastName,
+                        'email' => $email,
                     ],
                     'options' => [
                         'submitForSettlement' => true
@@ -66,7 +74,8 @@ class CheckoutController extends Controller
                 ]);
                 if ($result->success) {
                     $transaction = $result->transaction;
-                    return back()->with('success', 'Transaction successful. The ID is:'. $transaction->id);
+                    $this->store($firstName, $lastName, $email, $city, $address, $paymentType);
+                    return redirect()->route('thank-you');
                 } else {
                     $errorString = "";
                     foreach ($result->errors->deepAll() as $error) {
@@ -76,28 +85,10 @@ class CheckoutController extends Controller
                 }
 
             
-        } elseif(request()->_type === "khalti"){
-            try {
-            $headers = ['Authorization: Key ' . config('services.khalti.secretKey')];
-            $url = "https://khalti.com/api/v2/payment/verify/";
-                $client = new \GuzzleHttp\Client();
-                $response = $client->post($url, [
-                    'headers' => $headers,
-                    'form_params' => [
-                        'token' => request('token'),
-                        'amount' => request('amount')
-                    ]
-                ]);
-
-                return response()->json(['success' => 'ok', 'response' =>  $response->getBody()], 201);
-            }
-            catch (Exception $e) {
-                return response()->json([], 404);
-            }
-        } else {
+        }  else {
             try {
                 $stripe = Stripe::charges()->create([
-                    'amount' => 20,
+                    'amount' => $amt,
                     'currency' => 'USD',
                     'source' => request()->stripeToken,
                     'description' => 'Testin',
@@ -106,17 +97,63 @@ class CheckoutController extends Controller
                         'helo'=> 'helo'
                     ]
                 ]);
-                return back()->with('success', 'Your payment has been successful.');
+                $this->store($firstName, $lastName,  $email, $city, $address, $paymentType);
+                return redirect()->route('thank-you');
             } catch (CardErrorException $e) {
                 return back()->with('error', $e->getMessage());
             }
-        }
-        
-        
+        }        
 
         
     }
 
+    /**
+        * After Successful payment, store data to database
+    **/
+    public function store($firstName, $lastName,  $email, $city, $address, $paymentType){
+        $products = Cart::content();
+        $totalQuantity = Cart::instance('default')->count();
+        $subTotal = Cart::subtotal();
+        $discount = (session('discount'))?? 0;
+        $subAfterDis = (session('subAfterDis'))?? 0;
+        $tax = Cart::tax();
+        $grandTotal = (session('discount'))? session('grand') : Cart::total();
+        $Authenticated = ($this->guard()) ? $this->guard()->id : null;
+        
+        $order = Orders::create([
+            'user_id' => $Authenticated,
+            'first_name' => $firstName,
+            'last_name' => $lastName, 
+            'email' => $email,
+            'city' => $city, 
+            'street_address' => $address, 
+            'phoneNumber' => 9838383838,
+            'payment_method' => $paymentType, 
+            'subtotal' => $subTotal, 
+            'discount' => $discount, 
+            'subafterdiscount' => $subAfterDis, 
+            'tax' => $tax, 
+            'grand' => $grandTotal
+        ]);
+
+        foreach(Cart::content() as $product){
+            Order_Items::create([
+                'order_id' => 1,  
+                'name'     => $product->name, 
+                'price'    => $product->price, 
+                'quantity' => $product->qty
+            ]);
+        }
+        Cart::destroy();
+        session()->forget('discount');
+        session()->forget('subAfterDis');
+        session()->forget('grand');
+        return true;
+    }
+
+    public function thankyou(){
+        return view('home.thankyou');
+    }
     /**
 		* Returns the Authenticated USER via 'guard'
     */

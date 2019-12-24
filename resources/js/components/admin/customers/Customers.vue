@@ -91,7 +91,7 @@
         	searchCustomer(){
         		this.status = false;
                 if(!this.keyword){return;}
-        		axios.get(`/zero/searchCustomers/${this.keyword}`)
+        		axios.get(`/management/searchCustomers/${this.keyword}`)
         			.then((res) => {
         				// console.log(res.data.customers);
         				let ctms = res.data.customers;
@@ -109,7 +109,7 @@
         			})
         	},
             dropCostumer(customer){
-                axios.post(`/zero/customers/${customer.id}`, {})
+                axios.post(`/management/customers/${customer.id}`, {})
                     .then(res=>{
                         if(res.status == 204){
                         this.message = 'Product dropped.';                            
@@ -119,7 +119,7 @@
                     });
             },
             redirectTo(customer){
-                window.location = `http://localhost:8000/zero/customers/${customer.id}-${customer.name}`;   
+                window.location = `http://localhost:8000/management/customers/${customer.id}-${customer.name}`;   
             }
         }
     }

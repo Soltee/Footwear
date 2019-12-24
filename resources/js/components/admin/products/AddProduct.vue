@@ -2,7 +2,7 @@
     <div class="flex-1 flex flex-row justify-between">
         <div class="flex-1 overflow-hidden px-4">
                 
-            <form :method="`POST`" :action="`/zero/products`" :enctype="`multipart/form-data`">
+            <form :method="`POST`" :action="`/management/products`" :enctype="`multipart/form-data`">
                 <input type="hidden" name="_token" :value="csrf">
 
                 <div class="flex flex-row justify-between items-center mb-3">
@@ -57,7 +57,7 @@
                 <input type="text" name="name" placeholder="Name Here" v-model="name">
                 <button type="submit">Save</button>
             </form>
-            <form :action="`/zero/products`" method="POST">
+            <form :action="`/management/products`" method="POST">
                 <input type="hidden" name="_token" :value="csrf">
                 <div v-for="category in categoriesArray">
                     <label for="category">{{category.name}}</label>
@@ -98,7 +98,7 @@
                 
         	},
             addCategory(){
-                axios.post(`/zero/category/store`, {
+                axios.post(`/management/category/store`, {
                     name : this.name
                 })
                     .then((res) => {

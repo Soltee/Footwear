@@ -121,7 +121,7 @@
         	searchAll(){
         		this.status = true;
                 if(!this.keyword){return;}
-        		axios.get(`/zero/searchall/${this.keyword}`)
+        		axios.get(`/management/searchall/${this.keyword}`)
         			.then((res) => {
         				let data = res.data;
                         this.resultTotal = data.total;

@@ -19,30 +19,7 @@
         </div>
     </div>
 
-    <!-- <welcome-view :products="{{ $products->toJson() }}"></welcome-view> -->
-    
-    <div class="mt-64">
-        {{ Cart::content() }}
-    </div>
-    <div class="container mx-auto text-black font-bold mt-12">
-
-        <div class="flex flex-row items-center">
-        
-        @forelse(Cart::content() as $product)
-
-        <div class=" w-full sm:w-1/2 p-3 md:w-1/3 lg:w-1/4 ">
-            <div class="flex flex-col bg-white shadow-md rounded-lg">
-            <img class="w-full h-64 object-cover object-center rounded-lg" src="storage/{{ $product->imageUrl }}" alt="Product Image">
-            <h5>{{ $product->name }}</h5>
-            <h5>{{ $product->price }}</h5> 
-          </div>
-        </div>              
-        @empty 
-        
-    </div>
-
-
-    @endforelse
+    <div>
         <div class="flex flex-wrap justify-center">
             <div class="flex-1">
                 <div class="flex flex-wrap ">
