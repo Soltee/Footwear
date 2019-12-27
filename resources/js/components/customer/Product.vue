@@ -1,14 +1,14 @@
 <template>
-    <div class="container ">
-        <p v-if="message" class="rounded-lg text-md font-medium bg-green-500 text-white">
+    <div class="">
+        <p  v-if="message"  class="fixed top-0 right-0 w-auto z-20 text-center py-3 px-4 rounded-lg text-md font-medium bg-green-500 text-white">
             {{ message }}
         </p>
         <div v-if="isAdded">
-            <span class="p-3 rounded-lg text-white text-md cursor-not-allowed bg-green-900 opacity-50">In Cart</span>
+            <span class="p-2 rounded-lg text-white text-md cursor-not-allowed bg-green-900 opacity-50">In Cart</span>
         </div>
         <form v-else @submit.prevent="addToCart">
            
-            <button type="submit" :class="(isAdded) ? 'cursor-not-allowed bg-green-900 opacity-50' : 'bg-blue-900'" class="p-3 rounded-lg text-white text-md "> Add To Cart</button>
+            <button type="submit" :class="(isAdded) ? 'cursor-not-allowed bg-green-900 opacity-50' : 'bg-black'" class="p-3 rounded-lg text-white text-md hover:opacity-75"> Add To Cart</button>
         </form>
         
     </div>
@@ -30,7 +30,7 @@ import { serverBus } from '../../app.js';
             this.isProductAlreadyAdded();
         },
         methods: {
-            async addToCart(){
+            addToCart(){
                 axios.get(`/add-to-cart/${this.product.id}`)
                     .then((res) => {
                         if(res.status == 200){
@@ -42,9 +42,10 @@ import { serverBus } from '../../app.js';
                     }).catch(error => this.err = 'There has been some error.');
 
             },
-            async isProductAlreadyAdded(){
+            isProductAlreadyAdded(){
                 axios.get(`/is-already-added/${this.product.id}`)
                     .then((res) => {
+                        console.log(res.data);
                         if(res.data.isAdded){
                             this.isAdded = true;
                         } else {
@@ -52,7 +53,7 @@ import { serverBus } from '../../app.js';
                         }
                     }).catch(error => this.err = 'There has been some error.');
             },
-            async removeMessage(){
+            removeMessage(){
                 setTimeout(() => {
                     this.message = null;
                     this.err = null;

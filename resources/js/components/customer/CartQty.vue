@@ -1,6 +1,6 @@
 <template>
-	<div class="relative flex items-center">
-        <li  class="relative flex items-center cursor-pointer mb-3 md:mb-0 md:ml-4 hover:text-custom-gray-lighter">
+	<div class="relative flex items-center md:ml-12 ">
+        <li  class="relative flex items-center cursor-pointer mb-3 md:mb-0 hover:text-custom-gray-lighter">
             <a :href="`/cart-details`">
                 <svg class="icon" fill="" viewBox="0 0 59 57"  xmlns="http://wwwp.w3.org/2000/svg">
                     <path opacity="0.8" d="M3 3H12.538L18.9285 35.1297C19.1465 36.2344 19.7437 37.2268 20.6156 37.933C21.4875 38.6393 22.5784 39.0145 23.6975 38.9929H46.8748C47.9938 39.0145 49.0848 38.6393 49.9566 37.933C50.8285 37.2268 51.4257 36.2344 51.6438 35.1297L55.459 14.9976H14.9225" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>

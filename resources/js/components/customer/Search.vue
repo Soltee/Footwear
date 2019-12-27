@@ -1,6 +1,6 @@
 <template>
     <div class="container ">
-        <li class="mb-3 mb-0">
+        <li class="mb-3 mb-0 mr-4 ">
             <div class="relative hidden md:inline-flex flex-col justify-left items-center mt-2">
                 <div v-if="status">
                     <form @submit.prevent="searchShoes" class="relative flex items-center w-full" >

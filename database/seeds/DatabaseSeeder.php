@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
                 'subcategory_id' => 1,
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
-                'imageUrl' => $i.'.jpg',
+                'imageUrl' => '/products/'. $i.'.jpg',
             ]);
         }
        
@@ -48,7 +48,7 @@ class DatabaseSeeder extends Seeder
                 'subcategory_id' => 2,
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
-                'imageUrl' => $i.'.jpg',
+                'imageUrl' => '/products/'. $i.'.jpg',
             ]);
         }
 
@@ -59,7 +59,7 @@ class DatabaseSeeder extends Seeder
                 'subcategory_id' => 3,
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
-                'imageUrl' => $i.'.jpg',
+                'imageUrl' => '/products/'. $i.'.jpg',
             ]);
         }
        
@@ -70,7 +70,7 @@ class DatabaseSeeder extends Seeder
                 'subcategory_id' => 4,
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
-                'imageUrl' => $i.'.jpg',
+                'imageUrl' => '/products/'. $i.'.jpg',
             ]);
         }
 
@@ -81,7 +81,7 @@ class DatabaseSeeder extends Seeder
                 'subcategory_id' => 5,
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
-                'imageUrl' => $i.'.jpg',
+                'imageUrl' => '/products/'. $i.'.jpg',
             ]);
         }
        
@@ -92,7 +92,7 @@ class DatabaseSeeder extends Seeder
                 'subcategory_id' => 6,
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
-                'imageUrl' => $i.'.jpg',
+                'imageUrl' => '/products/'. $i.'.jpg',
             ]);
         }
 
@@ -104,7 +104,7 @@ class DatabaseSeeder extends Seeder
                 'subcategory_id' => 7,
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
-                'imageUrl' => $i.'.jpg',
+                'imageUrl' => '/products/'. $i.'.jpg',
             ]);
         }
        
@@ -115,7 +115,7 @@ class DatabaseSeeder extends Seeder
                 'subcategory_id' => 8,
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
-                'imageUrl' => $i.'.jpg',
+                'imageUrl' => '/products/'. $i.'.jpg',
             ]);
         }
 
@@ -126,7 +126,7 @@ class DatabaseSeeder extends Seeder
                 'subcategory_id' => 2,
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
-                'imageUrl' => $i.'.jpg',
+                'imageUrl' => '/products/'. $i.'.jpg',
             ]);
         }
        
@@ -137,7 +137,7 @@ class DatabaseSeeder extends Seeder
                 'subcategory_id' => 3,
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
-                'imageUrl' => $i.'.jpg',
+                'imageUrl' => '/products/'. $i.'.jpg',
             ]);
         }
     

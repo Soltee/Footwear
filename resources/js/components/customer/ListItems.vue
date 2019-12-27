@@ -1,9 +1,9 @@
 <template>
-    <div class=" flex flex-col items-left   bg-black rounded-lg p-2 md:p-0 z-20 md:mt-0  md:static md:flex-row md:items-center md:text-right md:rounded-none">
+    <div class=" flex flex-col items-left   bg-black rounded-lg p-2 md:p-0 z-20 md:mt-0  md:static md:flex-row   md:items-center md:text-right md:rounded-none">
 
        <search></search>
         
-        <li class="relative mb-3 md:mb-0 md:ml-4">
+        <li class="relative mb-3 md:mb-0 md:ml-4 md:mr-8">
             <span class="relative text-custom-gray hover:opacity-75">
                 <div class="flex flex-row justify-between items-center">
                     <a href="/shoes">
@@ -12,12 +12,12 @@
                     <svg v-if="megaMenustatus" @click="megaMenustatus = false" class="ml-2 h-8 w-8 text-custom-gray cursor-pointer hover:text-custom-gray-light" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10.707 7.05L10 6.343 4.343 12l1.414 1.414L10 9.172l4.243 4.242L15.657 12z"/></svg>
                     <svg v-else @click="megaMenustatus = true" class="ml-2 h-8 w-8 text-custom-gray cursor-pointer hover:text-custom-gray-light" fill="currentColor"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                 </div>
-                <div v-if="megaMenustatus" class="md:absolute bg-black p-3 rounded-lg top-0 right-0 m-0 md:mt-10 ml-0 flex flex-col md:flex-row justify-around ">
-                    <div v-for="category in categories" class="mt-2 md:mr-6 flex flex-col items-left rouneded-lg">
-                        <a :href="`/shoes?id=${category.id}&category=${category.name}`" class="text-custom-gray hover:opacity-75">
+                <div v-if="megaMenustatus" class="md:absolute bg-black p-3 rounded-lg top-0 right-0 m-0 md:mt-10 ml-0 flex flex-col md:flex-row justify-around w-64">
+                    <div v-for="category in categories" class="mt-6 md:mr-10 flex flex-col items-left rounded-lg">
+                        <a :href="`/shoes?id=${category.id}&category=${category.name}`" class="text-custom-gray hover:opacity-75 md:mr-10">
                             <h4 class="text-lg text-gray-light font-bold mb-4">{{ category.name }}</h4>
                         </a>
-                        <ul v-for="subcategory in category.subcategories" class="flex flex-col items-left">
+                        <ul v-for="subcategory in category.subcategories" class="flex flex-col items-left md:mr-10">
                             <li class="mb-2">
                                 <a :href="`/shoes?id=${subcategory.id}&subcategory=${subcategory.name}`" class="text-custom-gray hover:opacity-75">
 
@@ -30,7 +30,7 @@
                 </div>
             </span>
         </li>
-        <li class="mb-4 md:mb-0 md:ml-4">
+        <li class="mb-4 md:mb-0 md:ml-4 md:mr-8">
             <a href="" class="text-custom-gray hover:opacity-75">
                 Company
             </a>

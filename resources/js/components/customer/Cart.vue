@@ -15,27 +15,31 @@
                     <button @click="modal = true;" type="submit" class="p-3 bg-red-500 rounded-lg text-lg font-medium text-white">Clear Cart</button>
                 <!-- </form> -->
             </div>
-            
-            <div v-for="p in productsArr">
-                <div class="mt-4 flex flex-row justify-between items-center mb-3">
-                    <img class="h-16 w-16 rounded-lg object-cover object-center" :src="`/storage/${p.options.imageUrl}`">
-                    <div class="flex flex-col items-left justify-start pl-2">
-                        <h3 class="m-0">{{ p.name }}</h3>
-                        <h3 class="m-0">$ {{ p.price }}</h3>
-                    </div>
-                    <div class="flex items-center">
-                        <form @submit.prevent="updateCart(p)">
-                            <div>
-                                <input class="px-4 py-3 w-16 text-center rounded-lg" type="text" name="" @input="qty = $event.target.value; selected = p.id"  :value="`${(selected == p.id) ? qty : p.qty}`">
-                                <button type="submit" class="p-3 rounded-lg text-blue-900 text-md ">
-                                    Update
+            <div class="overflow-x-scroll w-400 md:w-auto md:overflow-auto">
+                
+                <div v-for="p in productsArr">
+                    <div class="mt-4 flex flex-row justify-between items-center mb-3">
+                        <img class="h-16 w-16 rounded-lg object-cover object-center" :src="`/storage/${p.options.imageUrl}`">
+                        <div class="flex flex-col items-left justify-start pl-2">
+                            <h3 class="m-0">{{ p.name }}</h3>
+                            <h3 class="m-0">$ {{ p.price }}</h3>
+                        </div>
+                        <div class="flex items-center">
+                            <form @submit.prevent="updateCart(p)">
+                                <div>
+                                    <input class="px-4 py-3 w-16 text-center rounded-lg" type="text" name="" @input="qty = $event.target.value; selected = p.id"  :value="`${(selected == p.id) ? qty : p.qty}`">
+                                    <button type="submit" class="p-3 rounded-lg text-blue-900 text-md ">
+                                        Update
+                                    </button>
+                                </div>
+                            </form>
+                            <form @submit.prevent="removeCart(p)">
+                   
+                                <button class="p-3 rounded-lg text-blue-900 text-md ">
+                                    <svg class="text-red-600 hover:shadow-md" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                                 </button>
-                            </div>
-                        </form>
-                        <form @submit.prevent="removeCart(p)">
-               
-                            <button class="p-3 rounded-lg text-blue-900 text-md ">Drop Product</button>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

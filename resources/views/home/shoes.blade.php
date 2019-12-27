@@ -1,21 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="  px-6  lg:px-12 flex flex-row bg-gray-300">
+    <div class="  px-6  lg:px-12 flex flex-col md:flex-row bg-gray-300 mx-auto container">
         
         <!-- Categories -->
-       <div class="w-48 px-3 py-3">
-            <ul class="flex flex-col items-left ml-2">
+       <div class="overflow-x-scroll md:w-56 md:px-3 py-3">
+            <ul class="flex flex-row md:flex-col items-left ml-2 ">
               @forelse($categories as $category)
 
-                <a class="mt-3 " href="{{ route('shoes', ['id' => $category->id , 'category' => $category->name]) }}" class="text-black hover:opacity-75">
+                <a class="hidden md:block mt-3 " href="{{ route('shoes', ['id' => $category->id , 'category' => $category->name]) }}" class="text-black hover:opacity-75">
                   <h4 class="text-lg font-bold mb-3 ">{{ $category->name }}</h4>
                 </a>
 
-                <ul class="mt-2 flex flex-col items-left ml-2">
+                <ul class="mt-2 flex flex-row md:flex-col items-left md:ml-2">
                   @forelse($category->subcategories as $subcategory)
             
-                  <li class="mb-2">
+                  <li class="mr-3 md:mr-0 mb-2 px-3 py-3 rounded-lg bg-white hover:shadow-lg ">
                         <a href="{{ route('shoes', ['id' => $subcategory->id , 'subcategory' => $subcategory->name]) }}">
                             {{ $subcategory->name }}
                         </a>
@@ -35,18 +35,23 @@
        			<h4 class="text-lg font-bold mb-3">Products</h4>
             <span class="">{{ $count }} / {{ $products->total() }}</span>
        		</div>
-       		<div class="mt-10 flex flex-row  flex-wrap {{ $count > 2 ? '' : '' }}">
+       		<div class="mt-10 flex flex-row container flex-wrap {{ $count > 2 ? '' : '' }}">
        			@forelse($products as $product)
+                <div class="p-4 bg-white rounded-lg shadow-lg cursor-pointer m-2 w-full cm:w-auto hover:-mt-1 hover:-mr-21 w-full p-3 md:2/3  lg:1/3">
+                    <a href="{{ $product->id }}">
+                        <h3 class="text-lg font-bold my-2 text-gray-900">{{ $product->name }}</h3>
+                        <img class="w-full sm:h-64 sm:w-64 rounded-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}">  
+                    </a>
+                    <div class=" my-2 bg-gray-300 shadow-lg rounded-lg flex flex-row justify-between w-full items-center">
+                            <h5 class="text-xl font-bold text-gray-800">$ {{ $product->price }}</h5>
+                            <add-to-cart :product="{{ $product }}"   /> 
+                        </div>
 
-                <div class=" w-full sm:w-1/2 p-3 md:w-1/3 lg:w-1/4   {{ $count > 2 ? '' : 'mr-24' }}">
-                	<div class="flex flex-col bg-white shadow-md rounded-lg">
-                    <img class="w-full h-64 object-cover object-center rounded-lg" src="storage/{{ $product->imageUrl }}" alt="Product Image">
-                    <h5>{{ $product->name }}</h5>
-                    <h5>{{ $product->price }}</h5> 
-                  </div>
-                </div>              
+                </div>
 	            @empty 
-
+                <div class="px-4 py-4 rounded-lg text-white bg-red-600">
+                  No products in the database.
+                </div>
 	            @endforelse
 
        		</div>

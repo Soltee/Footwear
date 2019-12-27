@@ -16,7 +16,10 @@ class CartController extends Controller
 	 	* Used in Product.vue
 	*/
 	public function isProductAlreadyAdded(Products $products){
-		return response()->json(['isAdded' => Cart::get($products->id) ], 200);
+		$added = Cart::search(function ($cartItem, $rowId) use ($products) {
+            return $cartItem->id === $products->id;
+        });
+		return response()->json(['isAdded' => ($added->isNotEmpty() ? true : false) ], 200);
 	} 
 
 

@@ -57,10 +57,10 @@
     <!--   <link href="{{ asset('css/sm.css') }}" rel="stylesheet"> -->
 </head>
 <body class="bg-gray-100 h-screen antialiased leading-none text-lg">
-    <div id="app" >
+    <div id="app"  class="">
         <nav class="relative">
             @if(Route::currentRouteName() == 'welcome')
-                <img class="header-blob background -z-10 -mt-16 md:mt-0" src="/img/blob.svg" alt="background">
+                <img class="header-blob background -z-10 -mt-16 md:mt-0" src="/svg/hero-blob.svg" alt="background">
             @endif
             <div class="px-3 md:px-6 lg:px-12 z-10 py-3 md:py-8 bg-black">
                 <div class="flex items-center justify-between">

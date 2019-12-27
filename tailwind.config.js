@@ -17,11 +17,19 @@ module.exports = {
           'red-light' : '#8a3231',
         }
       },
+      height: {
+        '86': '24rem'
+      },
+      width:{
+        '400' : '400px'
+      },
       maxHeight: {
         '24' : '24rem'
       } 
     }
   },
-  variants: {},
+  variants: {
+    margin: ['hover'],
+  },
   plugins: []
 }

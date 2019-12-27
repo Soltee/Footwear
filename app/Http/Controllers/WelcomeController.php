@@ -17,8 +17,9 @@ class WelcomeController extends Controller
     public function index(Request $request)
     {
     	
-        $products = Products::latest()->paginate(10);
-        return view('welcome', compact('products'));
+        $products = Products::latest()->paginate(4);
+        $adidas = Products::latest()->where('subcategory_id', 2)->take(4)->paginate();
+        return view('welcome', compact('products', 'adidas'));
 
     }
 
