@@ -1,6 +1,6 @@
 <ul class="m-0 flex flex-col justify-start items-left">
-	<li class="">
-		<a href="{{ route('administrator-dashboard') }}" class="text-white text-md font-bold flex flex-row items-center">
+	<li class="mb-3">
+		<a href="{{ route('administrator-dashboard') }}" class="text-gray-900 text-md font-bold flex flex-row items-center">
 			<svg class="h-8 w-8" viewBox="0 0 120 113" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<rect x="5" y="5" width="110" height="70" rx="9" fill="white" stroke="#17160F" stroke-width="10"/>
 				<rect x="40" y="70" width="40" height="38" rx="10" fill="#17160F"/>
@@ -18,32 +18,25 @@
 				<path d="M71.269 37.0006C71.5875 34.6437 72.4618 32.3964 73.8198 30.4439C75.1778 28.4915 76.9806 26.8899 79.0795 25.7714L86.134 39.009L71.269 37.0006Z" fill="#17160F"/>
 				</svg>
 
-			<span class="">Dashboard</span>
+			<span class="ml-3">Dashboard</span>
 		</a>
 	</li>
-	<li class="">
-		<a href="{{ route('products') }}" class="text-white text-md font-bold flex flex-row items-center">
+	<li class="mb-3">
+		<a href="{{ route('products') }}" class="text-gray-900 text-md font-bold flex flex-row items-center">
 			
 
 			Products
 		</a>
-		<ul class="m-0 flex flex-col justify-start items-left">
-			<a href="{{ route('products.create') }}" class="text-white text-md font-bold flex flex-row items-center">
-				
-
-				Add Product
-			</a>
-		</ul>
 	</li>
-	<li class="">
-		<a href="{{ route('customers') }}" class="text-white text-md font-bold flex flex-row items-center">
+	<li class="mb-3">
+		<a href="{{ route('customers') }}" class="text-gray-900 text-md font-bold flex flex-row items-center">
 			
 
 			Customers
 		</a>
 	</li>
-	<li class="">
-		<a href="{{ route('administrator-profile') }}" class="text-white text-md font-bold flex flex-row items-center">
+	<li class="mb-3">
+		<a href="{{ route('administrator-profile') }}" class="text-gray-900 text-md font-bold flex flex-row items-center">
 			
 
 			Profile

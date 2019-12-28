@@ -41,7 +41,7 @@ Route::get('/thank-you', 'CheckoutController@thankyou')->name('thank-you');
 
 
 //Dashboard
-Route::prefix('management')->group(function () {
+Route::prefix('admin')->group(function () {
 
 	/*Administrator*/
 	Route::get('/board-login', 'Administrator\AdminAuthController@loginView')->name('board-login-view');

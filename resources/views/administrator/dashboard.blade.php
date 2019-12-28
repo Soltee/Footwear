@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="container mx-auto">
+    <div class="py-6 md:px-10">
         <div class="flex flex-row justify-start">
         	<div class="w-40">
             

@@ -1,22 +1,96 @@
 <template>
     <div class="container">
+
         <p class="bg-green-500 text-white rounded-lg text-md">
             {{ message }}
         </p>
-        <form @submit.prevent="searchProducts">
-            <input @input="status = false" type="text" name="" v-model="keyword" class="px-2 py-2 bg-blue-500 text-white">
-            <button type="submit">Search</button>
-            <span v-if="!status" @click="status = ! status">XXX</span>
-        </form >
+        <div class="flex flex-row justify-between items-center w-full">
+            <h3 class="text-gray-900 text-xl font-bold">Products</h3>
+            <!-- <form @submit.prevent="searchProducts">
+                <input @input="searchStatus = false" type="text" name="" v-model="keyword" class="px-2 py-2 bg-gray-300 rounded-lg text-gray-900">
+                <button type="submit">Search</button>
+                <span v-if="!searchStatus" @click="searchStatus = ! searchStatus">XXX</span>
+            </form > -->
+            <input
+                    v-model="keyword"
+                    @blur="searchStatus = false"
+                    @focus="searchStatus = true"
+                    @keydown.esc="searchStatus = false"
+                    @keyup=" searchProducts();"
+                    class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" id="grid-first-name" type="text" name="name"
 
-        <div v-if="status"> 
-                   
-        	<div v-for="product in productArray">
+                    placeholder="Search Table">
+        </div>
+        
+
+        <div> 
+            <div class="overflow-x-scroll w-full mt-6">
+                
+                <table class="w-full table-auto">
+                    <thead>
+                        <tr class="bg-white rounded-lg">
+                          <th class="px-4 py-3 text-left text-gray-900">Id</th>
+                          <th class="px-4 py-3 text-left text-gray-900">Image</th>
+                          <th class="px-4 py-3 text-left text-gray-900">Name</th>
+                          <th class="px-4 py-3 text-left text-gray-900">Price</th>
+                          <th class="px-4 py-3 text-left text-gray-900">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr v-if="!searchStatus" v-for="p in productArray">
+                          <td class="border px-4 py-2 text-gray-900">{{ p.id }}</td>
+                          <td class="border px-4 py-2 text-gray-900">
+                              <img class="h-24 w-24 rounded-full" :src="`/storage/${p.imageUrl}`">
+                          </td>
+                          <td class="border px-4 py-2 text-gray-900">{{ p.name }}</td>
+                          <td class="border px-4 py-2 text-gray-900">Rs {{ p.price }}</td>
+                          <td class="">
+                            <div class="flex items-center">                                
+                                <form @submit.prevent="updateCart(p)">
+                                    <div class="flex flex-row items-center">
+                                        <input class="px-4 py-3 w-16 text-center rounded-lg" type="text" name="">
+                                        <button type="submit" class="p-3 rounded-lg text-blue-900 text-md ">
+                                            Edit
+                                        </button>
+                                    </div>
+                                </form>
+                                <button type="submit" @click="filterProduct(p); dropProduct(p)">Drop</button> 
+                            </div>
+                          </td>
+                        </tr>
+                         <tr v-if="searchStatus" v-for="p in searchArray">
+                          <td class="border px-4 py-2 text-gray-900">{{ p.id }}</td>
+                          <td class="border px-4 py-2 text-gray-900">
+                              <img class="h-24 w-24 rounded-full" :src="`/storage/${p.imageUrl}`">
+                          </td>
+                          <td class="border px-4 py-2 text-gray-900">{{ p.name }}</td>
+                          <td class="border px-4 py-2 text-gray-900">Rs {{ p.price }}</td>
+                          <td class="">
+                            <div class="flex items-center">                                
+                                <form @submit.prevent="updateCart(p)">
+                                    <div class="flex flex-row items-center">
+                                        <input class="px-4 py-3 w-16 text-center rounded-lg" type="text" name="">
+                                        <button type="submit" class="p-3 rounded-lg text-blue-900 text-md ">
+                                            Edit
+                                        </button>
+                                    </div>
+                                </form>
+                                <button type="submit" @click="filterProduct(p); dropProduct(p)">Drop</button> 
+                            </div>
+                          </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        	<!-- <div v-for="product in productArray">
         		<div  class="flex flex-wrap group border-2  border-transparent hover:border-green-500 items-center justify-between " @click="redirectTo(product)">
                         <div class="flex flex-row">
                             <img class="h-24 w-24 rounded-full" :src="`/storage/${product.imageUrl}`">
                             <h4 class="m-0">{{ product.name }}</h4>
-                            <a :href="`/management/products-edit/${product.id}-${product.name}`">Edit Product</a>
+                            <a :href="`/admin/products-edit/${product.id}-${product.name}`">Edit Product</a>
                             <button type="submit"
                          @click="filterProduct(product); dropProduct(product)">Drop</button>   
                         </div>      
@@ -27,10 +101,10 @@
         		<a  :href="`${ifExists(links.prevPage)}`"  class="px-2 py-2 bg-blue-800" >Prev </a>
         		<span>{{ links.currentPage }}</span>
         		<a  :href="`${ifExists(links.nextPage)}`" class="px-2 py-2 bg-blue-800">Next </a>
-        	</div>
+        	</div> -->
         </div>
 
-        <div v-else>
+       <!--  <div>
             <div class="flex justify-between items-center">
                 <span :class="(searchError) ? 'border-red-500 border-2' : ''">{{ (resultTotal) ? (resultTotal) : 0 }} results found for {{ keyword }}</span>   
             </div>
@@ -42,7 +116,7 @@
                     <button type="submit" @click="filterProduct(product); dropProduct(product)">Drop</button>
                 </div>
             </div>
-        </div>
+        </div> -->
 
     </div>
 </template>
@@ -57,9 +131,10 @@
                 selected: false,
         		links : null,
                 keyword: '',
-                status : true,
+                searchsearchStatus : true,
                 searchArray: [],
                 searchError: false,
+                resultTotal : 0,
                 message: null,
                 error: null
         	}
@@ -85,7 +160,7 @@
         	},
         	filterProduct(product){
         		
-                if(this.status){
+                if(this.searchStatus){
                     this.productArray = this.productArray.filter((state) => {
                         return state.id !== product.id;
                     });
@@ -96,9 +171,9 @@
                 }
         	},
             searchProducts(){
-                this.status = false;
+                this.searchStatus = false;
                 if(!this.keyword){return;}
-                axios.get(`/management/searchProducts/${this.keyword}`)
+                axios.get(`/admin/searchProducts/${this.keyword}`)
                     .then((res) => {
                         // console.log(res.data.customers);
                         let pdts = res.data.products;
@@ -117,9 +192,9 @@
             },
             dropProduct(product){
                 console.log(product);
-                axios.post(`/management/products/${product.id}`, {})
+                axios.post(`/admin/products/${product.id}`, {})
                     .then(res=>{
-                        if(res.status == 204){
+                        if(res.searchStatus == 204){
                         this.message = 'Product dropped.';                            
                         }
                     }).catch((error) => {
@@ -127,7 +202,7 @@
                     });
             },
             redirectTo(product){
-                window.location = `http://localhost:8000/management/products/${product.id}-${product.name}`;   
+                window.location = `http://localhost:8000/admin/products/${product.id}-${product.name}`;   
             }
         }
     }

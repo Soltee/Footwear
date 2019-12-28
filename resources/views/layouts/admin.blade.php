@@ -14,12 +14,13 @@
 </head>
 <body class="bg-gray h-screen antialiased leading-none">
     <div id="app">
-        <nav class="shadow mb-8 py-6">
-            <div class="container mx-auto px-6 md:px-0">
+        @auth('administrator')
+        <nav class="shadow mb-8 py-6 md:px-10">
+            <div class="container mx-auto md:px-0">
                 <div class="flex items-center justify-between">
                     <div class="mr-6 flex items-center">
                         <a href="{{ url('/') }}" class="text-lg font-semibold text-gray-100 no-underline mr-3">
-                            <svg class="h-10 w-10" viewBox="0 0 95 79" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="h-16 w-16" viewBox="0 0 95 79" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g filter="url(#filter0_d)">
                                 <rect y="28.2843" width="8" height="60" rx="4" transform="rotate(-45 0 28.2843)" fill="#201E16"/>
                                 <rect y="28.2843" width="40" height="10" rx="5" transform="rotate(-45 0 28.2843)" fill="#201E16"/>
@@ -41,36 +42,44 @@
                                 </svg>
 
                         </a>
-                        @auth('administrator')
 
-                            <search-all-view />
+                        <search-all-view />
 
-                        @endauth
                     </div>
                     <div class="flex flex-row items-center text-right">
-                        @auth('administrator')
-                            <svg class="text-bg-darker w-8 h-8 cursor-pointer mr-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M4 8a6 6 0 0 1 4.03-5.67 2 2 0 1 1 3.95 0A6 6 0 0 1 16 8v6l3 2v1H1v-1l3-2V8zm8 10a2 2 0 1 1-4 0h4z"/></svg>
-
-                            <div class="flex items-center">
-                                <svg class="text-bg-darker w-8 h-8 mr-2 cursor-pointer" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M4 8a6 6 0 0 1 4.03-5.67 2 2 0 1 1 3.95 0A6 6 0 0 1 16 8v6l3 2v1H1v-1l3-2V8zm8 10a2 2 0 1 1-4 0h4z"/></svg>
-                                <span class="text-bg-lighter text-md text-bold cursor-pointer">{{ auth('administrator')->user()->name }}</span>
-                            </div>
-                            <span class="text-gray-300 text-sm pr-4"></span>
+                        <div class="flex items-center justify-around w-full md:w-24 px-2 py-1 bg-custom-gray-lighter rounded-lg">
+                            <img class="h-8 w-8 p-1 text-white bg-white rounded-full" src="/svg/avatar.svg">
+                            {{-- <svg  class="ml-2 h-8 w-8 text-custom-gray cursor-pointer hover:text-custom-gray-light" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10.707 7.05L10 6.343 4.343 12l1.414 1.414L10 9.172l4.243 4.242L15.657 12z"/></svg> --}}
+                            <svg class="ml-2 h-8 w-8 text-custom-gray cursor-pointer hover:text-custom-gray-light" fill="currentColor"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                        </div>
+                        {{-- <div>
+                            <a href="" class="mt-2 flex items-left mb-2 no-underline">
+                                <svg class="h-6 w-6 text-custom-gray cursor-pointer hover:text-custom-gray-light" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z"/></svg>
+                                <span class="text-custom-gray ml-2">Profile</span>
+                            </a>
+                            <a href="/customer-logout"
+                               class="flex items-left no-underline text-custom-gray text-lg"
+                               onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                                <svg class="h-6 w-6 text-custom-gray cursor-pointer hover:text-custom-gray-light"  fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M497 273L329 441c-15 15-41 4.5-41-17v-96H152c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136V88c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zM192 436v-40c0-6.6-5.4-12-12-12H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12V76c0-6.6-5.4-12-12-12H96c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z"/></svg>
+                                <span class="text-custom-gray ml-2">Logout</span>
+                            </a>
+                            <form id="logout-form" action="/customer-logout" method="POST" class="hidden">
+                                @csrf
+                            </form>
+                        </div> --}}
                             <a href="{{ route('administrator-logout') }}"
-                                   class="no-underline hover:underline text-gray-300 text-sm p-3"
+                                   class="no-underline hover:underline text-gray-900 text-lg font-bold p-3"
                                    onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
                             <form id="logout-form" action="{{ route('administrator-logout') }}" method="POST" class="hidden">
                                 {{ csrf_field() }}
-                            </form>
-                        @else
-                            <a class="no-underline hover:underline text-gray-300 text-sm p-3" href="{{ route('board-login') }}">{{ __('Login') }}</a>
-                        @endauth
-                            
+                            </form>                            
                     </div>
                 </div>
             </div>
         </nav>
+        @endauth
 
         @if(session('success'))
             <div id="message"  class="bg-green-900 rounded-lg ml-auto shadow text-center py-2 w-64 text-gray-300">
