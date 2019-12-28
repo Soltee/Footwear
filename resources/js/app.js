@@ -38,6 +38,7 @@ Vue.component('add-to-cart', require('./components/customer/Product.vue').defaul
 Vue.component('cart-checkout', require('./components/customer/Checkout.vue').default);
 Vue.component('cart-view', require('./components/customer/Cart.vue').default);
 Vue.component('footer-view', require('./components/customer/Footer.vue').default);
+Vue.component('recommended', require('./components/customer/Recommended.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -52,6 +52,13 @@ class WelcomeController extends Controller
         return view('home.shoes', compact('products', 'categories', 'count'));
     }
 
+    public function show(Products $products, string $slug)
+    {
+        $paginate = Products::latest()->where('category_id', $products->category_id)->paginate(6);
+        $recommended = json_encode($paginate->items());
+        return view('home.show', compact('products', 'recommended'));
+    }
+
     public function test(Request $request){
     	$email = $request->input('email');
     	$data = [$request->input('message')];

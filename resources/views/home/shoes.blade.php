@@ -57,7 +57,7 @@
        		</div>
 			
 			     @if($count > 2)
-       	    <div class="mt-6 flex flex-row justify-center items-center ">
+       	    <div class="my-6 flex flex-row justify-center items-center ">
   				    <a href="{{ $products->appends(request()->input())->previousPageUrl() ?? '' }}" class="px-3 py-3 bg-black text-custom-gray text-center rounded-lg hover:bg-custom-gray-light mr-4 {{ $products->appends(request()->input())->previousPageUrl() ? '' : 'cursor-not-allowed opacity-75' }}">Previous page</a>
   				    <span class="text-bg-custom-gray-lighter">{{ $products->appends(request()->input())->currentPage() }}</span>
          			<a href="{{ $products->appends(request()->input())->nextPageUrl() ?? '#' }}" class="ml-4  px-3 py-3 bg-black text-custom-gray text-center rounded-lg hover:bg-custom-gray-light {{ $products->appends(request()->input())->nextPageUrl() ? '' : 'cursor-not-allowed opacity-75' }}">Next page</a>

@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
         for ($i=1; $i <= 2; $i++) {
             App\Products::create([
                 'name' => 'Shoe '.$i,
+                'slug' => 'Shoe-'.$i,
                 'category_id' => 1,
                 'subcategory_id' => 1,
                 'price' => rand(1, 5),
@@ -44,6 +45,7 @@ class DatabaseSeeder extends Seeder
         for ($i = 3; $i <= 4; $i++) {
             App\Products::create([
                 'name' => 'Shoe '.$i,
+                'slug' => 'Shoe-'.$i,
                 'category_id' => 2,
                 'subcategory_id' => 2,
                 'price' => rand(1, 5),
@@ -55,6 +57,7 @@ class DatabaseSeeder extends Seeder
         for ($i=5; $i <= 6; $i++) {
             App\Products::create([
                 'name' => 'Shoe '.$i,
+                'slug' => 'Shoe-'.$i,
                 'category_id' => 2,
                 'subcategory_id' => 3,
                 'price' => rand(1, 5),
@@ -66,6 +69,7 @@ class DatabaseSeeder extends Seeder
         for ($i = 7; $i <= 8; $i++) {
             App\Products::create([
                 'name' => 'Shoe '.$i,
+                'slug' => 'Shoe-'.$i,
                 'category_id' => 1,
                 'subcategory_id' => 4,
                 'price' => rand(1, 5),
@@ -77,6 +81,7 @@ class DatabaseSeeder extends Seeder
         for ($i=9; $i <= 10; $i++) {
             App\Products::create([
                 'name' => 'Shoe '.$i,
+                'slug' => 'Shoe-'.$i,
                 'category_id' => 1,
                 'subcategory_id' => 5,
                 'price' => rand(1, 5),
@@ -88,6 +93,7 @@ class DatabaseSeeder extends Seeder
         for ($i = 11; $i <= 12; $i++) {
             App\Products::create([
                 'name' => 'Shoe '.$i,
+                'slug' => 'Shoe-'.$i,
                 'category_id' => 2,
                 'subcategory_id' => 6,
                 'price' => rand(1, 5),
@@ -100,6 +106,7 @@ class DatabaseSeeder extends Seeder
         for ($i=13; $i <= 14; $i++) {
             App\Products::create([
                 'name' => 'Shoe '.$i,
+                'slug' => 'Shoe-'.$i,
                 'category_id' => 2,
                 'subcategory_id' => 7,
                 'price' => rand(1, 5),
@@ -111,6 +118,7 @@ class DatabaseSeeder extends Seeder
         for ($i = 15; $i <= 16; $i++) {
             App\Products::create([
                 'name' => 'Shoe '.$i,
+                'slug' => 'Shoe-'.$i,
                 'category_id' => 1,
                 'subcategory_id' => 8,
                 'price' => rand(1, 5),
@@ -122,6 +130,7 @@ class DatabaseSeeder extends Seeder
         for ($i=17; $i <= 18; $i++) {
             App\Products::create([
                 'name' => 'Shoe '.$i,
+                'slug' => 'Shoe-'.$i,
                 'category_id' => 1,
                 'subcategory_id' => 2,
                 'price' => rand(1, 5),
@@ -133,6 +142,7 @@ class DatabaseSeeder extends Seeder
         for ($i = 19; $i <= 20; $i++) {
             App\Products::create([
                 'name' => 'Shoe '.$i,
+                'slug' => 'Shoe-'.$i,
                 'category_id' => 2,
                 'subcategory_id' => 3,
                 'price' => rand(1, 5),

@@ -8,14 +8,60 @@
                 <rect y="35.3553" width="50" height="10" rx="5" transform="rotate(-45 0 35.3553)" fill="currentColor"/>
             </svg>
         </div>
-        <div v-if="updatedQty > 0" class="w-full">
+        <div v-if="updatedQty > 0" class="container mx-auto">
             <div class="flex justify-between items-center">
-                <h4 class="font-bold text-lg text-black">My Cart</h4>
+                <h4 class="font-bold text-lg text-gray-900">My Cart</h4>
                 <!-- <form @submit.prevent="clearCart"> -->
                     <button @click="modal = true;" type="submit" class="p-3 bg-red-500 rounded-lg text-lg font-medium text-white">Clear Cart</button>
                 <!-- </form> -->
             </div>
-            <div class="overflow-x-scroll w-400 md:w-auto md:overflow-auto">
+            <div class="overflow-x-scroll w-full mt-6">
+                
+                <table class="w-full table-auto">
+                    <thead>
+                        <tr class="bg-white rounded-lg">
+                          <th class="px-4 py-3 text-left text-gray-900">Id</th>
+                          <th class="px-4 py-3 text-left text-gray-900">Image</th>
+                          <th class="px-4 py-3 text-left text-gray-900">Name</th>
+                          <th class="px-4 py-3 text-left text-gray-900">Price</th>
+                          <th class="px-4 py-3 text-left text-gray-900">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr v-for="p in productsArr">
+                          <td class="border px-4 py-2">{{ p.id }}</td>
+                          <td class="border px-4 py-2">
+                              <img class="h-24 w-24 rounded-lg object-cover object-center" :src="`/storage/${p.options.imageUrl}`">
+                          </td>
+                          <td class="border px-4 py-2">{{ p.name }}</td>
+                          <td class="border px-4 py-2">Rs {{ p.price }}</td>
+                          <td class="">
+                            <div class="flex items-center">                                
+                                <form @submit.prevent="updateCart(p)">
+                                    <div class="flex flex-row items-center">
+                                        <input class="px-4 py-3 w-16 text-center rounded-lg" type="text" name="" @input="qty = $event.target.value; selected = p.id"  :value="`${(selected == p.id) ? qty : p.qty}`">
+                                        <button type="submit" class="p-3 rounded-lg text-blue-900 text-md ">
+                                            Update
+                                        </button>
+                                    </div>
+                                </form>
+                                <form @submit.prevent="removeCart(p)">
+                       
+                                    <button class="p-3 rounded-lg text-blue-900 text-md ">
+                                        <svg class="text-red-600 hover:shadow-md" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                    </button>
+                                </form>
+                            </div>
+                          </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+            <!-- <div class="overflow-x-scroll w-400 md:w-auto md:overflow-auto">
                 
                 <div v-for="p in productsArr">
                     <div class="mt-4 flex flex-row justify-between items-center mb-3">
@@ -42,37 +88,40 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="mt-6 mb-3 flex flex-row justify-between w-auto">
+            <div class="mt-6 mb-3 flex flex-col md:flex-row justify-between w-auto">
                 <form @submit.prevent="redeemDiscount"> 
-                    <h3 class="mb-3 text-lg font-bold text-black">Redeem your Coupon</h3>
-                    <div class="flex items-center">
-                        <input type="text" v-model="code" class="px-4 py-3 rounded-l-lg bg-gray-100">
-                        <button type="submit"  class="px-4 py-3 rounded-r-lg bg-black text-white font-bold text-lg">Redeem</button>
+                    <div class="w-full md:w-auto mb-4 cm:mb-0">
+                        <h3 class="mb-3 text-lg font-bold text-black">Redeem your Coupon</h3>
+                        <div class="flex flex-col cm:flex-row items-center">
+                            <input type="text" v-model="code" class="w-full cm:w-auto px-4 py-3 rounded-t-lg cm:rounded-l-lg bg-gray-100">
+                            <button type="submit"  class="w-full md:w-auto px-4 py-3 rounded-b-lg cm:rounded-r-lg bg-black text-white font-bold text-lg">Redeem</button>
+                        </div>
                     </div>
+                    
                 </form>
                 <div class="flex flex-col  rounded-lg p-3 mb-3">
                     <div class="flex items-center justify-between">
-                        <span class="text-bold text-lg text-black-600 rounded-lg mr-2">SubTotal</span>
-                        <span class="text-bold text-lg text-black-600 rounded-lg mr-2">$ {{ subTotal }}</span>
+                        <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">SubTotal</span>
+                        <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ subTotal }}</span>
                     </div>
                     <div class="flex items-center justify-between">
-                        <span class="text-bold text-lg text-black-600 rounded-lg mr-2">Discount</span>
-                        <span class="text-bold text-lg text-black-600 rounded-lg mr-2">$ {{ discount }}</span>
+                        <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">Discount</span>
+                        <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ discount }}</span>
                     </div>
                     <div class="flex items-center justify-between">
-                        <span class="text-bold text-lg text-black-600 rounded-lg mr-2">SubTotal After Discount</span>
-                        <span class="text-bold text-lg text-black-600 rounded-lg mr-2">$ {{ (subAfterDis) ? subAfterDis : subTotal }}</span>
+                        <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">SubTotal After Discount</span>
+                        <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ (subAfterDis) ? subAfterDis : subTotal }}</span>
                     </div>
                     <div class="flex items-center justify-between">
-                        <span class="text-bold text-lg text-black-600 rounded-lg mr-2">Tax</span>
-                        <span class="text-bold text-lg text-black-600 rounded-lg mr-2">$ {{ tax }}</span>
+                        <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">Tax</span>
+                        <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ tax }}</span>
                     </div>
                    
                     <div class="flex items-center justify-between">
-                        <span class="text-bold text-lg text-black-600 rounded-lg mr-2">Grand Total</span>
-                        <span class="text-bold text-lg text-black-600 rounded-lg mr-2">$ {{ grandTotal }}</span>
+                        <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">Grand Total</span>
+                        <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ grandTotal }}</span>
                     </div>
                 </div>
                 
@@ -120,7 +169,7 @@
 import { serverBus } from '../../app.js';    
     export default {
         name : 'cart-view',
-        props : ['products', 'cart', 'sub','tax', 'grand'],
+        props : ['products', 'cart', 'sub', 'dis', 'subAfterdis','tax', 'grand'],
         data(){
         	return {
                 productsArr : [],
@@ -128,8 +177,8 @@ import { serverBus } from '../../app.js';
                 qty: "",
                 updatedQty : this.cart,
                 subTotal : this.sub,
-                discount : 0,
-                subAfterDis : 0,
+                discount : this.dis,
+                subAfterDis : this.subAfterdis,
                 tax : this.tax,
                 grandTotal : this.grand,
                 selected: null,

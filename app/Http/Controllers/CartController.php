@@ -50,9 +50,11 @@ class CartController extends Controller
 		$products = Cart::content();
 		$totalQuantity = 	Cart::instance('default')->count();
 		$subTotal = Cart::subtotal();
+		$discount = (session('discount'))?? 0;
+		$subAfterDis = (session('subAfterDis'))?? 0;
 		$tax = Cart::tax();
-		$grandTotal = Cart::total();
-		return view('home.cart', compact('products', 'totalQuantity', 'subTotal', 'tax', 'grandTotal'));
+		$grandTotal = (session('discount'))? session('grand') : Cart::total();
+		return view('home.cart', compact('products', 'totalQuantity', 'subTotal', 'discount', 'subAfterDis', 'tax', 'grandTotal'));
 	}
 
 	/**

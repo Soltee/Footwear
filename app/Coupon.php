@@ -15,8 +15,5 @@ class Coupon extends Model
         return self::where('code', $code)->first();
     }
 
-    // public static function discount($total)
-    // {
-    //     return round(($this->percent / 100) * $total);
-    // }
+  
 }

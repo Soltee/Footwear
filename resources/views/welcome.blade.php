@@ -9,7 +9,7 @@
                 <span class="text-custom-red-light">Affordable Price</span>
             </h1>
             <p class="text-md md:text-lg text-custom-gray-lighter mt-6 font-bold">Get branded shoes for your next wear.</p>
-            <a href="#" class="w-48 px-4 py-3 text-center mt-6 text-lg text-custom-gray bg-custom-red-darker hover:bg-custom-red-lighter rounded-full">
+            <a href="/shoes" class="w-48 px-4 py-3 text-center mt-6 text-lg text-custom-gray bg-custom-red-darker hover:bg-custom-red-lighter rounded-full">
                 Grab Now
             </a>
         </div>
@@ -21,10 +21,11 @@
     <div class="py-6 md:py-10 w-full bg-gray-300">
         <div class="flex flex-wrap justify-center">
                 @forelse($products as $product)
-                <div class="p-4 bg-white rounded-lg shadow-lg m-2 w-full cm:w-auto">
-                    <h3 class="text-lg font-bold my-2 text-gray-900">{{ $product->name }}</h3>
-                    <img class="h-64 w-64 rounded-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}">
-                    
+                <div class="p-4 bg-white rounded-lg shadow-lg m-2 w-full cm:w-auto hover:-mt-1 hover:-mr-1">
+                    <a href="shoes/{{ $product->id }}-{{ $product->name }}">
+                        <h3 class="text-lg font-bold my-2 text-gray-900">{{ $product->name }}</h3>
+                        <img class="h-64 w-64 rounded-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}">
+                    </a>                    
                     <div class=" my-2 bg-gray-300 shadow-lg rounded-lg flex flex-row justify-between w-full items-center">
                         <h5 class="text-xl font-bold text-gray-800">$ {{ $product->price }}</h5>
                         <add-to-cart :product="{{ $product }}"   /> 
@@ -84,8 +85,8 @@
 
         <div class="flex flex-wrap justify-center">
                 @forelse($adidas as $product)
-                <div class="p-4 bg-white rounded-lg shadow-lg cursor-pointer m-2 w-full cm:w-auto hover:-mt-1 hover:-mr-21">
-                    <a href="{{ $product->id }}">
+                <div class="p-4 bg-white rounded-lg shadow-lg cursor-pointer m-2 w-full cm:w-auto hover:-mt-1 hover:-mr-1">
+                    <a href="shoes/{{ $product->id }}-{{ $product->name }}">
                         <h3 class="text-lg font-bold my-2 text-gray-900">{{ $product->name }}</h3>
                         <img class="h-64 w-64 rounded-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}">
                         
