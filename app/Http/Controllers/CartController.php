@@ -80,20 +80,26 @@ class CartController extends Controller
 	*/
     public function addProduct(Products $products)
     {
+    	$qty = request()->qty;
+    	if(!is_null($qty) AND $qty > 0){
 
-    	$duplicates = Cart::search(function ($cartItem, $rowId) use ($products) {
+    	} else {
+    		$duplicates = Cart::search(function ($cartItem, $rowId) use ($products) {
 
-            return $cartItem->id === $products->id;
-        });
+	            return $cartItem->id === $products->id;
+	        });
 
-        if ($duplicates->isNotEmpty()) {
-            return redirect()->route('cart.index')->with('success_message', 'Item is already in your cart!');
-        }
+	        if ($duplicates->isNotEmpty()) {
+	            return redirect()->route('cart.index')->with('success_message', 'Item is already in your cart!');
+	        }
+    	}
 
-        Cart::add($products->id, $products->name, 1, $products->price, ['imageUrl' => $products->imageUrl])
-            ->associate('App\Products');
+    	Cart::add($products->id, $products->name, ((!is_null($qty)) ? $qty : 1), $products->price, ['imageUrl' => $products->imageUrl])
+	            ->associate('App\Products');
 
-    	return response()->json(['success' => 'Ok'], 200);
+	    	return response()->json(['success' => 'Ok'], 200);
+
+    	
     }
 
     /**
@@ -138,6 +144,9 @@ class CartController extends Controller
     public function clearCart()
     {
     	Cart::destroy();
+    	session()->forget('discount');
+        session()->forget('subAfterDis');
+        session()->forget('grand');
     	return  response()->json(['success' => 'Ok'], 204); 
     }
 

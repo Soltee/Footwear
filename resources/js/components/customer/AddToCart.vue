@@ -1,57 +1,58 @@
 <template>
     <div class="">
-        <p  v-if="message"  class="fixed top-0 right-0 w-auto z-20 text-center py-3 px-4 rounded-lg text-md font-medium bg-green-500 text-white">
-            {{ message }}
-        </p>
-        <div v-if="isAdded">
-            <span class="p-2 rounded-lg text-white text-md cursor-not-allowed bg-green-900 opacity-50">In Cart</span>
+        <div v-if="message" class="flex flex-row justify-between items-center">
+            <mge :message="message"></mge>            
         </div>
-        <form v-else @submit.prevent="addToCart">
+        <div class="flex flex-row items-center justify-between">
+            <input v-model="qty" class="px-2 py-2 w-24 text-center rounded-lg" type="text" name=""  min="1" max="product">
+            <div class="flex flex-col items-center">
+                <svg @click="(qty <= product.qty) ? qty+=1 : ''"  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 cursor-pointer"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                <svg @click="
+                    (qty >= 1 ) ? qty-=1 : 0 " 
+                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 cursor-pointer"><polyline points="6 9 12 15 18 9"></polyline></svg>     
+            </div>
            
-            <button type="submit" :class="(isAdded) ? 'cursor-not-allowed bg-green-900 opacity-50' : 'bg-black'" class="p-3 rounded-lg text-white text-md hover:opacity-75"> Add To Cart</button>
-        </form>
+        </div>
+        <a v-if="message" :href='`/cart-details`' class="text-lg text-gray-900 mr-3">
+                Go To Cart
+        </a>
+        <button @click="addToCart" type="submit" class="mt-4 p-3 rounded-lg text-white text-md hover:opacity-75 bg-black"> Add To Cart</button>
         
     </div>
 </template>
 
 <script>
+import mge from './helpers/message';
 import { serverBus } from '../../app.js';    
     export default {
-        name : 'add-to-cart',
-        props : ['product'],
+        name : 'add-cart',
+        props : ['product', 'proCartNum'],
+        components : {
+            mge
+        },
         data(){
         	return {
-                isAdded : false,
+                qty       : 1,
                 message   : null,
                 err       : null
         	}
         },
-        mounted() {
-            this.isProductAlreadyAdded();
-        },
         methods: {
             addToCart(){
-                axios.get(`/add-to-cart/${this.product.id}`)
+                axios.post(`/add-cart/${this.product.id}`, {
+                    qty : this.qty
+                })
                     .then((res) => {
                         if(res.status == 200){
-                            serverBus.$emit('product-added-to-cart');
-                            this.isAdded = true;
+                            serverBus.$emit('product-added-to-cart', this.qty);
                             this.message = "Product added to my cart";
                             this.removeMessage();
                         }
-                    }).catch(error => this.err = 'There has been some error.');
+                    }).catch(error => {
+                        this.err = 'There has been some error.'
+                        this.removeMessage();
+                    });
 
-            },
-            isProductAlreadyAdded(){
-                axios.get(`/is-already-added/${this.product.id}`)
-                    .then((res) => {
-                        console.log(res.data);
-                        if(res.data.isAdded){
-                            this.isAdded = true;
-                        } else {
-                            this.isAdded = false;
-                        }
-                    }).catch(error => this.err = 'There has been some error.');
             },
             removeMessage(){
                 setTimeout(() => {

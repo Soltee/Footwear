@@ -7,7 +7,7 @@
             <rect x="0.798828" y="12" width="33.2015" height="4" rx="2" fill="currentColor"/>
             <rect x="0.798828" y="24" width="33.2015" height="4" rx="2" fill="currentColor"/>
         </svg>
-        <div v-if="menuStatus" class="absolute top-0 right-0 w-48 mt-12 md:hidden">
+        <div v-if="menuStatus" class="absolute top-0 right-0 w-48 mt-12 md:hidden z-30">
 
            <ListItems :customer="customer"></ListItems>
 

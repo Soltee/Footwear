@@ -1,10 +1,13 @@
 <template>
     <div class="">
-        <p  v-if="message"  class="fixed top-0 right-0 w-auto z-20 text-center py-3 px-4 rounded-lg text-md font-medium bg-green-500 text-white">
-            {{ message }}
-        </p>
+        <div if="message">
+            <mge :message="message"></mge>
+        </div>
+
         <div v-if="isAdded">
-            <span class="p-2 rounded-lg text-white text-md cursor-not-allowed bg-green-900 opacity-50">In Cart</span>
+            <a :href='`/cart-details`'>
+                <span class="p-2 rounded-lg text-white text-md cursor-not-allowed bg-green-900 opacity-50">In Cart</span>
+            </a>
         </div>
         <form v-else @submit.prevent="addToCart">
            
@@ -15,10 +18,14 @@
 </template>
 
 <script>
+import mge from './helpers/message';
 import { serverBus } from '../../app.js';    
     export default {
         name : 'add-to-cart',
         props : ['product'],
+        components : {
+            mge
+        },
         data(){
         	return {
                 isAdded : false,

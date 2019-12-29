@@ -35,11 +35,11 @@ Vue.component('show-customer', require('./components/admin/customers/ShowCustome
 /***** Components for Customers ******/
 Vue.component('Navmenu', require('./components/customer/Navmenu.vue').default);
 Vue.component('add-to-cart', require('./components/customer/Product.vue').default);
-Vue.component('cart-checkout', require('./components/customer/Checkout.vue').default);
-Vue.component('cart-view', require('./components/customer/Cart.vue').default);
 Vue.component('footer-view', require('./components/customer/Footer.vue').default);
 Vue.component('recommended', require('./components/customer/Recommended.vue').default);
-
+Vue.component('cart-checkout', require('./components/customer/Checkout.vue').default);
+Vue.component('cart-view', require('./components/customer/Cart.vue').default);
+Vue.component('add-cart', require('./components/customer/AddToCart.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

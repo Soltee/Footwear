@@ -54,9 +54,11 @@ class WelcomeController extends Controller
 
     public function show(Products $products, string $slug)
     {
+        
         $paginate = Products::latest()->where('category_id', $products->category_id)->paginate(6);
+        $category = $products->subcategory;
         $recommended = json_encode($paginate->items());
-        return view('home.show', compact('products', 'recommended'));
+        return view('home.show', compact('products', 'category', 'recommended'));
     }
 
     public function test(Request $request){

@@ -25,8 +25,12 @@ import { serverBus } from '../../app.js';
         	}
         },
         created(){
-            serverBus.$on('product-added-to-cart', () => {
-                this.cartTotalQty += 1;
+            serverBus.$on('product-added-to-cart', (qty) => {
+                if(qty){
+                    this.cartTotalQty += Number(qty);
+                } else {
+                    this.cartTotalQty += 1;                    
+                }
             });
             serverBus.$on('cart-updated', (p) => {
                 this.cartTotalQty += (Number(p.qty) - p.p.qty);

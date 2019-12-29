@@ -1,6 +1,6 @@
 <template>
-	<div class="flex flex-col mb-6">
-        <h3 class="text-xl text-gray-900 my-4 ">Recommended Products</h3>
+	<div class="flex flex-col my-6">
+        <h3 class="text-xl text-gray-900 mb-8 ">Recommended Products</h3>
     
         <div class="embla overflow-x-scroll">
             <div class="embla__container flex">

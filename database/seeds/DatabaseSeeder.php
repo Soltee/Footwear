@@ -151,10 +151,11 @@ class DatabaseSeeder extends Seeder
             ]);
         }
     
-        factory(\App\Coupon::class)->create(['code' => 'CODE1', 'percent' => 2,'expires_on' => \Carbon\Carbon::now()->addMinutes(10)]);
-        factory(\App\Coupon::class)->create([ 'code' => 'CODE2', 'percent' => 4,'expires_on' => \Carbon\Carbon::now()->addMinutes(20)]);
-        factory(\App\Coupon::class)->create(['code' => 'CODE3', 'percent' => 3,'expires_on' => \Carbon\Carbon::now()->addMinutes(30)]);
-        factory(\App\Coupon::class)->create([ 'code' => 'CODE4', 'percent' => 5,'expires_on' => \Carbon\Carbon::now()->addMinutes(40)]);
+        factory(\App\Coupon::class)->create(['code' => 'CODE1', 'percent' => 2,'expires_on' => \Carbon\Carbon::yesterday()]);
+        factory(\App\Coupon::class)->create(['code' => 'CODE2', 'percent' => 2,'expires_on' => \Carbon\Carbon::yesterday()]);
+        factory(\App\Coupon::class)->create([ 'code' => 'CODE3', 'percent' => 4,'expires_on' => \Carbon\Carbon::now()]);
+        factory(\App\Coupon::class)->create(['code' => 'CODE4', 'percent' => 3,'expires_on' => \Carbon\Carbon::now()->addDays(10)]);
+        factory(\App\Coupon::class)->create([ 'code' => 'CODE5', 'percent' => 5,'expires_on' => \Carbon\Carbon::now()->addDays(12)]);
         
         // Select random entries to be featured
         // Products::whereIn('id', [1, 12, 22, 31, 41, 43, 47, 51, 53,61, 69, 73, 80])->update(['featured' => true]);

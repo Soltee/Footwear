@@ -61,42 +61,15 @@
 
             </div>
 
-            <!-- <div class="overflow-x-scroll w-400 md:w-auto md:overflow-auto">
-                
-                <div v-for="p in productsArr">
-                    <div class="mt-4 flex flex-row justify-between items-center mb-3">
-                        <img class="h-16 w-16 rounded-lg object-cover object-center" :src="`/storage/${p.options.imageUrl}`">
-                        <div class="flex flex-col items-left justify-start pl-2">
-                            <h3 class="m-0">{{ p.name }}</h3>
-                            <h3 class="m-0">$ {{ p.price }}</h3>
-                        </div>
-                        <div class="flex items-center">
-                            <form @submit.prevent="updateCart(p)">
-                                <div>
-                                    <input class="px-4 py-3 w-16 text-center rounded-lg" type="text" name="" @input="qty = $event.target.value; selected = p.id"  :value="`${(selected == p.id) ? qty : p.qty}`">
-                                    <button type="submit" class="p-3 rounded-lg text-blue-900 text-md ">
-                                        Update
-                                    </button>
-                                </div>
-                            </form>
-                            <form @submit.prevent="removeCart(p)">
-                   
-                                <button class="p-3 rounded-lg text-blue-900 text-md ">
-                                    <svg class="text-red-600 hover:shadow-md" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-
             <div class="mt-6 mb-3 flex flex-col md:flex-row justify-between w-auto">
                 <form @submit.prevent="redeemDiscount"> 
                     <div class="w-full md:w-auto mb-4 cm:mb-0">
                         <h3 class="mb-3 text-lg font-bold text-black">Redeem your Coupon</h3>
                         <div class="flex flex-col cm:flex-row items-center">
                             <input type="text" v-model="code" class="w-full cm:w-auto px-4 py-3 rounded-t-lg cm:rounded-l-lg bg-gray-100">
-                            <button type="submit"  class="w-full md:w-auto px-4 py-3 rounded-b-lg cm:rounded-r-lg bg-black text-white font-bold text-lg">Redeem</button>
+                            <button type="submit"  class="w-full md:w-auto px-4 py-3 rounded-b-lg cm:rounded-r-lg bg-black text-white font-bold text-lg" >
+                                Redeem
+                            </button>
                         </div>
                     </div>
                     
@@ -126,10 +99,10 @@
                 </div>
                 
             </div>
-            <div class="flex items-center text-right justify-end">
-                <a :href="`/shoes`" class="mr-4 text-bold text-lg bg-gray-100 text-gray-900 p-3 rounded-lg">Continue My Shopping</a>
+            <div class="w-full md:w-auto flex flex-col md:flex-row items-center justify-end">
+                <a :href="`/shoes`" class="w-full mt-2 order-1 md:order-0 mb-3 md:mb-0 md:w-auto md:mr-10 text-bold text-lg bg-gray-100 text-gray-900 p-3 rounded-lg text-center">Continue My Shopping</a>
 
-                <a :href="`/checkout`" class="text-bold text-lg bg-green-900 hover:bg-green-500 text-white p-3 rounded-lg">Checkout</a>
+                <a :href="`/checkout`" class="w-full ml-12 order-0 md:order-1 text-center md:w-auto text-bold text-lg bg-green-900 hover:bg-green-500 text-white p-3 rounded-lg">Checkout</a>
             </div>
         </div>
         <div v-else>
@@ -303,15 +276,24 @@ import { serverBus } from '../../app.js';
                 })
                 .then(res => {
                     let data = res.data;
-                    if(res.status == 200){
+                    if(res.status == 202){
                         this.status = true;
                         this.discount = data.discount;
                         this.subAfterDis = data.subAfterDis;
                         this.tax = data.tax;
                         this.grandTotal = data.grand;
-                        this.message = 'My coupon has been accepted.';
+                        this.message = data.message;
+                        this.removeMessage();
+                    } else if(res.status == 200){
+                        this.status = false;
+                        this.message = data.message;
+                        this.removeMessage();
+                    } else if(res.status == 204){
+                        this.status = false;
+                        this.message = 'Your coupon doesnot match.';
                         this.removeMessage();
                     }
+
                 }).catch(err => {
                     this.status = false;
                     this.err = "There has been some error.";

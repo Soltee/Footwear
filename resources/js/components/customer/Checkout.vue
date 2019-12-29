@@ -3,142 +3,157 @@
         <p v-if="message" :class="(status) ? 'bg-green-500' : 'bg-red-500' " class="rounded-lg text-md font-medium  text-white">
             {{ message }}
         </p>
+        <div class="flex flex-row justify-between my-8">
+            <div class="flex-1 px-4 w-full">
+              <form :action="`/charge`" :method="`post`" id="payment-form">
+                <div class="w-full">
+                  
+                  <input type="hidden" name="_token" :value="csrf">
+                  <input name="amount" type="hidden" :value="total" />
 
-        <form :action="`/charge`" :method="`post`" id="payment-form">
-            <input type="hidden" name="_token" :value="csrf">
-            <input name="amount" type="hidden" :value="total" />
+                  <h3 class="text-lg font-semibold text-gray-900 mb-6 ">Fill Personal Info</h3>
+                  <div class="flex flex-col md:flex-row items-center mb-6 z-0">
+                    <div class="mb-4 mr-2 flex-1 w-full">
+                      <label class="block text-gray-700 text-sm font-bold mb-2" for="firstname">
+                        First Name
+                      </label>
+                      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="firstname" name="firstname" type="text" placeholder="firstname">
+                    </div>
 
-            <h3 class="text-lg font-semibold text-gray-900 mb-6 ">Fill Personal Info</h3>
-            <div class="flex items-center mb-6">
-              <div class="mb-4 mr-2 flex-1">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="firstname">
-                  First Name
-                </label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="firstname" name="firstname" type="text" placeholder="firstname">
-              </div>
-
-              <div class="mb-4 flex-1">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="lastname">
-                  Last Name
-                </label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="lastname" name="lastname" type="text" placeholder="lastname">
-              </div>
-            </div>
-
-            <div class="mb-6">
-              <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
-                Email
-              </label>
-              <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" type="email" placeholder="email">
-            </div>
-
-
-            <div class="flex flex-wrap -mx-3 mb-6">
-              <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-city">
-                  City
-                </label>
-                <div class="relative">
-                  <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" name="city">
-                    <option>Pokhara</option>
-                  </select>
-                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                      <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                    <div class="mb-4 flex-1 w-full">
+                      <label class="block text-gray-700 text-sm font-bold mb-2" for="lastname">
+                        Last Name
+                      </label>
+                      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="lastname" name="lastname" type="text" placeholder="lastname">
+                    </div>
                   </div>
+
+                  <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+                      Email
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" type="email" placeholder="email">
+                  </div>
+
+
+                  <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-city">
+                        City
+                      </label>
+                      <div class="relative">
+                        <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" name="city">
+                          <option>Pokhara</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="street">
+                        Street Address
+                      </label>
+                      <div class="relative">
+                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="street" type="text" placeholder="Albuquerque" name="address">
+
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <h3 class="text-lg font-semibold text-gray-900 mb-6 ">Select Payment Method</h3>
+
+                  <div class="flex flex-col md:flex-row items-center my-6 mx-3  ">
+                      <div @click="paymentOption('braintree')" class="flex w-full mb-3 md:mb-0 items-center p-4 rounded-lg mr-12 border-2 border-gray-300 group hover:border-green-600 checkbox cursor-pointer" :class="(method === 'braintree') ? 'border-green-600' : ''">
+                          <input  type="checkbox" class=""  v-model="method">
+                          <span class="text-lg ml-8 font-bold text-black" >Braintree</span>
+                      </div>
+                      <div @click="paymentOption('stripe')" class="flex w-full mb-3 md:mb-0 items-center p-4 rounded-lg mr-12 border-2 border-gray-300 group hover:border-green-600 checkbox cursor-pointer" :class="(method === 'stripe') ? 'border-green-600' : ''">
+                          <input  type="checkbox"  class="" v-model="method" >
+                          <span class="text-lg ml-8 font-bold text-black" >Stripe</span>
+                      </div>
+                      <div @click="paymentOption('paypal')" class="flex w-full mb-3 md:mb-0 items-center p-4 rounded-lg mr-12 border-2 border-gray-300 group hover:border-green-600 checkbox cursor-pointer" :class="(method === 'paypal') ? 'border-green-600' : ''">
+                          <input  type="checkbox"  class="" v-model="method" >
+                          <span class="text-lg ml-8 font-bold text-black" >Paypal</span>
+                      </div>
+
+                  </div>
+                  <div v-if="method === 'braintree'">
+                      <input type="hidden" name="_type" value="braintree">
+                      <input id="nonce" name="payment_method_nonce" type="hidden" />
+                      <div class="flex flex-col md:flex-row items-center">
+
+                          <div class="flex flex-col w-full">
+                              <label class="mb-2" for="cc_number">Credit Card Number</label>
+
+                              <div class="px-4 py-3 rounded-lg h-16" id="card-number">
+
+                              </div>
+                          </div>
+
+                          <div class="flex flex-col w-full">
+                              <label class="mb-2" for="expiry">Expiry</label>
+
+                              <div class="px-4 py-3 rounded-lg h-16" id="expiration-date">
+
+                              </div>
+                          </div>
+
+                          <div class="flex flex-col w-full">
+                              <label class="mb-2" for="cvv">CVV</label>
+
+                              <div class="px-4 py-3 rounded-lg h-16" id="cvv">
+
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div v-if="method === 'stripe'">
+                      <div class="ml-3">
+                          <input type="hidden" name="_type" value="stripe">
+                          <div class="flex flex-col">
+                              <label for="card-element" class="mb-4 py-2 px-2 font-bold text-lg">
+                                Credit details
+                              </label>
+                              <div id="card-element" class="mb-3">
+                                <!-- A Stripe Element will be inserted here. -->
+                              </div>
+
+                              <!-- Used to display form errors. -->
+                              <div id="card-errors" role="alert"></div>
+                          </div>
+
+
+                      </div>
+                  </div>
+                  <div v-if="method === 'paypal'" class="mb-3">
+                      <input type="hidden" name="_type" value="paypal">
+                      <input id="nonce" name="payment_method_nonce" type="hidden" />
+                      <div id="paypal-button"></div> 
+                  </div>
+
+                  <button type="submit" class="mt-5 px-6 py-4 hover:bg-green-500 rounded-full text-white font-bold text-lg bg-green-800 ">Submit Payment</button>
+                </div>
+              </form>
+            </div>
+            <div class="hidden md:flex md:flex-col md:w-64">
+              <div class="flex justify-between">
+                <h3 class="text-lg font-bold text-gray-900">My Cart</h3>
+                <span>{{ updatedQty }}</span>
+              </div>
+              <div v-for="product in products" class="w-full flex flex-col justify-between mt-4">
+                <div class="flex flex-row justify-between items-center">
+                    <img class="h-16 w-16 rounded-lg object-cover object-center" :src="`/storage/${product.options.imageUrl}`">
+                    <div class="ml-3 flex-1 flex flex-col">
+                      <h4>{{ product.name }}</h4>
+                      <h4>$ {{ product.price }}</h4>
+                    </div>
                 </div>
               </div>
-              <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="street">
-                  Street Address
-                </label>
-                <div class="relative">
-                  <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="street" type="text" placeholder="Albuquerque" name="address">
-
-
-                </div>
-              </div>
             </div>
-
-            <h3 class="text-lg font-semibold text-gray-900 mb-6 ">Select Payment Method</h3>
-
-            <div class="flex flex-row items-center my-6 mx-3  ">
-                <div @click="paymentOption('braintree')" class="flex items-center p-4 rounded-lg mr-12 border-2 border-gray-300 group hover:border-green-600 checkbox cursor-pointer" :class="(method === 'braintree') ? 'border-green-600' : ''">
-                    <input  type="checkbox" class=""  v-model="method">
-                    <span class="text-lg ml-8 font-bold text-black" >Braintree</span>
-                </div>
-                <div @click="paymentOption('stripe')" class="flex items-center p-4 rounded-lg mr-12 border-2 border-gray-300 group hover:border-green-600 checkbox cursor-pointer" :class="(method === 'stripe') ? 'border-green-600' : ''">
-                    <input  type="checkbox"  class="" v-model="method" >
-                    <span class="text-lg ml-8 font-bold text-black" >Stripe</span>
-                </div>
-                <div @click="paymentOption('paypal')" class="flex items-center p-4 rounded-lg mr-12 border-2 border-gray-300 group hover:border-green-600 checkbox cursor-pointer" :class="(method === 'paypal') ? 'border-green-600' : ''">
-                    <input  type="checkbox"  class="" v-model="method" >
-                    <span class="text-lg ml-8 font-bold text-black" >Paypal</span>
-                </div>
-
-            </div>
-            <div v-if="method === 'braintree'">
-                <input type="hidden" name="_type" value="braintree">
-                <input id="nonce" name="payment_method_nonce" type="hidden" />
-
-                <div class="flex flex-row items-center">
-
-                    <div class="flex flex-col">
-                        <label class="mb-2" for="cc_number">Credit Card Number</label>
-
-                        <div class="px-4 py-3 rounded-lg h-16" id="card-number">
-
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col">
-                        <label class="mb-2" for="expiry">Expiry</label>
-
-                        <div class="px-4 py-3 rounded-lg h-16" id="expiration-date">
-
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col">
-                        <label class="mb-2" for="cvv">CVV</label>
-
-                        <div class="px-4 py-3 rounded-lg h-16" id="cvv">
-
-                        </div>
-                    </div>
-
-
-                </div>
-
-            </div>
-            <div v-if="method === 'stripe'">
-                <div class="ml-3">
-                    <input type="hidden" name="_type" value="stripe">
-                    <div class="flex flex-col">
-                        <label for="card-element" class="mb-4 py-2 px-2 font-bold text-lg">
-                          Credit details
-                        </label>
-                        <div id="card-element" class="mb-3">
-                          <!-- A Stripe Element will be inserted here. -->
-                        </div>
-
-                        <!-- Used to display form errors. -->
-                        <div id="card-errors" role="alert"></div>
-                    </div>
-
-
-                </div>
-
-            </div>
-            <div v-if="method === 'paypal'" class="mb-3">
-                <input type="hidden" name="_type" value="paypal">
-                <input id="nonce" name="payment_method_nonce" type="hidden" />
-                <div id="paypal-button"></div> 
-
-            </div>
-
-            <button type="submit" class="mt-5 px-6 py-4 hover:bg-green-500 rounded-full text-white font-bold text-lg bg-green-800 ">Submit Payment</button>
-
-        </form>
+        </div>
+        
         
     </div>
 </template>
