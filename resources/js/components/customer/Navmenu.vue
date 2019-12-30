@@ -13,7 +13,7 @@
 
         
         </div> 
-        <div class="hidden md:inline-flex items-center">
+        <div class="hidden md:inline-flex justify-between items-center">
 
            <ListItems :customer="customer"></ListItems>
 

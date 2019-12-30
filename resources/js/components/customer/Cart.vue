@@ -1,7 +1,7 @@
 <template>
     <div class="relative  w-full px-6  lg:px-12 flex flex-col bg-gray-300 py-6" :class="(modal) ? 'bg-gray-400' : ''">
 
-        <div v-if="message"  :class="(status) ? 'bg-green-500' : 'bg-red-500' " class="absolute top-0 right-0 rounded-lg text-md flex flex-row justify-between items-center font-medium  text-white p-3 mb-2">
+        <div v-if="message"  :class="(status) ? 'bg-green-500' : 'bg-red-500' " class="w-full absolute top-0 right-0 rounded-lg text-md flex flex-row justify-between items-center font-medium  text-white p-3 mb-2">
             <span class="mr-6 w-64">{{ message }}</span>
             <svg @click="message = null" class="cursor-pointer text-custom-red-darker  w-6 h-6"  viewBox="0 0 43 43" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <rect x="7.07129" width="50" height="10" rx="5" transform="rotate(45 7.07129 0)" fill="currentColor"/>

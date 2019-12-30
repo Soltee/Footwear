@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
+use App\Order_Items;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,7 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home.dashboard');
+        $purchases = Order_Items::latest()->where('user_id', $this->guard()->user()->id)->paginate(10);
+        return view('home.dashboard', compact('purchases'));
     }
 
     public function profile()
@@ -34,6 +36,18 @@ class HomeController extends Controller
         return view('home.profile', compact('customer'));
     }
 
+    public function profilePic(Request $request){
+        $this->validate($request, [
+            'avatar' => ['image']
+        ]);
+        $avatarUrl = $request->file('avatar')->store('customers', 'public');
+        // dd($avatarUrl);
+        $this->guard()->user()->update([
+            'avatar' => $avatarUrl
+        ]);
+        return redirect()->back()->with('success', 'Profile picture updated.');
+
+    }
     public function updateProfile(Request $request, Customer $customer)
     {
         // dd($customer->email);
@@ -44,19 +58,12 @@ class HomeController extends Controller
         ]);
 
         // dd($request->all());
-        if($request->hasFile('avatar')){
-            $this->validate($request, [
-                'avatar' => ['image']
-            ]);
-            $avatarUrl = $request->file('avatar')->store('customers', 'public');
-            $avatarPath = ['avatar' => $avatarUrl];
-        }
-
+        
         $this->guard()->user()->update(array_merge([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password'])
-        ], $avatarPath ?? []));
+        ]));
 
         return redirect()->back()->with('success', 'Profile updated.');
     }

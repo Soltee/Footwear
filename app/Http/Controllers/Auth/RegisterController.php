@@ -80,7 +80,6 @@ class RegisterController extends Controller
         $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
-        // Notification::send(User::all(), new CustomerRegistered($workout));
         $this->guard()->login($user);
 
         return $this->registered($request, $user)

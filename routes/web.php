@@ -32,6 +32,7 @@ Auth::routes();
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 Route::get('/customer-profile', 'HomeController@profile')->name('customer-profile');
 Route::patch('/customer-profile/{customer}', 'HomeController@updateProfile')->name('customer-update');
+Route::patch('/customer-pic/{customer}', 'HomeController@profilePic')->name('customer-pic');
 Route::post('/customer-logout', 'Auth\LoginController@logout')->name('customer-logout');
 
 //Customer Checkout Process 

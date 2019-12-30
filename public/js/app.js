@@ -3785,6 +3785,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -27645,7 +27665,7 @@ var render = function() {
             "div",
             {
               staticClass:
-                "absolute top-0 right-0 rounded-lg text-md flex flex-row justify-between items-center font-medium  text-white p-3 mb-2",
+                "w-full absolute top-0 right-0 rounded-lg text-md flex flex-row justify-between items-center font-medium  text-white p-3 mb-2",
               class: _vm.status ? "bg-green-500" : "bg-red-500"
             },
             [
@@ -28284,7 +28304,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "relative flex items-center md:ml-12 " }, [
+  return _c("div", { staticClass: "relative flex items-center md:mx-12 " }, [
     _c(
       "li",
       {
@@ -29261,77 +29281,80 @@ var render = function() {
     [
       _c("search"),
       _vm._v(" "),
-      _c("li", { staticClass: "relative mb-3 md:mb-0 md:ml-4 md:mr-8" }, [
+      _c("li", { staticClass: "relative mb-3 md:mb-0 md:ml-4 md:mr-8 " }, [
         _c(
-          "span",
-          { staticClass: "relative text-custom-gray hover:opacity-75" },
+          "div",
+          { staticClass: "flex flex-row justify-between items-center" },
           [
-            _c(
-              "div",
-              { staticClass: "flex flex-row justify-between items-center" },
-              [
-                _vm._m(0),
-                _vm._v(" "),
-                _vm.megaMenustatus
-                  ? _c(
-                      "svg",
-                      {
-                        staticClass:
-                          "ml-2 h-8 w-8 text-custom-gray cursor-pointer hover:text-custom-gray-light",
-                        attrs: {
-                          fill: "currentColor",
-                          xmlns: "http://www.w3.org/2000/svg",
-                          viewBox: "0 0 20 20"
-                        },
-                        on: {
-                          click: function($event) {
-                            _vm.megaMenustatus = false
-                          }
-                        }
-                      },
-                      [
-                        _c("path", {
-                          attrs: {
-                            d:
-                              "M10.707 7.05L10 6.343 4.343 12l1.414 1.414L10 9.172l4.243 4.242L15.657 12z"
-                          }
-                        })
-                      ]
-                    )
-                  : _c(
-                      "svg",
-                      {
-                        staticClass:
-                          "ml-2 h-8 w-8 text-custom-gray cursor-pointer hover:text-custom-gray-light",
-                        attrs: {
-                          fill: "currentColor",
-                          xmlns: "http://www.w3.org/2000/svg",
-                          viewBox: "0 0 20 20"
-                        },
-                        on: {
-                          click: function($event) {
-                            _vm.megaMenustatus = true
-                          }
-                        }
-                      },
-                      [
-                        _c("path", {
-                          attrs: {
-                            d:
-                              "M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-                          }
-                        })
-                      ]
-                    )
-              ]
-            ),
+            _vm._m(0),
             _vm._v(" "),
             _vm.megaMenustatus
               ? _c(
+                  "svg",
+                  {
+                    staticClass:
+                      "ml-2 h-8 w-8 text-custom-gray cursor-pointer hover:text-custom-gray-light",
+                    attrs: {
+                      fill: "currentColor",
+                      xmlns: "http://www.w3.org/2000/svg",
+                      viewBox: "0 0 20 20"
+                    },
+                    on: {
+                      click: function($event) {
+                        _vm.megaMenustatus = false
+                      }
+                    }
+                  },
+                  [
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "M10.707 7.05L10 6.343 4.343 12l1.414 1.414L10 9.172l4.243 4.242L15.657 12z"
+                      }
+                    })
+                  ]
+                )
+              : _c(
+                  "svg",
+                  {
+                    staticClass:
+                      "ml-2 h-8 w-8 text-custom-gray cursor-pointer hover:text-custom-gray-light",
+                    attrs: {
+                      fill: "currentColor",
+                      xmlns: "http://www.w3.org/2000/svg",
+                      viewBox: "0 0 20 20"
+                    },
+                    on: {
+                      click: function($event) {
+                        _vm.megaMenustatus = true
+                      }
+                    }
+                  },
+                  [
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                      }
+                    })
+                  ]
+                )
+          ]
+        ),
+        _vm._v(" "),
+        _vm.megaMenustatus
+          ? _c(
+              "div",
+              {
+                staticClass:
+                  "md:absolute  p-3 mt-4 rounded-lg top-0 right-0  w-64"
+              },
+              [
+                _c(
                   "div",
                   {
                     staticClass:
-                      "md:absolute bg-black p-3 rounded-lg top-0 right-0 m-0 md:mt-10 ml-0 flex flex-col md:flex-row justify-around w-64"
+                      " bg-black flex flex-col md:flex-row justify-around"
                   },
                   _vm._l(_vm.categories, function(category) {
                     return _c(
@@ -29405,22 +29428,22 @@ var render = function() {
                   }),
                   0
                 )
-              : _vm._e()
-          ]
-        )
+              ]
+            )
+          : _vm._e()
       ]),
       _vm._v(" "),
       _vm._m(1),
       _vm._v(" "),
-      _c("cartQty"),
+      _c("div", { staticClass: "mx-6" }, [_c("cartQty")], 1),
       _vm._v(" "),
       _vm.customer
-        ? _c("div", { staticClass: "relative md:mb-0 md:ml-4 flex flex-col" }, [
+        ? _c("div", { staticClass: "relative md:mb-0  flex flex-col" }, [
             _c(
               "div",
               {
                 staticClass:
-                  "flex items-center justify-around w-full md:w-24 px-2 py-1 bg-custom-gray-lighter ",
+                  "flex items-center justify-around w-full md:w-32 px-2 py-1 bg-custom-gray-lighter ",
                 class: _vm.userStatus ? "rounded-t-lg" : "rounded-full"
               },
               [
@@ -29428,7 +29451,7 @@ var render = function() {
                   staticClass: "h-8 w-8 p-1 text-white bg-white rounded-full",
                   attrs: {
                     src: _vm.customer.avatar
-                      ? "/storage/user/" + _vm.customer.avatar
+                      ? "/storage/" + _vm.customer.avatar
                       : "/svg/avatar.svg"
                   }
                 }),
@@ -29492,14 +29515,123 @@ var render = function() {
                   "div",
                   {
                     staticClass:
-                      "absolute top-0 left-0 md:right-0 mt-10 bg-custom-gray-lighter px-2 py-1 rounded-b-lg w-full md:w-24 flex  flex-col border-gray-300 border-t-2"
+                      "absolute top-0 left-0 md:right-0 mt-10 bg-custom-gray-lighter px-2 py-1 rounded-b-lg w-full md:w-32 flex  flex-col border-gray-300 border-t-2"
                   },
                   [
                     _c(
                       "a",
                       {
                         staticClass: "mt-2 flex items-left mb-2 no-underline",
-                        attrs: { href: "" }
+                        attrs: { href: "/dashboard" }
+                      },
+                      [
+                        _c(
+                          "svg",
+                          {
+                            staticClass:
+                              "h-6 w-6 text-custom-gray cursor-pointer hover:text-custom-gray-light",
+                            attrs: {
+                              viewBox: "0 0 30 30",
+                              fill: "",
+                              xmlns: "http://www.w3.org/2000/svg"
+                            }
+                          },
+                          [
+                            _c("circle", {
+                              attrs: {
+                                cx: "15",
+                                cy: "15",
+                                r: "13.6",
+                                stroke: "white",
+                                "stroke-width": "2.8"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M11.3132 18.3167C11.3132 17.7627 10.8383 17.3135 10.2526 17.3135C9.66677 17.3135 9.19189 17.7627 9.19189 18.3167V22.3298C9.19189 22.8839 9.66677 23.3331 10.2526 23.3331C10.8383 23.3331 11.3132 22.8839 11.3132 22.3298V18.3167Z",
+                                fill: "white"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M15.2019 13.6349C15.2019 13.0808 14.727 12.6316 14.1412 12.6316C13.5554 12.6316 13.0806 13.0808 13.0806 13.6349V22.3298C13.0806 22.8839 13.5554 23.3331 14.1412 23.3331C14.727 23.3331 15.2019 22.8839 15.2019 22.3298V13.6349Z",
+                                fill: "white"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M14.7014 9.29798C15.0904 8.88373 15.0507 8.24961 14.6128 7.88162C14.1749 7.51364 13.5044 7.55115 13.1154 7.9654L7.37127 14.0818C6.98223 14.496 7.02188 15.1302 7.45983 15.4981C7.89778 15.8661 8.56818 15.8286 8.95722 15.4144L14.7014 9.29798Z",
+                                fill: "white"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M16.1622 12.2425C16.5793 12.6315 17.2509 12.6269 17.6621 12.2323C18.0734 11.8377 18.0686 11.2025 17.6514 10.8135L14.618 7.98513C14.2008 7.59615 13.5292 7.60071 13.118 7.99531C12.7068 8.38991 12.7116 9.02512 13.1288 9.4141L16.1622 12.2425Z",
+                                fill: "white"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M16.2438 10.7756C15.8637 11.1972 15.917 11.8304 16.3628 12.1899C16.8086 12.5494 17.478 12.499 17.8581 12.0774L20.8737 8.73167C21.2538 8.31002 21.2005 7.67679 20.7547 7.31731C20.3089 6.95783 19.6395 7.00822 19.2594 7.42986L16.2438 10.7756Z",
+                                fill: "white"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M19.4923 8.68639C19.4662 8.13282 19.9195 7.66413 20.5047 7.63948L20.7244 7.63022C20.9195 7.62199 21.0847 7.76493 21.0933 7.94943L21.1873 9.94402C21.2073 10.3704 20.8581 10.7315 20.4073 10.7505C19.9565 10.7695 19.5748 10.4392 19.5547 10.0128L19.4923 8.68639Z",
+                                fill: "white"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M19.9053 7.05488C20.4171 6.99495 20.8834 7.3388 20.9468 7.82294C20.9943 8.18603 20.7216 8.5168 20.3378 8.56175L17.8018 8.85875C17.354 8.91119 16.946 8.61031 16.8906 8.18673C16.8351 7.76312 17.1532 7.37719 17.601 7.32476L19.9053 7.05488Z",
+                                fill: "white"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M19.4441 16.3101C19.4441 15.7561 18.9692 15.3069 18.3834 15.3069C17.7976 15.3069 17.3228 15.7561 17.3228 16.3101V22.3297C17.3228 22.8838 17.7976 23.333 18.3834 23.333C18.9692 23.333 19.4441 22.8838 19.4441 22.3297V16.3101Z",
+                                fill: "white"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M23.3337 10.9593C23.3337 10.4052 22.8589 9.95605 22.2731 9.95605C21.6873 9.95605 21.2124 10.4052 21.2124 10.9593V22.3297C21.2124 22.8837 21.6873 23.3329 22.2731 23.3329C22.8589 23.3329 23.3337 22.8837 23.3337 22.3297V10.9593Z",
+                                fill: "white"
+                              }
+                            })
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "text-custom-gray ml-2" }, [
+                          _vm._v("Dashboard")
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "mt-2 flex items-left mb-2 no-underline",
+                        attrs: { href: "/customer-profile" }
                       },
                       [
                         _c(
@@ -29647,7 +29779,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "mb-4 md:mb-0 md:ml-4 md:mr-8" }, [
+    return _c("li", { staticClass: "mb-4 md:mb-0 " }, [
       _c(
         "a",
         {
@@ -29770,7 +29902,7 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "hidden md:inline-flex items-center" },
+      { staticClass: "hidden md:inline-flex justify-between items-center" },
       [_c("ListItems", { attrs: { customer: _vm.customer } })],
       1
     )
