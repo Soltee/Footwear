@@ -12,15 +12,15 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
-<body class="bg-gray h-screen antialiased leading-none">
-    <div id="app" class="bg-admin-bk">
+<body class="bg-gray h-screen antialiased leading-none ">
+    <div id="app" class="bg-admin-bk xl:container xl:mx-auto">
         @auth('administrator')
-        <nav class="shadow mb-8 py-6 md:px-10">
-            <div class="container mx-auto md:px-0">
+        <nav class="mb-8 py-3 md:py-6 px-3 md:px-10">
+            <div class="md:px-0">
                 <div class="flex items-center justify-between">
                     <div class="mr-6 flex items-center">
                         <a href="{{ url('/') }}" class="text-lg font-semibold text-gray-100 no-underline mr-3">
-                            <svg class="h-16 w-16" viewBox="0 0 95 79" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="h-12 w-12 md:h-16 md:w-16" viewBox="0 0 95 79" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g filter="url(#filter0_d)">
                                 <rect y="28.2843" width="8" height="60" rx="4" transform="rotate(-45 0 28.2843)" fill="#201E16"/>
                                 <rect y="28.2843" width="40" height="10" rx="5" transform="rotate(-45 0 28.2843)" fill="#201E16"/>
@@ -69,7 +69,7 @@
                             </form>
                         </div> --}}
                             <a href="{{ route('administrator-logout') }}"
-                                   class="no-underline hover:underline text-gray-900 text-lg font-bold p-3"
+                                   class="no-underline hover:underline text-gray-900 text-md  md:text-lg font-bold p-3"
                                    onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
                             <form id="logout-form" action="{{ route('administrator-logout') }}" method="POST" class="hidden">

@@ -11,9 +11,9 @@
 
                 <input
                     v-model="keyword"
-                    @focus="searchStatus = true"
+                    @focus="searchStatus = true;"
                     @keyup=" searchProducts();"
-                    class="relative w-64  block appearance-none rounded-full  bg-white border border-gray-400 hover:border-gray-500 pl-16 py-2 pr-8  shadow leading-tight focus:outline-none focus:shadow-outline" id="grid-first-name" type="text" name="name"
+                    class="relative w-40 md:w-64  block appearance-none rounded-full  bg-white border border-gray-400 hover:border-gray-500 pl-16 py-2 pr-8  shadow leading-tight focus:outline-none focus:shadow-outline" id="" type="text" name="name"
 
                     placeholder="Search Table">
                 <svg class="absolute left-0 top-0 mt-1 ml-2 h-8 w-8" viewBox="0 0 47 47" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -24,10 +24,9 @@
             </div>
 
         </div>
-        
 
         <div> 
-            <div class="overflow-x-scroll w-full mt-6">
+            <div class="overflow-x-scroll w-full mt-6 md:overflow-hidden">
                 
                 <table class="w-full table-auto">
                     <thead>
@@ -44,7 +43,7 @@
                         <tr v-if="!searchStatus" v-for="p in productArray">
                           <td class="border px-4 py-2 text-gray-900">{{ p.id }}</td>
                           <td class="border px-4 py-2 text-gray-900">
-                              <img class="h-24 w-24 rounded-full" :src="`/storage/${p.imageUrl}`">
+                              <img class="h-16 w-16 md:h-24 md:w-24 rounded-full" :src="`/storage/${p.imageUrl}`">
                           </td>
                           <td class="border px-4 py-2 text-gray-900">{{ p.name }}</td>
                           <td class="border px-4 py-2 text-gray-900">Rs {{ p.price }}</td>
@@ -55,8 +54,8 @@
                                         <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 "><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                     <!-- </div> -->
                                 <!-- </form> -->
-                                <button type="submit" @click="filterProduct(p); dropProduct(p)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 text-admin-red"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
+                                <button type="submit" @click="removeModal = true;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 text-admin-red"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
                                 </button> 
                             </div>
                           </td>
@@ -69,16 +68,14 @@
                           <td class="border px-4 py-2 text-gray-900">{{ p.name }}</td>
                           <td class="border px-4 py-2 text-gray-900">Rs {{ p.price }}</td>
                           <td class="">
-                            <div class="flex items-center">                                
-                                <form @submit.prevent="updateCart(p)">
-                                    <div class="flex flex-row items-center">
-                                        <input class="px-4 py-3 w-16 text-center rounded-lg" type="text" name="">
-                                        <button type="submit" class="p-3 rounded-lg text-blue-900 text-md ">
-                                            Edit
-                                        </button>
-                                    </div>
-                                </form>
-                                <button type="submit" @click="filterProduct(p); dropProduct(p)">Drop</button> 
+                            <div class="flex justify-around items-center">                                
+                                    <!-- <div class="flex flex-row items-center"> -->
+                                        <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 "><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                    <!-- </div> -->
+                                <!-- </form> -->
+                                <button type="submit" @click="removeModal = true;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 text-admin-red"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
+                                </button> 
                             </div>
                           </td>
                         </tr>
@@ -87,38 +84,34 @@
                 </table>
 
             </div>
-        	<!-- <div v-for="product in productArray">
-        		<div  class="flex flex-wrap group border-2  border-transparent hover:border-green-500 items-center justify-between " @click="redirectTo(product)">
-                        <div class="flex flex-row">
-                            <img class="h-24 w-24 rounded-full" :src="`/storage/${product.imageUrl}`">
-                            <h4 class="m-0">{{ product.name }}</h4>
-                            <a :href="`/admin/products-edit/${product.id}-${product.name}`">Edit Product</a>
-                            <button type="submit"
-                         @click="filterProduct(product); dropProduct(product)">Drop</button>   
-                        </div>      
-        		</div>
-        	</div>
-        	<div class="flex">
+        	<div class="my-6">      
+            	<div class="flex justify-center items-center">
 
-        		<a  :href="`${ifExists(links.prevPage)}`"  class="px-2 py-2 bg-blue-800" >Prev </a>
-        		<span>{{ links.currentPage }}</span>
-        		<a  :href="`${ifExists(links.nextPage)}`" class="px-2 py-2 bg-blue-800">Next </a>
-        	</div> -->
-        </div>
-
-       <!--  <div>
-            <div class="flex justify-between items-center">
-                <span :class="(searchError) ? 'border-red-500 border-2' : ''">{{ (resultTotal) ? (resultTotal) : 0 }} results found for {{ keyword }}</span>   
-            </div>
-            <div v-for="product in searchArray">
-                <div class="flex flex-wrap items-center justify-between group border-2  border-transparent hover:border-green-500" @click="redirectTo(product)">
-                    <span>{{ product.id }}</span>
-                    <img class="h-24 w-24 rounded-full" :src="`/storage/${product.imageUrl}`">
-                    <h4>{{ product.name }}</h4>
-                    <button type="submit" @click="filterProduct(product); dropProduct(product)">Drop</button>
+            		<a  :href="`${ifExists(links.prevPage)}`"  class="px-4 py-3 rounded-full text-white bg-admin-btn hover:bg-admin-btn-hover" >Older </a>
+            		<span class="text-gray-800 mx-4 font-semibold">{{ links.currentPage }}</span>
+            		<a  :href="`${ifExists(links.nextPage)}`" class="px-4 py-3 rounded-full text-white bg-admin-btn hover:bg-admin-btn-hover">Newer </a>
                 </div>
+        	</div>
+        </div>
+            
+        <div v-if="removeModal" class="fixed top-0 w-full h-screen  flex flex-col  justify-center rounded-lg ">
+               <div class="bg-white max-w-xl mx-auto shadow-lg rounded-lg p-3">
+                    <div class="mb-3 text-right">
+                        <button @click="removeModal = false; " type="button" class="px-4 py-3 cursor-pointer" data-dismiss="modal" aria-label="Close">
+                            <svg class="fill-current text-gray-900" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                              <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                            </svg>
+                        </button>
+
+                    </div>
+                    <p class="text-lg font-semibold text-green-800 text-center">Are you sure?</p>
+                    <div class="mt-6 mb-3 flex justify-end">
+                        <button @click="removeModal = false; " class="cursor-pointer text-gray-900 px-4 py-3 rounded-lg mr-4">Cancel</button>
+                        <button @click="removeModal = false; filterProduct(p); dropProduct(p)" class="cursor-pointer bg-admin-red hover:bg-custom-red-lighter text-white px-4 py-3 rounded-lg">Delete</button>
+                    </div>
+                </div>
+
             </div>
-        </div> -->
 
     </div>
 </template>
@@ -138,7 +131,8 @@
                 searchError: false,
                 resultTotal : 0,
                 message: null,
-                error: null
+                error: null,
+                removeModal : false,
         	}
         },
         mounted() {
@@ -173,7 +167,6 @@
                 }
         	},
             searchProducts(){
-                this.searchStatus = false;
                 if(!this.keyword){return;}
                 axios.get(`/admin/searchProducts/${this.keyword}`)
                     .then((res) => {

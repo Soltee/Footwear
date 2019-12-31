@@ -1,5 +1,5 @@
 <template>
-    <div class="container ">
+    <div class="container z-10">
       
         <svg v-if="!search" @click="focusInput" class="h-10 w-10 text-white cursor-pointer" fill="currentColor" viewBox="0 0 61 55" xmlns="http://www.w3.org/2000/svg">
             <g filter="url(#filter0_d)">
@@ -20,7 +20,7 @@
             </svg>
 
     	<div  v-if="search" class="z-0 fixed inset-0 bg-gray-300">
-            <div class="z-10 mx-12 py-6 h-full ">
+            <div class="z-10 mx-3 md:mx-12 py-6 h-full ">
                 <form  @submit.prevent="searchAll">
             
                     <div class=" relative flex flex-row items-center">
