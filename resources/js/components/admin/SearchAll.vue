@@ -43,7 +43,7 @@
                                 </defs>
                                 </svg>     
                         </button>
-                        <input v-focus  :class="(focus) ? 'border-blue-900':''" type="text" name="" v-model="keyword" class="w-full px-12 py-6 mt-3 bg-transparent  text-blue-900 text-md border-b-2 border-transparent" @focus="focus = true" >
+                        <input v-focus  :class="(focus) ? 'border-blue-900':''" type="text" name="" v-model="keyword" class="w-full px-16 py-6 mt-3 bg-transparent  text-blue-900 text-md border-b-2 border-transparent" @focus="focus = true" >
                         <svg @click="reset()" class="absolute right-0 top-0 mt-6 h-6 w-6 text-blue-900 mr-3 cursor-pointer"  fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z"/></svg>
                     </div>
                 </form >
@@ -60,20 +60,20 @@
                         </p>
                           
                     </div>
-                    <div class="flex flex-row justify-between ">
-                        <div v-if="products.length" class="flex flex-col md:w-1/2 pr-2">
+                    <div class="w-full flex flex-col md:flex-row justify-between ">
+                        <div v-if="products.length" class="flex flex-col md:w-1/2 pr-2 min-h-0 max-h-24 overflow-y-scroll overflow-x-auto">
                             <h4 class="m-0 mt-3 text-lg my-3">Products ({{ products.length }})</h4>
-                            <div v-for="p in products" class="mt-3 min-h-0 max-h-24 overflow-y-scroll overflow-x-auto">
-                                <div class="flex flex-row items-center justify-around group border-2 border-transparent hover:border-green-500 rounded-lg px-3 py-3  cursor-pointer mb-3" @click="redirectTo(p, 'products')">
+                            <div v-for="p in products" class="mt-3">
+                                <div class="flex flex-row items-center justify-around group border-2 border-transparent hover:border-green-500 rounded-lg px-3 py-2  cursor-pointer mb-3" @click="redirectTo(p, 'products')">
                                     <img class="h-12 w-12 rounded-full" :src="`/storage/${p.imageUrl}`">
                                     <h4 class="m-0">{{ p.name }}</h4>
                                 </div>
                             </div> 
                         </div>
-                        <div v-if="customers.length" class="flex flex-col md:w-1/2 pl-2">
+                        <div v-if="customers.length" class="flex flex-col md:w-1/2 pl-2 min-h-0 max-h-24 overflow-y-scroll overflow-x-auto">
                             <h4 class="m-0 mt-3 text-lg my-3">Customers ({{ customers.length }})</h4>
-                            <div v-for="c in customers" class="mt-3 min-h-0 max-h-24 overflow-y-scroll overflow-x-auto">
-                                <div class="flex flex-row items-center justify-around group border-2 border-transparent hover:border-green-500 rounded-lg px-3 py-3 cursor-pointer mb-3" @click="redirectTo(c, 'customers')">
+                            <div v-for="c in customers" class="mt-3">
+                                <div class="flex flex-row items-center justify-around group border-2 border-transparent hover:border-green-500 rounded-lg px-3 py-2 cursor-pointer mb-3" @click="redirectTo(c, 'customers')">
                                     <img class="h-12 w-12 rounded-full" :src="`/storage/${c.avatar}`">
                                     <h4>{{ c.name }}</h4>
                                 </div>     
@@ -156,7 +156,7 @@
                 this.search = false;
             },
             redirectTo(c, name){
-                window.location = `http://localhost:8000/zero/${name}/${c.id}-${c.name}`;   
+                window.location = `http://localhost:8000/admin/${name}/${c.id}-${c.slug}`;   
             }
         }
     }

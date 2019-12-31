@@ -15,6 +15,13 @@ module.exports = {
           'red-darker': '#cf1d1d',
           'red-lighter' : '#f43838',
           'red-light' : '#8a3231',
+        },
+        admin : {
+          'bk': '#c2c49f',
+          'btn': '#191911',
+          'btn-hover':'#6b6855',
+          'red' : '#dd1515',
+          'green': '#159049',
         }
       },
       height: {

@@ -30,7 +30,7 @@ class AdminAuthController extends Controller
         $this->clearLoginAttempts($request);
 
         return $this->authenticated($request, $this->guard()->user())
-                ?: redirect()->route('administrator-dashboard')->with('success', 'Logged in');
+                ?: redirect()->route('administrator-dashboard')->with('toast_success', 'Logged in');
     }
     /**
      * Log the user out of the application.
@@ -44,7 +44,7 @@ class AdminAuthController extends Controller
 
         $request->session()->invalidate();
 
-        return $this->loggedOut($request) ?: redirect('/')->with('success', 'Logged out');
+        return $this->loggedOut($request) ?: redirect('/')->with('toast_success', 'Logged out');
     }
 
     protected function guard()

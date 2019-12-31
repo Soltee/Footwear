@@ -80,11 +80,7 @@
             </div>
         </nav>
 
-        @if(session('success'))
-            <div id="message"  class="bg-green-900 rounded-lg ml-auto shadow text-center py-2 w-64 text-gray-300">
-                    {{ session('success') }}
-            </div>
-        @endif
+        @include('sweetalert::alert')
         <main>
         @yield('content')
         </main>

@@ -22,7 +22,7 @@
         <div class="flex flex-wrap justify-center">
                 @forelse($products as $product)
                 <div class="p-4 bg-white rounded-lg shadow-lg m-2 w-full cm:w-auto hover:-mt-1 hover:-mr-1">
-                    <a href="shoes/{{ $product->id }}-{{ $product->name }}">
+                    <a href="shoes/{{ $product->id }}-{{ $product->slug }}">
                         <h3 class="text-lg font-bold my-2 text-gray-900">{{ $product->name }}</h3>
                         <img class="h-64 w-64 rounded-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}">
                     </a>                    
@@ -86,7 +86,7 @@
         <div class="flex flex-wrap justify-center">
                 @forelse($adidas as $product)
                 <div class="p-4 bg-white rounded-lg shadow-lg cursor-pointer m-2 w-full cm:w-auto hover:-mt-1 hover:-mr-1">
-                    <a href="shoes/{{ $product->id }}-{{ $product->name }}">
+                    <a href="shoes/{{ $product->id }}-{{ $product->slug }}">
                         <h3 class="text-lg font-bold my-2 text-gray-900">{{ $product->name }}</h3>
                         <img class="h-64 w-64 rounded-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}">
                         

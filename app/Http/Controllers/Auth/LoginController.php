@@ -54,16 +54,16 @@ class LoginController extends Controller
         $this->clearLoginAttempts($request);
 
         return $this->authenticated($request, $this->guard()->user())
-                ?: redirect()->route('dashboard')->with('success', 'You are logged in');
+                ?: redirect()->route('dashboard')->with('toast_success', 'You are logged in');
     }
 
     public function logout(Request $request)
     {
         $this->guard()->logout();
 
-        // $request->session()->invalidate();
+        $request->session()->invalidate();
 
-        return $this->loggedOut($request) ?: redirect('/')->with('success', 'You are logged out');
+        return $this->loggedOut($request) ?: redirect('/')->with('toast_success', 'You are logged out');
     }
 
     protected function guard()

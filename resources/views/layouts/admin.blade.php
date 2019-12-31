@@ -13,7 +13,7 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body class="bg-gray h-screen antialiased leading-none">
-    <div id="app">
+    <div id="app" class="bg-admin-bk">
         @auth('administrator')
         <nav class="shadow mb-8 py-6 md:px-10">
             <div class="container mx-auto md:px-0">
@@ -80,12 +80,9 @@
             </div>
         </nav>
         @endauth
+        @include('sweetalert::alert')
 
-        @if(session('success'))
-            <div id="message"  class="bg-green-900 rounded-lg ml-auto shadow text-center py-2 w-64 text-gray-300">
-                    {{ session('success') }}
-            </div>
-        @endif
+
         @yield('content')
     </div>
 

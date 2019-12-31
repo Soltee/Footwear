@@ -24,9 +24,9 @@ class ProductsController extends Controller
     {
         $products = Products::latest()->paginate(10);
         // dd($products);
-        // $total = Products::all()->count();
-        // $shown = $products->count();
-        return view('products.index', compact('products'));
+        $total = Products::all()->count();
+        $shown = $products->count();
+        return view('products.index', compact('products', 'shown', 'total'));
     }
 
     /**

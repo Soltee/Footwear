@@ -3,7 +3,7 @@
 @section('content')
     <div class="py-6 md:px-10">
         <div class="flex flex-row justify-start">
-        	<div class="w-40">
+        	<div class="w-48">
             
 	            @include('_partials.nav')
 
