@@ -6,6 +6,7 @@ use App\Administrator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class AdminAuthController extends Controller
@@ -14,6 +15,18 @@ class AdminAuthController extends Controller
 
     public function loginView(){
     	return view('auth.admin-login');
+    }
+
+    protected function validateLogin(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            $this->username() => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        }
     }
 
     protected function attemptLogin(Request $request)

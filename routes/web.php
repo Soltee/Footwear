@@ -59,16 +59,20 @@ Route::prefix('admin')->group(function () {
 	Route::get('/categories', 'Administrator\CategoriesController@index');
 	Route::post('/category/store', 'Administrator\CategoriesController@store');
 
+	//Category Api
+	Route::get('/getCategories', 'Administrator\CategoriesController@getCategories');
 
 	//Prouducts 
 	Route::get('/products', 'Administrator\ProductsController@index')->name('products');
 	Route::get('/products/create', 'Administrator\ProductsController@create')->name('products.create');
 	Route::post('/products', 'Administrator\ProductsController@store')->name('products.store');
-	Route::get('/products/{products}-{slug}', 'Administrator\ProductsController@show')->name('products.show');
 	Route::get('/products-edit/{products}-{slug}', 'Administrator\ProductsController@edit')->name('products.edit');
-	Route::patch('/products/{products}/update', 'Administrator\ProductsController@update')->name('products.update');
-	Route::post('/products/{products}', 'Administrator\ProductsController@destroy')->name('products.delete');
 
+	//Products Api
+	Route::get('/getProducts', 'Administrator\ProductsController@getProducts');
+	Route::get('/products/{products}', 'Administrator\ProductsController@show');
+	Route::patch('/products/{products}', 'Administrator\ProductsController@update');
+	Route::delete('/products/{products}', 'Administrator\ProductsController@destroy');
 
 	//Customers
 	Route::get('/customers', 'Administrator\CustomerController@index')->name('customers');

@@ -7,6 +7,10 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+
+
+// Vue.use(Swal);
+
 export const serverBus = new Vue();
 
 /**

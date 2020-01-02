@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Administrator;
 
 use App\Categories;
+use App\Subcategories;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,6 +15,14 @@ class CategoriesController extends Controller
 		$categories = Categories::latest()->get();
 		return response()->json(['categories' => $categories], 200);
 	}
+
+    public function getCategories()
+    {
+        $categories = Categories::orderBy('name')->with('subcategories')->get();
+        return response()->json([
+            'categories' => $categories
+        ], 200);
+    }
 
     public function store(Request $request)
     {

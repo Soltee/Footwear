@@ -118,7 +118,7 @@ import request from '../../helpers.js';
             this.getCategories();
         },
         methods: {
-            async getCategories(){
+            getCategories(){
                 console.log(request);
                 request('/categories').then(res => {
                     if(res.status = 200){

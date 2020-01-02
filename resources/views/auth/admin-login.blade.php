@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="container mx-auto py-12 bg-gray-300">
-        <div class="flex flex-wrap items-center justify-center">
+    <div class="h-screen container mx-auto py-12 bg-gray-300">
+        <div class="fixed inset-0 mx-auto max-w-md rounded-lg flex flex-col  justify-center rounded-lg">
             <div class="w-full max-w-sm">
             
                 <div class="flex flex-col break-words bg-white border border-2 rounded shadow-md">

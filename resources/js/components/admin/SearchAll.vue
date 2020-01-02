@@ -1,7 +1,7 @@
 <template>
     <div class="container z-10">
       
-        <svg v-if="!search" @click="focusInput" class="h-10 w-10 text-white cursor-pointer" fill="currentColor" viewBox="0 0 61 55" xmlns="http://www.w3.org/2000/svg">
+        <svg v-if="!search" @click="focusInput" class="h-8 w-8 md:h-10 md:w-10 text-white cursor-pointer" fill="currentColor" viewBox="0 0 61 55" xmlns="http://www.w3.org/2000/svg">
             <g filter="url(#filter0_d)">
             <path fill-rule="evenodd" clip-rule="evenodd" d="M37.2309 34.1598C38.9903 31.1823 40 27.709 40 24C40 12.9543 31.0457 4 20 4C8.9543 4 0 12.9543 0 24C0 35.0457 8.9543 44 20 44C23.709 44 27.1823 42.9904 30.1598 41.2309L37.7487 48.8198C39.7014 50.7724 42.8672 50.7724 44.8198 48.8198C46.7724 46.8672 46.7724 43.7014 44.8198 41.7487L37.2309 34.1598Z" fill="#201E16"/>
             </g>

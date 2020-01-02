@@ -3,3 +3,4 @@ let request = async (param) => {
 	return data;
 }
 export default request;
+

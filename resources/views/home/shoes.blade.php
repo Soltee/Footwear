@@ -4,8 +4,8 @@
     <div class="  px-6  lg:px-12 flex flex-col md:flex-row bg-gray-300 mx-auto container">
         
         <!-- Categories -->
-       <div class="overflow-x-scroll md:w-56 md:px-3 py-3">
-            <ul class="flex flex-row md:flex-col items-left ml-2 ">
+       <div class=" overflow-x-scroll md:w-56 md:px-3 py-3">
+            <ul class="flex flex-row md:flex-col items-left ml-2">
               @forelse($categories as $category)
 
                 <a class="hidden md:block mt-3 " href="{{ route('shoes', ['id' => $category->id , 'category' => $category->name]) }}" class="text-black hover:opacity-75">
@@ -14,12 +14,9 @@
 
                 <ul class="mt-2 flex flex-row md:flex-col items-left md:ml-2">
                   @forelse($category->subcategories as $subcategory)
-            
-                  <li class="mr-3 md:mr-0 mb-2 px-3 py-3 rounded-lg bg-white hover:shadow-lg ">
-                        <a href="{{ route('shoes', ['id' => $subcategory->id , 'subcategory' => $subcategory->name]) }}">
-                            {{ $subcategory->name }}
-                        </a>
-                  </li> 
+                    <a class="mr-3 md:mr-0 mb-2 px-3 py-3 rounded-lg bg-white hover:shadow-lg" href="{{ route('shoes', ['id' => $subcategory->id , 'subcategory' => $subcategory->name]) }}">
+                        {{ $subcategory->name }}
+                    </a>
                   @empty  
                   @endforelse
                 </ul>              

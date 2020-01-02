@@ -28,5 +28,9 @@
         "vue-owl-carousel": "^2.0.3",
         "vue-template-compiler": "^2.6.4"
     },
-    "dependencies": {}
+    "dependencies": {
+        "n": "^6.1.3",
+        "sweetalert2": "^9.5.4",
+        "vue-sweetalert2": "^3.0.1"
+    }
 }

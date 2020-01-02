@@ -22,11 +22,34 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Products::latest()->paginate(10);
-        // dd($products);
-        $total = Products::all()->count();
-        $shown = $products->count();
-        return view('products.index', compact('products', 'shown', 'total'));
+        return view('products.index');
+    }
+
+
+    public function getProducts()
+    {
+        $search = request()->search;
+
+        $query = Products::latest();
+        if($search){
+            $query = $query->where('name', 'LIKE', '%'.$search.'%')
+                            ->orWhere('price', 'LIKE', '%'.$search.'%');
+         }
+
+        $products = $query->paginate(5);
+
+        return response()->json([
+            'products' => $products->items(),
+            'paginate' => [
+                'first_item'    => $products->firstItem(),
+                'last_item'     => $products->lastItem(),
+                'previous_page_url' => $products->previousPageUrl(),
+                'current_page'      => $products->currentPage(),
+                'next_page_url'     => $products->nextPageUrl(),
+                'current_count' => $products->count(),
+                'total_count'   => $products->total()
+            ]
+        ], 200);  
     }
 
     /**
@@ -84,26 +107,13 @@ class ProductsController extends Controller
      * @param  \App\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function show(Products $products, $slug)
+    public function show(Products $products)
     {
-        return view('products.show', compact('products'));
-        // dd($products->id);   
+        return response()->json([
+            'product' => $products
+        ], 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Products  $products
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Products $products, $slug)
-    {
-        // dd($slug);
-        $categories = Categories::latest()->get();
-        $category = Categories::findOrfail($products->category_id);
-
-        return view('products.edit', compact('products', 'categories', 'category'));
-    }
 
     /**
      * Update the specified resource in storage.
@@ -143,12 +153,12 @@ class ProductsController extends Controller
                 'qty' => $data['qty'],
                 'visible' => $request->filled('visible')
             ],
-            $imagePath   ?? []
-            // ,$excerpt     ?? [],
-            // $description ?? []
+            $imagePath   ?? [],
+            $excerpt     ?? [],
+            $description ?? []
         ));
 
-        return redirect()->route('administrator-dashboard')->with('success', 'Product added.');
+        return response()->json(['success' => 'true'], 200);
     }
 
     /**
@@ -159,12 +169,9 @@ class ProductsController extends Controller
      */
     public function destroy(Products $products)
     {
-        // dd(Storage::path($products->imageUrl));
-        // ($products->imageUrl) ? File::delete($products->imageUrl) : '' ;
-        // ($products->imageUrl) ?? Storage::disk('local')->delete([$products->imageUrl]);
-        // $products->delete();
+        ($products->imageUrl) ?? Storage::disk('public')->delete([$products->imageUrl]);
+        $products->delete();
         return response()->json(['success' => 'true'], 204);
-        // return redirect()->route('administrator-dashboard')->with('success', 'Product dropped.');
   
     }
 }
