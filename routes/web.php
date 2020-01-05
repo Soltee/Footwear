@@ -61,18 +61,22 @@ Route::prefix('admin')->group(function () {
 
 	//Category Api
 	Route::get('/getCategories', 'Administrator\CategoriesController@getCategories');
+	Route::get('/getSubCategories/{categories}', 'SubCategoriesController@index');
 
 	//Prouducts 
 	Route::get('/products', 'Administrator\ProductsController@index')->name('products');
-	Route::get('/products/create', 'Administrator\ProductsController@create')->name('products.create');
-	Route::post('/products', 'Administrator\ProductsController@store')->name('products.store');
+	Route::get('/products/create', 'Administrator\ProductsController@create');
 	Route::get('/products-edit/{products}-{slug}', 'Administrator\ProductsController@edit')->name('products.edit');
 
 	//Products Api
 	Route::get('/getProducts', 'Administrator\ProductsController@getProducts');
 	Route::get('/products/{products}', 'Administrator\ProductsController@show');
+	Route::post('/products', 'Administrator\ProductsController@store');
 	Route::patch('/products/{products}', 'Administrator\ProductsController@update');
 	Route::delete('/products/{products}', 'Administrator\ProductsController@destroy');
+
+	//ProductImageApi
+	Route::post('/productsImage/{products}', 'ProductImagesController@store');	
 
 	//Customers
 	Route::get('/customers', 'Administrator\CustomerController@index')->name('customers');

@@ -25,6 +25,11 @@ class Products extends Model
     	return $this->belongsTo(Subcategories::class);
     }
 
+    public function images()
+    {
+        return $this->hasMany(ProductImages::class);
+    }
+
     public function scopeFindByCategorySlug($query, $slug)
     {
         return $query->whereHas('category', function ($query) use ($slug) {

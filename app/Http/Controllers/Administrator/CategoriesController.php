@@ -18,10 +18,19 @@ class CategoriesController extends Controller
 
     public function getCategories()
     {
-        $categories = Categories::orderBy('name')->with('subcategories')->get();
-        return response()->json([
-            'categories' => $categories
-        ], 200);
+        $category = request()->category;
+        if($category){
+            $subcategories = Subcategories::where('category_id', $category)->rderBy('name')->get();
+            return response()->json([
+                'subcategories' => $subcategories
+            ], 200);
+        } else {
+            $categories = Categories::orderBy('name')->with('subcategories')->get();
+            return response()->json([
+                'categories' => $categories
+            ], 200);
+        }
+        
     }
 
     public function store(Request $request)

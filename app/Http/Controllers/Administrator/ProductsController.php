@@ -84,8 +84,7 @@ class ProductsController extends Controller
         // dd($request->all());
         $item =  $request->file('imageUrl')->store('products', 'public');
 
-        // $storeImage = Image::make(public_path("storage/{$item}"))->fit(1200, 1200);
-        // $storeImage->save();
+
 
         $product = Products::create([
             'category_id' => $data['category'],
@@ -98,7 +97,7 @@ class ProductsController extends Controller
             'visible' => $request->filled('visible')
         ]);
 
-        return redirect()->back()->with(['success' =>'Product added.', 'product' => $product]);
+        return response()->json(['product' => $product->id], 201);
     }
 
     /**

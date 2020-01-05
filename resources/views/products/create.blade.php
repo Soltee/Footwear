@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="container mx-auto">
+    <div class="container mx-auto pb-6">
         <div class="flex flex-row justify-start">
         	<div class="w-40">
             
@@ -10,15 +10,16 @@
 	            @endcomponent
 
 	        </div>
-
+            <div class="flex-1">
+            <create-product :categories="{{ $categories->toJson() }}" />                
+            </div>
 	        	
-			<add-product :categories="{{ $categories->toJson() }}" />
 				
         </div>
     </div>
 @endsection
 
-@section('scripts')
+{{-- @section('scripts')
 <script>
     $(document).ready(()=>{
 
@@ -60,4 +61,4 @@
         });
     });
 </script>
-@endsection
+@endsection --}}

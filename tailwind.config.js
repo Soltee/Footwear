@@ -40,5 +40,7 @@ module.exports = {
   variants: {
     margin: ['hover'],
   },
-  plugins: []
+  plugins: [
+    require('@tailwindcss/custom-forms'),
+  ]
 }

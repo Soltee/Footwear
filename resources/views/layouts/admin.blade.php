@@ -25,7 +25,7 @@
                             <rect x="0.798828" y="12" width="33.2015" height="4" rx="2" fill="currentColor"/>
                             <rect x="0.798828" y="24" width="33.2015" height="4" rx="2" fill="currentColor"/>
                         </svg>
-                        <a href="{{ url('/') }}" class="ml-3 md:ml-0 text-lg font-semibold text-gray-100 no-underline mr-3">
+                        <a href="{{ url('/') }}" class="ml-3 mt-0 md:-mt-1 md:ml-0 text-lg font-semibold text-gray-100 no-underline mr-3">
                             <svg class="h-12 w-12 md:h-16 md:w-16" viewBox="0 0 95 79" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g filter="url(#filter0_d)">
                                 <rect y="28.2843" width="8" height="60" rx="4" transform="rotate(-45 0 28.2843)" fill="#201E16"/>
@@ -46,7 +46,6 @@
                                 </filter>
                                 </defs>
                                 </svg>
-
                         </a>
 
                         <search-all-view />
