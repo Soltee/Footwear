@@ -25,11 +25,12 @@ export const serverBus = new Vue();
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 /****** Components For Administrator ******/
+Vue.component('admin-bar', require('./components/admin/AdminBar.vue').default);
 Vue.component('search-all-view', require('./components/admin/SearchAll.vue').default);
 //Products
 Vue.component('create-product', require('./components/admin/products/CreateProduct.vue').default);
 Vue.component('products-view', require('./components/admin/products/Products.vue').default);
-// Vue.component('show-product', require('./components/admin/products/ShowProduct.vue').default);
+
 
 //Customers
 Vue.component('customers-view', require('./components/admin/customers/Customers.vue').default);

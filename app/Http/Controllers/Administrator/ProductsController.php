@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Administrator;
 
 use App\Products;
+use App\ProductImages;
 use App\Categories;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -75,29 +78,47 @@ class ProductsController extends Controller
         // dd($request->all());
         $data = $this->validate($request, [
             'category' => ['required', 'int', 'min:1'],
+            'subcategory' => ['required', 'int', 'min:1'],
             'name' => ['required','string', 'min:2', 'unique:products'],
-            'imageUrl' => ['required','image'],
+            'file*' => 'required|file|image|mimes:jpeg,png,gif,webp|max:2048',
             'price' => ['required', 'int', 'min:1'],
             'qty' => ['required', 'int', 'min:1']
         ]);
         
         // dd($request->all());
-        $item =  $request->file('imageUrl')->store('products', 'public');
+        $images      = $request->file('files'); // get the validated filee
+        // dd($images);
+        foreach ($images as $image) {
+            $extension = $image->getClientOriginalExtension();
+            $filename  = 'product-' . time() . '.' . $extension;
+            $paths[]   = $image->storeAs('products', $filename, 'public');
+        }
 
+        if($paths){
+            $last = Arr::last($paths);
+             $product = Products::create([
+                'category_id' => $data['category'],
+                'subcategory_id' => $data['subcategory'],
+                'name' => $data['name'],
+                'slug' => Str::slug($data['name'], '-'),
+                'price' => $data['price'],
+                'qty' => $data['qty'],
+                'imageUrl' => $last,
+                'excerpt' => ($request->input('excerpt')) ? $request->input('excerpt') : "" ,
+                'description' => ($request->input('description')) ? $request->input('description') : "" 
+            ]);
 
+            foreach ($paths as $path) {
+                ProductImages::create([
+                    'products_id' => $product->id,
+                    'imageUrl'   => $path,
+                    'thumbnail'  => $path
+                ]);
+            }
 
-        $product = Products::create([
-            'category_id' => $data['category'],
-            'name' => $data['name'],
-            'price' => $data['price'],
-            'qty' => $data['qty'],
-            'imageUrl' => $item,
-            'excerpt' => ($request->input('excerpt')) ? $request->input('excerpt') : "" ,
-            'description' => ($request->input('description')) ? $request->input('description') : "" ,
-            'visible' => $request->filled('visible')
-        ]);
+            return response()->json(['success' => 'Ok'], 201);
+        }
 
-        return response()->json(['product' => $product->id], 201);
     }
 
     /**
@@ -109,7 +130,8 @@ class ProductsController extends Controller
     public function show(Products $products)
     {
         return response()->json([
-            'product' => $products
+            'product' => $products,
+            'images'  => $products->images
         ], 200);
     }
 

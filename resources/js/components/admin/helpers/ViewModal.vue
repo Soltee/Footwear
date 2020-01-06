@@ -13,6 +13,8 @@
             </div>
 
             <div class="overflow-y-scroll h-86">
+
+                <img v-for="image in images" :src="`/storage/${image.thumbnail}`">
                 {{item}}
             </div>
 
@@ -22,20 +24,30 @@
 </template>
 <script>
 import { serverBus } from '../../../app.js';    
+import Toast from '../../helpers/Alert';
 
     export default {
-        name : 'view-product',
-        props: ['product'],
+        name       : 'view-product',
+        props      : ['product'],
+        components : { Toast },
         data(){
         	return{
-                item : {},
+                item   : {},
+                images : [],
         	}
         },
         mounted(){
         	axios.get(`/admin/products/${this.product.id}`)
                 .then(res => {
+                    let data = res.data
                     if(res.status == 200){
-                        this.item = res.data.product;
+                        this.item = data.product;
+                        this.images = data.images;
+                    } else {
+                        Toast.fire({
+                          icon: 'error',
+                          title: 'Network Error!'
+                        });
                     }
                 }).catch(err => {
                     Toast.fire({
