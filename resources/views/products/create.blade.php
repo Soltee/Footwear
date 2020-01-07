@@ -3,15 +3,13 @@
 @section('content')
     <div class="container mx-auto pb-6">
         <div class="flex flex-row justify-start">
-        	<div class="w-40">
-            
-	            @component('_partials.nav')
-					
-	            @endcomponent
-
-	        </div>
-            <div class="flex-1">
-            <create-product :categories="{{ $categories->toJson() }}" />                
+            <div class="relative hidden md:block w-48 px-3">
+                <div class="fixed">
+                    @include('_partials.nav')                   
+                </div>
+            </div>
+            <div class="w-full md:flex-1 md:ml-48 md:px-6">
+                <create-product :categories="{{ $categories->toJson() }}" />                
             </div>
 	        	
 				
