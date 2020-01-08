@@ -1,8 +1,6 @@
 <template>
     <div class="">
-        <div v-if="message" class="flex flex-row justify-between items-center">
-            <mge :message="message"></mge>            
-        </div>
+     
         <div class="flex flex-row items-center justify-between">
             <input v-model="qty" class="px-2 py-2 w-24 text-center rounded-lg" type="text" name=""  min="1" max="product">
             <div class="flex flex-col items-center">
@@ -22,19 +20,19 @@
 </template>
 
 <script>
-import mge from './helpers/message';
+import Toast from '../helpers/Alert';
 import { serverBus } from '../../app.js';    
     export default {
         name : 'add-cart',
         props : ['product', 'proCartNum'],
         components : {
-            mge
+
         },
         data(){
         	return {
                 qty       : 1,
-                message   : null,
-                err       : null
+                message   : false,
+                err       : false
         	}
         },
         methods: {
@@ -45,19 +43,23 @@ import { serverBus } from '../../app.js';
                     .then((res) => {
                         if(res.status == 200){
                             serverBus.$emit('product-added-to-cart', this.qty);
-                            this.message = "Product added to my cart";
+                            Toast.fire({
+                              icon: 'success',
+                              title:   `Product added to my cart.`
+                            });
+                            this.message = true;
                             this.removeMessage();
                         }
                     }).catch(error => {
-                        this.err = 'There has been some error.'
+                        this.err = true;
                         this.removeMessage();
                     });
 
             },
             removeMessage(){
                 setTimeout(() => {
-                    this.message = null;
-                    this.err = null;
+                    this.message = false;
+                    this.err = false;
                 }, 3000);
             }
         }

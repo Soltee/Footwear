@@ -2,10 +2,12 @@
     <div class="">
         <nav class="py-2 md:py-6 px-3 md:px-10">
             <div class="md:px-0">
-                <div class="flex items-center justify-between">
-
+                <div class="relative flex items-center justify-between">
+                    <div v-if="expandMenu" class="absolute left-0 top-0 mt-16 w-full sm:w-40 md:hidden z-20">
+                        <Menu></Menu>            
+                    </div>
                     <div class="mr-6 flex items-center justify-between">
-                        <svg  class="md:hidden w-16 h-16 text-gray-900 cursor-pointer hover:text-custom-gray-lighter" viewBox="0 0 34 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <svg @click="expandMenu = !expandMenu" class="md:hidden w-16 h-16 text-gray-900 cursor-pointer hover:text-custom-gray-lighter" viewBox="0 0 34 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <rect x="0.798828" width="33.2015" height="4" rx="2" fill="currentColor"/>
                             <rect x="0.798828" y="12" width="33.2015" height="4" rx="2" fill="currentColor"/>
                             <rect x="0.798828" y="24" width="33.2015" height="4" rx="2" fill="currentColor"/>
@@ -63,10 +65,13 @@
                     </div>
                 </div>
             </div>
+
         </nav>
+
+        
         <div v-if="logoutModal">
             <div class="fixed inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
-                <div class="h-full w-full bg-gray-300" @click="logoutModal = false;">
+                <div class="h-full w-full bg-transparent" @click="logoutModal = false;">
                     
                 </div>
                 <div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30">
@@ -94,6 +99,7 @@
 </template>
 
 <script>
+import Menu from './helpers/Nav';
 
     export default {
         name : 'admin-bar',
@@ -104,9 +110,11 @@
           }
         },
         components: {
+            Menu
         },
         data(){
         	return {
+                expandMenu  : false,
                 logoutModal : false,
                 csrf        : document.head.querySelector('meta[name="csrf-token"]').content,
         	}

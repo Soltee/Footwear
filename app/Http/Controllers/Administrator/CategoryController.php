@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Administrator;
 
-use App\Categories;
-use App\Subcategories;
+use App\Category;
+use App\Subcategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class CategoriesController extends Controller
+class CategoryController extends Controller
 {
     
 	public function index()
 	{
-		$categories = Categories::latest()->get();
+		$categories = Category::latest()->get();
 		return response()->json(['categories' => $categories], 200);
 	}
 
@@ -20,12 +20,12 @@ class CategoriesController extends Controller
     {
         $category = request()->category;
         if($category){
-            $subcategories = Subcategories::where('category_id', $category)->rderBy('name')->get();
+            $subcategories = Subcategory::where('category_id', $category)->rderBy('name')->get();
             return response()->json([
                 'subcategories' => $subcategories
             ], 200);
         } else {
-            $categories = Categories::orderBy('name')->with('subcategories')->get();
+            $categories = Category::orderBy('name')->with('subcategories')->get();
             return response()->json([
                 'categories' => $categories
             ], 200);
@@ -40,7 +40,7 @@ class CategoriesController extends Controller
     		'name' => ['string', 'min:3']
     	]);
 
-    	$category = Categories::create([
+    	$category = Category::create([
     		'name' => $data['name']
     	]);
 

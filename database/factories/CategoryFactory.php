@@ -2,17 +2,17 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Categories;
-use App\Subcategories;
+use App\Category;
+use App\Subcategory;
 use Faker\Generator as Faker;
 
-$factory->define(Categories::class, function (Faker $faker) {
+$factory->define(Category::class, function (Faker $faker) {
     return [
     	
     ];
 });
 
-$factory->define(Subcategories::class, function (Faker $faker) {
+$factory->define(Subcategory::class, function (Faker $faker) {
     return [
     ];
 });

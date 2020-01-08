@@ -14,7 +14,11 @@ class AdminAuthController extends Controller
 	use AuthenticatesUsers;
 
     public function loginView(){
-    	return view('auth.admin-login');
+        if($this->guard()->user()){
+            return redirect()->route('administrator-dashboard');
+        } else {
+            return view('auth.admin-login');            
+        }
     }
 
     protected function validateLogin(Request $request)

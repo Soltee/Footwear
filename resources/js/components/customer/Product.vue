@@ -1,8 +1,5 @@
 <template>
     <div class="">
-        <div if="message">
-            <mge :message="message"></mge>
-        </div>
 
         <div v-if="isAdded">
             <a :href='`/cart-details`'>
@@ -18,18 +15,17 @@
 </template>
 
 <script>
-import mge from './helpers/message';
+import Toast from '../helpers/Alert';
 import { serverBus } from '../../app.js';    
     export default {
         name : 'add-to-cart',
         props : ['product'],
         components : {
-            mge
+
         },
         data(){
         	return {
                 isAdded : false,
-                message   : null,
                 err       : null
         	}
         },
@@ -43,28 +39,33 @@ import { serverBus } from '../../app.js';
                         if(res.status == 200){
                             serverBus.$emit('product-added-to-cart');
                             this.isAdded = true;
-                            this.message = "Product added to my cart";
-                            this.removeMessage();
+                            Toast.fire({
+                              icon: 'success',
+                              title:   `Product added to my cart.`
+                            });
                         }
-                    }).catch(error => this.err = 'There has been some error.');
+                    }).catch(error => {
+                        Toast.fire({
+                              icon: 'error',
+                              title:   `There was some error.`
+                        });
+                    });
 
             },
             isProductAlreadyAdded(){
                 axios.get(`/is-already-added/${this.product.id}`)
                     .then((res) => {
-                        console.log(res.data);
                         if(res.data.isAdded){
                             this.isAdded = true;
                         } else {
                             this.isAdded = false;
                         }
-                    }).catch(error => this.err = 'There has been some error.');
-            },
-            removeMessage(){
-                setTimeout(() => {
-                    this.message = null;
-                    this.err = null;
-                }, 3000);
+                    }).catch(error => {
+                        Toast.fire({
+                              icon: 'error',
+                              title:   `There was some error.`
+                        });
+                    });
             }
         }
     }

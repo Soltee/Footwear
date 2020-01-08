@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="bg-black w-full pt-8  px-6  lg:px-12 z-10 flex flex-col md:flex-row items-center content-between py-8">
+    <div class="bg-black w-full  px-6  lg:px-12 z-10 flex flex-col md:flex-row items-center content-between py-2">
         <div class="flex flex-col items-left justify-around flex-1 w-full">
             <h1 class="text-3xl md:text-4xl lg:text-5xl text-custom-gray leading-tight font-bold">
                 Branded Shoes

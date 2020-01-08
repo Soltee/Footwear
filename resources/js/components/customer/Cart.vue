@@ -1,16 +1,16 @@
 <template>
     <div class="relative  w-full px-6  lg:px-12 flex flex-col bg-gray-300 py-6" :class="(modal) ? 'bg-gray-400' : ''">
 
-        <div v-if="message"  :class="(status) ? 'bg-green-500' : 'bg-red-500' " class="w-full absolute top-0 right-0 rounded-lg text-md flex flex-row justify-between items-center font-medium  text-white p-3 mb-2">
-            <span class="mr-6 w-64">{{ message }}</span>
-            <svg @click="message = null" class="cursor-pointer text-custom-red-darker  w-6 h-6"  viewBox="0 0 43 43" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <rect x="7.07129" width="50" height="10" rx="5" transform="rotate(45 7.07129 0)" fill="currentColor"/>
-                <rect y="35.3553" width="50" height="10" rx="5" transform="rotate(-45 0 35.3553)" fill="currentColor"/>
-            </svg>
-        </div>
+        
         <div v-if="updatedQty > 0" class="container mx-auto">
             <div class="flex justify-between items-center">
-                <h4 class="font-bold text-lg text-gray-900">My Cart</h4>
+                <div class="flex items-center">
+                    <a :href="`/shoes`" class="font-bold text-lg text-indigo-900">Shoes</a>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-800 mx-2" ><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+                    <h4 class=" font-bold text-lg text-gray-900">My Cart</h4>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-700 mx-2"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+                    <h4 class="font-bold text-lg text-gray-900">Checkout</h4>
+                </div>
                 <!-- <form @submit.prevent="clearCart"> -->
                     <button @click="modal = true;" type="submit" class="p-3 bg-red-500 rounded-lg text-lg font-medium text-white">Clear Cart</button>
                 <!-- </form> -->
@@ -139,10 +139,11 @@
 </template>
 
 <script>
+import Toast from '../helpers/Alert';
 import { serverBus } from '../../app.js';    
     export default {
         name : 'cart-view',
-        props : ['products', 'cart', 'sub', 'dis', 'subAfterdis','tax', 'grand'],
+        props : ['products', 'cart', 'sub', 'dis', 'subafterdis','taxadded', 'grand'],
         data(){
         	return {
                 productsArr : [],
@@ -151,8 +152,8 @@ import { serverBus } from '../../app.js';
                 updatedQty : this.cart,
                 subTotal : this.sub,
                 discount : this.dis,
-                subAfterDis : this.subAfterdis,
-                tax : this.tax,
+                subAfterDis : this.subafterdis,
+                tax : this.taxadded,
                 grandTotal : this.grand,
                 selected: null,
                 status : false,
@@ -180,7 +181,6 @@ import { serverBus } from '../../app.js';
                     if(res.status == 200){
                         this.status = true;
                         serverBus.$emit('cart-updated',  { p, qty });  
-                        this.message = 'Cart updated.';
                         this.productsArr = this.productsArr.filter((state) => {
                             return state.rowId !== p.rowId;
                         });
@@ -195,7 +195,10 @@ import { serverBus } from '../../app.js';
                             }
                         });
                         this.getUpdatedData();
-                        this.removeMessage(); 
+                        Toast.fire({
+                          icon: 'success',
+                          title:   `Item has been updated from my cart.`
+                        }); 
                     }
                     if(res.status == 204) {
 
@@ -205,14 +208,18 @@ import { serverBus } from '../../app.js';
                         });
                         this.getUpdatedData();
                         this.status = false;
-                        this.message = 'Product removed from cart.';
-                        this.removeMessage();  
+                        Toast.fire({
+                          icon: 'success',
+                          title:   `Item has been removed from my cart.`
+                        }); 
                     }
                 })
                 .catch(err => {
                     this.status = false;
-                    this.err = "There has been some error.";
-                    this.removeMessage(); 
+                    Toast.fire({
+                          icon: 'error',
+                          title:   `There has been server error. Please try again.`
+                        });
                 });
             },
             removeCart(p){
@@ -225,14 +232,18 @@ import { serverBus } from '../../app.js';
                         });
                         this.getUpdatedData();
                         this.status = true;
-                        this.message = 'Product has been removed from my cart.';
-                        this.removeMessage();
+                        Toast.fire({
+                          icon: 'success',
+                          title:   `Item has been removed from my cart.`
+                        });
                     }
                 }).catch(err => {
                     this.status = false;
-                    this.err = 'There has been some error.';
-                    this.removeMessage();
-                })
+                   Toast.fire({
+                      icon: 'error',
+                      title:   `There was some server error.`
+                    }); 
+                });
             },
             getUpdatedData(){
                 axios.get('/getUpdatedData')
@@ -245,8 +256,10 @@ import { serverBus } from '../../app.js';
                     }
                 }).catch(err => {
                     this.status = false;
-                    this.err = "There has been some error.";
-                    this.removeMessage();
+                    Toast.fire({
+                      icon: 'error',
+                      title:   `There was some server error.`
+                    });
                 });
             },
             clearCart(){
@@ -260,13 +273,17 @@ import { serverBus } from '../../app.js';
                         this.grandTotal = 0;
                         this.status = true;
                         this.modal = false;
-                        this.message = 'My cart has been cleared.';
-                        this.removeMessage();
+                        Toast.fire({
+                          icon: 'success',
+                          title:   `There was some server error.`
+                        });
                     }
                 }).catch(err => {
                     this.status = false;
-                    this.err = "There has been some error.";
-                    this.removeMessage();
+                    Toast.fire({
+                      icon: 'error',
+                      title:   `There was some server error.`
+                    });
                 });
             },
             redeemDiscount(){
@@ -276,28 +293,36 @@ import { serverBus } from '../../app.js';
                 })
                 .then(res => {
                     let data = res.data;
-                    if(res.status == 202){
+                    if(res.status == 201){
                         this.status = true;
                         this.discount = data.discount;
                         this.subAfterDis = data.subAfterDis;
                         this.tax = data.tax;
                         this.grandTotal = data.grand;
-                        this.message = data.message;
-                        this.removeMessage();
+                        Toast.fire({
+                          icon: 'success',
+                          title:   `My coupon is successfully redeemed.`
+                        });
                     } else if(res.status == 200){
                         this.status = false;
-                        this.message = data.message;
-                        this.removeMessage();
+                        Toast.fire({
+                          icon: 'error',
+                          title:   `My coupon has already been redeemed.`
+                        });
                     } else if(res.status == 204){
                         this.status = false;
-                        this.message = 'Your coupon doesnot match.';
-                        this.removeMessage();
+                        Toast.fire({
+                          icon: 'error',
+                          title:   `My coupon doesnot match.`
+                        });
                     }
 
                 }).catch(err => {
                     this.status = false;
-                    this.err = "There has been some error.";
-                    this.removeMessage();
+                    Toast.fire({
+                      icon: 'error',
+                      title:   `There was some server error.`
+                    });
                 });
             },  
             removeMessage(){

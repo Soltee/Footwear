@@ -62,7 +62,7 @@
             @if(Route::currentRouteName() == 'welcome')
                 <img class="header-blob background -z-10 -mt-16 md:mt-0" src="/svg/hero-blob.svg" alt="background">
             @endif
-            <div class="px-3 md:px-6 lg:px-12 z-10 py-3 md:py-8 bg-black">
+            <div class="px-3 md:px-6 lg:px-12 z-10 py-3 md:py-6 bg-black">
                 <div class="flex items-center justify-between">
                     <div class="mr-6 flex items-center">
                         <a href="{{ url('/') }}" class="text-lg font-semibold text-gray-100 no-underline mr-3">

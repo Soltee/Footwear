@@ -4,8 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Products extends Model
+class Product extends Model
 {
+    use UsesUuid;
     protected $fillable = [
       'category_id', 'subcategory_id', 'imageUrl', 'name', 'slug', 'price', 'qty', 'excerpt', 'description', 'visible',
     ];
@@ -15,14 +16,14 @@ class Products extends Model
         
     ];
 
-    public function category()
+    public function categories()
     {
-    	return $this->belongsTo(Categories::class);
+    	return $this->belongsTo(Category::class);
     }
 
-    public function subcategory()
+    public function subcategories()
     {
-    	return $this->belongsTo(Subcategories::class);
+    	return $this->belongsTo(Subcategory::class);
     }
 
     public function images()
@@ -30,6 +31,15 @@ class Products extends Model
         return $this->hasMany(ProductImages::class);
     }
 
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($product) { 
+        // before delete() method call this
+             $product->images()->delete();
+             // do the rest of the cleanup...
+        });
+    }
     public function scopeFindByCategorySlug($query, $slug)
     {
         return $query->whereHas('category', function ($query) use ($slug) {

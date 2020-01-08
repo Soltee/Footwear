@@ -9,8 +9,6 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 
-// Vue.use(Swal);
-
 export const serverBus = new Vue();
 
 /**
@@ -26,6 +24,7 @@ export const serverBus = new Vue();
 
 /****** Components For Administrator ******/
 Vue.component('admin-bar', require('./components/admin/AdminBar.vue').default);
+// Vue.component('nav', require('./components/admin/helpers/Nav.vue').default);
 Vue.component('search-all-view', require('./components/admin/SearchAll.vue').default);
 //Products
 Vue.component('create-product', require('./components/admin/products/CreateProduct.vue').default);

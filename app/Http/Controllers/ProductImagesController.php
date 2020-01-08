@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Products;
+use App\Product;
 use App\ProductImages;
 use Illuminate\Http\Request;
 

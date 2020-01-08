@@ -88,8 +88,8 @@
 </template>
 
 <script>
-import { serverBus } from '../../app.js';    
-import Toast from './Alert';
+import { serverBus } from '../../../app.js';    
+import Toast from '../../helpers/Alert';
 
     export default {
         name : 'EditModal',
@@ -100,7 +100,6 @@ import Toast from './Alert';
             }
         },
         components: {
-
         },
         data(){
             return {
@@ -117,75 +116,13 @@ import Toast from './Alert';
             }
         },
         mounted() {
-            axios.get(`/admin/products/${this.product.id}`)
-                .then(res => {
-                    let data = res.data.product;
-                    if(res.status == 200){
-                        this.name = data.name;
-                        this.price = data.price;
-                        this.qty = data.qty;
-                        this.category = data.category;
-                        this.subcategory = data.subcategory;
-                        this.description = data.description;
-                        this.excerpt = data.excerpt;
-                    }
-                }).catch(err => {
-                    Toast.fire({
-                      icon: 'error',
-                      title: 'Network Error!'
-                    });
-                });
-            axios.get('/admin/getCategories')
-                .then(res => {
-                    let data = res.data;
-                    if(res.status == 200){
-                        data.categories.forEach((category) => {
-                            this.categoriesArray.push(category);
-                        });
-                    }
-                }).catch(err => {
-                    Toast.fire({
-                      icon: 'error',
-                      title: 'Network Error!'
-                    });
-                });
         },
         updated() {
-            this.pushSubCategories();
         },
         methods: {
-            handleFilePondInit: function() {
-                console.log('FilePond has initialized');
-
-                // FilePond instance methods are available on `this.$refs.pond`
-            },
-        	closeModal(){
+          closeModal(){
                 serverBus.$emit('close-modal');
-            },
-            pushSubCategories(){
-                this.subcategories = [];
-                // this.subcategories.push(this.category.subcategories);
-
-            },
-            updateProduct(){
-
-                axios.patch(`/admin/products/${this.product.id}`)
-                    .then(res=>{
-                        if(res.status == 200){
-                            serverBus.$emit('success', this.product);
-                            Toast.fire({
-                              icon: 'success',
-                              title:   `Product  updated.`
-                            });
-                        }
-                    }).catch((error) => {
-                        Toast.fire({
-                              icon: 'error',
-                              title:   `Product was unable to update.`
-                        }); 
-                        this.closeModal();
-                    });
-            }
+          },
         }
     }
 </script>

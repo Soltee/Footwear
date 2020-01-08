@@ -2,12 +2,13 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Products;
+use App\Product;
+use App\ProductImages;
 use Faker\Generator as Faker;
-use App\Categories;
-use App\Subcategories;
+use App\Category;
+use App\Subcategory;
 
-$factory->define(Products::class, function (Faker $faker) {
+$factory->define(Product::class, function (Faker $faker) {
     return [
     	'category_id' => function(){
     		foreach ([1,2,3,4] as $n) {
@@ -28,5 +29,11 @@ $factory->define(Products::class, function (Faker $faker) {
     	'price' => $faker->unique()->numberBetween(1, 100),
         'qty' => $faker->unique()->numberBetween(1, 100),
         'visible' => collect([true, false])->random()
+    ];
+});
+
+
+$factory->define(ProductImages::class, function (Faker $faker) {
+    return [
     ];
 });

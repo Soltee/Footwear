@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Coupon;
-use App\Products;
+use App\Product;
 use App\Helpers\Helpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,9 +15,9 @@ class CartController extends Controller
 	 	* Check if The Product is Already Added in the Cart
 	 	* Used in Product.vue
 	*/
-	public function isProductAlreadyAdded(Products $products){
-		$added = Cart::search(function ($cartItem, $rowId) use ($products) {
-            return $cartItem->id === $products->id;
+	public function isProductAlreadyAdded(Product $product){
+		$added = Cart::search(function ($cartItem, $rowId) use ($product) {
+            return $cartItem->id === $product->id;
         });
 		return response()->json(['isAdded' => ($added->isNotEmpty() ? true : false) ], 200);
 	} 
@@ -78,15 +78,15 @@ class CartController extends Controller
 	 	* Generate cart session if logged in
 	 	* Return json RESPONSE
 	*/
-    public function addProduct(Products $products)
+    public function addProduct(Product $product)
     {
     	$qty = request()->qty;
     	if(!is_null($qty) AND $qty > 0){
 
     	} else {
-    		$duplicates = Cart::search(function ($cartItem, $rowId) use ($products) {
+    		$duplicates = Cart::search(function ($cartItem, $rowId) use ($product) {
 
-	            return $cartItem->id === $products->id;
+	            return $cartItem->id === $product->id;
 	        });
 
 	        if ($duplicates->isNotEmpty()) {
@@ -94,8 +94,8 @@ class CartController extends Controller
 	        }
     	}
 
-    	Cart::add($products->id, $products->name, ((!is_null($qty)) ? $qty : 1), $products->price, ['imageUrl' => $products->imageUrl])
-	            ->associate('App\Products');
+    	Cart::add($product->id, $product->name, ((!is_null($qty)) ? $qty : 1), $product->price, ['imageUrl' => $product->imageUrl])
+	            ->associate('App\Product');
 
 	    	return response()->json(['success' => 'Ok'], 200);
 

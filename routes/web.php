@@ -46,37 +46,37 @@ Route::get('/thank-you', 'CheckoutController@thankyou')->name('thank-you');
 Route::prefix('admin')->group(function () {
 
 	/*Administrator*/
-	Route::get('/board-login', 'Administrator\AdminAuthController@loginView')->name('board-login-view');
-	Route::post('/board-login', 'Administrator\AdminAuthController@login')->name('board-login');
+	Route::get('/login', 'Administrator\AdminAuthController@loginView')->name('board-login-view');
+	Route::post('/login', 'Administrator\AdminAuthController@login')->name('board-login');
 
-	Route::get('/administrator-dashboard', 'Administrator\AdministratorController@index')->name('administrator-dashboard');
-	Route::get('/administrator-profile', 'Administrator\AdministratorController@profile')->name('administrator-profile');
+	Route::get('/dashboard', 'Administrator\AdministratorController@index')->name('administrator-dashboard');
+	Route::get('/profile', 'Administrator\AdministratorController@profile')->name('administrator-profile');
 	Route::patch('/administrator-profile/{administrator}', 'Administrator\AdministratorController@update')->name('administrator-update');
 	Route::post('/administrator-logout', 'Administrator\AdminAuthController@logout')->name('administrator-logout');
 
 
 	//Categories
-	Route::get('/categories', 'Administrator\CategoriesController@index');
-	Route::post('/category/store', 'Administrator\CategoriesController@store');
+	Route::get('/categories', 'Administrator\CategoryController@index');
+	Route::post('/category/store', 'Administrator\CategoryController@store');
 
 	//Category Api
-	Route::get('/getCategories', 'Administrator\CategoriesController@getCategories');
-	Route::get('/getSubCategories/{categories}', 'SubCategoriesController@index');
+	Route::get('/getCategories', 'Administrator\CategoryController@getCategories');
+	Route::get('/getSubCategories/{category}', 'SubCategoryController@index');
 
 	//Prouducts 
-	Route::get('/products', 'Administrator\ProductsController@index')->name('products');
-	Route::get('/products/create', 'Administrator\ProductsController@create');
-	Route::get('/products-edit/{products}-{slug}', 'Administrator\ProductsController@edit')->name('products.edit');
+	Route::get('/products', 'Administrator\ProductController@index')->name('products');
+	Route::get('/products/create', 'Administrator\ProductController@create');
+	Route::get('/products-edit/{product}-{slug}', 'Administrator\ProductController@edit')->name('products.edit');
 
 	//Products Api
-	Route::get('/getProducts', 'Administrator\ProductsController@getProducts');
-	Route::get('/products/{products}', 'Administrator\ProductsController@show');
-	Route::post('/products', 'Administrator\ProductsController@store');
-	Route::patch('/products/{products}', 'Administrator\ProductsController@update');
-	Route::delete('/products/{products}', 'Administrator\ProductsController@destroy');
+	Route::get('/getProducts', 'Administrator\ProductController@getProducts');
+	Route::get('/products/{product}', 'Administrator\ProductController@show');
+	Route::post('/products', 'Administrator\ProductController@store');
+	Route::patch('/products/{product}', 'Administrator\ProductController@update');
+	Route::delete('/products/{product}', 'Administrator\ProductController@destroy');
 
 	//ProductImageApi
-	Route::post('/productsImage/{products}', 'ProductImagesController@store');	
+	Route::post('/productsImage/{product}', 'ProductImagesController@store');	
 
 	//Customers
 	Route::get('/customers', 'Administrator\CustomerController@index')->name('customers');

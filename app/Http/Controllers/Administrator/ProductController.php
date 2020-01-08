@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Administrator;
 
-use App\Products;
+use App\Product;
 use App\ProductImages;
-use App\Categories;
+use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -13,7 +13,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
-class ProductsController extends Controller
+class ProductController extends Controller
 {
     public function __construct()
     {
@@ -34,7 +34,7 @@ class ProductsController extends Controller
     {
         $search = request()->search;
 
-        $query = Products::latest();
+        $query = Product::latest();
         if($search){
             $query = $query->where('name', 'LIKE', '%'.$search.'%')
                             ->orWhere('price', 'LIKE', '%'.$search.'%');
@@ -63,7 +63,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        $categories = Categories::latest()->get();
+        $categories = Category::latest()->get();
         return view('products.create', compact('categories'));
     }
 
@@ -94,7 +94,7 @@ class ProductsController extends Controller
             $paths[] = $image->storeAs('products', $original, 'public'); 
         }
 
-        $product = Products::create([
+        $product = Product::create([
             'category_id' => $data['category'],
             'subcategory_id' => $data['subcategory'],
             'name' => $data['name'],
@@ -108,7 +108,7 @@ class ProductsController extends Controller
 
         foreach ($paths as $path) {
             ProductImages::create([
-                'products_id' => $product->id,
+                'product_id' => $product->id,
                 'imageUrl'   => $path,
                 'thumbnail'  => $path
             ]);
@@ -124,11 +124,13 @@ class ProductsController extends Controller
      * @param  \App\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function show(Products $products)
+    public function show(Product $product)
     {
         return response()->json([
-            'product' => $products,
-            'images'  => $products->images
+            'product' => $product,
+            'category' => $product->categories,
+            'subcategory' => $product->subcategories,
+            'images'  => $product->images
         ], 200);
     }
 
@@ -137,10 +139,10 @@ class ProductsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Products  $products
+     * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Products $products)
+    public function update(Request $request, Product $product)
     {
         $data = $this->validate($request, [
             'category' => ['required', 'int', 'min:1'],
@@ -163,7 +165,7 @@ class ProductsController extends Controller
 
         $description = ['description' => $request->input('description')];
 
-        $products->update(array_merge(
+        $product->update(array_merge(
             [
                 'category_id' => $data['category'],
                 'name' => $data['name'],
@@ -185,10 +187,11 @@ class ProductsController extends Controller
      * @param  \App\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Products $products)
+    public function destroy(Product $product)
     {
-        ($products->imageUrl) ?? Storage::disk('public')->delete([$products->imageUrl]);
-        $products->delete();
+        ($product->imageUrl) ?? Storage::disk('public')->delete([$product->imageUrl]);
+        $product->delete();
+        App\ProductImages::where('product_id', $product->id)->delete();
         return response()->json(['success' => 'true'], 204);
   
     }

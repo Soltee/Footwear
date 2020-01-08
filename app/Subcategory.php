@@ -4,8 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Subcategories extends Model
+class Subcategory extends Model
 {
+    use UsesUuid;
+    
     protected $fillable = [
       'category_id',  'name',
     ];
@@ -16,11 +18,11 @@ class Subcategories extends Model
 
     public function products()
     {
-    	return $this->belongsTo(Products::class);
+    	return $this->belongsTo(Product::class);
     }
 
     public function category()
     {
-    	return $this->belongsTo(Categories::class);
+    	return $this->belongsTo(Category::class);
     }
 }

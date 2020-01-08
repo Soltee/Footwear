@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 
 class Customer extends Authenticatable
 {
+    use UsesUuid;
     use Notifiable;
 
     /**

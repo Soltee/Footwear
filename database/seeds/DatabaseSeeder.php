@@ -17,21 +17,21 @@ class DatabaseSeeder extends Seeder
         factory(App\Administrator::class)->create(['avatar'=>'role.jpg','name' => 'role', 'email'=>'role@example.com', 'email_verified_at' => now(), 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'remember_token' => Str::random()]);
         factory(App\Administrator::class)->create();
 
-        factory(App\Categories::class)->create(['name' => 'Brands' ]);
-        factory(App\Categories::class)->create(['name' => 'Type' ]);
+        factory(App\Category::class)->create(['name' => 'Brands' ]);
+        factory(App\Category::class)->create(['name' => 'Type' ]);
 
-        factory(App\Subcategories::class)->create(['category_id' => 1, 'name' => 'featured' ]);
-        factory(App\Subcategories::class)->create(['category_id' => 1, 'name' => 'Adidas' ]);
-        factory(App\Subcategories::class)->create(['category_id' => 1, 'name' => 'Converse' ]);
-        factory(App\Subcategories::class)->create(['category_id' => 1, 'name' => 'DC' ]);
-        factory(App\Subcategories::class)->create(['category_id' => 1, 'name' => 'Nike' ]);
-        factory(App\Subcategories::class)->create(['category_id' => 2, 'name' => 'Baby' ]);
-        factory(App\Subcategories::class)->create(['category_id' => 2, 'name' => 'Children' ]);
-        factory(App\Subcategories::class)->create(['category_id' => 2, 'name' => 'Men' ]);
-        factory(App\Subcategories::class)->create(['category_id' => 2, 'name' => 'Women' ]);
+        factory(App\Subcategory::class)->create(['category_id' => 1, 'name' => 'featured' ]);
+        factory(App\Subcategory::class)->create(['category_id' => 1, 'name' => 'Adidas' ]);
+        factory(App\Subcategory::class)->create(['category_id' => 1, 'name' => 'Converse' ]);
+        factory(App\Subcategory::class)->create(['category_id' => 1, 'name' => 'DC' ]);
+        factory(App\Subcategory::class)->create(['category_id' => 1, 'name' => 'Nike' ]);
+        factory(App\Subcategory::class)->create(['category_id' => 2, 'name' => 'Baby' ]);
+        factory(App\Subcategory::class)->create(['category_id' => 2, 'name' => 'Children' ]);
+        factory(App\Subcategory::class)->create(['category_id' => 2, 'name' => 'Men' ]);
+        factory(App\Subcategory::class)->create(['category_id' => 2, 'name' => 'Women' ]);
 
         for ($i=1; $i <= 2; $i++) {
-            App\Products::create([
+            $h1 = App\Product::create([
                 'name' => 'Shoe '.$i,
                 'slug' => 'Shoe-'.$i,
                 'category_id' => 1,
@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
         }
        
         for ($i = 3; $i <= 4; $i++) {
-            App\Products::create([
+            $h2 = App\Product::create([
                 'name' => 'Shoe '.$i,
                 'slug' => 'Shoe-'.$i,
                 'category_id' => 2,
@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
         }
 
         for ($i=5; $i <= 6; $i++) {
-            App\Products::create([
+            $h3 = App\Product::create([
                 'name' => 'Shoe '.$i,
                 'slug' => 'Shoe-'.$i,
                 'category_id' => 2,
@@ -67,7 +67,7 @@ class DatabaseSeeder extends Seeder
         }
        
         for ($i = 7; $i <= 8; $i++) {
-            App\Products::create([
+            $h4 = App\Product::create([
                 'name' => 'Shoe '.$i,
                 'slug' => 'Shoe-'.$i,
                 'category_id' => 1,
@@ -79,7 +79,7 @@ class DatabaseSeeder extends Seeder
         }
 
         for ($i=9; $i <= 10; $i++) {
-            App\Products::create([
+            $h5 = App\Product::create([
                 'name' => 'Shoe '.$i,
                 'slug' => 'Shoe-'.$i,
                 'category_id' => 1,
@@ -91,7 +91,7 @@ class DatabaseSeeder extends Seeder
         }
        
         for ($i = 11; $i <= 12; $i++) {
-            App\Products::create([
+            $h6 = App\Product::create([
                 'name' => 'Shoe '.$i,
                 'slug' => 'Shoe-'.$i,
                 'category_id' => 2,
@@ -104,7 +104,7 @@ class DatabaseSeeder extends Seeder
 
 
         for ($i=13; $i <= 14; $i++) {
-            App\Products::create([
+            $h7 = App\Product::create([
                 'name' => 'Shoe '.$i,
                 'slug' => 'Shoe-'.$i,
                 'category_id' => 2,
@@ -116,7 +116,7 @@ class DatabaseSeeder extends Seeder
         }
        
         for ($i = 15; $i <= 16; $i++) {
-            App\Products::create([
+            $h8 = App\Product::create([
                 'name' => 'Shoe '.$i,
                 'slug' => 'Shoe-'.$i,
                 'category_id' => 1,
@@ -128,7 +128,7 @@ class DatabaseSeeder extends Seeder
         }
 
         for ($i=17; $i <= 18; $i++) {
-            App\Products::create([
+            $h9 = App\Product::create([
                 'name' => 'Shoe '.$i,
                 'slug' => 'Shoe-'.$i,
                 'category_id' => 1,
@@ -140,7 +140,7 @@ class DatabaseSeeder extends Seeder
         }
        
         for ($i = 19; $i <= 20; $i++) {
-            App\Products::create([
+            $h10 = App\Product::create([
                 'name' => 'Shoe '.$i,
                 'slug' => 'Shoe-'.$i,
                 'category_id' => 2,
@@ -148,6 +148,172 @@ class DatabaseSeeder extends Seeder
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
                 'imageUrl' => '/products/'. $i.'.jpg',
+            ]);
+        }
+
+        //ProductImages
+        for ($i = 1; $i <= 3; $i++) {
+            App\ProductImages::create([
+                'product_id' => $h1->id,
+                'imageUrl' => '/products/'. $i.'.jpg',
+                'thumbnail' => '/products/'. $i.'.jpg',
+            ]);
+        }
+
+        for ($i = 4; $i <= 5; $i++) {
+            App\ProductImages::create([
+                'product_id' => $h2->id,
+                              'imageUrl' => '/products/'. $i.'.jpg',
+                'thumbnail' => '/products/'. $i.'.jpg',
+            ]);
+        }
+
+        for ($i = 6; $i <= 8; $i++) {
+            App\ProductImages::create([
+                'product_id' => $h3->id,
+                              'imageUrl' => '/products/'. $i.'.jpg',
+                'thumbnail' => '/products/'. $i.'.jpg',
+            ]);
+        }
+
+        for ($i = 9; $i <= 11; $i++) {
+            App\ProductImages::create([
+                'product_id' => $h4->id,
+                              'imageUrl' => '/products/'. $i.'.jpg',
+                'thumbnail' => '/products/'. $i.'.jpg',
+            ]);
+        }
+
+        for ($i = 12; $i <= 15; $i++) {
+            App\ProductImages::create([
+                'product_id' => $h5->id,
+                              'imageUrl' => '/products/'. $i.'.jpg',
+                'thumbnail' => '/products/'. $i.'.jpg',
+            ]);
+        }
+
+        for ($i = 16; $i <= 17; $i++) {
+            App\ProductImages::create([
+                'product_id' => $h10->id,
+                              'imageUrl' => '/products/'. $i.'.jpg',
+                'thumbnail' => '/products/'. $i.'.jpg',
+            ]);
+        }
+
+        for ($i = 18; $i <= 20; $i++) {
+            App\ProductImages::create([
+                'product_id' => $h6->id,
+                              'imageUrl' => '/products/'. $i.'.jpg',
+                'thumbnail' => '/products/'. $i.'.jpg',
+            ]);
+        }
+
+        for ($i = 21; $i <= 23; $i++) {
+            App\ProductImages::create([
+                'product_id' => $h2->id,
+                              'imageUrl' => '/products/1.jpg',
+                'thumbnail' => '/products/1.jpg',
+            ]);
+        }
+
+
+        for ($i = 24; $i <= 25; $i++) {
+            App\ProductImages::create([
+                'product_id' => $h7->id,
+                              'imageUrl' => '/products/2.jpg',
+                'thumbnail' => '/products/2.jpg',
+            ]);
+        }
+
+        //
+        for ($i = 26; $i <= 27; $i++) {
+            App\ProductImages::create([
+                'product_id' => $h2->id,
+                               'imageUrl' => '/products/3.jpg',
+                'thumbnail' => '/products/3.jpg',
+            ]);
+        }
+
+        for ($i = 28; $i <= 29; $i++) {
+            App\ProductImages::create([
+                'product_id' => $h8->id,
+                               'imageUrl' => '/products/4.jpg',
+                'thumbnail' => '/products/4.jpg',
+            ]);
+        }
+
+        for ($i = 30; $i <= 32; $i++) {
+            App\ProductImages::create([
+                'product_id' => $h9->id,
+                               'imageUrl' => '/products/5.jpg',
+                'thumbnail' => '/products/5.jpg',
+            ]);
+        }
+
+        for ($i = 33; $i <= 34; $i++) {
+            App\ProductImages::create([
+                'product_id' => $h8->id,
+                               'imageUrl' => '/products/6.jpg',
+                'thumbnail' => '/products/6.jpg',
+            ]);
+        }
+
+        for ($i = 35; $i <= 36; $i++) {
+            App\ProductImages::create([
+                'product_id' => $h8->id,
+                               'imageUrl' => '/products/7.jpg',
+                'thumbnail' => '/products/7.jpg',
+            ]);
+        }
+
+        for ($i = 37; $i <= 38; $i++) {
+            App\ProductImages::create([
+                'product_id' => $h8->id,
+                               'imageUrl' => '/products/8.jpg',
+                'thumbnail' => '/products/8.jpg',
+            ]);
+        }
+
+        for ($i = 39; $i <= 40; $i++) {
+            App\ProductImages::create([
+                'product_id' => $h8->id,
+                               'imageUrl' => '/products/9.jpg',
+                'thumbnail' => '/products/9.jpg',
+            ]);
+        }
+
+        for ($i = 41; $i <= 43; $i++) {
+            App\ProductImages::create([
+                'product_id' => $h10->id,
+                               'imageUrl' => '/products/10.jpg',
+                'thumbnail' => '/products/10.jpg',
+            ]);
+        }
+
+
+        for ($i = 44; $i <= 46; $i++) {
+            App\ProductImages::create([
+                'product_id' => $h8->id,
+                               'imageUrl' => '/products/11.jpg',
+                'thumbnail' => '/products/11.jpg',
+            ]);
+        }
+
+
+        for ($i = 47; $i <= 49; $i++) {
+            App\ProductImages::create([
+                'product_id' => $h9->id,
+                               'imageUrl' => '/products/14.jpg',
+                'thumbnail' => '/products/14.jpg',
+            ]);
+        }
+
+
+        for ($i = 50; $i <= 52; $i++) {
+            App\ProductImages::create([
+                'product_id' => $h10->id,
+                               'imageUrl' => '/products/19.jpg',
+                'thumbnail' => '/products/19.jpg',
             ]);
         }
     

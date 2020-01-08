@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductImages extends Model
 {
+	use UsesUuid;
+	
     protected $fillable = [
-    	'products_id', 'imageUrl', 'thumbnail'
+    	'product_id', 'imageUrl', 'thumbnail'
     ];
 
     public function product(){
-    	return $this->belongsTo(Products::class);
+    	return $this->belongsTo(Product::class);
     }
 }

@@ -8,7 +8,7 @@
                     @include('_partials.nav')                   
                 </div>
             </div>
-            <div class="w-full md:flex-1 md:ml-48 md:px-6">
+            <div class="w-full px-3 md:flex-1 md:ml-48 md:px-6">
                 <create-product :categories="{{ $categories->toJson() }}" />                
             </div>
 	        	

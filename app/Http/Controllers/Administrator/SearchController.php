@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Administrator;
 
 use App\Customer;
-use App\Products;
-use App\Categories;
+use App\Product;
+use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -15,7 +15,7 @@ class SearchController extends Controller
     {
     
         $total   = 0;
-    	$products = Products::where('name', 'LIKE', '%'.$param.'%')->latest()->get();
+    	$products = Product::where('name', 'LIKE', '%'.$param.'%')->latest()->get();
         $totalProducts = $products->count();
         $total += $totalProducts;
     	
@@ -29,7 +29,7 @@ class SearchController extends Controller
     public function searchProuducts($param)
     {
     	// $param = request('param');
-    	$products = Products::where('name', 'LIKE', '%'.$param.'%')->latest()->get();
+    	$products = Product::where('name', 'LIKE', '%'.$param.'%')->latest()->get();
     	return response()->json(['products' => $products, 'total' => $products->count()], 200);
     }
 

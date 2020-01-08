@@ -16,6 +16,7 @@ class CouponController extends Controller
         
 
         if($coupon){
+            dd(integer($coupon->percent));
             if(session('discount')){
                 return response()->json([
                     'valid' => false,
@@ -36,7 +37,7 @@ class CouponController extends Controller
                         'subAfterDis' => $subAfterDis,
                         'tax' => $tax,
                         'grand' =>  $grand
-                    ], 202); 
+                    ], 201); 
             }
                   
         } else {

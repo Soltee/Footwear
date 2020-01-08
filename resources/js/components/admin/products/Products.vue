@@ -21,7 +21,7 @@
 
             <a class="flex flex-row sm:items-center" :href="`/admin/products/create`" >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6  mr-3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                <span class="text-admin-btn text-lg font-semibold">New Product</span>
+                <span class="hidden md:inline text-admin-btn text-lg font-semibold">New Product</span>
             </a>
             
         </div>
@@ -32,7 +32,6 @@
                 <table class="w-full table-auto">
                     <thead>
                         <tr class="bg-white rounded-lg">
-                          <th class="px-4 py-3 text-left text-gray-900">Id</th>
                           <th class="px-4 py-3 text-left text-gray-900">Image</th>
                           <th class="px-4 py-3 text-left text-gray-900">Name</th>
                           <th class="px-4 py-3 text-left text-gray-900">Price</th>
@@ -42,7 +41,6 @@
                     <tbody>
 
                         <tr v-if="!searchStatus" v-for="p in productArray">
-                          <td class="border px-4 py-2 text-gray-900">{{ p.id }}</td>
                           <td class="border px-4 py-2 text-gray-900">
                               <img class="h-16 w-16 md:h-24 md:w-24 rounded-full" :src="`/storage/${p.imageUrl}`">
                           </td>
@@ -59,7 +57,6 @@
                           </td>
                         </tr>
                          <tr v-if="searchStatus" v-for="p in searchArray">
-                          <td class="border px-4 py-2 text-gray-900">{{ p.id }}</td>
                           <td class="border px-4 py-2 text-gray-900">
                               <img class="h-24 w-24 rounded-full" :src="`/storage/${p.imageUrl}`">
                           </td>
@@ -130,7 +127,7 @@
 <script>
 import { serverBus } from '../../../app.js';    
 import Toast from '../../helpers/Alert';
-import EditModal from '../../helpers/EditModal';
+import EditModal from '../helpers/EditModal';
 import DeleteModal from '../helpers/DeleteModal';
 import ViewModal from '../helpers/ViewModal';
 
