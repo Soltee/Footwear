@@ -40,7 +40,6 @@ Vue.component('customers-view', require('./components/admin/customers/Customers.
 Vue.component('Navmenu', require('./components/customer/Navmenu.vue').default);
 Vue.component('add-to-cart', require('./components/customer/Product.vue').default);
 Vue.component('footer-view', require('./components/customer/Footer.vue').default);
-Vue.component('recommended', require('./components/customer/Recommended.vue').default);
 Vue.component('cart-checkout', require('./components/customer/Checkout.vue').default);
 Vue.component('cart-view', require('./components/customer/Cart.vue').default);
 Vue.component('add-cart', require('./components/customer/AddToCart.vue').default);

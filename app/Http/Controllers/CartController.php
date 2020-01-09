@@ -15,7 +15,8 @@ class CartController extends Controller
 	 	* Check if The Product is Already Added in the Cart
 	 	* Used in Product.vue
 	*/
-	public function isProductAlreadyAdded(Product $product){
+	public function isProductAlreadyAdded($product){
+		$product = Product::findOrFail($product);
 		$added = Cart::search(function ($cartItem, $rowId) use ($product) {
             return $cartItem->id === $product->id;
         });
@@ -78,8 +79,9 @@ class CartController extends Controller
 	 	* Generate cart session if logged in
 	 	* Return json RESPONSE
 	*/
-    public function addProduct(Product $product)
+    public function addProduct($product)
     {
+    	$product = Product::findOrFail($product);
     	$qty = request()->qty;
     	if(!is_null($qty) AND $qty > 0){
 

@@ -20,22 +20,22 @@ class DatabaseSeeder extends Seeder
         $category1 = factory(App\Category::class)->create(['name' => 'Brands' ]);
         $category2 = factory(App\Category::class)->create(['name' => 'Type' ]);
 
-        factory(App\Subcategory::class)->create(['category_id' => $category1, 'name' => 'featured' ]);
-        factory(App\Subcategory::class)->create(['category_id' => $category1, 'name' => 'Adidas' ]);
-        factory(App\Subcategory::class)->create(['category_id' => $category1, 'name' => 'Converse' ]);
-        factory(App\Subcategory::class)->create(['category_id' => $category1, 'name' => 'DC' ]);
-        factory(App\Subcategory::class)->create(['category_id' => $category1, 'name' => 'Nike' ]);
-        factory(App\Subcategory::class)->create(['category_id' => $category2, 'name' => 'Baby' ]);
-        factory(App\Subcategory::class)->create(['category_id' => $category2, 'name' => 'Children' ]);
-        factory(App\Subcategory::class)->create(['category_id' => $category2, 'name' => 'Men' ]);
-        factory(App\Subcategory::class)->create(['category_id' => $category2, 'name' => 'Women' ]);
+        $subcategory1 = factory(App\Subcategory::class)->create(['category_id' => $category1->id, 'name' => 'featured' ]);
+        $subcategory2 = factory(App\Subcategory::class)->create(['category_id' => $category1->id, 'name' => 'Adidas' ]);
+        $subcategory3 = factory(App\Subcategory::class)->create(['category_id' => $category1->id, 'name' => 'Converse' ]);
+        $subcategory4 = factory(App\Subcategory::class)->create(['category_id' => $category1->id, 'name' => 'DC' ]);
+        $subcategory5 = factory(App\Subcategory::class)->create(['category_id' => $category1->id, 'name' => 'Nike' ]);
+        $subcategory6 = factory(App\Subcategory::class)->create(['category_id' => $category2->id, 'name' => 'Baby' ]);
+        $subcategory7 = factory(App\Subcategory::class)->create(['category_id' => $category2->id, 'name' => 'Children' ]);
+        $subcategory8 = factory(App\Subcategory::class)->create(['category_id' => $category2->id, 'name' => 'Men' ]);
+        $subcategory9 = factory(App\Subcategory::class)->create(['category_id' => $category2->id, 'name' => 'Women' ]);
 
         for ($i=1; $i <= 2; $i++) {
             $h1 = App\Product::create([
-                'name' => 'Shoe '.$i,
-                'slug' => 'Shoe-'.$i,
-                'category_id' => 1,
-                'subcategory_id' => 1,
+                'name' => 'Shoe '. $i,
+                'slug' => 'Shoe-'. $i,
+                'category_id' => $category1,
+                'subcategory_id' => $subcategory1->id,
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
                 'imageUrl' => '/products/'. $i.'.jpg',
@@ -44,10 +44,10 @@ class DatabaseSeeder extends Seeder
        
         for ($i = 3; $i <= 4; $i++) {
             $h2 = App\Product::create([
-                'name' => 'Shoe '.$i,
-                'slug' => 'Shoe-'.$i,
-                'category_id' => 2,
-                'subcategory_id' => 2,
+                'name' => 'Shoe '. $i,
+                'slug' => 'Shoe-'. $i,
+                'category_id' => $category2->id,
+                'subcategory_id' => $subcategory2->id,
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
                 'imageUrl' => '/products/'. $i.'.jpg',
@@ -56,10 +56,10 @@ class DatabaseSeeder extends Seeder
 
         for ($i=5; $i <= 6; $i++) {
             $h3 = App\Product::create([
-                'name' => 'Shoe '.$i,
-                'slug' => 'Shoe-'.$i,
-                'category_id' => 2,
-                'subcategory_id' => 3,
+                'name' => 'Shoe '. $i,
+                'slug' => 'Shoe-'. $i,
+                'category_id' => $category1->id,
+                'subcategory_id' => $subcategory1->id,
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
                 'imageUrl' => '/products/'. $i.'.jpg',
@@ -68,10 +68,10 @@ class DatabaseSeeder extends Seeder
        
         for ($i = 7; $i <= 8; $i++) {
             $h4 = App\Product::create([
-                'name' => 'Shoe '.$i,
-                'slug' => 'Shoe-'.$i,
-                'category_id' => 1,
-                'subcategory_id' => 4,
+                'name' => 'Shoe '. $i,
+                'slug' => 'Shoe-'. $i,
+                'category_id' => $category2->id,
+                'subcategory_id' => $subcategory3->id,
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
                 'imageUrl' => '/products/'. $i.'.jpg',
@@ -80,10 +80,10 @@ class DatabaseSeeder extends Seeder
 
         for ($i=9; $i <= 10; $i++) {
             $h5 = App\Product::create([
-                'name' => 'Shoe '.$i,
-                'slug' => 'Shoe-'.$i,
-                'category_id' => 1,
-                'subcategory_id' => 5,
+                'name' => 'Shoe '. $i,
+                'slug' => 'Shoe-'. $i,
+                'category_id' => $category1->id,
+                'subcategory_id' => $subcategory4->id,
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
                 'imageUrl' => '/products/'. $i.'.jpg',
@@ -92,10 +92,10 @@ class DatabaseSeeder extends Seeder
        
         for ($i = 11; $i <= 12; $i++) {
             $h6 = App\Product::create([
-                'name' => 'Shoe '.$i,
-                'slug' => 'Shoe-'.$i,
-                'category_id' => 2,
-                'subcategory_id' => 6,
+                'name' => 'Shoe '. $i,
+                'slug' => 'Shoe-'. $i,
+                'category_id' => $category2->id,
+                'subcategory_id' => $subcategory1->id,
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
                 'imageUrl' => '/products/'. $i.'.jpg',
@@ -105,10 +105,10 @@ class DatabaseSeeder extends Seeder
 
         for ($i=13; $i <= 14; $i++) {
             $h7 = App\Product::create([
-                'name' => 'Shoe '.$i,
-                'slug' => 'Shoe-'.$i,
-                'category_id' => 2,
-                'subcategory_id' => 7,
+                'name' => 'Shoe '. $i,
+                'slug' => 'Shoe-'. $i,
+                'category_id' => $category1->id,
+                'subcategory_id' => $subcategory5->id,
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
                 'imageUrl' => '/products/'. $i.'.jpg',
@@ -117,10 +117,10 @@ class DatabaseSeeder extends Seeder
        
         for ($i = 15; $i <= 16; $i++) {
             $h8 = App\Product::create([
-                'name' => 'Shoe '.$i,
-                'slug' => 'Shoe-'.$i,
-                'category_id' => 1,
-                'subcategory_id' => 8,
+                'name' => 'Shoe '. $i,
+                'slug' => 'Shoe-'. $i,
+                'category_id' => $category2->id,
+                'subcategory_id' => $subcategory2->id,
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
                 'imageUrl' => '/products/'. $i.'.jpg',
@@ -129,10 +129,10 @@ class DatabaseSeeder extends Seeder
 
         for ($i=17; $i <= 18; $i++) {
             $h9 = App\Product::create([
-                'name' => 'Shoe '.$i,
-                'slug' => 'Shoe-'.$i,
-                'category_id' => 1,
-                'subcategory_id' => 2,
+                'name' => 'Shoe '. $i,
+                'slug' => 'Shoe-'. $i,
+                'category_id' => $category1->id,
+                'subcategory_id' => $subcategory1->id,
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
                 'imageUrl' => '/products/'. $i.'.jpg',
@@ -141,10 +141,10 @@ class DatabaseSeeder extends Seeder
        
         for ($i = 19; $i <= 20; $i++) {
             $h10 = App\Product::create([
-                'name' => 'Shoe '.$i,
-                'slug' => 'Shoe-'.$i,
-                'category_id' => 2,
-                'subcategory_id' => 3,
+                'name' => 'Shoe '. $i,
+                'slug' => 'Shoe-'. $i,
+                'category_id' => $category1->id,
+                'subcategory_id' => $subcategory1->id,
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
                 'imageUrl' => '/products/'. $i.'.jpg',

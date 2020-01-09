@@ -7,7 +7,7 @@ Route::get('/', 'WelcomeController@index')->name('welcome');
 Route::get('/categories', 'WelcomeController@categories');
 Route::get('/searchShoes/{shoes}', 'WelcomeController@searchShoes');
 Route::get('/shoes', 'WelcomeController@shoes')->name('shoes');
-Route::get('/shoes/{products}-{slug}', 'WelcomeController@show')->name('show');
+Route::get('/shoes/{product}/{slug}', 'WelcomeController@show')->name('show');
 Route::post('/add-cart/{products}', 'CartController@addProduct');
 
 //Cart

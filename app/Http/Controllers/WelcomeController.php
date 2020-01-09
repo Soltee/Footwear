@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Cart;
 use App\Product;
-use App\Category;
+use App\Category ;
 use App\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +18,7 @@ class WelcomeController extends Controller
     {
     	
         $products = Product::latest()->paginate(4);
-        $adidas = Product::latest()->where('subcategory_id', 2)->paginate(4);
+        $adidas = Product::latest()->where('subcategory_id', )->paginate(4);
         return view('welcome', compact('products', 'adidas'));
 
     }
@@ -39,26 +39,29 @@ class WelcomeController extends Controller
         $categories = Category::orderBy('name')->with('subcategories')->get();
 
         if(request()->category){
+            // dd(request()->id);
             $products = Product::where('category_id', request()->id)->paginate(8);
+
             $count = count($products);
         } elseif (request()->subcategory) {
             $products = Product::where('subcategory_id', request()->id)->paginate(8);
             $count = count($products);
         } else {
-            $products = Products::latest()->paginate(8);
+            $products = Product::latest()->paginate(8);
             $count = count($products);
         }
 
         return view('home.shoes', compact('products', 'categories', 'count'));
     }
 
-    public function show(Product $product, string $slug)
-    {
-        
+    public function show($product, $slug)
+    {   
+        $product = Product::findOrFail($product);
         $paginate = Product::latest()->where('category_id', $product->category_id)->paginate(6);
-        $category = $product->subcategories;
+        $category = ($product->subcategories)?? null;
         $recommended = json_encode($paginate->items());
-        return view('home.show', compact('products', 'category', 'recommended'));
+
+        return view('home.show', compact('product', 'category', 'recommended'));
     }
 
     public function test(Request $request){
