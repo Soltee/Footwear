@@ -48,4 +48,8 @@
     </div>
 @endsection
 
+@push('scripts')
+    {!! $chart->script() !!}
+@endpush
+
 

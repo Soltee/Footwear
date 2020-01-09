@@ -76,7 +76,8 @@ Route::prefix('admin')->group(function () {
 	Route::delete('/products/{product}', 'Administrator\ProductController@destroy');
 
 	//ProductImageApi
-	Route::post('/productsImage/{product}', 'ProductImagesController@store');	
+	Route::get('/productsImage/{product}', 'ProductImagesController@index');	
+	Route::delete('/productsImage/{ProductImages}', 'ProductImagesController@destroy');
 
 	//Customers
 	Route::get('/customers', 'Administrator\CustomerController@index')->name('customers');

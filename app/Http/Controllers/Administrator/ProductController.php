@@ -78,8 +78,8 @@ class ProductController extends Controller
 
         // dd($request->all());
         $data = $this->validate($request, [
-            'category' => ['required', 'int', 'min:1'],
-            'subcategory' => ['required', 'int', 'min:1'],
+            'category' => ['required', 'string', 'min:1'],
+            'subcategory' => ['required', 'string', 'min:1'],
             'name' => ['required','string', 'min:2', 'unique:products'],
             'cover' => ['required','file', 'image', 'mimes:jpeg,png,gif,webp', 'max:2048'],
             'file*' => 'required|file|image|mimes:jpeg,png,gif,webp|max:2048',
@@ -144,39 +144,51 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        // dd($request->all());
         $data = $this->validate($request, [
-            'category' => ['required', 'int', 'min:1'],
-            'name' => ['required','string', 'min:2'],
+            'category' => ['required', 'string', 'min:1'],
+            'subcategory' => ['required', 'string', 'min:1'],
+            'name' => ['required','string', 'min:2', 'unique:products'],
             'price' => ['required', 'int', 'min:1'],
             'qty' => ['required', 'int', 'min:1']
         ]);
         // dd($request->all());
-        
+        if($request->file('files')){
+            $files = $this->validate($request, [
+                'file*' => 'required|file|image|mimes:jpeg,png,gif,webp|max:2048',                
+            ]);
+            // dd($files['files']);
 
-        if($request->hasFile('imageUrl')){
-            $this->validate($request,['imageUrl' => ['required','image']]);
-            $image = $request->file('imageUrl')->store('products', 'public');
-            $imagePath = ['imageUrl' => $image];
+            $images      = $request->file('files'); // get the validated filee
+            // dd($images);
+
+            foreach ($images as $image) {
+                $basename  = Str::random();
+                $original  = 'pd-' . $basename . '.' . $image->getClientOriginalExtension();
+                $paths[] = $image->storeAs('products', $original, 'public'); 
+            }
         }
+        // dd($data['description']);
+        $descriptionArray  = ['description' => $request->input('description')];
+        $excerptArray      = ['excerpt' => $request->input('excerpt')];
 
-        // $storeImage = Image::make(public_path("storage/{$item}"))->fit(1200, 1200);
-        // $storeImage->save();
-        $excerpt = ['excerpt' => $request->input('excerpt')];
+        $new_product = $product->update(array_merge([
+            'category_id' => $data['category'],
+            'subcategory_id' => $data['subcategory'],
+            'name' => $data['name'],
+            'slug' => Str::slug($data['name'], '-'),
+            'price' => $data['price'],
+            'qty' => $data['qty']
+        ], ($excerptArray) ?? [], ($descriptionArray) ?? []));
 
-        $description = ['description' => $request->input('description')];
 
-        $product->update(array_merge(
-            [
-                'category_id' => $data['category'],
-                'name' => $data['name'],
-                'price' => $data['price'],
-                'qty' => $data['qty'],
-                'visible' => $request->filled('visible')
-            ],
-            $imagePath   ?? [],
-            $excerpt     ?? [],
-            $description ?? []
-        ));
+        foreach ($paths as $path) {
+            ProductImages::create([
+                'product_id' => $product->id,
+                'imageUrl'   => $path,
+                'thumbnail'  => $path
+            ]);
+        }
 
         return response()->json(['success' => 'true'], 200);
     }

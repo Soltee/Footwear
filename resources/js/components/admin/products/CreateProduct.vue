@@ -136,16 +136,12 @@ import Toast from '../../helpers/Alert';
         			this.categoriesArray.push(category); 		
         		});
         	},
-            handleFilePondInit: function() {
-                console.log('FilePond has initialized');
-
-                // FilePond instance methods are available on `this.$refs.pond`
-            },
             getSubCategories(){
                 if(this.selectedCat !== null){
                     axios.get(`/admin/getSubCategories/${this.selectedCat}`)
                     .then(res =>{
                         if(res.status == 200){
+                            this.subCategoriesArray = [];
                             res.data.subcategories.forEach((subcategory) => {
                                 this.subCategoriesArray.push(subcategory);
                             });

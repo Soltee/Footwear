@@ -17,18 +17,18 @@ class DatabaseSeeder extends Seeder
         factory(App\Administrator::class)->create(['avatar'=>'role.jpg','name' => 'role', 'email'=>'role@example.com', 'email_verified_at' => now(), 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'remember_token' => Str::random()]);
         factory(App\Administrator::class)->create();
 
-        factory(App\Category::class)->create(['name' => 'Brands' ]);
-        factory(App\Category::class)->create(['name' => 'Type' ]);
+        $category1 = factory(App\Category::class)->create(['name' => 'Brands' ]);
+        $category2 = factory(App\Category::class)->create(['name' => 'Type' ]);
 
-        factory(App\Subcategory::class)->create(['category_id' => 1, 'name' => 'featured' ]);
-        factory(App\Subcategory::class)->create(['category_id' => 1, 'name' => 'Adidas' ]);
-        factory(App\Subcategory::class)->create(['category_id' => 1, 'name' => 'Converse' ]);
-        factory(App\Subcategory::class)->create(['category_id' => 1, 'name' => 'DC' ]);
-        factory(App\Subcategory::class)->create(['category_id' => 1, 'name' => 'Nike' ]);
-        factory(App\Subcategory::class)->create(['category_id' => 2, 'name' => 'Baby' ]);
-        factory(App\Subcategory::class)->create(['category_id' => 2, 'name' => 'Children' ]);
-        factory(App\Subcategory::class)->create(['category_id' => 2, 'name' => 'Men' ]);
-        factory(App\Subcategory::class)->create(['category_id' => 2, 'name' => 'Women' ]);
+        factory(App\Subcategory::class)->create(['category_id' => $category1, 'name' => 'featured' ]);
+        factory(App\Subcategory::class)->create(['category_id' => $category1, 'name' => 'Adidas' ]);
+        factory(App\Subcategory::class)->create(['category_id' => $category1, 'name' => 'Converse' ]);
+        factory(App\Subcategory::class)->create(['category_id' => $category1, 'name' => 'DC' ]);
+        factory(App\Subcategory::class)->create(['category_id' => $category1, 'name' => 'Nike' ]);
+        factory(App\Subcategory::class)->create(['category_id' => $category2, 'name' => 'Baby' ]);
+        factory(App\Subcategory::class)->create(['category_id' => $category2, 'name' => 'Children' ]);
+        factory(App\Subcategory::class)->create(['category_id' => $category2, 'name' => 'Men' ]);
+        factory(App\Subcategory::class)->create(['category_id' => $category2, 'name' => 'Women' ]);
 
         for ($i=1; $i <= 2; $i++) {
             $h1 = App\Product::create([
