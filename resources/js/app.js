@@ -24,8 +24,8 @@ export const serverBus = new Vue();
 
 /****** Components For Administrator ******/
 Vue.component('admin-bar', require('./components/admin/AdminBar.vue').default);
-// Vue.component('nav', require('./components/admin/helpers/Nav.vue').default);
 Vue.component('search-all-view', require('./components/admin/SearchAll.vue').default);
+
 //Products
 Vue.component('create-product', require('./components/admin/products/CreateProduct.vue').default);
 Vue.component('products-view', require('./components/admin/products/Products.vue').default);
@@ -33,7 +33,7 @@ Vue.component('products-view', require('./components/admin/products/Products.vue
 
 //Customers
 Vue.component('customers-view', require('./components/admin/customers/Customers.vue').default);
-Vue.component('show-customer', require('./components/admin/customers/ShowCustomer.vue').default);
+
 
 
 /***** Components for Customers ******/

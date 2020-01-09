@@ -81,9 +81,11 @@ Route::prefix('admin')->group(function () {
 
 	//Customers
 	Route::get('/customers', 'Administrator\CustomerController@index')->name('customers');
-	Route::get('/customers/{customer}-{slug}', 'Administrator\CustomerController@show')->name('customer.show');
-	Route::post('/customers/{customer}', 'Administrator\CustomerController@destroy')->name('customer.delete');
-
+	
+	//CustomerApi
+	Route::get('/getCustomers', 'Administrator\CustomerController@get');
+	Route::get('/customers/{customer}', 'Administrator\CustomerController@show');
+	Route::delete('/customers/{customer}', 'Administrator\CustomerController@destroy');
 
 	//Search
 	Route::get('/searchall/{param}', 'Administrator\SearchController@search');

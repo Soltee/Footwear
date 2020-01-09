@@ -10,7 +10,7 @@
 	        </div>
 	        <div class="overflow-x-scroll w-500 md:w-auto md:overflow-hidden flex-1 md:px-6">
                 
-                <customers-view :customers="{{ $customers->toJson() }}"></customers-view>
+                <customers-view></customers-view>
 
 
 	        </div>

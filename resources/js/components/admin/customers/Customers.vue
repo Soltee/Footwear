@@ -1,8 +1,5 @@
 <template>
     <div class="container">
-        <p class="bg-green-500 text-white rounded-lg text-md">
-            {{ message }}
-        </p>
 
         <div class="flex flex-row justify-between items-center">
             <h3 class="text-admin-btn text-lg font-bold">Products</h3>
@@ -11,8 +8,7 @@
 
                 <input
                     v-model="keyword"
-                    @focus="searchStatus = true;"
-                    @keyup=" searchProducts();"
+                    @keyup="searchStatus = true; getCustomers();"
                     class="relative w-40 md:w-64  block appearance-none rounded-full  bg-white border border-gray-400 hover:border-gray-500 pl-16 py-2 pr-8  shadow leading-tight focus:outline-none focus:shadow-outline" id="" type="text" name="name"
 
                     placeholder="Search Table">
@@ -31,7 +27,6 @@
                 <table class="w-full table-auto">
                     <thead>
                         <tr class="bg-white rounded-lg">
-                          <th class="px-4 py-3 text-left text-gray-900">Id</th>
                           <th class="px-4 py-3 text-left text-gray-900">Avatar</th>
                           <th class="px-4 py-3 text-left text-gray-900">Name</th>
                           <th class="px-4 py-3 text-left text-gray-900">Email</th>
@@ -40,42 +35,30 @@
                     </thead>
                     <tbody>
 
-                        <tr v-if="!searchStatus" v-for="customer in customerArray">
-                          <td class="border px-4 py-2 text-gray-900">{{ customer.id }}</td>
-                          <td class="border px-4 py-2 text-gray-900">
-                              <img class="h-16 w-16 md:h-24 md:w-24 rounded-full" :src="`/storage/${customer.avatar}`">
-                          </td>
-                          <td class="border px-4 py-2 text-gray-900">{{ customer.name }}</td>
-                          <td class="border px-4 py-2 text-gray-900">Rs {{ customer.email }}</td>
-                          <td class="">
-                            <div class="flex justify-around items-center">                                
-                                <!-- <form @submit.prevent="updateCart(p)"> -->
-                                    <!-- <div class="flex flex-row items-center"> -->
-                                        <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 "><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                                    <!-- </div> -->
-                                <!-- </form> -->
-                                <button type="submit" @click="removeModal = true;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 text-admin-red"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
-                                </button> 
-                            </div>
-                          </td>
-                        </tr>
                          <tr v-if="searchStatus" v-for="customer in searchArray">
-                          <td class="border px-4 py-2 text-gray-900">{{ customer.id }}</td>
                           <td class="border px-4 py-2 text-gray-900">
                               <img class="h-24 w-24 rounded-full" :src="`/storage/${customer.avatar}`">
                           </td>
                           <td class="border px-4 py-2 text-gray-900">{{ customer.name }}</td>
                           <td class="border px-4 py-2 text-gray-900">Rs {{ customer.email }}</td>
                           <td class="">
-                            <div class="flex justify-around items-center">                                
-                                    <!-- <div class="flex flex-row items-center"> -->
-                                        <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 "><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                                    <!-- </div> -->
-                                <!-- </form> -->
-                                <button type="submit" @click="removeModal = true;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 text-admin-red"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
-                                </button> 
+                            <div class="flex justify-around items-center">
+                                <svg @click="displayDeleteModal(p)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-admin-red"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
+                                <svg @click="displayViewModal(p)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-gray-600 cursor-pointer "><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </div>
+                          </td>
+                        </tr>
+
+                        <tr v-if="!searchStatus" v-for="customer in customerArray">
+                          <td class="border px-4 py-2 text-gray-900">
+                              <img class="h-16 w-16 md:h-24 md:w-24 rounded-full" :src="`/storage/${customer.avatar}`">
+                          </td>
+                          <td class="border px-4 py-2 text-gray-900">{{ customer.name }}</td>
+                          <td class="border px-4 py-2 text-gray-900">Rs {{ customer.email }}</td>
+                          <td class="">
+                            <div class="flex justify-around items-center">  
+                                <svg @click="displayDeleteModal(customer)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-admin-red"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
+                                <svg @click="displayViewModal(customer)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-gray-600 cursor-pointer "><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                             </div>
                           </td>
                         </tr>
@@ -83,136 +66,175 @@
                     </tbody>
                 </table>
 
-            </div>
-            <!-- <div class="my-6">      
-                <div class="flex justify-center items-center">
-
-                    <a  :href="`${ifExists(links.prevPage)}`"  class="px-4 py-3 rounded-full text-white bg-admin-btn hover:bg-admin-btn-hover" >Older </a>
-                    <span class="text-gray-800 mx-4 font-semibold">{{ links.currentPage }}</span>
-                    <a  :href="`${ifExists(links.nextPage)}`" class="px-4 py-3 rounded-full text-white bg-admin-btn hover:bg-admin-btn-hover">Newer </a>
+                <!-- Paginaion -->
+                <div v-if="searchStatus">
+                    <div class="my-6 flex flex-col md:flex-row justify-between items-center" v-if="searchLinks">      
+                        <div class="flex flex-row items-center">
+                            <span class="px-4 py-3 text-gray-800 font-bold text-lg">{{ searchLinks.first_item }} </span>
+                            <span class="font-semibold text-md text-gray-700"> of </span>
+                            <span class="px-4 py-3 text-gray-800 font-bold text-lg"> {{ searchLinks.last_item }}</span>
+                            <span class="font-semibold text-md text-gray-700"> in </span>
+                            <span class="px-4 py-3 text-gray-800 font-bold text-lg"> {{ searchLinks.total_count }}</span>
+                        </div>
+                        <div>
+                            <button  class="px-4 py-3 rounded-full text-white bg-admin-btn hover:bg-admin-btn-hover" @click="page = searchLinks.previous_page_url; getCustomers()" :class="(!searchLinks.previous_page_url) ? 'cursor-not-allowed' : ''">Prev</button>
+                            <span class="text-gray-800 mx-4 font-semibold">{{ searchLinks.current_page }}</span>
+                            <button class="px-4 py-3 rounded-full text-white bg-admin-btn hover:bg-admin-btn-hover" @click="page = searchLinks.next_page_url; getCustomers()" :class="(!searchLinks.next_page_url) ? 'cursor-not-allowed' : ''">Next</button>
+                        </div>
+                    </div>
                 </div>
-            </div> -->
-        </div>
-<!-- 
-    	<form @submit.prevent="searchCustomer">
-    		<input @input="status = false" type="text" name="" v-model="keyword" class="px-2 py-2 bg-blue-500 text-white">
-    		<button type="submit">Search</button>
-    		<span v-if="!status" @click="status = ! status">XXX</span>
-    	</form > -->
-    	<!-- <div v-if="status">
-    		<div v-for="customer in customerArray">
-	    		<div class="flex flex-wrap items-center justify-between group border-2 border-tranparent hover:border-green-500" @click="redirectTo(customer)">
-	    			<!-- <span>{{ customer.id }}</span> -->
-	    			<!-- <img class="h-24 w-24 rounded-full" :src="`/storage/${customer.avatar}`">
-		    		<h4>{{ customer.name }}</h4>
-		            <button type="submit" @click="filterCustomer(customer); dropCostumer(customer)">Drop</button>
-	    		</div>
-	    	</div>
-	    	<div class="flex">
+                <div v-else>
+                    <div class="my-6 flex flex-col md:flex-row justify-between items-center" v-if="links">      
+                        <div class="flex flex-row items-center">
+                            <span class="px-4 py-3 text-gray-800 font-bold text-lg">{{ links.first_item }} </span>
+                            <span class="font-semibold text-md text-gray-700"> of </span>
+                            <span class="px-4 py-3 text-gray-800 font-bold text-lg"> {{ links.last_item }}</span>
+                            <span class="font-semibold text-md text-gray-700"> in </span>
+                            <span class="px-4 py-3 text-gray-800 font-bold text-lg"> {{ links.total_count }}</span>
+                        </div>
+                        <div>
+                            <button  class="px-4 py-3 rounded-full text-white bg-admin-btn hover:bg-admin-btn-hover" @click="page = links.previous_page_url; getCustomers()" :class="(!links.previous_page_url) ? 'cursor-not-allowed' : ''">Prev</button>
+                            <span class="text-gray-800 mx-4 font-semibold">{{ links.current_page }}</span>
+                            <button class="px-4 py-3 rounded-full text-white bg-admin-btn hover:bg-admin-btn-hover" @click="page = links.next_page_url; getCustomers()" :class="(!links.next_page_url) ? 'cursor-not-allowed' : ''">Next</button>
+                        </div>
+                    </div>
+                </div>
 
-	    		<a  :href="`${links.prevPage}`"  class="px-2 py-2 bg-blue-800" >Prev </a>
-	    		<span>{{ links.currentPage }}</span>
-	    		<a  :href="`${links.nextPage}`" class="px-2 py-2 bg-blue-800">Next </a>
-	    	</div> -->
-    	<!-- </div> --> -->
-    	<!-- <div v-else>
-            <div class="flex justify-between items-center">
-                <span :class="(searchError) ? 'border-red-500 border-2' : ''">{{ (resultTotal) ? (resultTotal) : 0 }} results found for {{ keyword }}</span>   
             </div>
-    		<div v-for="customer in searchArray">
-    			<div class="flex flex-wrap items-center justify-between group border-2 border-tranparent hover:border-green-500" @click="redirectTo(customer)">
-	    			<img class="h-24 w-24 rounded-full" :src="`/storage/${customer.avatar}`">
-		    		<h4>{{ customer.name }}</h4>
-		            <button type="submit" @click="filterCustomer(customer); dropCostumer(customer)">Drop</button>
-	    		</div>
-	    	</div>
-    	</div> -->
-
+        </div>
+        <div v-if="deleteModal">
+            <DeleteModal :type="selected"></DeleteModal>
+        </div>
+        <div v-if="viewModal">
+            <ViewModal type="customer"  :data="selected"></ViewModal>
+        </div>
     </div>
 </template>
 
 <script>
+import { serverBus } from '../../../app.js';    
+import Toast from '../../helpers/Alert';
+import DeleteModal from '../helpers/DeleteModal';
+import ViewModal from '../helpers/ViewModal';
+
     export default {
         name : 'customers-view',
-        props: ['customers'],
+        components : {
+            DeleteModal, ViewModal
+        },
         data(){
         	return {
-        		customerArray : [],
-        		links : null,
-        		keyword: '',
-        		status : true,
-        		searchArray: [],
-        		searchError: '',
-                searchStatus:false,
-        		resultTotal : false,
-                message: null,
-                error: null
+        		customerArray  : [],
+        		links          : null,
+                searchStatus    :false,
+        		keyword        : '',
+        		searchArray    : [],
+                searchLinks    : null,
+        		page           : null,
+        		selected       : {
+                        id : 1,
+                        name : 'Name'
+                },
+                deleteModal    : false,
+                viewModal      : false
         	}
         },
         mounted() {
-        	this.pushToData();
+        	this.getCustomers();
+        },
+        created(){
+            serverBus.$on('close-modal', ()=>{
+                this.closeModal();
+            }); 
+            serverBus.$on('drop-type', ()=>{
+                this.dropCostumer();
+            });
         },
         methods: {
-        	pushToData(){
-        		let All = this.customers;
-        		this.links = {
-        			prevPage :  All.prev_page_url,
-        			nextPage : All.next_page_url,
-        			currentPage : All.current_page
-        		};
-        		All.data.forEach((customer) => {
-        			this.customerArray.push(customer);		
-        		});
+        	getCustomers(){
+                let endpoint = '/admin/getCustomers';
+                
+                
+                if(this.searchStatus){
+                    endpoint = `/admin/getCustomers?search=${this.keyword}`;
+                    if(this.page) {
+                        endpoint = `${this.page}&search=${this.keyword}`;
+                    }
+                } else {
+                    if(this.page){
+                        endpoint = this.page;
+                    }
+                }
+
+                
+                axios.get(`${endpoint}`)
+                    .then(res => {
+                        let data = res.data;
+                        if(res.status == 200){
+                            if(this.searchStatus){
+                                this.searchArray = [];
+                                data.customers.forEach((customer) => {
+                                    this.searchArray.push(customer);
+                                });
+                                this.searchLinks = data.paginate;
+                            } else {
+                                this.customerArray = [];
+                                data.customers.forEach((customer) => {
+                                    this.customerArray.push(customer);
+                                });
+                                this.links = data.paginate;
+                            }
+
+                            this.page = null;
+
+                        }
+                    }).catch(err => {
+                        Toast.fire({
+                          icon: 'error',
+                          title: 'Network Error!'
+                        });
+                    });
         	},
         	ifExists(page){
         		if(!page){return 'No page.'} else {return page;}
         	},
-        	filterCustomer(customer){
-
-        		if(this.status){
-        			this.customerArray = this.customerArray.filter((state) => {
-	        			return state.id !== customer.id;
-	        		});
-        		} else {
-        			this.searchArray = this.searchArray.filter((state) => {
-	        			return state.id !== customer.id;
-	        		});
-        		}
-        		
-        	},
-        	searchCustomer(){
-        		this.status = false;
-                if(!this.keyword){return;}
-        		axios.get(`/admin/searchCustomers/${this.keyword}`)
-        			.then((res) => {
-        				// console.log(res.data.customers);
-        				let ctms = res.data.customers;
-                        this.resultTotal = res.data.total;
-        				if(ctms.length > 0){
-        					this.searchArray = ctms;
-                            this.searchError = false;
-		        		} else {
-                            this.searchArray = [];
-        					this.searchError = true;
-	        			}
-        				
-        			}).catch((error) => {
-        				this.searchError = error.data;
-        			})
-        	},
-            dropCostumer(customer){
-                axios.post(`/admin/customers/${customer.id}`, {})
-                    .then(res=>{
+            dropCostumer(){
+                axios.delete(`/admin/customers/${this.selected.id}`)
+                    .then((res) => {
                         if(res.status == 204){
-                        this.message = 'Product dropped.';                            
+                            Toast.fire({
+                              icon: 'success',
+                              title:   `Product  deleted.`
+                            });
+
+                            this.closeOnSuccess();                            
                         }
                     }).catch((error) => {
-                        this.error = error.data;
+                        Toast.fire({
+                              icon: 'error',
+                              title:   `Product was unable to delete.`
+                        }); 
+                        this.closeModal();
                     });
             },
-            redirectTo(customer){
-                window.location = `http://localhost:8000/admin/customers/${customer.id}-${customer.name}`;   
-            }
+            displayDeleteModal(customer){
+                this.deleteModal = ! this.deleteModal;
+                this.selected = customer;
+            },
+            displayViewModal(customer){
+                this.viewModal = ! this.viewModal;
+                this.selected = customer;
+            },
+            closeOnSuccess(){
+                this.selected = {};
+                this.deleteModal = false;
+                this.getProducts();
+            },
+            closeModal(){
+                this.selected = {};
+                this.deleteModal = false;
+                this.viewModal = false;
+            },
         }
     }
 </script>

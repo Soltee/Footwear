@@ -12,7 +12,7 @@
                 </button>
             </div>
 
-            <div class="overflow-y-scroll h-86">
+            <div v-if="type == 'product'" class="overflow-y-scroll h-86">
                 <div class="flex flex-col md:flex-row justify-around items-center">
                     <img :src="`/storage/${item.imageUrl}`" class="w-64 h-64 rounded-lg">
                     <div class="flex-1 flex flex-col ml-2">
@@ -41,7 +41,26 @@
                     </div>
                     </div>
                 </div>
-               
+            </div>
+            <div v-if="type == 'customer'" class="overflow-y-scroll h-86">
+              <div class="flex flex-col md:flex-row justify-around items-center">
+                    <img :src="`/storage/${customer.avatar}`" class="w-64 h-64 rounded-lg">
+                    <div class="flex-1 flex flex-col ml-2">
+                        <div class="flex items-center mb-2">
+                            <span class="text-md font-md text-gray-800 w-40">Name</span>
+                            <span class="text-lg font-lg text-gray-900">{{ customer.name}}</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <span class="text-md font-md text-gray-800 w-40">Email</span>
+                            <span class="text-lg font-lg text-gray-900">{{ customer.price}}</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <span class="text-md font-md text-gray-800 w-40">Registered At</span>
+                            <span class="text-lg font-lg text-gray-900">{{ format(customer.created_at) }}</span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
 		</div>
@@ -52,41 +71,40 @@
 import { serverBus } from '../../../app.js';    
 import Toast from '../../helpers/Alert';
 import EmblaCarousel from 'embla-carousel';
-
+import moment from 'moment';
 
     export default {
-        name       : 'view-product',
-        props      : ['product'],
+        name       : 'view',
+        props      : ['type', 'data'],
         components : { 
             Toast 
         },
         data(){
         	return{
-                item   : {},
-                images : [],
-                hooperSettings: {
-                    itemsToShow: 1,
-                    centerMode: true,
-                    breakpoints: {
-                      800: {
-                        centerMode: false,
-                        itemsToShow: 3
-                      },
-                      1000: {
-                        itemsToShow: 6,
-                        pagination: 'fraction'
-                      }
-                    }
-                }
+              customer : {},
+              item   : {},
+              images : [],
         	}
         },
         mounted(){
-        	axios.get(`/admin/products/${this.product.id}`)
+          let endpoint = '/admin';
+
+          if(this.type == 'product'){
+            endpoint += `/products/${this.data.id}`;
+          } else if(this.type == 'customer'){
+            endpoint += `/customers/${this.data.id}`;            
+          }
+        	axios.get(`${endpoint}`)
                 .then(res => {
                     let data = res.data
                     if(res.status == 200){
+                      if(this.type == 'product'){
                         this.item = data.product;
                         this.images = data.images;
+                      } else if(this.type == 'customer'){
+                        this.customer = data.customer;
+                      }
+                        
                     } else {
                         Toast.fire({
                           icon: 'error',
@@ -120,8 +138,11 @@ import EmblaCarousel from 'embla-carousel';
         },
         methods: {
         	closeModal(){
-                serverBus.$emit('close-modal');
-            },
+            serverBus.$emit('close-modal');
+          },
+          format(date) {
+            return moment().format(date);
+          }
         }
     }
 </script>

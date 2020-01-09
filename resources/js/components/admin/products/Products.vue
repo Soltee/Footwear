@@ -116,11 +116,11 @@
             <EditModal :product="selected"></EditModal>
         </div>
         <div v-if="deleteModal">
-            <DeleteModal :product="selected"></DeleteModal>
+            <DeleteModal :type="selected"></DeleteModal>
         </div>
 
         <div v-if="viewModal">
-            <ViewModal :product="selected"></ViewModal>
+            <ViewModal type="product" :data="selected"></ViewModal>
         </div>
         
     </div>
@@ -163,7 +163,7 @@ import ViewModal from '../helpers/ViewModal';
             serverBus.$on('close-modal', ()=>{
                 this.closeModal();
             }); 
-            serverBus.$on('drop-product', ()=>{
+            serverBus.$on('drop-type', ()=>{
                 this.dropProduct();
             });
         },

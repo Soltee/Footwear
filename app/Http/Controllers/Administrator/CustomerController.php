@@ -20,20 +20,35 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $total = Customer::all()->count();
-        $customers = Customer::latest()->paginate(5);
-        $shown = $customers->count();
-        return view('customers.index', compact('customers', 'total', 'shown'));
+        return view('customers.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    /*
+    * Get the Custoers data via ajax
+    */
+    public function get(){
+        $search = request()->search;
+
+        $query = Customer::latest();
+        if($search){
+            $query = $query->where('name', 'LIKE', '%'.$search.'%')
+                            ->orWhere('price', 'LIKE', '%'.$search.'%');
+         }
+
+        $customers = $query->paginate(5);
+
+        return response()->json([
+            'customers' => $customers->items(),
+            'paginate' => [
+                'first_item'    => $customers->firstItem(),
+                'last_item'     => $customers->lastItem(),
+                'previous_page_url' => $customers->previousPageUrl(),
+                'current_page'      => $customers->currentPage(),
+                'next_page_url'     => $customers->nextPageUrl(),
+                'current_count' => $customers->count(),
+                'total_count'   => $customers->total()
+            ]
+        ], 200); 
     }
 
     /**
@@ -53,10 +68,9 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Customer $customer, $slug)
+    public function show(Customer $customer)
     {
-        return view('customers.show', compact('customer'));
-        // dd($customer->id);
+        return response()->json(['customer' => $customer], 200);
     }
 
     /**
@@ -69,7 +83,7 @@ class CustomerController extends Controller
     {
         // ($customer->avatar) ? File::delete($customer->avatar) : '' ;
         // $customer->delete();
-        return response()->json(['success'=>true], 204);
+        return response()->json([], 204);
         // return redirect()->back()->with('success', 'Customer removed.');
     }
 }
