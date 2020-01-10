@@ -4,9 +4,9 @@
     <div class="  px-3 lg:px-12 bg-gray-300">
 
           @if($category)
-          <add-cart :product="{{ $product }}"  :category="{{ $category }}" :recommended="{{ $recommended }}"/> 
+          <add-cart :product="{{ $product }}" :images="{{$images}}"  :category="{{ $category }}" :recommended="{{ $recommended }}"/> 
           @else
-          <add-cart :product="{{ $product }}"  :recommended="{{ $recommended }}"/> 
+          <add-cart :product="{{ $product }}" :images="{{$images}}"  :recommended="{{ $recommended }}"/> 
           @endif
 
           

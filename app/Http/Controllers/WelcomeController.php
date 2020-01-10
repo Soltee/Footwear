@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Cart;
 use App\Product;
-use App\Category ;
+use App\Category;
 use App\Subcategory;
+use App\ProductImages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -18,8 +19,8 @@ class WelcomeController extends Controller
     {
     	
         $products = Product::latest()->paginate(4);
-        $adidas = Product::latest()->where('subcategory_id', )->paginate(4);
-        return view('welcome', compact('products', 'adidas'));
+        $featured = Product::latest()->where('featured', true)->paginate(4);
+        return view('welcome', compact('products', 'featured'));
 
     }
 
@@ -57,11 +58,13 @@ class WelcomeController extends Controller
     public function show($product, $slug)
     {   
         $product = Product::findOrFail($product);
+        $images  = $product->images;
         $paginate = Product::latest()->where('category_id', $product->category_id)->paginate(6);
         $category = ($product->subcategories)?? null;
         $recommended = json_encode($paginate->items());
+        // dd($images);
 
-        return view('home.show', compact('product', 'category', 'recommended'));
+        return view('home.show', compact('product', 'images', 'category', 'recommended'));
     }
 
     public function test(Request $request){

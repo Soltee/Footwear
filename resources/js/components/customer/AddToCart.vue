@@ -2,10 +2,17 @@
     <div class="">
         
         <div class="relative w-full md:px-12 bg-gray-300 flex flex-col cm:flex-row justify-between ">
-            <div class="flex-1 w-full">
-              <img class="h-full rounded-lg object-center object-cover w-full " :src="`/storage/${product.imageUrl }`" :alt="`${product.name}`">
+            <div class="md:w-1/2">
+              <div v-if="images.length > 0" class="relative">
+                    <img class="h-full rounded-lg object-center object-cover w-64 " :src="`/storage/${productImage}`" />
+                    <a class="prev bg-black" @click.prevent="pushImage" href="#">&#10094; </a>
+                    <a class="next bg-black" @click.prevent="pushImage" href="#">&#10095; </a>
+              </div>  
+              <div v-else>
+                <img class="h-full rounded-lg object-center object-cover w-64 " :src="`/storage/${product.imageUrl }`" :alt="`${product.name}`">                  
+              </div>
             </div>
-            <div class="cm:px-6 flex-1 flex flex-col items-center cm:items-start justify-center py-6 md:py-0 ">
+            <div class="md:w-1/2 cm:px-6 flex-1 flex flex-col items-center cm:items-start justify-center py-6 md:py-0 ">
                 <h3 class="text-3xl font-bold text-gray-900">{{ product.name }}</h3>
                 <h5 v-if="category" class="my-4 cm:my-0 text-xl font-bold text-gray-800">{{ category.name }}</h5>
                 <h5 class="my-4 cm:my-0 text-xl font-bold text-gray-800">$ {{ product.price }}</h5>
@@ -20,7 +27,7 @@
                         </div>
                        
                     </div>
-                    <a v-if="message" :href='`/cart-details`' class="text-lg text-gray-900 mr-3">
+                    <a v-if="added" :href='`/cart-details`' class="text-lg text-gray-900 mr-3">
                             Go To Cart
                     </a>
                     <button @click="addToCart" type="submit" class="mt-4 p-3 rounded-lg text-white text-md hover:opacity-75 bg-black"> Add To Cart</button>
@@ -31,12 +38,12 @@
         <div class="flex flex-col my-6">
             <h3 class="text-xl text-gray-900 mb-8 ">Recommended Products</h3>
         
-            <div class="embla overflow-x-scroll">
+            <div class="embla2 overflow-x-scroll">
                 <div class="embla__container flex">
                 <div v-for="recommend in recommended">
 
                     <div class="embla__slide relative w-64 h-auto p-1 bg-white rounded-lg hover:shadow-md m-2">
-                        <a :href="`/shoes/${recommend.id}-${recommend.slug}`">
+                        <a :href="`/shoes/${recommend.id}/${recommend.slug}`">
                             <h3 class="text-lg font-bold my-2 text-gray-900">{{ recommend.name }}</h3>
                             <img class="w-full rounded-lg object-cover object-center" :src="`/storage/${recommend.imageUrl}`">                        
                         </a>
@@ -56,65 +63,136 @@ import EmblaCarousel from 'embla-carousel';
 
     export default {
         name : 'add-cart',
-        props : ['product', 'category', 'recommended'],
+        props : ['product', 'images', 'category', 'recommended'],
         components : {
 
         },
         data(){
         	return {
+                productImage : null,
+                added     : false,
                 qty       : 1,
-                message   : false,
-                err       : false
+                currentIndex: 0
         	}
         },
         mounted(){
-            const emblaNode = document.querySelector('.embla');
-            const options = { loop: false };
-            const embla = EmblaCarousel(emblaNode, {
-              align: 'start',
-              containerSelector: '*',
-              slidesToScroll: 1,
-              containScroll: false,
-              draggable: true,
-              dragFree: false,
-              loop: true,
-              speed: 10,
-              startIndex: 0,
-              selectedClass: 'is-selected',
-              draggableClass: 'is-draggable',
-              draggingClass: 'is-dragging',
-            });
-        },
+            this.pushImage();
+            this.setUpEmbla();
+            },
         methods: {
+            pushImage() {
+                let images = this.images;
+                return this.productImage = images[Math.floor(Math.random() * images.length)].thumbnail;
+            },
+
+            next: function() {
+                if(this.images.length >= this.currentIndex){
+                    this.currentIndex += 1;                    
+                }
+            },
+            prev: function() {
+                if(this.currentIndex >= 0){
+                    this.currentIndex -= 1;
+                }
+            },
             addToCart(){
+
                 axios.post(`/add-cart/${this.product.id}`, {
                     qty : this.qty
                 })
                     .then((res) => {
                         if(res.status == 200){
+                            this.added = true;
                             serverBus.$emit('product-added-to-cart', this.qty);
                             Toast.fire({
                               icon: 'success',
                               title:   `Product added to my cart.`
                             });
-                            this.message = true;
-                            this.removeMessage();
                         }
                     }).catch(error => {
-                        this.err = true;
-                        this.removeMessage();
+                        Toast.fire({
+                              icon: 'error',
+                              title:   `Server error.`
+                        });
                     });
 
             },
-            removeMessage(){
+            reset(){
                 setTimeout(() => {
-                    this.message = false;
-                    this.err = false;
-                }, 3000);
+                    this.added = false;
+                }, 4000);
+            },
+            setUpEmbla(){
+                const emblaNode2 = document.querySelector('.embla2');
+                const options = { loop: false };
+                
+
+                const embla2 = EmblaCarousel(emblaNode2, {
+                  align: 'start',
+                  containerSelector: '*',
+                  slidesToScroll: 1,
+                  containScroll: false,
+                  draggable: true,
+                  dragFree: false,
+                  loop: true,
+                  speed: 10,
+                  startIndex: 0,
+                  selectedClass: 'is-selected',
+                  draggableClass: 'is-draggable',
+                  draggingClass: 'is-dragging',
+                });
+            },
+            currentImg(){
+                
             }
-        }
+        },
+        
     }
 </script>
-<style scoped>
-    
+<style scoped>  
+    .fade-enter-active,
+    .fade-leave-active {
+      transition: all 0.9s ease;
+      overflow: hidden;
+      visibility: visible;
+      position: absolute;
+      width:100%;
+      opacity: 1;
+    }
+
+    .fade-enter,
+    .fade-leave-to {
+      visibility: hidden;
+      width:100%;
+      opacity: 0;
+    }
+
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 40%;
+      width: auto;
+      padding: 16px;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      transition: 0.7s ease;
+      border-radius: 0 4px 4px 0;
+      text-decoration: none;
+      user-select: none;
+
+    }
+
+    .next {
+      right: 0;
+    }
+
+    .prev {
+      left: 0;
+    }
+
+    .prev:hover, .next:hover {
+      background-color: rgba(0,0,0,0.9);
+    }
+
 </style>
