@@ -40,12 +40,16 @@ class WelcomeController extends Controller
         $categories = Category::orderBy('name')->with('subcategories')->get();
 
         if(request()->category){
-            // dd(request()->id);
             $products = Product::where('category_id', request()->id)->paginate(8);
 
             $count = count($products);
         } elseif (request()->subcategory) {
             $products = Product::where('subcategory_id', request()->id)->paginate(8);
+            $count = count($products);
+        } elseif (request()->type) {
+            $subcategory = Subcategory::where('name', request()->type)->first();
+            // dd($subcategory->id);
+            $products = Product::where('subcategory_id', $subcategory->id)->paginate(8);
             $count = count($products);
         } else {
             $products = Product::latest()->paginate(8);

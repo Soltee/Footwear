@@ -16,7 +16,8 @@ class CouponController extends Controller
         
 
         if($coupon){
-            dd(integer($coupon->percent));
+            // dd($coupon->percent/100 * Cart::subTotal());
+            // dd(session('discount'));
             if(session('discount')){
                 return response()->json([
                     'valid' => false,
@@ -24,7 +25,7 @@ class CouponController extends Controller
                 ], 200);
             }  else {
                 $percent_off = ($coupon->percent / 100) * Cart::subTotal();///4 
-                $request->session()->put('discount', round($percent_off));
+                $request->session()->put('discount', $percent_off);
                 $subAfterDis = (Cart::subTotal() - $percent_off);//6
                 $request->session()->put('subAfterDis', $subAfterDis);
                 $tax = Cart::tax();//2

@@ -1,8 +1,5 @@
 <template>
     <div class="px-3 md:px-6 lg:px-12 z-10 py-3 md:py-8 ">
-        <p v-if="message" :class="(status) ? 'bg-green-500' : 'bg-red-500' " class="rounded-lg text-md font-medium  text-white">
-            {{ message }}
-        </p>
         <div class="flex flex-row justify-between my-8">
             <div class="flex-1 px-4 w-full">
               <form :action="`/charge`" :method="`post`" id="payment-form">
@@ -66,16 +63,19 @@
 
                   <div class="flex flex-col md:flex-row items-center my-6 mx-3  ">
                       <div @click="paymentOption('braintree')" class="flex w-full mb-3 md:mb-0 items-center p-4 rounded-lg mr-12 border-2 border-gray-300 group hover:border-green-600 checkbox cursor-pointer" :class="(method === 'braintree') ? 'border-green-600' : ''">
-                          <input  type="checkbox" class=""  v-model="method">
-                          <span class="text-lg ml-8 font-bold text-black" >Braintree</span>
+                          <!-- <input  type="checkbox" class=""  v-model="method"> -->
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 hover:text-green-600 group-hover:text-green-600"  :class="(method == 'braintree') ? 'text-green-600' : 'text-gray-900 '"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                          <span class="text-lg ml-8 font-bold text-gray-900" >Braintree</span>
                       </div>
                       <div @click="paymentOption('stripe')" class="flex w-full mb-3 md:mb-0 items-center p-4 rounded-lg mr-12 border-2 border-gray-300 group hover:border-green-600 checkbox cursor-pointer" :class="(method === 'stripe') ? 'border-green-600' : ''">
-                          <input  type="checkbox"  class="" v-model="method" >
-                          <span class="text-lg ml-8 font-bold text-black" >Stripe</span>
+                          <!-- <input  type="checkbox"  class="" v-model="method" > -->
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 hover:text-green-600 group-hover:text-green-600" :class="(method == 'stripe') ? 'text-green-600' : 'text-gray-900 '"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                          <span class="text-lg ml-8 font-bold text-gray-900" >Stripe</span>
                       </div>
                       <div @click="paymentOption('paypal')" class="flex w-full mb-3 md:mb-0 items-center p-4 rounded-lg mr-12 border-2 border-gray-300 group hover:border-green-600 checkbox cursor-pointer" :class="(method === 'paypal') ? 'border-green-600' : ''">
-                          <input  type="checkbox"  class="" v-model="method" >
-                          <span class="text-lg ml-8 font-bold text-black" >Paypal</span>
+                          <!-- <input  type="checkbox"  class="" v-model="method" > -->
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 hover:text-green-600 group-hover:text-green-600" :class="(method == 'paypal') ? 'text-green-600' : 'text-gray-900 '"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                          <span class="text-lg ml-8 font-bold text-gray-900" >Paypal</span>
                       </div>
 
                   </div>
@@ -140,7 +140,7 @@
             <div class="hidden md:flex md:flex-col md:w-64">
               <div class="flex justify-between">
                 <h3 class="text-lg font-bold text-gray-900">My Cart</h3>
-                <span>{{ updatedQty }}</span>
+                <span class="rounded-full p-1 text-custom-red-darker">{{ updatedQty }}</span>
               </div>
               <div v-for="product in products" class="w-full flex flex-col justify-between mt-4">
                 <div class="flex flex-row justify-between items-center">
@@ -151,6 +151,29 @@
                     </div>
                 </div>
               </div>
+              <div class="flex flex-col  rounded-lg p-3 mb-3">
+                    <div class="flex items-center justify-between">
+                        <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">SubTotal</span>
+                        <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ sub }}</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">Discount</span>
+                        <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ dis }}</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">SubTotal After Discount</span>
+                        <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ (afterdis) ? afterdis : sub }}</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">Tax</span>
+                        <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ tax }}</span>
+                    </div>
+                   
+                    <div class="flex items-center justify-between">
+                        <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">Grand Total</span>
+                        <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ grand }}</span>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -170,8 +193,6 @@ import KhaltiCheckout from "khalti-web";
                 updatedQty : this.cart,
                 method : "",
                 selected : null,
-                subTotal : this.sub,
-                total : this.grand,
                 status : false,
                 message   : null,
                 err       : null,

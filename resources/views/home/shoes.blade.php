@@ -34,7 +34,7 @@
        		</div>
        		<div class="mt-10 flex flex-row container flex-wrap {{ $count > 2 ? '' : '' }}">
        			@forelse($products as $product)
-                <div class="p-4 bg-white rounded-lg shadow-lg cursor-pointer m-2 w-full cm:w-auto hover:-mt-1 hover:-mr-21 w-full p-3 md:2/3  lg:1/3">
+                <div class="p-4 bg-white rounded-lg shadow-lg cursor-pointer m-2 w-full cm:w-auto hover:-mt-1 hover:-mr-21 w-full p-3 md:2/3  lg:1/3 transition-all">
                     <a href="/shoes/{{ $product->id }}/{{$product->slug}}">
                         <h3 class="text-lg font-bold my-2 text-gray-900">{{ $product->name }}</h3>
                         <img class="w-full sm:h-64 sm:w-64 rounded-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}">  

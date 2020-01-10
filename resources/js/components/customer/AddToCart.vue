@@ -1,8 +1,8 @@
 <template>
     <div class="">
         
-        <div class="relative w-full md:px-12 bg-gray-300 flex flex-col cm:flex-row justify-between ">
-            <div class="md:w-1/2">
+        <div class="relative w-full py-6 md:px-12 bg-gray-300 flex flex-col cm:flex-row justify-between ">
+            <div class="md:w-1/2 flex flex-row items-center justify-center">
               <div v-if="images.length > 0" class="relative">
                     <img class="h-full rounded-lg object-center object-cover w-64 " :src="`/storage/${productImage}`" />
                     <a class="prev bg-black" @click.prevent="pushImage" href="#">&#10094; </a>
@@ -81,8 +81,17 @@ import EmblaCarousel from 'embla-carousel';
             },
         methods: {
             pushImage() {
-                let images = this.images;
-                return this.productImage = images[Math.floor(Math.random() * images.length)].thumbnail;
+              
+                let newArr = [];
+                if(this.productImage !== null){
+                  newArr = this.images.filter((image) => {
+                    return image.thumbnai !== this.productImage;
+                  });
+                } else {
+                  newArr = this.images;
+                }
+                
+                return this.productImage = newArr[Math.floor(Math.random() * newArr.length)].thumbnail;
             },
 
             next: function() {

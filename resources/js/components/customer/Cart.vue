@@ -20,7 +20,6 @@
                 <table class="w-full table-auto">
                     <thead>
                         <tr class="bg-white rounded-lg">
-                          <th class="px-4 py-3 text-left text-gray-900">Id</th>
                           <th class="px-4 py-3 text-left text-gray-900">Image</th>
                           <th class="px-4 py-3 text-left text-gray-900">Name</th>
                           <th class="px-4 py-3 text-left text-gray-900">Price</th>
@@ -30,7 +29,6 @@
                     <tbody>
 
                         <tr v-for="p in productsArr">
-                          <td class="border px-4 py-2">{{ p.id }}</td>
                           <td class="border px-4 py-2">
                               <img class="h-24 w-24 rounded-lg object-cover object-center" :src="`/storage/${p.options.imageUrl}`">
                           </td>
