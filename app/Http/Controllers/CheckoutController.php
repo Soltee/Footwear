@@ -121,7 +121,7 @@ class CheckoutController extends Controller
         $Authenticated = ($this->guard()) ? $this->guard()->id : null;
         
         $order = Orders::create([
-            'user_id' => $Authenticated,
+            'customer_id' => $Authenticated,
             'first_name' => $firstName,
             'last_name' => $lastName, 
             'email' => $email,
@@ -138,7 +138,7 @@ class CheckoutController extends Controller
 
         foreach(Cart::content() as $product){
             Order_Items::create([
-                'order_id' => $Authenticated,  
+                'customer_id' => $Authenticated,  
                 'order_id' => $order->id,  
                 'name'     => $product->name, 
                 'price'    => $product->price, 

@@ -16,7 +16,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             // $table->bigIncrements('id');
             $table->uuid('id')->primary();
-            $table->UnsignedBigInteger('user_id')->nullable();
+            $table->UnsignedBigInteger('customer_id')->nullable();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->nullable();
@@ -24,6 +24,7 @@ class CreateOrdersTable extends Migration
             $table->string('city');
             $table->string('street_address');
             $table->string('payment_method');
+            $table->string('payment_id');
             $table->integer('subtotal');
             $table->integer('discount')->nullable();
             $table->integer('subafterdiscount')->nullable();

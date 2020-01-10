@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
                 'imageUrl' => '/products/'. $i.'.jpg',
+                'created_at' => today()->subDays(1)
             ]);
         }
        
@@ -51,6 +52,7 @@ class DatabaseSeeder extends Seeder
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
                 'imageUrl' => '/products/'. $i.'.jpg',
+                'created_at' => today()->subDays(1)
             ]);
         }
 
@@ -63,6 +65,8 @@ class DatabaseSeeder extends Seeder
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
                 'imageUrl' => '/products/'. $i.'.jpg',
+                'featured' => true,
+                'created_at' => today()->subDays(1)
             ]);
         }
        
@@ -75,6 +79,7 @@ class DatabaseSeeder extends Seeder
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
                 'imageUrl' => '/products/'. $i.'.jpg',
+                'created_at' => today()->subDays(2)
             ]);
         }
 
@@ -87,6 +92,8 @@ class DatabaseSeeder extends Seeder
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
                 'imageUrl' => '/products/'. $i.'.jpg',
+                'featured' => true,
+                'created_at' => today()->subDays(2)
             ]);
         }
        
@@ -99,6 +106,7 @@ class DatabaseSeeder extends Seeder
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
                 'imageUrl' => '/products/'. $i.'.jpg',
+                'created_at' => today()->subDays(10)
             ]);
         }
 
@@ -112,6 +120,7 @@ class DatabaseSeeder extends Seeder
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
                 'imageUrl' => '/products/'. $i.'.jpg',
+                'created_at' => today()->subDays(10)
             ]);
         }
        
@@ -124,6 +133,8 @@ class DatabaseSeeder extends Seeder
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
                 'imageUrl' => '/products/'. $i.'.jpg',
+                'featured' => true,
+                'created_at' => today()->subDays(3)
             ]);
         }
 
@@ -136,6 +147,7 @@ class DatabaseSeeder extends Seeder
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
                 'imageUrl' => '/products/'. $i.'.jpg',
+                'created_at' => today()->subDays(3)
             ]);
         }
        
@@ -148,6 +160,8 @@ class DatabaseSeeder extends Seeder
                 'price' => rand(1, 5),
                 'qty' => rand(0, 100),
                 'imageUrl' => '/products/'. $i.'.jpg',
+                'featured' => true,
+                'created_at' => today()
             ]);
         }
 
@@ -316,6 +330,10 @@ class DatabaseSeeder extends Seeder
                 'thumbnail' => '/products/19.jpg',
             ]);
         }
+
+        factory(App\Orders::class, 50)->create();
+        factory(App\Order_Items::class, 100)->create();
+
     
         factory(\App\Coupon::class)->create(['code' => 'CODE1', 'percent' => 2,'expires_on' => \Carbon\Carbon::yesterday()]);
         factory(\App\Coupon::class)->create(['code' => 'CODE2', 'percent' => 2,'expires_on' => \Carbon\Carbon::yesterday()]);

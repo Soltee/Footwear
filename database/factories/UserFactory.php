@@ -24,6 +24,9 @@ $factory->define(Customer::class, function (Faker $faker) {
         'email_verified_at' => now(),
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'remember_token' => Str::random(10),
+        'created_at' => function(){
+            return \Carbon\Carbon::now()->subDays(rand(0, 20))->format('Y-m-d');
+        }
     ];
 });
 $factory->define(App\Administrator::class, function (Faker $faker) {
