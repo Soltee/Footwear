@@ -63,6 +63,50 @@
 
             </div>
 
+            <div v-if="type == 'order'" class="overflow-y-scroll h-86">
+              <div class="flex flex-col md:flex-row justify-around items-center">
+                    <img :src="`/storage/${customer.avatar}`" class="w-64 h-64 rounded-lg">
+                    <div class="flex-1 flex flex-col ml-2">
+                        <div class="flex items-center mb-2">
+                            <span class="text-md font-md text-gray-800 w-40">Name</span>
+                            <span class="text-lg font-lg text-gray-900">{{ order.first_name}} {{order.last_name}}</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <span class="text-md font-md text-gray-800 w-40">Grand Total</span>
+                            <span class="text-lg font-lg text-gray-900">{{ order.grand}}</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <span class="text-md font-md text-gray-800 w-40">Completed</span>
+                            <span class="text-lg font-lg text-gray-900">{{ format(order.created_at) }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overflow-x-scroll min-w-64 mt-6 md:overflow-hidden md:w-auto">
+                
+                <table class="w-full table-auto">
+                    <thead>
+                        <tr class="bg-white rounded-lg">
+                          <th class="px-4 py-3 text-left text-gray-900">Name</th>
+                          <th class="px-4 py-3 text-left text-gray-900">Price</th>
+                          <th class="px-4 py-3 text-left text-gray-900">Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                       <tr v-for="items in orderItems">
+                          <td class="border px-4 py-2 text-gray-900">{{ item.name }}</td>
+                          <td class="border px-4 py-2 text-gray-900">Rs {{ item.price }}</td>
+                          <td class="border px-4 py-2 text-gray-900">Rs {{ item.price }}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+            </div>
+
 		</div>
 		
 	</div>
@@ -82,6 +126,9 @@ import moment from 'moment';
         data(){
         	return{
               customer : {},
+              order    : {},
+              customer : {},
+              orderItems : {},
               item   : {},
               images : [],
         	}
@@ -93,7 +140,10 @@ import moment from 'moment';
             endpoint += `/products/${this.data.id}`;
           } else if(this.type == 'customer'){
             endpoint += `/customers/${this.data.id}`;            
+          } else if(this.type == 'order'){
+            endpoint += `/orders/${this.data.id}`;   
           }
+
         	axios.get(`${endpoint}`)
                 .then(res => {
                     let data = res.data
@@ -103,6 +153,10 @@ import moment from 'moment';
                         this.images = data.images;
                       } else if(this.type == 'customer'){
                         this.customer = data.customer;
+                      } else if(this.type == 'order'){
+                        this.order = data.order;
+                        this.customer = data.customer;
+                        this.orderItems = data.orders_items;
                       }
                         
                     } else {

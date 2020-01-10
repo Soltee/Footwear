@@ -34,6 +34,8 @@ Vue.component('products-view', require('./components/admin/products/Products.vue
 //Customers
 Vue.component('customers-view', require('./components/admin/customers/Customers.vue').default);
 
+//Payments
+Vue.component('payments-view', require('./components/admin/payments/Payments.vue').default);
 
 
 /***** Components for Customers ******/

@@ -87,6 +87,14 @@ Route::prefix('admin')->group(function () {
 	Route::get('/customers/{customer}', 'Administrator\CustomerController@show');
 	Route::delete('/customers/{customer}', 'Administrator\CustomerController@destroy');
 
+	//Payments
+	Route::get('/payments', 'Administrator\PaymentController@index')->name('payments');
+	
+	//OrderApi
+	Route::get('/orders', 'Administrator\OrderController@index');
+	Route::get('/orders/{orders}', 'Administrator\OrderController@show');
+	Route::delete('/orders/{orders}', 'Administrator\OrderController@destroy');
+
 	//Search
 	Route::get('/searchall/{param}', 'Administrator\SearchController@search');
 	Route::get('/searchProducts/{param}', 'Administrator\SearchController@searchProuducts');

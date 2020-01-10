@@ -8,7 +8,7 @@
 	            @include('_partials.nav')
 
 	        </div>
-	        <div class="overflow-x-scroll w-500 md:w-auto md:overflow-hidden flex-1 md:px-6">
+	        <div class="w-full md:flex-1 md:ml-48 md:px-6">
                 
                 <customers-view></customers-view>
 
