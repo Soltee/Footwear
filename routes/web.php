@@ -56,12 +56,16 @@ Route::prefix('admin')->group(function () {
 
 
 	//Categories
-	Route::get('/categories', 'Administrator\CategoryController@index');
+	Route::get('/categories', 'Administrator\CategoryController@index')->name('categories');
 	Route::post('/category/store', 'Administrator\CategoryController@store');
 
 	//Category Api
 	Route::get('/getCategories', 'Administrator\CategoryController@getCategories');
 	Route::get('/getSubCategories/{category}', 'SubCategoryController@index');
+
+	//SubCategories Api
+	Route::get('/getSubCategories', 'SubCategoryController@getSubCategories');
+
 
 	//Prouducts 
 	Route::get('/products', 'Administrator\ProductController@index')->name('products');

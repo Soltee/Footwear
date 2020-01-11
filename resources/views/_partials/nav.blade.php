@@ -6,7 +6,13 @@
 			<span class="ml-3 text-white">Dashboard</span>
 		</a>
 	</li>
+	<li class="mb-3">
+		<a href="{{ route('categories') }}" class="text-gray-900 text-md font-bold flex flex-row items-center  hover:bg-admin-btn rounded-lg px-3 py-2 {{ (Route::currentRouteName() == 'categories') ? 'bg-admin-btn' : 'bg-admin-btn-hover' }} ">
+			<svg class="h-8 w-8 text-white" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M11.15 3.4L7.43 9.48c-.41.66.07 1.52.85 1.52h7.43c.78 0 1.26-.86.85-1.52L12.85 3.4c-.39-.64-1.31-.64-1.7 0z"/><circle cx="17.5" cy="17.5" r="4.5"/><path d="M4 21.5h6c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1z"/></svg>
 
+			<span class="ml-3 text-white">Categories</span>
+		</a>
+	</li>
 	<li class="mb-3">
 		<a href="{{ route('products') }}" class="text-gray-900 text-md font-bold flex flex-row items-center  hover:bg-admin-btn rounded-lg px-3 py-2 {{ (Route::currentRouteName() == 'products') ? 'bg-admin-btn' : 'bg-admin-btn-hover' }} ">
 			<svg class="h-8 w-8 text-white" fill="currentColor" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M11.499 12.03v11.971l-10.5-5.603v-11.835l10.5 5.467zm11.501 6.368l-10.501 5.602v-11.968l10.501-5.404v11.77zm-16.889-15.186l10.609 5.524-4.719 2.428-10.473-5.453 4.583-2.499zm16.362 2.563l-4.664 2.4-10.641-5.54 4.831-2.635 10.474 5.775z"/></svg>

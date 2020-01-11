@@ -12,30 +12,44 @@ class CategoryController extends Controller
     
 	public function index()
 	{
-		$categories = Category::latest()->get();
-		return response()->json(['categories' => $categories], 200);
+		return view('categories.index');
 	}
 
     public function getCategories()
     {
         $category = request()->category;
+        $search = request()->search;
+
         if($category){
             $subcategories = Subcategory::where('category_id', $category)->rderBy('name')->get();
             return response()->json([
                 'subcategories' => $subcategories
             ], 200);
         } else {
-            $categories = Category::orderBy('name')->with('subcategories')->get();
+            $query = Category::latest();
+            if($search){
+                $query = $query->orderBy('name')->where('name', 'LIKE', '%'.$search.'%');
+            }
+
+            $categories = $query->paginate(10);
+
             return response()->json([
-                'categories' => $categories
+                'categories' => $categories->items(),
+                'paginate' => [
+                    'first_item'    => $categories->firstItem(),
+                    'last_item'     => $categories->lastItem(),
+                    'previous_page_url' => $categories->previousPageUrl(),
+                    'current_page'      => $categories->currentPage(),
+                    'next_page_url'     => $categories->nextPageUrl(),
+                    'current_count' => $categories->count(),
+                    'total_count'   => $categories->total()
+                ]
             ], 200);
-        }
-        
+        }        
     }
 
     public function store(Request $request)
     {
-    	// dd($request->all());
     	$data = $this->validate($request, [
     		'name' => ['string', 'min:3']
     	]);
@@ -45,5 +59,23 @@ class CategoryController extends Controller
     	]);
 
     	return response()->json(['category' => $category], 201);
+    }
+
+
+     public function store(Request $request){
+        $data = $this->validate($request, [
+            'name' => 'required|string|min:3',
+        ]);
+
+        Category::create([
+            'name'       => $data['name']
+        ]);
+
+        return response()->json(['success' => 'Ok'], 201);
+    }
+
+    public function destroy(Category $category){
+        $category->delete();
+        return response()->json(['success' => 'Ok'], 204);      
     }
 }

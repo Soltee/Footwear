@@ -30,6 +30,8 @@ Vue.component('search-all-view', require('./components/admin/SearchAll.vue').def
 Vue.component('create-product', require('./components/admin/products/CreateProduct.vue').default);
 Vue.component('products-view', require('./components/admin/products/Products.vue').default);
 
+//Categories
+Vue.component('categories-view', require('./components/admin/categories/Categories.vue').default);
 
 //Customers
 Vue.component('customers-view', require('./components/admin/customers/Customers.vue').default);
