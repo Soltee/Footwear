@@ -4,6 +4,7 @@
 use App\Customer;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,11 @@ use Illuminate\Support\Str;
 
 $factory->define(Customer::class, function (Faker $faker) {
     return [
-        'avatar' => $faker->name . ".jpg",
+        'avatar' => function(){
+            $arr = ['1.jpg', '2.jpg', '3.jpg', '5.jpg', '6.jpg','12.jpg', '11.jpg', '15.jpg', '9.jpg', '10.jpg'];
+            $random =  Arr::random($arr);
+            return '/customers/' . $random;
+        },
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),

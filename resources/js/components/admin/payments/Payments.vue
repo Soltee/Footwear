@@ -43,6 +43,7 @@
                     <tbody>
 
                         <tr v-if="!searchStatus" v-for="order in ordersArr">
+                            
                           <td class="border px-4 py-2 text-gray-900">{{ order.email }}</td>
                           <td class="border px-4 py-2 text-gray-900">{{ order.payment_method }}</td>
                           <td class="border px-4 py-2 text-gray-900">{{ order.grand }}</td>
@@ -61,8 +62,7 @@
                           <td class="border px-4 py-2 text-gray-900">{{ order.payment_method }}</td>
                           <td class="border px-4 py-2 text-gray-900">{{ order.grand }}</td>
                           <td class="">
-                            <div class="flex flex-col md:flex-row justify-around items-center">                                
-                                <svg @click="displayEditModal(order)" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 cursor-pointer"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            <div class="flex flex-col md:flex-row justify-around items-center">
 
                                 <svg @click="displayDeleteModal(order)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-admin-red"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
 
@@ -110,10 +110,6 @@
             
         </div>
 
-        <!-- <EditModal :product=/"selected"></EditModal> -->
-        <div v-if="editModal">
-            <EditModal :product="selected"></EditModal>
-        </div>
         <div v-if="deleteModal">
             <DeleteModal :type="selected"></DeleteModal>
         </div>
@@ -128,14 +124,13 @@
 <script>
 import { serverBus } from '../../../app.js';    
 import Toast from '../../helpers/Alert';
-import EditModal from '../helpers/EditModal';
 import DeleteModal from '../helpers/DeleteModal';
 import ViewModal from '../helpers/ViewModal';
 
     export default {
         name : 'payments-view',
         components: {
-            EditModal, DeleteModal, ViewModal
+            DeleteModal, ViewModal
         },
         data(){
         	return {
@@ -151,7 +146,6 @@ import ViewModal from '../helpers/ViewModal';
                     name : 'Name'
                 },
                 deleteModal    : false,
-                editModal      : false,
                 viewModal      : false
         	}
         },
@@ -236,11 +230,6 @@ import ViewModal from '../helpers/ViewModal';
             displayDeleteModal(order){
                 this.deleteModal = ! this.deleteModal;
                 this.selected = order;
-                console.log(this.selected);
-            },
-            displayEditModal(order){
-                this.editModal = !this.editModal;
-                this.selected = order;
             },
             displayViewModal(order){
                 this.viewModal = !this.viewModal;
@@ -262,11 +251,3 @@ import ViewModal from '../helpers/ViewModal';
         }
     }
 </script>
-<style>
-    .custom-fixed{
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 100vh;
-    }
-</style>

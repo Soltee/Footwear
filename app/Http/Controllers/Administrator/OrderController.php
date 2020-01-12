@@ -37,8 +37,8 @@ class OrderController extends Controller
 
         return response()->json([
             'customer' => ($orders->customer)?? null,
-            'orders' => $orders,
-            'orders_items' => null,
+            'order' => $orders,
+            'orders_items' => $orders->items,
         ], 200); 
     }
 

@@ -51,16 +51,6 @@ class CustomerController extends Controller
         ], 200); 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -81,9 +71,8 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        // ($customer->avatar) ? File::delete($customer->avatar) : '' ;
-        // $customer->delete();
+        ($customer->avatar) ? File::delete($customer->avatar) : '' ;
+        $customer->delete();
         return response()->json([], 204);
-        // return redirect()->back()->with('success', 'Customer removed.');
     }
 }

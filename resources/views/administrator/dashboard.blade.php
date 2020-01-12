@@ -14,6 +14,14 @@
 	        		<div class="flex flex-row items-center justify-between">
 	        			<div class="">
 	        				<h4>
+	        					<span>Categories</span>
+	        				</h4>
+	        				<div>
+	        					{{$categories}}
+	        				</div>
+	        			</div>
+	        			<div class="">
+	        				<h4>
 	        					<span>Products</span>
 	        				</h4>
 	        				<div>
@@ -28,12 +36,30 @@
 	        					{{$customers}}
 	        				</div>
 	        			</div>
+	        		</div>
+	        		<div class="flex flex-row items-center justify-between">
+	        			<div class="">
+	        				<h4>
+	        					<span>Sales</span>
+	        				</h4>
+	        				<div>
+	        					{{$sales}}
+	        				</div>
+	        			</div>
 	        			<div class="">
 	        				<h4>
 	        					<span>Orders</span>
 	        				</h4>
 	        				<div>
 	        					{{$orders}}
+	        				</div>
+	        			</div>
+	        			<div class="">
+	        				<h4>
+	        					<span>Order Items</span>
+	        				</h4>
+	        				<div>
+	        					{{$items}}
 	        				</div>
 	        			</div>
 	        		</div>

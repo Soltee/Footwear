@@ -2,7 +2,7 @@
     <div class="container">
 
         <div class="flex flex-row justify-between items-center">
-            <h3 class="text-admin-btn text-lg font-bold">Products</h3>
+            <h3 class="text-admin-btn text-lg font-bold">Customers</h3>
             <div class="relative flex items-center">
                 
 
@@ -37,7 +37,12 @@
 
                          <tr v-if="searchStatus" v-for="customer in searchArray">
                           <td class="border px-4 py-2 text-gray-900">
-                              <img class="h-24 w-24 rounded-full" :src="`/storage/${customer.avatar}`">
+                                <div v-if="customer.avatar">
+                                    <img :src="`/storage/${customer.avatar}`" class="w-16 h-16 rounded-full object-cover object-center">
+                                </div>
+                                <div v-else>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 rounded-full object-cover object-center"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                </div>
                           </td>
                           <td class="border px-4 py-2 text-gray-900">{{ customer.name }}</td>
                           <td class="border px-4 py-2 text-gray-900">Rs {{ customer.email }}</td>
@@ -50,9 +55,14 @@
                         </tr>
 
                         <tr v-if="!searchStatus" v-for="customer in customerArray">
-                          <td class="border px-4 py-2 text-gray-900">
-                              <img class="h-16 w-16 md:h-24 md:w-24 rounded-full" :src="`/storage/${customer.avatar}`">
-                          </td>
+                            <td class="border px-4 py-2 text-gray-900">
+                              <div v-if="customer.avatar">
+                                    <img :src="`/storage/${customer.avatar}`" class="w-16 h-16 rounded-full object-cover object-center">
+                                </div>
+                                <div v-else>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 rounded-full object-cover object-center"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                </div>
+                           </td>
                           <td class="border px-4 py-2 text-gray-900">{{ customer.name }}</td>
                           <td class="border px-4 py-2 text-gray-900">Rs {{ customer.email }}</td>
                           <td class="">
@@ -204,7 +214,7 @@ import ViewModal from '../helpers/ViewModal';
                         if(res.status == 204){
                             Toast.fire({
                               icon: 'success',
-                              title:   `Product  deleted.`
+                              title:   `Customer  deleted.`
                             });
 
                             this.closeOnSuccess();                            
@@ -212,7 +222,7 @@ import ViewModal from '../helpers/ViewModal';
                     }).catch((error) => {
                         Toast.fire({
                               icon: 'error',
-                              title:   `Product was unable to delete.`
+                              title:   `Customer was unable to delete.`
                         }); 
                         this.closeModal();
                     });
@@ -228,7 +238,7 @@ import ViewModal from '../helpers/ViewModal';
             closeOnSuccess(){
                 this.selected = {};
                 this.deleteModal = false;
-                this.getProducts();
+                this.getCustomers();
             },
             closeModal(){
                 this.selected = {};

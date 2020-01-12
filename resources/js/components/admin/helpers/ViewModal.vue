@@ -44,7 +44,12 @@
             </div>
             <div v-if="type == 'customer'" class="overflow-y-scroll h-86">
               <div class="flex flex-col md:flex-row justify-around items-center">
-                    <img :src="`/storage/${customer.avatar}`" class="w-64 h-64 rounded-lg">
+                    <div v-if="customer">
+                      <img :src="`/storage/${customer.avatar}`" class="w-40 h-40 rounded-full object-cover object-center">
+                    </div>
+                    <div v-else>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-40 h-40 rounded-full object-cover object-center"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
                     <div class="flex-1 flex flex-col ml-2">
                         <div class="flex items-center mb-2">
                             <span class="text-md font-md text-gray-800 w-40">Name</span>
@@ -52,7 +57,7 @@
                         </div>
                         <div class="flex items-center mb-2">
                             <span class="text-md font-md text-gray-800 w-40">Email</span>
-                            <span class="text-lg font-lg text-gray-900">{{ customer.price}}</span>
+                            <span class="text-lg font-lg text-gray-900">{{ customer.email}}</span>
                         </div>
                         <div class="flex items-center mb-2">
                             <span class="text-md font-md text-gray-800 w-40">Registered At</span>
@@ -65,15 +70,53 @@
 
             <div v-if="type == 'order'" class="overflow-y-scroll h-86">
               <div class="flex flex-col md:flex-row justify-around items-center">
-                    <img :src="`/storage/${customer.avatar}`" class="w-64 h-64 rounded-lg">
+                    <div v-if="customer">
+                      <img :src="`/storage/${customer.avatar}`" class="w-40 h-40 rounded-full object-cover object-center">
+                    </div>
+                    <div v-else>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-40 h-40 rounded-full object-cover object-center"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
                     <div class="flex-1 flex flex-col ml-2">
                         <div class="flex items-center mb-2">
                             <span class="text-md font-md text-gray-800 w-40">Name</span>
                             <span class="text-lg font-lg text-gray-900">{{ order.first_name}} {{order.last_name}}</span>
                         </div>
                         <div class="flex items-center mb-2">
+                            <span class="text-md font-md text-gray-800 w-40">Email</span>
+                            <span class="text-lg font-lg text-gray-900">{{ order.first_name}} {{order.email}}</span>
+                        </div>
+                         <div class="flex items-center mb-2">
+                            <span class="text-md font-md text-gray-800 w-40">Phone</span>
+                            <span class="text-lg font-lg text-gray-900">{{ order.phoneNumber }} </span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <span class="text-md font-md text-gray-800 w-40">City</span>
+                            <span class="text-lg font-lg text-gray-900">{{ order.phoneNumber }} </span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <span class="text-md font-md text-gray-800 w-40">Street Address</span>
+                            <span class="text-lg font-lg text-gray-900">{{ order.street_address }} </span>
+                        </div>
+
+                        <div class="flex items-center mb-2">
+                            <span class="text-md font-md text-gray-800 w-40">Sub Total</span>
+                            <span class="text-lg font-lg text-gray-900">Rs {{ order.subtotal}}</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <span class="text-md font-md text-gray-800 w-40">Discount</span>
+                            <span class="text-lg font-lg text-gray-900">Rs {{ order.discount}}</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <span class="text-md font-md text-gray-800 w-40">Subtotal After Discount</span>
+                            <span class="text-lg font-lg text-gray-900">Rs {{ order.subafterdiscount}}</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <span class="text-md font-md text-gray-800 w-40">Tax</span>
+                            <span class="text-lg font-lg text-gray-900">Rs {{ order.tax}}</span>
+                        </div>
+                        <div class="flex items-center mb-2">
                             <span class="text-md font-md text-gray-800 w-40">Grand Total</span>
-                            <span class="text-lg font-lg text-gray-900">{{ order.grand}}</span>
+                            <span class="text-lg font-lg text-gray-900">Rs {{ order.grand}}</span>
                         </div>
                         <div class="flex items-center mb-2">
                             <span class="text-md font-md text-gray-800 w-40">Completed</span>
@@ -90,15 +133,20 @@
                           <th class="px-4 py-3 text-left text-gray-900">Name</th>
                           <th class="px-4 py-3 text-left text-gray-900">Price</th>
                           <th class="px-4 py-3 text-left text-gray-900">Quantity</th>
+                          <th class="px-4 py-3 text-left text-gray-900">Total</th>
                         </tr>
                     </thead>
                     <tbody>
 
-                       <tr v-for="items in orderItems">
+                      <tr v-if="orderItems.length > 0" v-for="item in orderItems">
                           <td class="border px-4 py-2 text-gray-900">{{ item.name }}</td>
                           <td class="border px-4 py-2 text-gray-900">Rs {{ item.price }}</td>
-                          <td class="border px-4 py-2 text-gray-900">Rs {{ item.price }}</td>
-                        </tr>
+                          <td class="border px-4 py-2 text-gray-900">{{ item.quantity }}</td>
+                          <td class="border px-4 py-2 text-gray-900">{{ (item.price * item.quantity) }}</td>
+                      </tr>
+                      <tr v-else>
+                          <td class="border px-4 py-2 text-gray-900">Sorry No Orders Items</td>
+                      </tr>
 
                     </tbody>
                 </table>
@@ -118,7 +166,7 @@ import EmblaCarousel from 'embla-carousel';
 import moment from 'moment';
 
     export default {
-        name       : 'view',
+        name       : 'ViewModal',
         props      : ['type', 'data'],
         components : { 
             Toast 
@@ -127,7 +175,6 @@ import moment from 'moment';
         	return{
               customer : {},
               order    : {},
-              customer : {},
               orderItems : {},
               item   : {},
               images : [],

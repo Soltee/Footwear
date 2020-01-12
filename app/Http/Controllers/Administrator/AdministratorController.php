@@ -6,6 +6,7 @@ use App\Product;
 use App\Customer;
 use App\Category;
 use App\Orders;
+use App\Order_Items;
 use App\Administrator;
 use App\Charts\GroupChart;
 use Illuminate\Http\Request;
@@ -49,11 +50,25 @@ class AdministratorController extends Controller
         $chart->dataset('Orders', 'line', [$orders_last_ten_days_ago, $orders_2_days_ago, $yesterday_orders, $today_orders])->options([
                 'color' => '#000000',
             ]);;
+        $categories = Category::all()->count();
         $products = Product::all()->count();
         $customers = Customer::all()->count();
-    	$orders = Orders::all()->count();
+        $orders = Orders::all()->count();
+    	$grandTotals = Orders::latest()->pluck('grand');
 
-    	return view('administrator.dashboard', compact('products' ,'customers', 'orders', 'chart'));
+        $sales = 0;
+        foreach ($grandTotals as $grand) {
+            $sales += $grand;
+        }
+
+        $orderItems = Order_Items::latest()->pluck('quantity');
+
+        $items = 0;
+        foreach ($orderItems as $amt) {
+            $items += $amt;
+        }
+
+    	return view('administrator.dashboard', compact('categories', 'products' ,'customers', 'sales', 'orders', 'items' ,'chart'));
     }
 
     public function profile(){
