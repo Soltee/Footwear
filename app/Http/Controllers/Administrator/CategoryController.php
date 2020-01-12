@@ -64,6 +64,20 @@ class CategoryController extends Controller
         return response()->json(['success' => 'Ok'], 201);
     }
 
+
+    public function update(Request $request, Category $category){
+        $data = $this->validate($request, [
+            'name' => 'required|string|min:3',
+        ]);
+
+        $category->update([
+            'name'       => $data['name'],
+            'slug'      => Str::slug($data['name'])
+        ]);
+
+        return response()->json(['success' => 'Ok'], 200);
+    }
+
     public function destroy(Category $category){
         $category->delete();
         return response()->json(['success' => 'Ok'], 204);      

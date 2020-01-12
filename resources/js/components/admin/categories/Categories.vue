@@ -54,7 +54,7 @@
                               <td class="">
                                 <div class="flex justify-around items-center">
                                     
-                                    <svg @click="displayEditModal(p)" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 cursor-pointer"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                    <svg @click="type = 'category'; displayEditModal(category)" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 cursor-pointer"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                     <svg @click="selectedCategory = category; categoryStatus = false; getSubCategories();" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800 hover:text-green-600 cursor-pointer" fill="currentColor" :class="" viewBox="0 0 24 24"><path d="M0 11c.511-6.158 5.685-11 12-11s11.489 4.842 12 11h-2.009c-.506-5.046-4.793-9-9.991-9s-9.485 3.954-9.991 9h-2.009zm21.991 2c-.506 5.046-4.793 9-9.991 9s-9.485-3.954-9.991-9h-2.009c.511 6.158 5.685 11 12 11s11.489-4.842 12-11h-2.009z"/></svg>
                                     <svg @click="type = 'category';  displayDeleteModal(category)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-admin-red"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
                                 </div>
@@ -73,7 +73,7 @@
                               <td class="">
                                 <div class="flex justify-around items-center">  
                                     
-                                    <svg @click="displayEditModal(p)" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 cursor-pointer"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                    <svg @click="type = 'category'; displayEditModal(category)" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 cursor-pointer"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                     <svg @click="selectedCategory = category; categoryStatus = false; getSubCategories();" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800 hover:text-green-600 cursor-pointer" fill="currentColor" :class="" viewBox="0 0 24 24"><path d="M0 11c.511-6.158 5.685-11 12-11s11.489 4.842 12 11h-2.009c-.506-5.046-4.793-9-9.991-9s-9.485 3.954-9.991 9h-2.009zm21.991 2c-.506 5.046-4.793 9-9.991 9s-9.485-3.954-9.991-9h-2.009c.511 6.158 5.685 11 12 11s11.489-4.842 12-11h-2.009z"/></svg>
                                     <svg @click="type = 'category'; displayDeleteModal(category)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-admin-red"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
                                 </div>
@@ -176,7 +176,7 @@
                               <td class="">
                                 <div class="flex justify-around items-center">
                                     
-                                    <svg @click="displayEditModal(p)" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 cursor-pointer"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                    <svg @click="type = 'subcategory'; displayEditModal(subcategory)" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 cursor-pointer"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                     <svg @click="type = 'subcategory'; displayDeleteModal(subcategory)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-admin-red"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
                                 </div>
                               </td>
@@ -193,7 +193,7 @@
                               <td class="">
                                 <div class="flex justify-around items-center">  
                                     
-                                    <svg @click="displayEditModal(p)" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 cursor-pointer"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                    <svg @click="type = 'subcategory'; displayEditModal(subcategory)" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 cursor-pointer"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                     <svg @click="type = 'subcategory'; displayDeleteModal(subcategory)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-admin-red"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
                                 </div>
                               </td>
@@ -251,19 +251,23 @@
         <div v-if="createModal">
             <CreateModal :type="type"></CreateModal>
         </div>
+        <div v-if="editModal">
+            <EditModal :type="type" :data="selected"></EditModal>
+        </div>
     </div>
 </template>
 
 <script>
 import { serverBus } from '../../../app.js';    
 import Toast from '../../helpers/Alert';
-import CreateModal from '../helpers/CreateModal';
+import CreateModal from './Create';
+import EditModal from './Edit';
 import DeleteModal from '../helpers/DeleteModal';
 
     export default {
         name : 'categories-view',
         components : {
-            DeleteModal, CreateModal
+            DeleteModal, CreateModal, EditModal
         },
         data(){
         	return {
@@ -291,6 +295,7 @@ import DeleteModal from '../helpers/DeleteModal';
                 subcategory    : '',
                 deleteModal    : false,
                 createModal    : false,
+                editModal      : false,
         	}
         },
         mounted() {
@@ -452,29 +457,30 @@ import DeleteModal from '../helpers/DeleteModal';
                 this.deleteModal = true;
                 this.selected = type;
             },
+            displayEditModal(type){
+                this.editModal = true;
+                this.selected = type;
+            },
             closeModal(){
                 this.selected = {};
                 this.deleteModal = false;
                 this.createModal = false;
+                this.editModal = false;
+                this.type = '';
             },
             closeonSuccess(){
-                if(this.type == 'category'){
-                    Toast.fire({
-                      icon: 'success',
-                      title:   `Category  created.`
-                    });
-                } else if(this.type == 'subcategory'){
-                    Toast.fire({
-                      icon: 'success',
-                      title:   `SubCategory  created.`
-                    });
-                }
+                Toast.fire({
+                  icon: 'success',
+                  title:   `Operation successful.`
+                });
                 this.reset();
             },
             reset(){
+                this.type = '';
                 this.selected = {};
                 this.deleteModal = false;
                 this.createModal = false;
+                this.editModal = false;
                 this.getCategories();
                 this.getSubCategories();
             }

@@ -59,6 +59,21 @@ class SubCategoryController extends Controller
     	return response()->json(['success' => 'Ok'], 201);
     }
 
+    public function update(Request $request, Subcategory $subcategory){
+        $data = $this->validate($request, [
+            'name' => 'required|string|min:3',
+            'category' => 'required|string'
+        ]);
+
+        $subcategory->update([
+            'category_id' => $data['category'],
+            'name'       => $data['name'],
+            'slug'      => Str::slug($data['name'])
+        ]);
+
+        return response()->json(['success' => 'Ok'], 200);
+    }
+
     public function destroy(Subcategory $subcategory){
     	$subcategory->delete();
     	return response()->json(['success' => 'Ok'], 204);    	

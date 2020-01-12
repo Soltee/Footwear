@@ -62,11 +62,13 @@ Route::prefix('admin')->group(function () {
 	Route::get('/getCategories', 'Administrator\CategoryController@getCategories');
 	Route::get('/getSubCategories/{category}', 'SubCategoryController@index');
 	Route::post('/categories', 'Administrator\CategoryController@store');
+	Route::patch('/categories/{category}', 'Administrator\CategoryController@update');
 	Route::delete('/categories/{category}', 'Administrator\CategoryController@destroy');
 
 	//SubCategories Api
 	Route::get('/getSubCategories', 'SubCategoryController@getSubCategories');
 	Route::post('/subcategories', 'SubCategoryController@store');
+	Route::patch('/subcategories/{subcategory}', 'SubCategoryController@update');
 	Route::delete('/subcategories/{subcategory}', 'SubCategoryController@destroy');
 
 
