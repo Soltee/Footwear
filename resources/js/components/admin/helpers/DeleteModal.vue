@@ -13,11 +13,14 @@
                 </button>
 
             </div>
-            <p class="mt-4 text-lg font-semibold text-green-800 text-center">Are you sure? You want to delete {{ type.name }}</p>
-            <div class="mt-6 mb-3 flex justify-end">
-                <button @click="closeModal" class="cursor-pointer text-gray-900 px-4 py-3 rounded-lg mr-4">Cancel</button>
-                <button @click="emit()" class="cursor-pointer bg-admin-red hover:bg-custom-red-lighter text-white px-4 py-3 rounded-lg">Delete</button>
+            <div class="">
+                <p class="mt-4 text-lg font-semibold text-green-800 text-center">Are you sure? You want to delete {{ type.name }}</p>
+                <div class="mt-6 mb-3 flex justify-end">
+                    <button @click="closeModal" class="cursor-pointer text-gray-900 px-4 py-3 rounded-lg mr-4">Cancel</button>
+                    <button @click="emit()" class="cursor-pointer bg-admin-red hover:bg-custom-red-lighter text-white px-4 py-3 rounded-lg">Delete</button>
+                </div>
             </div>
+            
         </div>
 
     </div>
@@ -36,8 +39,7 @@ import Toast from '../../helpers/Alert';
                 required : true
             }
         },
-        mounted() {
-        },
+
         methods: {
         	closeModal(){
                 serverBus.$emit('close-modal');

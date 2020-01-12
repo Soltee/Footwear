@@ -40,7 +40,7 @@ $factory->define(App\Order_Items::class, function (Faker $faker) {
     		$customers = App\Customer::inRandomOrder()->pluck('id')->toArray();
     		return  Illuminate\Support\Arr::random($customers);
     	},
-    	'order_id' => function(){
+    	'orders_id' => function(){
     		$orders = Orders::inRandomOrder()->pluck('id')->toArray();
     		return  Illuminate\Support\Arr::random($orders);
     	},

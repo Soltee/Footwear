@@ -17,18 +17,18 @@ class DatabaseSeeder extends Seeder
         factory(App\Administrator::class)->create(['avatar'=>'role.jpg','name' => 'role', 'email'=>'role@example.com', 'email_verified_at' => now(), 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'remember_token' => Str::random()]);
         factory(App\Administrator::class)->create();
 
-        $category1 = factory(App\Category::class)->create(['name' => 'Brands' ]);
-        $category2 = factory(App\Category::class)->create(['name' => 'Type' ]);
+        $category1 = factory(App\Category::class)->create(['name' => 'Brands', 'slug' => 'brands' ]);
+        $category2 = factory(App\Category::class)->create(['name' => 'Type', 'slug' => 'type' ]);
 
-        $subcategory1 = factory(App\Subcategory::class)->create(['category_id' => $category1->id, 'name' => 'featured' ]);
-        $subcategory2 = factory(App\Subcategory::class)->create(['category_id' => $category1->id, 'name' => 'Adidas' ]);
-        $subcategory3 = factory(App\Subcategory::class)->create(['category_id' => $category1->id, 'name' => 'Converse' ]);
-        $subcategory4 = factory(App\Subcategory::class)->create(['category_id' => $category1->id, 'name' => 'DC' ]);
-        $subcategory5 = factory(App\Subcategory::class)->create(['category_id' => $category1->id, 'name' => 'Nike' ]);
-        $subcategory6 = factory(App\Subcategory::class)->create(['category_id' => $category2->id, 'name' => 'Baby' ]);
-        $subcategory7 = factory(App\Subcategory::class)->create(['category_id' => $category2->id, 'name' => 'Children' ]);
-        $subcategory8 = factory(App\Subcategory::class)->create(['category_id' => $category2->id, 'name' => 'Men' ]);
-        $subcategory9 = factory(App\Subcategory::class)->create(['category_id' => $category2->id, 'name' => 'Women' ]);
+        $subcategory1 = factory(App\Subcategory::class)->create(['category_id' => $category1->id, 'name' => 'featured' , 'slug' => 'featured']);
+        $subcategory2 = factory(App\Subcategory::class)->create(['category_id' => $category1->id, 'name' => 'Adidas' , 'slug' => 'adidas']);
+        $subcategory3 = factory(App\Subcategory::class)->create(['category_id' => $category1->id, 'name' => 'Converse' , 'slug' => 'converse']);
+        $subcategory4 = factory(App\Subcategory::class)->create(['category_id' => $category1->id, 'name' => 'DC' , 'slug' => 'dc']);
+        $subcategory5 = factory(App\Subcategory::class)->create(['category_id' => $category1->id, 'name' => 'Nike' , 'slug' => 'nike']);
+        $subcategory6 = factory(App\Subcategory::class)->create(['category_id' => $category2->id, 'name' => 'Baby' , 'slug' => 'baby']);
+        $subcategory7 = factory(App\Subcategory::class)->create(['category_id' => $category2->id, 'name' => 'Children' , 'slug' => 'children']);
+        $subcategory8 = factory(App\Subcategory::class)->create(['category_id' => $category2->id, 'name' => 'Men' , 'slug' => '']);
+        $subcategory9 = factory(App\Subcategory::class)->create(['category_id' => $category2->id, 'name' => 'Women' , 'slug' => 'women']);
 
         for ($i=1; $i <= 2; $i++) {
             $h1 = App\Product::create([

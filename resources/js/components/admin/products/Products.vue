@@ -111,7 +111,6 @@
             
         </div>
 
-        <!-- <EditModal :product=/"selected"></EditModal> -->
         <div v-if="editModal">
             <EditModal :product="selected"></EditModal>
         </div>

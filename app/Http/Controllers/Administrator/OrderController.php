@@ -43,8 +43,8 @@ class OrderController extends Controller
     }
 
     public function destroy(Orders $orders){
-    	// $orders->delete();
-    	// $orders->items()->delete();
+    	$orders->delete();
+    	$orders->items()->delete();
         return response()->json([
             'orders' => $orders,
         ], 204); 

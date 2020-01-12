@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Administrator;
 use App\Category;
 use App\Subcategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
@@ -48,27 +49,16 @@ class CategoryController extends Controller
         }        
     }
 
-    public function store(Request $request)
-    {
-    	$data = $this->validate($request, [
-    		'name' => ['string', 'min:3']
-    	]);
-
-    	$category = Category::create([
-    		'name' => $data['name']
-    	]);
-
-    	return response()->json(['category' => $category], 201);
-    }
 
 
-     public function store(Request $request){
+    public function store(Request $request){
         $data = $this->validate($request, [
             'name' => 'required|string|min:3',
         ]);
 
         Category::create([
-            'name'       => $data['name']
+            'name'       => $data['name'],
+            'slug'      => Str::slug($data['name'])
         ]);
 
         return response()->json(['success' => 'Ok'], 201);

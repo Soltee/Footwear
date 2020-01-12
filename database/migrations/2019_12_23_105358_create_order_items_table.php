@@ -17,7 +17,7 @@ class CreateOrderItemsTable extends Migration
             // $table->bigIncrements('id');
             $table->uuid('id')->primary();
             $table->UnsignedBigInteger('customer_id')->nullable();
-            $table->UnsignedBigInteger('order_id');
+            $table->UnsignedBigInteger('orders_id');
             $table->string('name');
             $table->integer('price');
             $table->integer('quantity');

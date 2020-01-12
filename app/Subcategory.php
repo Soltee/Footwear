@@ -9,7 +9,7 @@ class Subcategory extends Model
     use UsesUuid;
     
     protected $fillable = [
-      'category_id',  'name',
+      'category_id',  'name', 'slug'
     ];
 
     protected $hidden = [

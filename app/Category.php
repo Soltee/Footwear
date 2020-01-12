@@ -8,7 +8,7 @@ class Category extends Model
 {
     use UsesUuid;
     protected $fillable = [
-       'name',
+       'name', 'slug'
     ];
 
 
@@ -24,6 +24,16 @@ class Category extends Model
     public function subcategories()
     {
     	return $this->hasMany(Subcategory::class, 'category_id', 'id');
+    }
+
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($category) { 
+        // before delete() method call this
+             $category->subcategories()->delete();
+             // do the rest of the cleanup...
+        });
     }
   
 }

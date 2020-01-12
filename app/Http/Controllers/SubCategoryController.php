@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Subcategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class SubCategoryController extends Controller
 {
@@ -46,12 +47,13 @@ class SubCategoryController extends Controller
     public function store(Request $request){
     	$data = $this->validate($request, [
     		'name' => 'required|string|min:3',
-    		'category' => 'required|int'
+    		'category' => 'required|string'
     	]);
 
     	Subcategory::create([
     		'category_id' => $data['category'],
-    		'name'       => $data['name']
+    		'name'       => $data['name'],
+            'slug'      => Str::slug($data['name'])
     	]);
 
     	return response()->json(['success' => 'Ok'], 201);

@@ -106,6 +106,7 @@ import Toast from '../../helpers/Alert';
             add(){
                 let endpoint = `/admin`;
                 let formData = new FormData();
+
                 formData.append('name', this.inputname);
 
                 if(this.type == 'category'){
@@ -114,17 +115,13 @@ import Toast from '../../helpers/Alert';
                     endpoint += '/subcategories';
                     formData.append('category', this.category);
                 }
+                console.log(formData);
 
-
-                axios.post(`${endpoint}`, {
+                axios.post(`${endpoint}`, 
                     formData
-                }).then(res => {
+                ).then(res => {
                         if(res.status == 201){
-                            Toast.fire({
-                              icon: 'error',
-                              title: 'Network Error!'
-                            });
-                            this.closeModal();
+                            serverBus.$emit('success', res.status);
                         }
                     }).catch(err => {
                         Toast.fire({
