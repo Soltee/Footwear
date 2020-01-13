@@ -142,7 +142,7 @@
                           <td class="border px-4 py-2 text-gray-900">{{ item.name }}</td>
                           <td class="border px-4 py-2 text-gray-900">Rs {{ item.price }}</td>
                           <td class="border px-4 py-2 text-gray-900">{{ item.quantity }}</td>
-                          <td class="border px-4 py-2 text-gray-900">{{ (item.price * item.quantity) }}</td>
+                          <td class="border px-4 py-2 text-gray-900">Rs {{ (item.price * item.quantity) }}</td>
                       </tr>
                       <tr v-else>
                           <td class="border px-4 py-2 text-gray-900">Sorry No Orders Items</td>

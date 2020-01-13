@@ -4,7 +4,17 @@
         <div class="flex flex-row justify-between items-center w-full rounded-lg">
             <div class="flex items-center">
                 <h3 class="text-admin-btn text-lg font-bold">Orders</h3>
-                
+                <svg @click="
+                    searchStatus  = false;
+                    loading       = false;
+                    keyword       = '';
+                    page          = null;
+                    selected      = {};
+                    deleteModal   = false;
+                    viewModal     = false;
+                    getOrders();
+                    " 
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 ml-2 cursor-pointer"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
             </div>
 
             <div class="ml-3 relative flex items-center">
@@ -20,11 +30,6 @@
                     </svg>
                     <svg @click="searchStatus = false; keyword = '';" xmlns="http://www.w3.org/2000/svg" class="absolute right-0 top-0 mt-1 mr-2 h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </div>
-
-            <!-- <a class="flex flex-row sm:items-center" :href="`/admin/products/create`" >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6  mr-3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                <span class="hidden md:inline text-admin-btn text-lg font-semibold">New Product</span>
-            </a> -->
             
         </div>
 
@@ -69,6 +74,9 @@
                                 <svg @click="displayViewModal(order)" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-gray-600 cursor-pointer "><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                             </div>
                           </td>
+                        </tr>
+                        <tr v-if="loading">
+                            <td>Loading ..</td>
                         </tr>
 
                     </tbody>
@@ -126,6 +134,7 @@ import { serverBus } from '../../../app.js';
 import Toast from '../../helpers/Alert';
 import DeleteModal from '../helpers/DeleteModal';
 import ViewModal from '../helpers/ViewModal';
+// import _ from 'lodash';
 
     export default {
         name : 'payments-view',
@@ -135,6 +144,7 @@ import ViewModal from '../helpers/ViewModal';
         data(){
         	return {
         		ordersArr   : [],
+                loading      : false,
         		links          : null,
                 searchStatus   : false,
                 keyword        : '',
@@ -162,6 +172,7 @@ import ViewModal from '../helpers/ViewModal';
         },
         methods: {
         	getOrders(){
+                this.loading = true;
                 let endpoint = '/admin/orders';
                 
                 
@@ -176,11 +187,11 @@ import ViewModal from '../helpers/ViewModal';
                     }
                 }
 
-                
-                axios.get(`${endpoint}`)
+                    axios.get(`${endpoint}`)
                     .then(res => {
                         let data = res.data;
                         if(res.status == 200){
+                            this.loading = false;
                             if(this.searchStatus){
                                 this.searchArray = [];
                                 data.orders.forEach((order) => {
@@ -204,6 +215,7 @@ import ViewModal from '../helpers/ViewModal';
                           title: 'Network Error!'
                         });
                     });
+                
         	},
         	dropOrder(){
         		

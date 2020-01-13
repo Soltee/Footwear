@@ -38,30 +38,23 @@
                         <search-all-view />
 
                     </div>
-                    <div class="flex flex-row items-center text-right">
-                         <!-- <div class="flex items-center justify-around w-full md:w-24 px-2 py-1 bg-custom-gray-lighter rounded-lg">
-                            <img class="h-8 w-8 p-1 text-white bg-white rounded-full" src="/svg/avatar.svg">
-                            <svg  class="ml-2 h-8 w-8 text-custom-gray cursor-pointer hover:text-custom-gray-light" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10.707 7.05L10 6.343 4.343 12l1.414 1.414L10 9.172l4.243 4.242L15.657 12z"/></svg>
-                            <svg class="ml-2 h-8 w-8 text-custom-gray cursor-pointer hover:text-custom-gray-light" fill="currentColor"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                        </div> 
-                        <div>
-                            <a href="" class="mt-2 flex items-left mb-2 no-underline">
-                                <svg class="h-6 w-6 text-custom-gray cursor-pointer hover:text-custom-gray-light" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.3 3.7l4 4L4 20H0v-4L12.3 3.7zm1.4-1.4L16 0l4 4-2.3 2.3-4-4z"/></svg>
-                                <span class="text-custom-gray ml-2">Profile</span>
-                            </a>
-                            <a href="/customer-logout"
-                               class="flex items-left no-underline text-custom-gray text-lg"
-                               onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">
-                                <svg class="h-6 w-6 text-custom-gray cursor-pointer hover:text-custom-gray-light"  fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M497 273L329 441c-15 15-41 4.5-41-17v-96H152c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136V88c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zM192 436v-40c0-6.6-5.4-12-12-12H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12V76c0-6.6-5.4-12-12-12H96c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z"/></svg>
-                                <span class="text-custom-gray ml-2">Logout</span>
-                            </a>
-                            <form id="logout-form" action="/customer-logout" method="POST" class="hidden">
-                                @csrf
-                            </form>
-                        </div>  -->
-                        <a @click.prevent="toggleLogoutModel" :href="`/#`"
-                               class="no-underline hover:underline text-gray-900 text-md  md:text-lg font-bold p-3">Logout</a>
+                    <div class="relative flex flex-row items-center text-right">
+                        <div class="flex items-center justify-around w-auto px-2 py-1 bg-custom-gray-lighter " :class="(status) ? 'rounded-t-lg' : 'rounded-full'">
+                            <img v-if="admin.avatar" :src="`/storage/${admin.avatar}`" class="w-8 h-8 rounded-full object-cover object-center">
+                            <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 rounded-full object-cover object-center"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+
+                            <svg v-if="status" @click="status = false" class="ml-2 h-8 w-8 text-custom-gray cursor-pointer hover:text-custom-gray-light" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10.707 7.05L10 6.343 4.343 12l1.414 1.414L10 9.172l4.243 4.242L15.657 12z"/></svg>
+                            <svg v-else @click="status = true" class="ml-2 h-8 w-8 text-custom-gray cursor-pointer hover:text-custom-gray-light" fill="currentColor"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                        </div>
+                        <div v-if="status" class="absolute top-0 left-0 md:right-0 mt-10 bg-custom-gray-lighter px-2 py-1 rounded-b-lg w-full flex  flex-col border-gray-300 border-t-2 z-20">
+                        
+                            <a :href="`/admin/profile`"
+                               class="no-underline hover:underline text-white text-md  md:text-lg font-bold p-3">Profile</a>
+                            <a @click.prevent="toggleLogoutModel" :href="`/#`"
+                               class="no-underline hover:underline text-white text-md  md:text-lg font-bold p-3">Logout</a>
+                        </div>
+
+                        
                     </div>
                 </div>
             </div>
@@ -114,6 +107,7 @@ import Menu from './helpers/Nav';
         },
         data(){
         	return {
+                status      : false,
                 expandMenu  : false,
                 logoutModal : false,
                 csrf        : document.head.querySelector('meta[name="csrf-token"]').content,

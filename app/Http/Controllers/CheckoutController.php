@@ -74,7 +74,7 @@ class CheckoutController extends Controller
                 ]);
                 if ($result->success) {
                     $transaction = $result->transaction;
-                    $this->store($firstName, $lastName, $email, $city, $address, $paymentType);
+                    $this->store($firstName, $lastName, $email, $city, $address, $paymentType, $transaction);
                     return redirect()->route('thank-you');
                 } else {
                     $errorString = "";
@@ -97,7 +97,7 @@ class CheckoutController extends Controller
                         'helo'=> 'helo'
                     ]
                 ]);
-                $this->store($firstName, $lastName,  $email, $city, $address, $paymentType);
+                $this->store($firstName, $lastName,  $email, $city, $address, $paymentType, $stripe);
                 return redirect()->route('thank-you');
             } catch (CardErrorException $e) {
                 return back()->with('error', $e->getMessage());
@@ -110,7 +110,7 @@ class CheckoutController extends Controller
     /**
         * After Successful payment, store data to database
     **/
-    public function store($firstName, $lastName,  $email, $city, $address, $paymentType){
+    public function store($firstName, $lastName,  $email, $city, $address, $paymentType, $paymentId){
         $products = Cart::content();
         $totalQuantity = Cart::instance('default')->count();
         $subTotal = Cart::subtotal();
@@ -129,6 +129,7 @@ class CheckoutController extends Controller
             'street_address' => $address, 
             'phoneNumber' => 9838383838,
             'payment_method' => $paymentType, 
+            'payment_id' => $paymentId, 
             'subtotal' => $subTotal, 
             'discount' => $discount, 
             'subafterdiscount' => $subAfterDis, 

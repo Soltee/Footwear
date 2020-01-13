@@ -72,32 +72,43 @@ class AdministratorController extends Controller
     }
 
     public function profile(){
-        $administrator = Auth::guard('administrator')->user();
-        return view('administrator.profile', compact('administrator'));
+        $admin = Auth::guard('administrator')->user();
+        return view('administrator.profile', compact('admin'));
     }
 
     public function update(Administrator $administrator, Request $request)
     {
+         // dd($request->all());
         $data = $this->validate($request, [
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string','min:4', 'max:255'],
+            'last_name' => ['required', 'string','min:4', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
          // dd($request->all());
        if($request->hasFile('avatar')){
             $this->validate($request, [
-                'avatar' => ['image']
+                'avatar' => ['required','file', 'image', 'mimes:jpeg,png,gif,webp', 'max:2048'],
             ]);
-            $avatarUrl = $request->file('avatar')->store('administrator', 'public');
-            $avatarPath = ['avatar' => $avatarUrl];
+            $file = $request->file('avatar');
+            $basename  = \Illuminate\Support\Str::random();
+            $original  = 'ad-' . $basename . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('admin', $original, 'public');
+
+            $avatarPath = ['avatar' => $path];
         }
 
-        auth()->user()->update(array_merge([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password'])
+        $this->guard()->update(array_merge([
+            'first_name' => $data['first_name'],
+            'last_name'  => $data['last_name'],
+            'email'      => $data['email'],
+            'password'   => bcrypt($data['password'])
         ], $avatarPath ?? []));
 
-        return redirect()->route('administrator-profile')->with('success', 'Profile updated.');
+        return response()->json(['success' => 'Ok', 'avatar' => $avatarPath ?? null], 200);
+    }
+
+    protected function guard(){
+        return Auth::guard('administrator')->user();
     }
 }

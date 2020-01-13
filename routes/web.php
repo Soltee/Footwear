@@ -51,9 +51,9 @@ Route::prefix('admin')->group(function () {
 
 	Route::get('/dashboard', 'Administrator\AdministratorController@index')->name('administrator-dashboard');
 	Route::get('/profile', 'Administrator\AdministratorController@profile')->name('administrator-profile');
-	Route::patch('/administrator-profile/{administrator}', 'Administrator\AdministratorController@update')->name('administrator-update');
 	Route::post('/administrator-logout', 'Administrator\AdminAuthController@logout')->name('administrator-logout');
 
+	Route::patch('/profile/{administrator}', 'Administrator\AdministratorController@update');
 
 	//Categories
 	Route::get('/categories', 'Administrator\CategoryController@index')->name('categories');

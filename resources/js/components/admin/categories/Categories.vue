@@ -2,34 +2,35 @@
     <div class="w-auto mb-6">
         <div class="mb-2">
             
-            <div class="flex flex-row justify-between items-center">
-                <div class="flex items-center mb-2">
-                    <h3 class="text-admin-btn text-lg font-bold">Categories</h3>
-                    <svg v-if="!categoryStatus" @click="categoryStatus = true;" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-800 ml-2 cursor-pointer"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                    <svg v-if="categoryStatus" @click="categoryStatus = false;" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-800 ml-2 cursor-pointer"><polyline points="18 15 12 9 6 15"></polyline></svg>
+            <div class="w-full flex flex-col  sm:flex-row sm:justify-between items-center">
+                <div class="w-full flex flex-row justify-between items-center sm:w-auto mb-2 sm:mb-0">
+                    <div class="flex flex-row items-center"> 
+                        <h3 class="text-admin-btn text-lg font-bold">Categories</h3>
+                        <svg v-if="!categoryStatus" @click="categoryStatus = true;" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-800 ml-2 cursor-pointer"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        <svg v-if="categoryStatus" @click="categoryStatus = false;" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-800 ml-2 cursor-pointer"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                    </div>
                     <button @click="createModal = true; type='category'" type="button"  class="ml-2 hover:bg-gray-300 bg-admin-btn hover:bg-admin-btn-hover text-gray-100 font-bold py-2 px-4 rounded-tl-lg  rounded-br-lg focus:outline-none focus:shadow-outline" >
                         New 
                     </button> 
                 </div>
-                <div class="flex items-center">
+                <div class="w-full flex flex-row justify-between items-center sm:w-auto">
                     <svg @click="selectedCategory =  null; category = ''; reset();" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 mr-2 cursor-pointer"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
                 
-                
-                <div class="relative flex items-center">
-                    
+                    <div class="relative flex items-center">
+                        
 
-                    <input
-                        v-model="category"
-                        @keyup="searchStatus = true; categoryStatus = true; getCategories();"
-                        class="relative w-40 md:w-32  block appearance-none rounded-full  bg-white border border-gray-400 hover:border-gray-500 pl-16 py-2 pr-8  shadow leading-tight focus:outline-none focus:shadow-outline" id="" type="text" name="name"
+                        <input
+                            v-model="category"
+                            @keyup="searchStatus = true; categoryStatus = true; getCategories();"
+                            class="relative w-40 md:w-32  block appearance-none rounded-full  bg-white border border-gray-400 hover:border-gray-500 pl-16 py-2 pr-8  shadow leading-tight focus:outline-none focus:shadow-outline" id="" type="text" name="name"
 
-                        placeholder="Search Table">
-                    <svg class="absolute left-0 top-0 mt-1 ml-2 h-8 w-8" viewBox="0 0 47 47" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M37.2309 30.1598C38.9903 27.1823 40 23.709 40 20C40 8.9543 31.0457 0 20 0C8.9543 0 0 8.9543 0 20C0 31.0457 8.9543 40 20 40C23.709 40 27.1823 38.9904 30.1598 37.2309L37.7487 44.8198C39.7014 46.7724 42.8672 46.7724 44.8198 44.8198C46.7724 42.8672 46.7724 39.7014 44.8198 37.7487L37.2309 30.1598Z" fill="#201E16"/>
-                        <circle opacity="0.3" cx="20" cy="20" r="15" fill="white"/>
-                    </svg>
-                    <svg @click="searchStatus = false; category = '';" xmlns="http://www.w3.org/2000/svg" class="absolute right-0 top-0 mt-1 mr-2 h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                </div>
+                            placeholder="Search Table">
+                        <svg class="absolute left-0 top-0 mt-1 ml-2 h-8 w-8" viewBox="0 0 47 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M37.2309 30.1598C38.9903 27.1823 40 23.709 40 20C40 8.9543 31.0457 0 20 0C8.9543 0 0 8.9543 0 20C0 31.0457 8.9543 40 20 40C23.709 40 27.1823 38.9904 30.1598 37.2309L37.7487 44.8198C39.7014 46.7724 42.8672 46.7724 44.8198 44.8198C46.7724 42.8672 46.7724 39.7014 44.8198 37.7487L37.2309 30.1598Z" fill="#201E16"/>
+                            <circle opacity="0.3" cx="20" cy="20" r="15" fill="white"/>
+                        </svg>
+                        <svg @click="searchStatus = false; category = '';" xmlns="http://www.w3.org/2000/svg" class="absolute right-0 top-0 mt-1 mr-2 h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </div>
                 </div>
             </div>
 
@@ -126,33 +127,35 @@
         </div>
 
         <div class="mb-2">
-            <div class="flex flex-row justify-between items-center">
-                <div class="flex items-center">
-                <h3 class="text-admin-btn text-lg font-bold">SubCategories</h3>
-                    <svg v-if="!subcategoryStatus" @click="subcategoryStatus = true;" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-800 ml-2 cursor-pointer"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                    <svg v-if="subcategoryStatus" @click="subcategoryStatus = false;" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-800 ml-2 cursor-pointer"><polyline points="18 15 12 9 6 15"></polyline></svg>
-                     <button @click="createModal = true; type='subcategory' " type="button"  class="ml-2 hover:bg-gray-300 bg-admin-btn hover:bg-admin-btn-hover text-gray-100 font-bold py-2 px-4 rounded-tl-lg  rounded-br-lg focus:outline-none focus:shadow-outline" >
+            <div class="w-full flex flex-col  sm:flex-row sm:justify-between items-center">
+                <div class="w-full flex flex-row justify-between items-center sm:w-auto mb-2 sm:mb-0">
+                    <div class="flex flex-row items-center"> 
+                        <h3 class="text-admin-btn text-lg font-bold">SubCategories</h3>
+                        <svg v-if="!subcategoryStatus" @click="subcategoryStatus = true;" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-800 ml-2 cursor-pointer"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        <svg v-if="subcategoryStatus" @click="subcategoryStatus = false;" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-800 ml-2 cursor-pointer"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                    </div>
+                    <button @click="createModal = true; type='subcategory' " type="button"  class="ml-2 hover:bg-gray-300 bg-admin-btn hover:bg-admin-btn-hover text-gray-100 font-bold py-2 px-4 rounded-tl-lg  rounded-br-lg focus:outline-none focus:shadow-outline" >
                         New 
                     </button> 
                 </div>
-                <div class="flex items-center">
-               <svg @click="subcategory = '';" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 mr-2 cursor-pointer"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
-                
-                <div class="relative flex items-center">
+                <div class="w-full flex flex-row justify-between items-center sm:w-auto">
+                    <svg @click="subcategory = '';" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 mr-2 cursor-pointer"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
                     
+                    <div class="relative flex items-center">
+                        
 
-                    <input
-                        v-model="subcategory"
-                        @keyup="subSearchStatus = true; getSubCategories();"
-                        class="relative w-40 md:w-32  block appearance-none rounded-full  bg-white border border-gray-400 hover:border-gray-500 pl-16 py-2 pr-8  shadow leading-tight focus:outline-none focus:shadow-outline" id="" type="text" name="name"
+                        <input
+                            v-model="subcategory"
+                            @keyup="subSearchStatus = true; getSubCategories();"
+                            class="relative w-40 md:w-32  block appearance-none rounded-full  bg-white border border-gray-400 hover:border-gray-500 pl-16 py-2 pr-8  shadow leading-tight focus:outline-none focus:shadow-outline" id="" type="text" name="name"
 
-                        placeholder="Search Table">
-                    <svg class="absolute left-0 top-0 mt-1 ml-2 h-8 w-8" viewBox="0 0 47 47" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M37.2309 30.1598C38.9903 27.1823 40 23.709 40 20C40 8.9543 31.0457 0 20 0C8.9543 0 0 8.9543 0 20C0 31.0457 8.9543 40 20 40C23.709 40 27.1823 38.9904 30.1598 37.2309L37.7487 44.8198C39.7014 46.7724 42.8672 46.7724 44.8198 44.8198C46.7724 42.8672 46.7724 39.7014 44.8198 37.7487L37.2309 30.1598Z" fill="#201E16"/>
-                        <circle opacity="0.3" cx="20" cy="20" r="15" fill="white"/>
-                    </svg>
-                    <svg @click="subSearchStatus = false; subcategory = '';" xmlns="http://www.w3.org/2000/svg" class="absolute right-0 top-0 mt-1 mr-2 h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                </div>
+                            placeholder="Search Table">
+                        <svg class="absolute left-0 top-0 mt-1 ml-2 h-8 w-8" viewBox="0 0 47 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M37.2309 30.1598C38.9903 27.1823 40 23.709 40 20C40 8.9543 31.0457 0 20 0C8.9543 0 0 8.9543 0 20C0 31.0457 8.9543 40 20 40C23.709 40 27.1823 38.9904 30.1598 37.2309L37.7487 44.8198C39.7014 46.7724 42.8672 46.7724 44.8198 44.8198C46.7724 42.8672 46.7724 39.7014 44.8198 37.7487L37.2309 30.1598Z" fill="#201E16"/>
+                            <circle opacity="0.3" cx="20" cy="20" r="15" fill="white"/>
+                        </svg>
+                        <svg @click="subSearchStatus = false; subcategory = '';" xmlns="http://www.w3.org/2000/svg" class="absolute right-0 top-0 mt-1 mr-2 h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </div>
                 </div>
             </div>
 

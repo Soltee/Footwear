@@ -25,6 +25,7 @@ export const serverBus = new Vue();
 /****** Components For Administrator ******/
 Vue.component('admin-bar', require('./components/admin/AdminBar.vue').default);
 Vue.component('search-all-view', require('./components/admin/SearchAll.vue').default);
+Vue.component('admin-profile', require('./components/admin/AdminProfile.vue').default);
 
 //Products
 Vue.component('create-product', require('./components/admin/products/CreateProduct.vue').default);

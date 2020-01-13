@@ -14,15 +14,29 @@
                         @csrf
 
                         <div class="flex flex-wrap mb-6">
-                            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">
-                                {{ __('Name') }}:
+                            <label for="first_name" class="block text-gray-700 text-sm font-bold mb-2">
+                                {{ __('First Name') }}:
                             </label>
 
-                            <input id="name" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline{{ $errors->has('name') ? ' border-red-500' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
+                            <input id="first_name" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline{{ $errors->has('first_name') ? ' border-red-500' : '' }}" name="name" value="{{ old('first_name') }}" required autofocus>
 
-                            @if ($errors->has('name'))
+                            @if ($errors->has('first_name'))
                                 <p class="text-red-500 text-xs italic mt-4">
-                                    {{ $errors->first('name') }}
+                                    {{ $errors->first('first_name') }}
+                                </p>
+                            @endif
+                        </div>
+
+                        <div class="flex flex-wrap mb-6">
+                            <label for="last_name" class="block text-gray-700 text-sm font-bold mb-2">
+                                {{ __('Last Name') }}:
+                            </label>
+
+                            <input id="last_name" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline{{ $errors->has('last_name') ? ' border-red-500' : '' }}" name="last_name" value="{{ old('last_name') }}" required autofocus>
+
+                            @if ($errors->has('last_name'))
+                                <p class="text-red-500 text-xs italic mt-4">
+                                    {{ $errors->first('last_name') }}
                                 </p>
                             @endif
                         </div>
