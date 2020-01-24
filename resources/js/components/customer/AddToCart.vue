@@ -93,17 +93,7 @@ import EmblaCarousel from 'embla-carousel';
                 
                 return this.productImage = newArr[Math.floor(Math.random() * newArr.length)].thumbnail;
             },
-
-            next: function() {
-                if(this.images.length >= this.currentIndex){
-                    this.currentIndex += 1;                    
-                }
-            },
-            prev: function() {
-                if(this.currentIndex >= 0){
-                    this.currentIndex -= 1;
-                }
-            },
+            
             addToCart(){
 
                 axios.post(`/add-cart/${this.product.id}`, {
