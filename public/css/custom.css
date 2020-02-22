@@ -12,8 +12,13 @@ li{list-style-type: none;}
 	height: 900px;
 }
 
-
-
+.hero{
+	background-image: url('/img/lg-bk.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: right;
+	/*background-color: red;*/
+}
 /* Create a custom radio button */
 
 

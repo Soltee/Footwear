@@ -58,11 +58,8 @@
 </head>
 <body class="bg-gray-100 h-screen antialiased leading-none text-lg">
     <div id="app"  class="">
-        <nav class="relative">
-            @if(Route::currentRouteName() == 'welcome')
-                <img class="header-blob background -z-10 -mt-16 md:mt-0" src="/svg/hero-blob.svg" alt="background">
-            @endif
-            <div class="px-3 md:px-6 lg:px-12 z-10 py-3 md:py-6 bg-black">
+        <nav class="relative bg-black z-10 opacity-95 overflow-hidden {{ Route::currentRouteName() == 'welcome' ? 'h-screen ' : ''}}" >
+            <div class="px-3 md:px-6 lg:px-12 z-10 py-3 md:py-6">
                 <div class="flex items-center justify-between">
                     <div class="mr-6 flex items-center">
                         <a href="{{ url('/') }}" class="text-lg font-semibold text-gray-100 no-underline mr-3">
@@ -78,6 +75,20 @@
                     <Navmenu :customer="{{ json_encode(Auth::guard('customer')->user()) }}"></Navmenu>
                 </div>
             </div>
+
+          @if(Route::currentRouteName() == 'welcome')
+           <img class="absolute inset-0  bg-cover  object-right -z-10" src="{{ asset('img/lg-bk.jpg') }}" alt="Hero Background">
+
+           <div class="w-full  px-6  lg:px-12 mt-32 z-10 flex flex-col  items-center justify-center py-2">
+                  <h1 class=" leading-tight font-bold text-md md:text-xl lg:text-2xl text-custom-red-light">
+                      Thousands of shoes.
+                  </h1>
+                  <p class=" text-3xl md:text-4xl  lg:text-5xl  text-white mt-6 font-bold">Get branded shoes for your next wear.</p>
+                  <a href="/shoes" class="w-48 px-4 py-3 text-center mt-6 text-lg text-custom-gray bg-custom-red-darker hover:bg-custom-red-lighter rounded-full">
+                      Grab Now
+                  </a>
+            </div>
+          @endif
         </nav>
 
         @include('sweetalert::alert')

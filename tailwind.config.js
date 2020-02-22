@@ -35,7 +35,11 @@ module.exports = {
       },
       maxHeight: {
         '24' : '24rem'
-      } 
+      },
+       opacity: {
+        '90': '0.90',
+        '95': '0.95',
+      }, 
     },
     transitionProperty: { // defaults to these values
       'none': 'none',

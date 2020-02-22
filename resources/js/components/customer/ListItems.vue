@@ -1,5 +1,5 @@
 <template>
-    <div class=" flex flex-col items-left   bg-black rounded-lg p-2 md:p-0 z-20 md:mt-0  md:static md:flex-row   md:items-center md:text-right md:rounded-none">
+    <div class=" flex flex-col items-left   rounded-lg p-2 md:p-0 z-20 md:mt-0  md:static md:flex-row   md:items-center md:text-right md:rounded-none">
 
        <search></search>
         

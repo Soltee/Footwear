@@ -20,9 +20,7 @@ use Illuminate\Support\Arr;
 $factory->define(Customer::class, function (Faker $faker) {
     return [
         'avatar' => function(){
-            $arr = ['1.jpg', '2.jpg', '3.jpg', '5.jpg', '6.jpg','12.jpg', '11.jpg', '15.jpg', '9.jpg', '10.jpg'];
-            $random =  Arr::random($arr);
-            return '/customers/' . $random;
+            return '/customers/1.jpg';
         },
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
@@ -37,7 +35,7 @@ $factory->define(Customer::class, function (Faker $faker) {
 });
 $factory->define(App\Administrator::class, function (Faker $faker) {
     return [
-        'avatar' => $faker->name . ".jpg",
+        'avatar' => "/admins/1.jpg",
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,

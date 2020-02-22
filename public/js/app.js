@@ -2697,6 +2697,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -5195,16 +5196,6 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return this.productImage = newArr[Math.floor(Math.random() * newArr.length)].thumbnail;
-    },
-    next: function next() {
-      if (this.images.length >= this.currentIndex) {
-        this.currentIndex += 1;
-      }
-    },
-    prev: function prev() {
-      if (this.currentIndex >= 0) {
-        this.currentIndex -= 1;
-      }
     },
     addToCart: function addToCart() {
       var _this2 = this;
@@ -59342,7 +59333,7 @@ var render = function() {
     "div",
     {
       staticClass:
-        " flex flex-col items-left   bg-black rounded-lg p-2 md:p-0 z-20 md:mt-0  md:static md:flex-row   md:items-center md:text-right md:rounded-none"
+        " flex flex-col items-left   rounded-lg p-2 md:p-0 z-20 md:mt-0  md:static md:flex-row   md:items-center md:text-right md:rounded-none"
     },
     [
       _c("search"),
@@ -74500,8 +74491,8 @@ var request = function request(param) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/soltee/Projects/larashop/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/soltee/Projects/larashop/resources/scss/app.scss */"./resources/scss/app.scss");
+__webpack_require__(/*! /home/soltee/projects/footwear/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/soltee/projects/footwear/resources/scss/app.scss */"./resources/scss/app.scss");
 
 
 /***/ })

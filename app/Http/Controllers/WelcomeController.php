@@ -19,7 +19,7 @@ class WelcomeController extends Controller
     {
     	
         $products = Product::latest()->paginate(4);
-        $featured = Product::latest()->where('featured', true)->paginate(4);
+        $featured = Product::inRandomOrder()->where('featured', true)->paginate(4);
         return view('welcome', compact('products', 'featured'));
 
     }
