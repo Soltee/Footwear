@@ -14,7 +14,6 @@
 
             <div v-if="type == 'product'" class="overflow-y-scroll h-86">
                 <div class="flex flex-col md:flex-row justify-around items-center">
-                    <img :src="`/storage/${item.imageUrl}`" class="w-64 h-64 rounded-lg">
                     <div class="flex-1 flex flex-col ml-2">
                         <div class="flex items-center mb-2">
                             <span class="text-md font-md text-gray-800 w-40">Name</span>

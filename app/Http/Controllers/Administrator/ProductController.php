@@ -158,26 +158,38 @@ class ProductController extends Controller
     {
         // dd($request->all());
         $data = $this->validate($request, [
+            'name' => ['required','string', 'min:2'],
+            'price' => ['required', 'int', 'min:1'],
+            'qty' => ['required', 'int', 'min:1'],
             'category' => ['required', 'string', 'min:1'],
             'subcategory' => ['required', 'string', 'min:1'],
-            'name' => ['required','string', 'min:2', 'unique:products'],
-            'price' => ['required', 'int', 'min:1'],
-            'qty' => ['required', 'int', 'min:1']
         ]);
-        // dd($request->all());
-        if($request->file('files')){
-            $files = $this->validate($request, [
-                'file*' => 'required|file|image|mimes:jpeg,png,gif,webp|max:2048',                
-            ]);
-            // dd($files['files']);
 
-            $images      = $request->file('files'); // get the validated filee
-            // dd($images);
+        if($request->hasFile('files')){
+
+            $allowedfileExtension = ['jpeg','jpg','png','gif'];
+            $images      = $request->file('files'); 
+            foreach($images as $file){
+                $filename = $file->getClientOriginalName();
+
+                $extension = $file->getClientOriginalExtension();
+
+                $check = in_array($extension,$allowedfileExtension);
+                abort_if(!$check, 422);
+            }
 
             foreach ($images as $image) {
                 $basename  = Str::random();
                 $original  = 'pd-' . $basename . '.' . $image->getClientOriginalExtension();
                 $paths[] = $image->storeAs('products', $original, 'public'); 
+            }
+
+            foreach ($paths as $path) {
+                ProductImages::create([
+                    'product_id' => $product->id,
+                    'imageUrl'   => $path,
+                    'thumbnail'  => $path
+                ]);
             }
         }
         // dd($data['description']);
@@ -192,15 +204,6 @@ class ProductController extends Controller
             'price' => $data['price'],
             'qty' => $data['qty']
         ], ($excerptArray) ?? [], ($descriptionArray) ?? []));
-
-
-        foreach ($paths as $path) {
-            ProductImages::create([
-                'product_id' => $product->id,
-                'imageUrl'   => $path,
-                'thumbnail'  => $path
-            ]);
-        }
 
         return response()->json(['success' => 'true'], 200);
     }

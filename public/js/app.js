@@ -3722,6 +3722,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3746,7 +3758,12 @@ __webpack_require__.r(__webpack_exports__);
       categoriesArray: [],
       subCategoriesArray: [],
       files: [],
-      fileRead: []
+      fileRead: [],
+      fileErr: [],
+      nameErr: [],
+      priceErr: [],
+      qtyErr: [],
+      categoryErr: []
     };
   },
   mounted: function mounted() {
@@ -3912,6 +3929,39 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       })["catch"](function (error) {
+        var errors = error.response.data.errors;
+        _this6.fileErr = [];
+        _this6.nameErr = [];
+        _this6.priceErr = [];
+        _this6.qtyErr = [];
+        _this6.categoryErr = [];
+
+        if (error.response.status == 422) {
+          _this6.fileErr = ["File must be jpeg, png or gif"];
+        }
+
+        if (errors) {
+          if (errors.files) {
+            _this6.fileErr = errors.files;
+          }
+
+          if (errors.name) {
+            _this6.nameErr = errors.name;
+          }
+
+          if (errors.price) {
+            _this6.priceErr = errors.price;
+          }
+
+          if (errors.qty) {
+            _this6.qtyErr = errors.qty;
+          }
+
+          if (errors.category || errors.subcategory) {
+            _this6.categoryErr = errors.category || errors.subcategory;
+          }
+        }
+
         _helpers_Alert__WEBPACK_IMPORTED_MODULE_1__["default"].fire({
           icon: 'error',
           title: 'There was some network error!'
@@ -3927,6 +3977,11 @@ __webpack_require__.r(__webpack_exports__);
       this.excerpt = '';
       this.files = [];
       this.fileRead = [];
+      this.fileErr = [];
+      this.nameErr = [];
+      this.priceErr = [];
+      this.qtyErr = [];
+      this.categoryErr = [];
     },
     closeModal: function closeModal() {
       _app_js__WEBPACK_IMPORTED_MODULE_0__["serverBus"].$emit('close-modal');
@@ -4013,7 +4068,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var embla_carousel__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(embla_carousel__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
-//
 //
 //
 //
@@ -53729,6 +53783,16 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
+                  _vm._l(_vm.fileErr, function(n) {
+                    return _vm.fileErr.length > 0
+                      ? _c("div", [
+                          _c("p", { staticClass: "text-red-600 p-2" }, [
+                            _vm._v(_vm._s(n))
+                          ])
+                        ])
+                      : _vm._e()
+                  }),
+                  _vm._v(" "),
                   _vm.files.length > 0
                     ? _c(
                         "div",
@@ -53872,308 +53936,353 @@ var render = function() {
                 2
               ),
               _vm._v(" "),
-              _c("div", { staticClass: "flex-1 overflow-y-scroll h-90" }, [
-                _c("div", { staticClass: "flex flex-col  rounded-lg mb-3" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass:
-                        " px-2 py-3 text-gray-800 text-md font-semibold ",
-                      attrs: { for: "name" }
-                    },
-                    [_vm._v("Name")]
-                  ),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.name,
-                        expression: "name"
-                      }
-                    ],
-                    staticClass:
-                      "px-3 py-3 rounded-lg  bg-gray-300 text-gray-900",
-                    attrs: { type: "text", id: "name" },
-                    domProps: { value: _vm.name },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.name = $event.target.value
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "flex flex-row items-center justify-between mb-3"
-                  },
-                  [
+              _c(
+                "div",
+                { staticClass: "flex-1 overflow-y-scroll h-90" },
+                [
+                  _c("div", { staticClass: "flex flex-col  rounded-lg mb-3" }, [
                     _c(
-                      "div",
-                      { staticClass: "flex-1 flex flex-col  rounded-lg mr-2" },
-                      [
-                        _c(
-                          "label",
-                          {
-                            staticClass:
-                              " px-2 py-3 text-gray-800 text-md font-semibold ",
-                            attrs: { for: "price" }
-                          },
-                          [_vm._v("Price")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.price,
-                              expression: "price"
-                            }
-                          ],
-                          staticClass:
-                            "px-3 py-3 rounded-lg  bg-gray-300 text-gray-900  w-full",
-                          attrs: { type: "text", id: "price" },
-                          domProps: { value: _vm.price },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.price = $event.target.value
-                            }
-                          }
-                        })
-                      ]
+                      "label",
+                      {
+                        staticClass:
+                          " px-2 py-3 text-gray-800 text-md font-semibold ",
+                        attrs: { for: "name" }
+                      },
+                      [_vm._v("Name")]
                     ),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "flex-1 flex flex-col  rounded-lg ml-2" },
-                      [
-                        _c(
-                          "label",
-                          {
-                            staticClass:
-                              " px-2 py-3 text-gray-800 text-md font-semibold ",
-                            attrs: { for: "qty" }
-                          },
-                          [_vm._v("Quantity")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.qty,
-                              expression: "qty"
-                            }
-                          ],
-                          staticClass:
-                            "px-3 py-3 rounded-lg  bg-gray-300 text-gray-900  w-full",
-                          attrs: { type: "text", id: "qty" },
-                          domProps: { value: _vm.qty },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.qty = $event.target.value
-                            }
-                          }
-                        })
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "flex flex-row items-center justify-between mb-3"
-                  },
-                  [
-                    _c("label", { staticClass: "flex-1 block mb-3 mr-2" }, [
-                      _c("span", { staticClass: "text-gray-700 mb-2" }, [
-                        _vm._v("Category")
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "select",
+                    _c("input", {
+                      directives: [
                         {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.selectedCat,
-                              expression: "selectedCat"
-                            }
-                          ],
-                          staticClass: "form-select mt-1 block w-full",
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.selectedCat = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            }
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.name,
+                          expression: "name"
+                        }
+                      ],
+                      staticClass:
+                        "px-3 py-3 rounded-lg  bg-gray-300 text-gray-900",
+                      attrs: { type: "text", id: "name" },
+                      domProps: { value: _vm.name },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
                           }
-                        },
-                        _vm._l(_vm.categoriesArray, function(category) {
-                          return _c(
-                            "option",
-                            { domProps: { value: category.id } },
-                            [_vm._v(_vm._s(category.name))]
-                          )
-                        }),
-                        0
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("label", { staticClass: "block mb-3 flex-1 ml-2" }, [
-                      _c("span", { staticClass: "text-gray-700 mb-2" }, [
-                        _vm._v("SubCategory")
-                      ]),
-                      _vm._v(" "),
+                          _vm.name = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "flex flex-row items-center justify-between mb-3"
+                    },
+                    [
                       _c(
-                        "select",
+                        "div",
                         {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.selectedSubCat,
-                              expression: "selectedSubCat"
-                            }
-                          ],
-                          staticClass: "form-select mt-1 block w-full",
-                          class: _vm.selectedCat
-                            ? "opacity-100"
-                            : "opacity-75 cursor-not-allowed",
-                          attrs: { disabled: !_vm.selectedCat },
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.selectedSubCat = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            }
-                          }
+                          staticClass: "flex-1 flex flex-col  rounded-lg mr-2"
                         },
                         [
-                          _c("option", { attrs: { value: "", disabled: "" } }, [
-                            _vm._v("Select Sub-category")
-                          ]),
+                          _c(
+                            "label",
+                            {
+                              staticClass:
+                                " px-2 py-3 text-gray-800 text-md font-semibold ",
+                              attrs: { for: "price" }
+                            },
+                            [_vm._v("Price")]
+                          ),
                           _vm._v(" "),
-                          _vm._l(_vm.subCategoriesArray, function(subcategory) {
-                            return _vm.selectedCat
-                              ? _c(
-                                  "option",
-                                  { domProps: { value: subcategory.id } },
-                                  [_vm._v(_vm._s(subcategory.name))]
-                                )
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.price,
+                                expression: "price"
+                              }
+                            ],
+                            staticClass:
+                              "px-3 py-3 rounded-lg  bg-gray-300 text-gray-900  w-full",
+                            attrs: { type: "text", id: "price" },
+                            domProps: { value: _vm.price },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.price = $event.target.value
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm._l(_vm.priceErr, function(n) {
+                            return _vm.priceErr.length > 0
+                              ? _c("div", [
+                                  _c("p", { staticClass: "text-red-600 p-2" }, [
+                                    _vm._v(_vm._s(n))
+                                  ])
+                                ])
+                              : _vm._e()
+                          })
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "flex-1 flex flex-col  rounded-lg ml-2"
+                        },
+                        [
+                          _c(
+                            "label",
+                            {
+                              staticClass:
+                                " px-2 py-3 text-gray-800 text-md font-semibold ",
+                              attrs: { for: "qty" }
+                            },
+                            [_vm._v("Quantity")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.qty,
+                                expression: "qty"
+                              }
+                            ],
+                            staticClass:
+                              "px-3 py-3 rounded-lg  bg-gray-300 text-gray-900  w-full",
+                            attrs: { type: "text", id: "qty" },
+                            domProps: { value: _vm.qty },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.qty = $event.target.value
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm._l(_vm.qtyErr, function(n) {
+                            return _vm.qtyErr.length > 0
+                              ? _c("div", [
+                                  _c("p", { staticClass: "text-red-600 p-2" }, [
+                                    _vm._v(_vm._s(n))
+                                  ])
+                                ])
                               : _vm._e()
                           })
                         ],
                         2
                       )
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "flex flex-col  rounded-lg mb-3" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass:
-                        " px-2 py-3 text-gray-800 text-md font-semibold ",
-                      attrs: { for: "description" }
-                    },
-                    [_vm._v("Description")]
+                    ]
                   ),
                   _vm._v(" "),
-                  _c("textarea", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.description,
-                        expression: "description"
-                      }
-                    ],
-                    staticClass:
-                      "px-3 py-3 rounded-lg  bg-gray-300 text-gray-900 w-full h-24",
-                    attrs: { id: "description" },
-                    domProps: { value: _vm.description },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.description = $event.target.value
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "flex flex-col  rounded-lg mb-3" }, [
                   _c(
-                    "label",
+                    "div",
                     {
                       staticClass:
-                        " px-2 py-3 text-gray-800 text-md font-semibold ",
-                      attrs: { for: "description" }
+                        "flex flex-row items-center justify-between mb-3"
                     },
-                    [_vm._v("Excerpt")]
+                    [
+                      _c("label", { staticClass: "flex-1 block mb-3 mr-2" }, [
+                        _c("span", { staticClass: "text-gray-700 mb-2" }, [
+                          _vm._v("Category")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.selectedCat,
+                                expression: "selectedCat"
+                              }
+                            ],
+                            staticClass: "form-select mt-1 block w-full",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.selectedCat = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          _vm._l(_vm.categoriesArray, function(category) {
+                            return _c(
+                              "option",
+                              { domProps: { value: category.id } },
+                              [_vm._v(_vm._s(category.name))]
+                            )
+                          }),
+                          0
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("label", { staticClass: "block mb-3 flex-1 ml-2" }, [
+                        _c("span", { staticClass: "text-gray-700 mb-2" }, [
+                          _vm._v("SubCategory")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.selectedSubCat,
+                                expression: "selectedSubCat"
+                              }
+                            ],
+                            staticClass: "form-select mt-1 block w-full",
+                            class: _vm.selectedCat
+                              ? "opacity-100"
+                              : "opacity-75 cursor-not-allowed",
+                            attrs: { disabled: !_vm.selectedCat },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.selectedSubCat = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { value: "", disabled: "" } },
+                              [_vm._v("Select Sub-category")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.subCategoriesArray, function(
+                              subcategory
+                            ) {
+                              return _vm.selectedCat
+                                ? _c(
+                                    "option",
+                                    { domProps: { value: subcategory.id } },
+                                    [_vm._v(_vm._s(subcategory.name))]
+                                  )
+                                : _vm._e()
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]
                   ),
                   _vm._v(" "),
-                  _c("textarea", {
-                    directives: [
+                  _vm._l(_vm.categoryErr, function(n) {
+                    return _vm.categoryErr.length > 0
+                      ? _c("div", [
+                          _c("p", { staticClass: "text-red-600 p-2" }, [
+                            _vm._v(_vm._s(n))
+                          ])
+                        ])
+                      : _vm._e()
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "flex flex-col  rounded-lg mb-3" }, [
+                    _c(
+                      "label",
                       {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.excerpt,
-                        expression: "excerpt"
-                      }
-                    ],
-                    staticClass:
-                      "px-3 py-3 rounded-lg  bg-gray-300 text-gray-900 w-full h-16",
-                    attrs: { id: "description" },
-                    domProps: { value: _vm.excerpt },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+                        staticClass:
+                          " px-2 py-3 text-gray-800 text-md font-semibold ",
+                        attrs: { for: "description" }
+                      },
+                      [_vm._v("Description")]
+                    ),
+                    _vm._v(" "),
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.description,
+                          expression: "description"
                         }
-                        _vm.excerpt = $event.target.value
+                      ],
+                      staticClass:
+                        "px-3 py-3 rounded-lg  bg-gray-300 text-gray-900 w-full h-24",
+                      attrs: { id: "description" },
+                      domProps: { value: _vm.description },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.description = $event.target.value
+                        }
                       }
-                    }
-                  })
-                ])
-              ])
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "flex flex-col  rounded-lg mb-3" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass:
+                          " px-2 py-3 text-gray-800 text-md font-semibold ",
+                        attrs: { for: "description" }
+                      },
+                      [_vm._v("Excerpt")]
+                    ),
+                    _vm._v(" "),
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.excerpt,
+                          expression: "excerpt"
+                        }
+                      ],
+                      staticClass:
+                        "px-3 py-3 rounded-lg  bg-gray-300 text-gray-900 w-full h-16",
+                      attrs: { id: "description" },
+                      domProps: { value: _vm.excerpt },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.excerpt = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ],
+                2
+              )
             ])
           ]
         )
@@ -54512,11 +54621,6 @@ var render = function() {
                       "flex flex-col md:flex-row justify-around items-center"
                   },
                   [
-                    _c("img", {
-                      staticClass: "w-64 h-64 rounded-lg",
-                      attrs: { src: "/storage/" + _vm.item.imageUrl }
-                    }),
-                    _vm._v(" "),
                     _c("div", { staticClass: "flex-1 flex flex-col ml-2" }, [
                       _c("div", { staticClass: "flex items-center mb-2" }, [
                         _c(
