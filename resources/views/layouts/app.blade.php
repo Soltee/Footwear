@@ -81,11 +81,11 @@
            <img class="absolute inset-0  bg-cover  object-right -z-10" src="{{ asset('img/lg-bk.jpg') }}" alt="Hero Background">
 
            <div class="w-full  px-6  lg:px-12 mt-32 z-10 flex flex-col  items-center justify-center py-2">
-                  <h1 class=" leading-tight font-bold text-md md:text-xl lg:text-2xl text-custom-red-light">
+                  <h1 class=" leading-tight font-bold text-md md:text-xl lg:text-2xl text-custom-red-darker">
                       Thousands of shoes.
                   </h1>
-                  <p class=" text-3xl md:text-4xl  lg:text-5xl  text-white mt-6 font-bold">Get branded shoes for your next wear.</p>
-                  <a href="/shoes" class="w-48 px-4 py-3 text-center mt-6 text-lg text-custom-gray bg-custom-red-darker hover:bg-custom-red-lighter rounded-full">
+                  <p class=" text-3xl md:text-5xl  text-white mt-8 font-bold">Get branded shoes for your next wear.</p>
+                  <a href="/shoes" class="w-48 px-6 py-4 text-center mt-8 text-lg text-custom-gray bg-custom-red-darker hover:bg-custom-red-lighter rounded-full">
                       Grab Now
                   </a>
             </div>
@@ -97,7 +97,7 @@
         @yield('content')
         </main>
 
-        <footer-view></footer-view>
+        <footer-view url="{{ url()->current() }}"></footer-view>
     </div>
 
     <!-- Scripts -->

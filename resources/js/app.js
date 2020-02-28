@@ -7,8 +7,8 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-
-
+var VueScrollTo = require('vue-scrollto');
+Vue.use(VueScrollTo);
 export const serverBus = new Vue();
 
 /**

@@ -43,7 +43,7 @@
         </div>
         <div class="flex flex-row justify-between items-center mt-12">
             <span class="font-sm text-sm text-white">&copy; Shoe-wear 2019</span>
-            <a href="/#">
+            <a href="/#" v-scroll-to="`#app`">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"></circle><polyline points="16 12 12 8 8 12"></polyline><line x1="12" y1="16" x2="12" y2="8"></line></svg>
             </a>
         </div>  
@@ -55,6 +55,7 @@ import request from '../../helpers.js';
 
     export default {
         name : 'footer-view',
+        props : ['url'],
         data(){
         	return {
                 categories : null
