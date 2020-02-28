@@ -29,6 +29,9 @@
                             <input type='file' id="files" ref="files"  class="hidden" multiple @change="handleFileUpload" />
                         </label>
                     </div>
+                    <div v-if="fileErr.length > 0" v-for="n in fileErr">
+                            <p class="text-red-600 p-2">{{  n }}</p>
+                    </div>
                     <div v-if="files.length > 0" class=" w-full h-48 overflow-y-scroll">
                             <div v-for="(file) in fileRead" class="w-full flex flex-row flex-wrap justify-between">
                                 <div class="w-1/3 flex flex-col items-center rounded-lg">
@@ -45,17 +48,28 @@
                         <div class="flex flex-col  rounded-lg mb-3">
                             <label for="name" class=" px-2 py-3 text-gray-800 text-md font-semibold ">Name</label>
                             <input type="text" id="name" v-model="name" class="px-3 py-3 rounded-lg  bg-gray-300 text-gray-900">
+
+                            <div v-if="nameErr.length > 0" v-for="n in nameErr">
+                                <p class="text-red-600 p-2">{{  n }}</p>
+                            </div>
                         </div>
                         <div class="flex flex-row items-center justify-between mb-3">
                             <div class="flex-1 flex flex-col  rounded-lg mr-2">
                                 <label for="price" class=" px-2 py-3 text-gray-800 text-md font-semibold ">Price</label>
                                 <input type="text" id="price" v-model="price" class="px-3 py-3 rounded-lg  bg-gray-300 text-gray-900  w-full">
+                                <div v-if="priceErr.length > 0" v-for="n in priceErr">
+                                        <p class="text-red-600 p-2">{{  n }}</p>
+                                </div>
                             </div>
                             <div class="flex-1 flex flex-col  rounded-lg ml-2">
                                 <label for="qty" class=" px-2 py-3 text-gray-800 text-md font-semibold ">Quantity</label>
                                 <input type="text" id="qty" v-model="qty" class="px-3 py-3 rounded-lg  bg-gray-300 text-gray-900  w-full">
+                                <div v-if="qtyErr.length > 0" v-for="n in qtyErr">
+                                        <p class="text-red-600 p-2">{{  n }}</p>
+                                </div>
                             </div>
                         </div>
+                       
 
                         <div class="flex flex-row items-center justify-between mb-3">
                         
@@ -74,6 +88,9 @@
                                 <option v-if="selectedCat" v-for="subcategory in subCategoriesArray" :value="subcategory.id">{{subcategory.name}}</option>
                               </select>
                             </label>
+                        </div>
+                        <div v-if="categoryErr.length > 0" v-for="n in categoryErr">
+                            <p class="text-red-600 p-2">{{  n }}</p>
                         </div>
                         
                         <div class="flex flex-col  rounded-lg mb-3">
@@ -118,7 +135,12 @@ import Toast from '../../helpers/Alert';
                 description     : '',
                 excerpt         : '',
                 selectedCat     : '',
-                selectedSubCat  : ''
+                selectedSubCat  : '',
+                fileErr         : [],
+                nameErr         : [],
+                priceErr        : [],
+                qtyErr          : [],
+                categoryErr     : []
         	}
         },
 
@@ -211,6 +233,12 @@ import Toast from '../../helpers/Alert';
                             title:   `Product was created successfully!`
                         });
 
+                        this.fileErr     = [];
+                        this.nameErr     = [];
+                        this.priceErr    = [];
+                        this.qtyErr      = [];
+                        this.categoryErr = [];
+
                         this.reset();
                     } else {
                         Toast.fire({
@@ -221,6 +249,39 @@ import Toast from '../../helpers/Alert';
 
                 })
                 .catch((error) => {
+
+
+                    let errors       = error.response.data.errors;
+                    this.fileErr     = [];
+                    this.nameErr     = [];
+                    this.priceErr    = [];
+                    this.qtyErr      = [];
+                    this.categoryErr = [];
+                    if(error.response.status == 422){
+                        this.fileErr = ["File must be jpeg, png or gif"];
+                    }
+
+                    if(errors){
+                        if(errors.files){
+                            this.fileErr = errors.files;
+                        }
+                        if(errors.name){
+                            this.nameErr = errors.name;
+                        }
+
+                        if(errors.price){
+                            this.priceErr = errors.price;
+                        }
+
+                        if(errors.qty){
+                            this.qtyErr = errors.qty;
+                        }
+
+                        if(errors.category || errors.subcategory){
+                            this.categoryErr = errors.category || errors.subcategory;
+                        }
+                    }
+
                     Toast.fire({
                       icon: 'error',
                       title: 'There was some network error!'
@@ -238,5 +299,5 @@ import Toast from '../../helpers/Alert';
                 this.fileRead = [];
             }
         }
-    }
+    };
 </script>

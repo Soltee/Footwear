@@ -36,7 +36,7 @@
             <form @submit.prevent="updateProfile">
                 <div class="flex flex-row justify-between items-center mb-3">
                     <h3 class="text-admin-btn text-lg font-bold">Profile Info</h3>
-                  <!--   <button type="submit"  class="ml-2 hover:bg-gray-300 bg-admin-btn hover:bg-admin-btn-hover text-gray-100 font-bold py-2 px-4 rounded-tl-lg  rounded-br-lg focus:outline-none focus:shadow-outline" >
+                 <!--    <button type="submit"  class="ml-2 hover:bg-gray-300 bg-admin-btn hover:bg-admin-btn-hover text-gray-100 font-bold py-2 px-4 rounded-tl-lg  rounded-br-lg focus:outline-none focus:shadow-outline" >
                         Save 
                     </button>  -->
                 </div>

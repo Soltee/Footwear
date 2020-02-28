@@ -54,8 +54,7 @@
                           <td class="border px-4 py-2 text-gray-900">{{ order.grand }}</td>
                           <td class="">
                             <div class="flex flex-col md:flex-row justify-around items-center">                                
-                                <svg @click="displayEditModal(order)" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 cursor-pointer"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-
+                                
                                 <svg @click="displayDeleteModal(order)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-admin-red"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
 
                                 <svg @click="displayViewModal(order)" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-gray-600 cursor-pointer "><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -224,14 +223,14 @@ import ViewModal from '../helpers/ViewModal';
                         if(res.status == 204){
                             Toast.fire({
                               icon: 'success',
-                              title:   `Product  deleted.`
+                              title:   `Payment Order  deleted.`
                             });
                             this.closeOnSuccess();
                         }
                     }).catch((error) => {
                         Toast.fire({
                               icon: 'error',
-                              title:   `Product was unable to delete.`
+                              title:   `Payment Order was unable to delete.`
                         }); 
                         this.closeModal();
                     });

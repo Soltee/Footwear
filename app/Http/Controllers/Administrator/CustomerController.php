@@ -31,8 +31,9 @@ class CustomerController extends Controller
 
         $query = Customer::latest();
         if($search){
-            $query = $query->where('name', 'LIKE', '%'.$search.'%')
-                            ->orWhere('price', 'LIKE', '%'.$search.'%');
+            $query = $query->where('first_name', 'LIKE', '%'.$search.'%')
+                            ->orWhere('last_name', 'LIKE', '%'.$search.'%')
+                            ->orWhere('email', 'LIKE', '%'.$search.'%');
          }
 
         $customers = $query->paginate(5);

@@ -320,5 +320,5 @@ import Toast from '../../helpers/Alert';
                 serverBus.$emit('close-modal');
             },
         }
-    }
+    };
 </script>

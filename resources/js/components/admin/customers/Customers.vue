@@ -44,8 +44,8 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 rounded-full object-cover object-center"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                 </div>
                           </td>
-                          <td class="border px-4 py-2 text-gray-900">{{ customer.name }}</td>
-                          <td class="border px-4 py-2 text-gray-900">Rs {{ customer.email }}</td>
+                            <td class="border px-4 py-2 text-gray-900">{{ customer.first_name }} {{ customer.last_name }}</td>
+                          <td class="border px-4 py-2 text-gray-900">{{ customer.email }}</td>
                           <td class="">
                             <div class="flex justify-around items-center">
                                 <svg @click="displayDeleteModal(p)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-admin-red"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
@@ -63,8 +63,8 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 rounded-full object-cover object-center"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                 </div>
                            </td>
-                          <td class="border px-4 py-2 text-gray-900">{{ customer.name }}</td>
-                          <td class="border px-4 py-2 text-gray-900">Rs {{ customer.email }}</td>
+                          <td class="border px-4 py-2 text-gray-900">{{ customer.first_name }} {{ customer.last_name }}</td>
+                          <td class="border px-4 py-2 text-gray-900">{{ customer.email }}</td>
                           <td class="">
                             <div class="flex justify-around items-center">  
                                 <svg @click="displayDeleteModal(customer)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-admin-red"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>

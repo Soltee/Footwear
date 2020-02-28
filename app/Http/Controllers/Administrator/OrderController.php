@@ -14,7 +14,8 @@ class OrderController extends Controller
         $query = Orders::latest();
         if($search){
             $query = $query->where('first_name', 'LIKE', '%'.$search.'%')
-                            ->orWhere('last_name', 'LIKE', '%'.$search.'%');
+                            ->orWhere('last_name', 'LIKE', '%'.$search.'%')
+                            ->orWhere('email', 'LIKE', '%'.$search.'%');
          }
 
         $orders = $query->paginate(10);

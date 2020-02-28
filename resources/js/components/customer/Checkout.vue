@@ -6,7 +6,7 @@
                 <div class="w-full">
                   
                   <input type="hidden" name="_token" :value="csrf">
-                  <input name="amount" type="hidden" :value="total" />
+                  <input name="amount" type="hidden" :value="grand" />
 
                   <h3 class="text-lg font-semibold text-gray-900 mb-6 ">Fill Personal Info</h3>
                   <div class="flex flex-col md:flex-row items-center mb-6 z-0">
@@ -78,6 +78,12 @@
                           <span class="text-lg ml-8 font-bold text-gray-900" >Paypal</span>
                       </div>
 
+                       <div @click="paymentOption('khalti')" class="flex w-full mb-3 md:mb-0 items-center p-4 rounded-lg mr-12 border-2 border-gray-300 group hover:border-green-600 checkbox cursor-pointer" :class="(method === 'khalti') ? 'border-green-600' : ''">
+                          <!-- <input  type="checkbox"  class="" v-model="method" > -->
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 hover:text-green-600 group-hover:text-green-600" :class="(method == 'khalti') ? 'text-green-600' : 'text-gray-900 '"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                          <span class="text-lg ml-8 font-bold text-gray-900" >Khalti</span>
+                      </div>
+
                   </div>
                   <div v-if="method === 'braintree'">
                       <input type="hidden" name="_type" value="braintree">
@@ -133,6 +139,10 @@
                       <div id="paypal-button"></div> 
                   </div>
 
+                  <div v-if="method === 'khalti'" class="mb-3">
+                      <input type="hidden" name="_type" value="khalti">
+                  </div>
+
                   <button type="submit" class="mt-5 px-6 py-4 hover:bg-green-500 rounded-full text-white font-bold text-lg bg-green-800 ">Submit Payment</button>
                 </div>
               </form>
@@ -182,7 +192,6 @@
 </template>
 
 <script>
-import KhaltiCheckout from "khalti-web";
 
     export default {
         name : 'cart-checkout',
@@ -210,14 +219,14 @@ import KhaltiCheckout from "khalti-web";
             }, 
             paymentOption(param){
                 this.method = param;
-                let grand = this.total;
+                let grand = this.grand;
                 const form = document.getElementById('payment-form');
                 if(this.method === "stripe"){
                     setTimeout(() => {
                          // Create a Stripe client.
                         // alert(process.env.MIX_STRIPE_APP_KEY);
                         let key = process.env.MIX_STRIPE_APP_KEY;
-                        var stripe = Stripe(key);
+                        var stripe = Stripe(`${key}`);
 
                         // Create an instance of Elements.
                         var elements = stripe.elements();
@@ -290,6 +299,39 @@ import KhaltiCheckout from "khalti-web";
                    
                 }  else if(this.method === 'braintree'){
                     this.braintreePayment(form);
+                }  else if(this.method === 'khalti'){
+                  let key = process.env.MIX_KHALTI_APP_KEY;
+                  var config = {
+                      // replace the publicKey with yours
+                      "publicKey": `${key}`,
+                      "productIdentity": "1234567890",
+                      "productName": "Dragon",
+                      "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",
+                      "eventHandler": {
+                          onSuccess (payload) {
+                              // hit merchant api for initiating verfication
+                              console.log(payload);
+                              var hiddenInput = document.createElement('input');
+                              hiddenInput.setAttribute('type', 'hidden');
+                              hiddenInput.setAttribute('name', 'khalti_token');
+                              hiddenInput.setAttribute('value', payload.token);
+                              form.appendChild(hiddenInput);
+
+                    
+                              form.submit();
+                          },
+                          onError (error) {
+                              console.log(error);
+                          },
+                          onClose () {
+                              console.log('widget is closing');
+                          }
+                      }
+                  };
+
+                  var checkout = new KhaltiCheckout(config);
+                  checkout.show({amount: this.grand * 100});
+
                 } else if(this.method === 'paypal') {
 
                       braintree.client.create({

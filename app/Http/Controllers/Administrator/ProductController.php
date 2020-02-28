@@ -78,16 +78,28 @@ class ProductController extends Controller
 
         // dd($request->all());
         $data = $this->validate($request, [
+            'name' => ['required','string', 'min:2', 'unique:products'],
+            'price' => ['required', 'int', 'min:1'],
+            'qty' => ['required', 'int', 'min:1'],
             'category' => ['required', 'string', 'min:1'],
             'subcategory' => ['required', 'string', 'min:1'],
-            'name' => ['required','string', 'min:2', 'unique:products'],
-            'cover' => ['required','file', 'image', 'mimes:jpeg,png,gif,webp', 'max:2048'],
-            'file*' => 'required|file|image|mimes:jpeg,png,gif,webp|max:2048',
-            'price' => ['required', 'int', 'min:1'],
-            'qty' => ['required', 'int', 'min:1']
         ]);
         
-        $images      = $request->file('files'); // get the validated filee
+
+        abort_if(!$request->hasFile('files'), 422);
+        $allowedfileExtension = ['jpeg','jpg','png','gif'];
+        $images      = $request->file('files'); 
+        foreach($images as $file){
+            $filename = $file->getClientOriginalName();
+
+            $extension = $file->getClientOriginalExtension();
+
+            $check = in_array($extension,$allowedfileExtension);
+            abort_if(!$check, 422);
+        }
+
+
+
         foreach ($images as $image) {
             $basename  = Str::random();
             $original  = 'pd-' . $basename . '.' . $image->getClientOriginalExtension();
@@ -171,7 +183,7 @@ class ProductController extends Controller
         // dd($data['description']);
         $descriptionArray  = ['description' => $request->input('description')];
         $excerptArray      = ['excerpt' => $request->input('excerpt')];
-
+        // dd($paths);
         $new_product = $product->update(array_merge([
             'category_id' => $data['category'],
             'subcategory_id' => $data['subcategory'],
@@ -193,7 +205,7 @@ class ProductController extends Controller
         return response()->json(['success' => 'true'], 200);
     }
 
-    /**
+    /**g
      * Remove the specified resource from storage.
      *
      * @param  \App\Products  $products
@@ -201,9 +213,9 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        ($product->imageUrl) ?? Storage::disk('public')->delete([$product->imageUrl]);
+        // ($product->imageUrl) ?? Storage::disk('public')->delete([$product->imageUrl]);
         $product->delete();
-        App\ProductImages::where('product_id', $product->id)->delete();
+        ProductImages::where('product_id', $product->id)->delete();
         return response()->json(['success' => 'true'], 204);
   
     }

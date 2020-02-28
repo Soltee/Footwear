@@ -17,6 +17,7 @@
       <script src="https://js.braintreegateway.com/web/3.56.0/js/hosted-fields.min.js"></script>
       <script src="https://www.paypalobjects.com/api/checkout.js" data-version-4 log-level="warn"></script>
 
+      <script src="https://khalti.com/static/khalti-checkout.js"></script>
       <!-- Load the PayPal Checkout component. -->
       <script src="https://js.braintreegateway.com/web/3.56.0/js/paypal-checkout.min.js"></script>
       <script src="https://js.stripe.com/v3/"></script>

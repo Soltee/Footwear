@@ -7,9 +7,9 @@ use App\Product;
 use App\Orders;
 use App\Order_Items;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-use Cartalyst\Stripe\Laravel\Facades\Stripe;
-use Cartalyst\Stripe\Exception\CardErrorException;
+use Omnipay\Omnipay;
 
 class CheckoutController extends Controller
 {
@@ -50,7 +50,7 @@ class CheckoutController extends Controller
         $address = request()->address;
         $paymentType = request()->_type;
         $amt = (session('discount'))? session('grand') : Cart::total();
-
+        // dd($paymentType);
         if($paymentType === 'braintree' || $paymentType === 'paypal'){
                 $gateway = new \Braintree\Gateway([
                     'environment' => config('services.braintree.environment'),
@@ -85,25 +85,63 @@ class CheckoutController extends Controller
                 }
 
             
-        }  else {
+        }  elseif($paymentType === 'stripe') {
             try {
-                $stripe = Stripe::charges()->create([
+                // dd($paymentType);
+                $gateway = Omnipay::create('Stripe');               
+                $gateway->setApiKey(env('STRIPE_SECRET_KEY'));
+              
+                $token = $request->input('stripeToken');
+              
+                $response = $gateway->purchase([
                     'amount' => $amt,
-                    'currency' => 'USD',
-                    'source' => request()->stripeToken,
-                    'description' => 'Testin',
-                    'receipt_email' => 'larael_shop@shop.com',
-                    'metadata' => [
-                        'helo'=> 'helo'
-                    ]
-                ]);
-                $this->store($firstName, $lastName,  $email, $city, $address, $paymentType, $stripe);
-                return redirect()->route('thank-you');
+                    'currency' => 'usd',
+                    'token' => request()->stripeToken,
+                ])->send();
+                
+                // dd($response);
+                if ($response->isSuccessful()) {
+                    $transaction = Str::random(10);
+                    $this->store($firstName, $lastName, $email, $city, $address, $paymentType, $transaction);
+                    return redirect()->route('thank-you');
+                }
+               
+                
             } catch (CardErrorException $e) {
                 return back()->with('error', $e->getMessage());
             }
-        }        
+        }  elseif($paymentType === 'khalti') {
+            $args = http_build_query(array(
+                'token' => request()->khalti_token,
+                'amount'  => $amt * 100
+            ));
 
+            $url = "https://khalti.com/api/v2/payment/verify/";
+
+            # Make the call using API.
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS,$args);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+            $headers = ['Authorization: Key '. env('KHALTI_SECRET_KEY') . ''];
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+            // Response
+            $response = json_decode(curl_exec($ch));
+
+            $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            if ($status_code === 200) {
+                $transaction = Str::random(10);
+                $this->store($firstName, $lastName, $email, $city, $address, $paymentType, $transaction);
+                return redirect()->route('thank-you');
+            } else {
+                return back()->with('error', 'An error occurred Please try again. ');
+            }
+        }
         
     }
 

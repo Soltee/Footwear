@@ -83,7 +83,6 @@ class AdministratorController extends Controller
             'first_name' => ['required', 'string','min:4', 'max:255'],
             'last_name' => ['required', 'string','min:4', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
          // dd($request->all());
        if($request->hasFile('avatar')){
@@ -98,12 +97,18 @@ class AdministratorController extends Controller
             $avatarPath = ['avatar' => $path];
         }
 
+        if($request->input('password')){
+            $ps = $this->validate($request, [
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+            ]);
+            $passW = ['password' => bcrypt($ps)];
+        }
         $this->guard()->update(array_merge([
             'first_name' => $data['first_name'],
             'last_name'  => $data['last_name'],
-            'email'      => $data['email'],
-            'password'   => bcrypt($data['password'])
-        ], $avatarPath ?? []));
+            'email'      => $data['email']
+        ], $avatarPath ?? [], $passW ?? []));
+        
 
         return response()->json(['success' => 'Ok', 'avatar' => $avatarPath ?? null], 200);
     }

@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="h-screen container mx-auto py-12 bg-gray-300">
+    <div class="h-screen container mx-auto py-12">
         <div class="fixed inset-0 mx-auto max-w-md rounded-lg flex flex-col  justify-center rounded-lg">
             <div class="w-full max-w-sm">
             
@@ -55,20 +55,8 @@
                                 {{ __('Login') }}
                             </button>
 
-                            @if (Route::has('password.request'))
-                                <a class="text-sm text-blue-500 hover:text-blue-700 whitespace-no-wrap no-underline ml-auto" href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
-                                </a>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <p class="w-full text-xs text-center text-gray-700 mt-8 -mb-4">
-                                    Don't have an account?
-                                    <a class="text-blue-500 hover:text-blue-700 no-underline" href="{{ route('register') }}">
-                                        Register
-                                    </a>
-                                </p>
-                            @endif
+                            
+                            
                         </div>
                     </form>
 
