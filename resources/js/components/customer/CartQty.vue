@@ -1,5 +1,5 @@
 <template>
-	<div class="relative flex items-center md:mx-12 ">
+	<div class="relative flex items-center md:mx-12 mr-6 md:mt-3">
         <li  class="relative flex items-center cursor-pointer mb-3 md:mb-0 hover:text-custom-gray-lighter">
             <a :href="`/cart-details`">
                 <svg class="icon" fill="" viewBox="0 0 59 57"  xmlns="http://wwwp.w3.org/2000/svg">

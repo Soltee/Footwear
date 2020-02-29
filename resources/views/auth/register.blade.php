@@ -18,7 +18,7 @@
                                 {{ __('First Name') }}:
                             </label>
 
-                            <input id="first_name" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline{{ $errors->has('first_name') ? ' border-red-500' : '' }}" name="name" value="{{ old('first_name') }}" required autofocus>
+                            <input id="first_name" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline{{ $errors->has('first_name') ? ' border-red-500' : '' }}" name="first_name" value="{{ old('first_name') }}" required autofocus>
 
                             @if ($errors->has('first_name'))
                                 <p class="text-red-500 text-xs italic mt-4">

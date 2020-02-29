@@ -93,6 +93,7 @@ module.exports = {
     transitionDelay: ['responsive'],
     willChange: ['responsive'],
     textColor: ['responsive', 'hover', 'focus', 'group-hover'],
+    gridAutoFlow: ['responsive', 'hover', 'focus'],
   },
   plugins: [
     require('@tailwindcss/custom-forms'),

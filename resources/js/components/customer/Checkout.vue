@@ -14,14 +14,14 @@
                       <label class="block text-gray-700 text-sm font-bold mb-2" for="firstname">
                         First Name
                       </label>
-                      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="firstname" name="firstname" type="text" placeholder="firstname">
+                      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="firstname" name="firstname" type="text" :value="(auth) ? auth.first_name : ''" placeholder="firstname">
                     </div>
 
                     <div class="mb-4 flex-1 w-full">
                       <label class="block text-gray-700 text-sm font-bold mb-2" for="lastname">
                         Last Name
                       </label>
-                      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="lastname" name="lastname" type="text" placeholder="lastname">
+                      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="lastname" name="lastname" type="text" :value="(auth) ? auth.last_name : ''" placeholder="lastname">
                     </div>
                   </div>
 
@@ -29,7 +29,7 @@
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
                       Email
                     </label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" type="email" placeholder="email">
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" :value="(auth) ? auth.email : ''" type="email" placeholder="email">
                   </div>
 
 
@@ -195,7 +195,7 @@
 
     export default {
         name : 'cart-checkout',
-        props : ['products', 'cart','sub', 'dis', 'afterdis', 'tax', 'grand', 'token'],
+        props : ['auth', 'products', 'cart','sub', 'dis', 'afterdis', 'tax', 'grand', 'token'],
         data(){
         	return {
                 productsArr : [],

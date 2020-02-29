@@ -26,8 +26,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // toast('Login Successful!','success')->autoClose(3000);
-         // alert()->success('Login','You are logged in.')->position($position = 'top-end')->autoClose(5000);
         $purchases = Order_Items::latest()->where('user_id', $this->guard()->user()->id)->paginate(10);
         return view('home.dashboard', compact('purchases'));
     }
