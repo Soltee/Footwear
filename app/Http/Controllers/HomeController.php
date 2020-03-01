@@ -26,8 +26,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $purchases = Order_Items::latest()->where('user_id', $this->guard()->user()->id)->paginate(10);
-        return view('home.dashboard', compact('purchases'));
+        $purchases = Order_Items::latest();
+        $paginate = $purchases->where('customer_id', $this->guard()->user()->id)->paginate(10);
+        $items = $paginate->items();
+        $first = $paginate->firstItem();
+        $last = $paginate->lastItem();
+        $total = $paginate->total();
+        $has_previous = $paginate->previousPageUrl();
+        $has_next = $paginate->nextPageUrl();
+        return view('home.dashboard', compact('items', 'first', 'last', 'total', 'has_previous', 'has_next'));
     }
 
     public function profile()

@@ -8,9 +8,14 @@
             </div>
         @endif
 
-        <div class="flex flex-col bg-gray-300 w-full">
+        <div class="flex flex-col w-full">
+            <div class="flex items-center mb-6">
+                <a href="/dashboard"><h2 class="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none {{ Route::currentRouteName() == 'dashboard' ? 'text-blue-500 border-b-2 font-medium border-blue-500' : '' }} ">My Purchases</h2></a>
+
+                <a href="/#"><h2 class="ml-3 ttext-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none {{ Route::currentRouteName() == 'customer-profile' ? 'text-blue-500 border-b-2 font-medium border-blue-500' : '' }}">Profile</h2></a>
+            </div>
 	        <div class="flex-1 flex flex-col md:flex-row justify-between">
-	        	<div>
+	        	<div class="w-full md:w-64">
 	        		<form method="POST" action="{{ route('customer-pic', $customer->id) }}" enctype="multipart/form-data">
 		        		@csrf
 		        		@method('PATCH')
@@ -28,7 +33,7 @@
 			        		</div>
 			        </form>
 	        	</div>
-	        	<div class="flex-1 overflow-hidden px-4">
+	        	<div class="flex-1 overflow-hidden px-4 md:pl-8   ">
 						
 	        		<form method="POST" action="{{ route('customer-update', $customer->id) }}" enctype="multipart/form-data">
 		        		@csrf

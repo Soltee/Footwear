@@ -65,4 +65,5 @@
             
       </div>
     </div>
+    <footer-view url="{{ url()->current() }}"></footer-view>
 @endsection
