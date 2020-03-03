@@ -3,9 +3,9 @@
 @section('content')
 
 
-    <div class="py-6 md:py-10 w-full  mt-16">
-        <div class="flex justify-center items-center">
-            <span class="text-gray-900 font-bold text-center  tracking-wider text-lg md:text-xl my-6 ml-4">Recommended</span>
+    <div class="py-6 w-full  ">
+        <div class="flex justify-center items-center mb-6">
+            <span class="text-gray-900 font-bold text-center  tracking-wider text-lg md:text-xl my-6 ml-4">RECOMMENDED</span>
         </div>
         <div class="flex flex-wrap justify-center">
                 @forelse($products as $product)
@@ -33,7 +33,9 @@
         <div class="flex-1 flex flex-col justify-center text-center md:items-left py-6 md:py-0 z-20">
             <h3 class="text-3xl font-bold text-gray-900">Over hundreds of women shoes</h3>
             <p class="text-lg font-bold text-gray-900 mt-8">
-                <span class="opacity-75">Grab now to get</span> 
+                <a href="/shoes?type=Women">
+                    <span class="opacity-75">Grab now to get</span> 
+                </a>
                 <a href="/shoes?type=Women">
                     <span class="p-2 rounded-lg bg-black text-white ml-6 opacity-100 hover:opacity-75">20% off</span>
                 </a>
@@ -72,9 +74,9 @@
         </div>
     </div>
 
-    <div class="mb-6 relative w-full overflow-hidden md:px-12  flex flex-col md:flex-row justify-between items-center h-64 ">
+    <div class="relative w-full overflow-hidden md:px-12  flex flex-col md:flex-row justify-between items-center h-64 ">
 
-        <img class="hover:shadow-2xl h-full opacity-75 absolute inset-0  object-center object-cover w-full " src="{{ asset('/img/children.jpg') }}" alt="Women Shoes">
+        <img class="hover:shadow-2xl h-full opacity-50 absolute inset-0  object-center object-cover w-full " src="{{ asset('/img/children.jpg') }}" alt="Women Shoes">
         <div class="flex-1 flex flex-col justify-center text-center md:items-left py-6 md:py-0 z-20">
             <a href="/shoes?type=Children"><h3 class="text-3xl font-bold text-gray-900 cursor-pointer"> Shop shoes for children : Boys & Girls </h3>
             </a>
@@ -82,5 +84,5 @@
        
     </div>
 
-
+    <footer-view></footer-view>
 @endsection

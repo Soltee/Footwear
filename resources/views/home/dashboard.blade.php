@@ -12,7 +12,7 @@
 
             <div class="w-full">
                 <div class=" mx-auto px-3 sm:px-8">
-                    <div class="py-8" >
+                    <div class="py-4" >
                         <div class="flex items-center mb-6">
                             <a href="/dashboard"><h2 class="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none {{ Route::currentRouteName() == 'dashboard' ? 'text-blue-500 border-b-2 font-medium border-blue-500' : '' }} ">My Purchases</h2></a>
 

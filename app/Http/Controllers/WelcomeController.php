@@ -49,9 +49,11 @@ class WelcomeController extends Controller
             $products = Product::where('subcategory_id', request()->id)->paginate(8);
             $count = count($products);
         } elseif (request()->type) {
+            // dd(request()->type);
             $subcategory = Subcategory::where('name', request()->type)->first();
             // dd($subcategory->id);
             $products = Product::where('subcategory_id', $subcategory->id)->paginate(8);
+            // dd($products);
             $count = count($products);
         } else {
             $products = Product::latest()->paginate(8);

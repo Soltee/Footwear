@@ -42,7 +42,7 @@ Vue.component('payments-view', require('./components/admin/payments/Payments.vue
 
 
 /***** Components for Customers ******/
-Vue.component('searchncart', require('./components/customer/Navmenu.vue').default);
+Vue.component('navmenu', require('./components/customer/Navmenu.vue').default);
 Vue.component('add-to-cart', require('./components/customer/Product.vue').default);
 Vue.component('footer-view', require('./components/customer/Footer.vue').default);
 Vue.component('cart-checkout', require('./components/customer/Checkout.vue').default);
