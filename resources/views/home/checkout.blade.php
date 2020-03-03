@@ -47,7 +47,7 @@
 @endsection
 
 @section('content')
-    <div class="flex flex-row  items-center">
+    {{-- <div class=""> --}}
 
     	@if(Auth::guard('customer')->user())
         	<cart-checkout  :auth="{{ Auth::guard('customer')->user()  }}" :products="{{ $products->toJson() }}" :cart="{{ $totalQuantity }}" sub="{{ $subTotal }}" dis="{{ $discount }}" afterdis="{{ $subAfterDis }}" tax="{{ $tax }}" grand="{{ $grandTotal }}" token="{{ $token }}"></cart-checkout>
@@ -55,7 +55,7 @@
 			<cart-checkout :products="{{ $products->toJson() }}" :cart="{{ $totalQuantity }}" sub="{{ $subTotal }}" dis="{{ $discount }}" afterdis="{{ $subAfterDis }}" tax="{{ $tax }}" grand="{{ $grandTotal }}" token="{{ $token }}"></cart-checkout>
         @endif
             
-    </div>
+    {{-- </div> --}}
 
    	<footer-view url="{{ url()->current() }}"></footer-view>
 

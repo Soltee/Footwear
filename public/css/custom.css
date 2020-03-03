@@ -1,5 +1,9 @@
 li{list-style-type: none;}
-.background{
+.hero-background{
+	height: 300;
+}
+
+/*.background{
 	position: absolute;
 	left: 0;
 	width: 100%;
@@ -18,11 +22,11 @@ li{list-style-type: none;}
 	background-size: cover;
 	background-position: right;
 	/*background-color: red;*/
-}
+}*/
 /* Create a custom radio button */
 
 
-
+/*
 
 .footer-blob{
 	transform: rotateX(180deg);
@@ -31,3 +35,4 @@ li{list-style-type: none;}
 
 }
 
+*/

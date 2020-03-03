@@ -1,5 +1,5 @@
 <template>
-    <nav class=" flex flex-row justify-between items-center px-4 py-3 md:px-16 md:py-4 border-b-2 border-gray-300">
+    <nav class=" flex flex-row justify-between items-center px-3 py-3 md:px-16 md:py-4 ">
         
 
         <div class=" flex items-center">
@@ -21,7 +21,7 @@
         </div>
         
         <!-- small screeen nav-->
-        <div v-if="openMenu" class="absolute top-0 mt-16 left-0 p-2 md:hidden  flex flex-col ">
+        <div v-if="openMenu" class="absolute top-0 mt-24 ml-6 left-0 p-2 md:hidden  flex flex-col ">
                 
             <li class="mb-4 mr-8">
                 <a :href="`/#`" @click.prevent="searchModal = true;">
@@ -43,7 +43,7 @@
             </li>
         </div>
         <!-- Large screeen nav-->
-        <ul class=" md:static md:flex md:flex-row items-center p-2">
+        <ul class=" md:static md:flex md:flex-row items-center">
             <div class="hidden md:static md:p-0 md:rounded-none md:flex md:flex-row items-center mt-2">
                 
                 <li class="mb-4 mr-8">
@@ -74,7 +74,7 @@
                     <svg class="h-8 w-8  text-gray-900 rounded-full" fill="currentColor" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24"><path d="M16 9v-4l8 7-8 7v-4h-8v-6h8zm-2 10v-.083c-1.178.685-2.542 1.083-4 1.083-4.411 0-8-3.589-8-8s3.589-8 8-8c1.458 0 2.822.398 4 1.083v-2.245c-1.226-.536-2.577-.838-4-.838-5.522 0-10 4.477-10 10s4.478 10 10 10c1.423 0 2.774-.302 4-.838v-2.162z"/></svg>
                 </a>
             </li>
-            <li v-else class="mb-4">
+            <li v-else class="mt-2 mr-2 mb-4">
               <a href="/login" class="flex items-center content-between bg-custom-red-darker hover:bg-custom-red-lighter  px-6 py-2 rounded-full">
                   <svg class="w-6 h-6 text-white" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 448h-84c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h84c17.7 0 32-14.3 32-32V160c0-17.7-14.3-32-32-32h-84c-6.6 0-12-5.4-12-12V76c0-6.6 5.4-12 12-12h84c53 0 96 43 96 96v192c0 53-43 96-96 96zm-47-201L201 79c-15-15-41-4.5-41 17v96H24c-13.3 0-24 10.7-24 24v96c0 13.3 10.7 24 24 24h136v96c0 21.5 26 32 41 17l168-168c9.3-9.4 9.3-24.6 0-34z"/></svg>
                   <span class="text-white ml-3 font-bold text-lg">Login</span>

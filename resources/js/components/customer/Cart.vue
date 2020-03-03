@@ -9,7 +9,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-800 mx-2" ><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
                     <h4 class=" font-bold text-lg text-gray-900">My Cart</h4>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-700 mx-2"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
-                    <h4 class="font-bold text-lg text-gray-900">Checkout</h4>
+                    <h4 class="font-bold text-lg text-gray-900 opacity-75">Checkout</h4>
                 </div>
                 <!-- <form @submit.prevent="clearCart"> -->
                     <button @click="modal = true;" type="submit" class="p-3 bg-red-500 rounded-lg text-lg font-medium text-white">Clear Cart</button>
@@ -59,8 +59,8 @@
 
             </div>
 
-            <div class="mt-6 mb-3 flex flex-col md:flex-row justify-between w-auto">
-                <form @submit.prevent="redeemDiscount"> 
+            <div class="mt-6 mb-3 flex flex-col md:flex-row justify-end w-auto">
+                <!-- <form @submit.prevent="redeemDiscount"> 
                     <div class="w-full md:w-auto mb-4 cm:mb-0">
                         <h3 class="mb-3 text-lg font-bold text-black">Redeem your Coupon</h3>
                         <div class="flex flex-col cm:flex-row items-center">
@@ -71,7 +71,7 @@
                         </div>
                     </div>
                     
-                </form>
+                </form> -->
                 <div class="flex flex-col  rounded-lg p-3 mb-3">
                     <div class="flex items-center justify-between">
                         <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">SubTotal</span>

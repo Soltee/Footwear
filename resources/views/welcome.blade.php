@@ -2,8 +2,7 @@
 
 @section('content')
 
-
-    <div class="py-6 w-full  ">
+    <div class="mt-10 py-6 w-full  ">
         <div class="flex justify-center items-center mb-6">
             <span class="text-gray-900 font-bold text-center  tracking-wider text-lg md:text-xl my-6 ml-4">RECOMMENDED</span>
         </div>

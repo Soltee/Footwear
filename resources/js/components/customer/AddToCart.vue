@@ -38,14 +38,14 @@
         <div class="flex flex-col my-6">
             <h3 class="text-xl text-gray-900 mb-8 ">Recommended Products</h3>
         
-            <div class="embla2 overflow-x-scroll">
+            <div class="embla2 overflow-x-scroll h-auto">
                 <div class="embla__container flex">
                 <div v-for="recommend in recommended">
 
                     <div class="embla__slide relative w-64 h-auto p-1 bg-white rounded-lg hover:shadow-md m-2">
                         <a :href="`/shoes/${recommend.id}/${recommend.slug}`">
                             <h3 class="text-lg font-bold my-2 text-gray-900">{{ recommend.name }}</h3>
-                            <img class="w-full rounded-lg object-cover object-center" :src="`/storage/${recommend.imageUrl}`">                        
+                            <img class="w-64 h-64 rounded-lg object-cover object-center" :src="`/storage/${recommend.imageUrl}`">                        
                         </a>
                     </div>
                 </div>
@@ -146,7 +146,7 @@ import EmblaCarousel from 'embla-carousel';
             }
         },
         
-    }
+    };
 </script>
 <style scoped>  
     .fade-enter-active,

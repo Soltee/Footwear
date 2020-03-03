@@ -8,7 +8,7 @@
             </div>
         @endif
 
-        <div class="flex flex-col w-full">
+        <div class="flex flex-col w-full bg-white rounded-lg">
             <div class="flex items-center mb-6">
                 <a href="/dashboard"><h2 class="text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none {{ Route::currentRouteName() == 'dashboard' ? 'text-blue-500 border-b-2 font-medium border-blue-500' : '' }} ">My Purchases</h2></a>
 
@@ -26,7 +26,7 @@
 	                        </button>
 		        		</div>
 			        		<div class="flex flex-row items-center 	rounded-lg mb-3">
-					        	<input type="file" id="avatar" name="avatar" class="px-2 py-2 rounded-r-lg  text-white cursor-pointer">
+					        	<input type="file" id="avatar" name="avatar" class="px-2 py-2 rounded-r-lg  text-white cursor-pointer" required="">
 			        			@if($customer->avatar)
 			        			<img class="h-24 w-full rounded-lg object-cover object-center" src="/storage/{{ $customer->avatar }}">
 			        			@endif

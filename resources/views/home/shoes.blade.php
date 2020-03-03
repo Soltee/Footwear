@@ -1,8 +1,18 @@
 @extends('layouts.app')
 
+@section('extra')
+  <style>
+   .products{
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+     grid-gap:2rem;
+   } 
+  </style>
+@endsection
+
 @section('content')
-    <div class="bg-custom-gray">
-      <div class="z-0  px-3  lg:px-12 flex flex-col lg:flex-row  mx-auto container">
+    <div class="bg-gray-300">
+      <div class="z-0  px-3  md:px-16 flex flex-col lg:flex-row  mx-auto container">
           
           <!-- Categories -->
          <div class=" overflow-x-scroll lg:w-56 md:px-3 py-3">
@@ -28,17 +38,17 @@
          </div>
 
           <!-- Shoes -->
-         <div class="px-3 py-3 flex flex-col flex-1 mt-3">
+         <div class="flex-1 px-3 py-3 flex-1 mt-3">
          		<div class="flex flex-row justify-between">
          			<h4 class="text-lg font-bold mb-3">Products</h4>
               <span class="">{{ $count }} / {{ $products->total() }}</span>
          		</div>
-         		<div class="mt-10 flex flex-row  flex-wrap {{ $count > 2 ? '' : '' }}">
+         		<div class="mt-10  w-full products">
          			@forelse($products as $product)
-                  <div class="p-4 bg-white rounded-lg shadow-lg cursor-pointer m-2 w-full hover:-mt-1  w-full sm:w-64  p-3  transition-all">
+                  <div class=" bg-white rounded-lg shadow-lg cursor-pointer m-2 hover:-mt-1   p-3  transition-all">
                       <a href="/shoes/{{ $product->id }}/{{$product->slug}}">
                           <h3 class="text-lg font-bold my-2 text-gray-900">{{ $product->name }}</h3>
-                          <img class="w-full sm:h-64 sm:w-56 rounded-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}">  
+                          <img class="w-full h-40 rounded-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}">  
                       </a>
                       <div class=" my-2  rounded-lg flex flex-row justify-between w-full items-center">
                               <h5 class="text-xl font-bold text-gray-800">$ {{ $product->price }}</h5>

@@ -19,7 +19,7 @@
             </div>
 
             <div class="mt-6 cm:mt-0  items-right ">
-                <h3 class="text-custom-gray hover:opacity-75 mb-4 cm:text-right border-r-2 border-white pr-3">Our Social Platform</h3>
+                <h3 class="text-custom-gray hover:opacity-75 mb-8 cm:text-right border-r-2 border-white pr-3">Our Social Platform</h3>
                 <div class="flex flex-row items-right md:justify-end w-full mt-4">
                     <li class="ml-10">
                         <a :href="`#`" class="text-custom-gray hover:opacity-75">
@@ -41,7 +41,7 @@
 
             </div>
         </div>
-        <div class="flex flex-row justify-around items-center mt-12">
+        <div class="px-4 sm:px-12 md:px-24 flex flex-row justify-between items-center mt-12">
             <span class="font-sm text-sm text-white">&copy; Shoe-wear 2019</span>
             <a href="/#" v-scroll-to="`#app`">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"></circle><polyline points="16 12 12 8 8 12"></polyline><line x1="12" y1="16" x2="12" y2="8"></line></svg>
