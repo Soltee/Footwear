@@ -172,6 +172,7 @@
 
 <script>
 import Toast from '../helpers/Alert.js';
+import { eventBus } from '../../app.js';    
 
     export default {
         name : 'navmenu',
@@ -207,21 +208,21 @@ import Toast from '../helpers/Alert.js';
             this.getCartProducts();
         },
         created(){
-            serverBus.$on('product-added-to-cart', (qty) => {
+            eventBus.$on('product-added-to-cart', (qty) => {
                 if(qty){
                     this.cartTotalQty += Number(qty);
                 } else {
                     this.cartTotalQty += 1;                    
                 }
             });
-            serverBus.$on('cart-updated', (p) => {
+            eventBus.$on('cart-updated', (p) => {
                 this.cartTotalQty += (Number(p.qty) - p.p.qty);
             });
-            serverBus.$on('product-removed', (qty) => {
+            eventBus.$on('product-removed', (qty) => {
 
                 this.cartTotalQty -= qty;
             });
-            serverBus.$on('cart-cleared', () => {
+            eventBus.$on('cart-cleared', () => {
                   // console.log('Yes');
                 this.cartTotalQty = 0;
                 this.products = [];

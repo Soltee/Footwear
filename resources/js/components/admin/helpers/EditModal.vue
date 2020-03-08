@@ -18,8 +18,8 @@
                         Save
                     </button>
                 </div>
-                <div class="flex flex-row">
-                    <div class="w-64 h-90 overflow-y-scroll pl-2">
+                <div class="flex flex-col md:flex-row h-90 overflow-y-scroll">
+                    <div class="w-full md:w-64  pl-2">
                         <h4 class="text-md font-semibold text-gray-800 my-2">Images</h4>
                         <div class="flex w-full items-center justify-center bg-grey-lighter mb-3">
                             <label class="w-full flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue ">
@@ -51,7 +51,7 @@
                             <svg @click="removeImage(image)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-admin-red cursor-pointer"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
                         </div>
                     </div> 
-                    <div class="flex-1 overflow-y-scroll h-90">
+                    <div class="flex-1 pl-3">
                         <div class="flex flex-col  rounded-lg mb-3">
                             <label for="name" class=" px-2 py-3 text-gray-800 text-md font-semibold ">Name</label>
                             <input type="text" id="name" v-model="name" class="px-3 py-3 rounded-lg  bg-gray-300 text-gray-900">
@@ -118,7 +118,7 @@
 </template>
 
 <script>
-import { serverBus } from '../../../app.js';    
+import { eventBus } from '../../../app.js';    
 import Toast from '../../helpers/Alert';
 
     export default {
@@ -370,7 +370,7 @@ import Toast from '../../helpers/Alert';
                 this.categoryErr     = [];            
             },
             closeModal(){
-                serverBus.$emit('close-modal');
+                eventBus.$emit('close-modal');
             },
         }
     };

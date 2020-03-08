@@ -16,7 +16,7 @@
 
 <script>
 import Toast from '../helpers/Alert';
-import { serverBus } from '../../app.js';    
+import { eventBus } from '../../app.js';    
     export default {
         name : 'add-to-cart',
         props : ['product'],
@@ -37,7 +37,7 @@ import { serverBus } from '../../app.js';
                 axios.get(`/add-to-cart/${this.product.id}`)
                     .then((res) => {
                         if(res.status == 200){
-                            serverBus.$emit('product-added-to-cart');
+                            eventBus.$emit('product-added-to-cart');
                             this.isAdded = true;
                             Toast.fire({
                               icon: 'success',

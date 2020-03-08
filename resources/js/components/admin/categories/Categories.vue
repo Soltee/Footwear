@@ -262,7 +262,7 @@
 </template>
 
 <script>
-import { serverBus } from '../../../app.js';    
+import { eventBus } from '../../../app.js';    
 import Toast from '../../helpers/Alert';
 import CreateModal from './Create';
 import EditModal from './Edit';
@@ -307,16 +307,16 @@ import DeleteModal from '../helpers/DeleteModal';
             this.getSubCategories();
         },
         created(){
-            serverBus.$on('close-modal', ()=>{
+            eventBus.$on('close-modal', ()=>{
                 this.closeModal();
             }); 
 
-            serverBus.$on('success', (status)=>{
+            eventBus.$on('success', (status)=>{
                 this.closeonSuccess();
                 this.reset();
             });
 
-            serverBus.$on('drop-type', ()=>{
+            eventBus.$on('drop-type', ()=>{
                 this.dropCateSubCat();
             });
         },

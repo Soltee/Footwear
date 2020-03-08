@@ -126,7 +126,7 @@
 </template>
 
 <script>
-import { serverBus } from '../../../app.js';    
+import { eventBus } from '../../../app.js';    
 import Toast from '../../helpers/Alert';
 import EditModal from '../helpers/EditModal';
 import DeleteModal from '../helpers/DeleteModal';
@@ -159,10 +159,11 @@ import ViewModal from '../helpers/ViewModal';
         	this.getProducts();
         },
         created(){
-            serverBus.$on('close-modal', ()=>{
+            eventBus.$on('close-modal', ()=>{
                 this.closeModal();
             }); 
-            serverBus.$on('drop-type', ()=>{
+            eventBus.$on('drop-type', ()=>{
+                console.log('hhh');
                 this.dropProduct();
             });
         },
@@ -212,7 +213,7 @@ import ViewModal from '../helpers/ViewModal';
                     });
         	},
         	dropProduct(){
-        		
+        		console.log('hhh2');
                axios.delete(`/admin/products/${this.selected.id}`)
                     .then(res=>{
                         if(res.status == 204){

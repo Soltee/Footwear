@@ -138,7 +138,7 @@
 
 <script>
 import Toast from '../helpers/Alert';
-import { serverBus } from '../../app.js';    
+import { eventBus } from '../../app.js';    
     export default {
         name : 'cart-view',
         props : ['products', 'cart', 'sub', 'dis', 'subafterdis','taxadded', 'grand'],
@@ -178,7 +178,7 @@ import { serverBus } from '../../app.js';
 
                     if(res.status == 200){
                         this.status = true;
-                        serverBus.$emit('cart-updated',  { p, qty });  
+                        eventBus.$emit('cart-updated',  { p, qty });  
                         this.productsArr = this.productsArr.filter((state) => {
                             return state.rowId !== p.rowId;
                         });
@@ -200,7 +200,7 @@ import { serverBus } from '../../app.js';
                     }
                     if(res.status == 204) {
 
-                        serverBus.$emit('product-removed', p.qty);  
+                        eventBus.$emit('product-removed', p.qty);  
                         this.productsArr = this.productsArr.filter((state) => {
                             return state.id !== p.id;
                         });
@@ -224,7 +224,7 @@ import { serverBus } from '../../app.js';
                 axios.post(`/remove-from-cart/${p.rowId}`)
                 .then(res => {
                     if(res.status = 204){
-                        serverBus.$emit('product-removed', p.qty);
+                        eventBus.$emit('product-removed', p.qty);
                         this.productsArr = this.productsArr.filter((state) => {
                             return state.id !== p.id;
                         });
@@ -264,7 +264,7 @@ import { serverBus } from '../../app.js';
                 axios.post('/clear-cart', {})
                 .then(res => {
                     if(res.status == 204){
-                        serverBus.$emit('cart-cleared');  
+                        eventBus.$emit('cart-cleared');  
                         this.productsArr = [];
                         this.updatedQty = 0;
                         this.subTotal = 0;

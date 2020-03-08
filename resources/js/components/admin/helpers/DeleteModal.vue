@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { serverBus } from '../../../app.js';    
+import { eventBus } from '../../../app.js';    
 import Toast from '../../helpers/Alert';
 
     export default {
@@ -42,11 +42,11 @@ import Toast from '../../helpers/Alert';
 
         methods: {
         	closeModal(){
-                serverBus.$emit('close-modal');
+                eventBus.$emit('close-modal');
             },
             emit(){
-                serverBus.$emit('drop-type');
+                eventBus.$emit('drop-type');
             }
         }
-    }
+    };
 </script>

@@ -19,7 +19,10 @@ class SearchController extends Controller
         $totalProducts = $products->count();
         $total += $totalProducts;
     	
-    	$customers = Customer::where('name', 'LIKE', '%'.$param.'%')->latest()->get();
+    	$customers = Customer::where('first_name', 'LIKE', '%'.$param.'%')
+                                ->orWhere('last_name', 'LIKE', '%'. $param . '%')
+                                ->orWhere('email', 'LIKE', '%'. $param . '%')
+                                ->latest()->get();
         $totalCustomers = $customers->count();
         $total += $totalCustomers;
     	

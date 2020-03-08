@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import { serverBus } from '../../../app.js';    
+import { eventBus } from '../../../app.js';    
 import Toast from '../../helpers/Alert';
 
     export default {
@@ -98,10 +98,10 @@ import Toast from '../../helpers/Alert';
         },
         methods: {
         	closeModal(){
-                serverBus.$emit('close-modal');
+                eventBus.$emit('close-modal');
             },
             emit(){
-                serverBus.$emit('create-type');
+                eventBus.$emit('create-type');
             },
             add(){
                 let endpoint = `/admin`;
@@ -121,7 +121,7 @@ import Toast from '../../helpers/Alert';
                     formData
                 ).then(res => {
                         if(res.status == 201){
-                            serverBus.$emit('success', res.status);
+                            eventBus.$emit('success', res.status);
                         }
                     }).catch(err => {
                         Toast.fire({

@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="mt-10 py-6 w-full  ">
+    <div class="mt-32 py-6 w-full  ">
         <div class="flex justify-center items-center mb-6">
             <span class="text-gray-900 font-bold text-center  tracking-wider text-lg md:text-xl my-6 ml-4">RECOMMENDED</span>
         </div>
@@ -53,7 +53,7 @@
 
         <div class="flex flex-wrap justify-center">
                 @forelse($featured as $product)
-                <div class="p-4 bg-white rounded-lg hover:shadow-lg cursor-pointer m-2 w-full cm:w-auto hover:-mt-1 transition-all">
+                <div class="p-4 rounded-lg hover:shadow-lg cursor-pointer m-2 w-full cm:w-auto hover:-mt-1 transition-all">
                     <a href="shoes/{{ $product->id }}/{{ $product->slug }}">
                         <h3 class="text-lg font-bold my-2 text-gray-900">{{ $product->name }}</h3>
                         <img class="h-64 w-64 rounded-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}">

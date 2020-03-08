@@ -9,7 +9,8 @@ require('./bootstrap');
 window.Vue = require('vue');
 var VueScrollTo = require('vue-scrollto');
 Vue.use(VueScrollTo);
-export const serverBus = new Vue();
+
+export const eventBus = new Vue();
 
 /**
  * The following block of code may be used to automatically register your

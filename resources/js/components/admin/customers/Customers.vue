@@ -122,7 +122,7 @@
 </template>
 
 <script>
-import { serverBus } from '../../../app.js';    
+import { eventBus } from '../../../app.js';    
 import Toast from '../../helpers/Alert';
 import DeleteModal from '../helpers/DeleteModal';
 import ViewModal from '../helpers/ViewModal';
@@ -153,10 +153,10 @@ import ViewModal from '../helpers/ViewModal';
         	this.getCustomers();
         },
         created(){
-            serverBus.$on('close-modal', ()=>{
+            eventBus.$on('close-modal', ()=>{
                 this.closeModal();
             }); 
-            serverBus.$on('drop-type', ()=>{
+            eventBus.$on('drop-type', ()=>{
                 this.dropCostumer();
             });
         },

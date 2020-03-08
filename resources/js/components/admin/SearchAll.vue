@@ -65,7 +65,7 @@
                             <h4 class="m-0 mt-3 text-lg my-3">Products ({{ products.length }})</h4>
                             <div v-for="p in products" class="mt-3">
                                 <div class="flex flex-row items-center justify-around group border-2 border-transparent hover:border-green-500 rounded-lg px-3 py-2  cursor-pointer mb-3" @click="redirectTo(p, 'products')">
-                                    <img class="h-12 w-12 rounded-full" :src="`/storage/${p.imageUrl}`">
+                                    <img class="h-12 w-12 md:h-16 md:w-16 rounded-full" :src="`/storage/${p.imageUrl}`">
                                     <h4 class="m-0">{{ p.name }}</h4>
                                 </div>
                             </div> 
@@ -74,8 +74,8 @@
                             <h4 class="m-0 mt-3 text-lg my-3">Customers ({{ customers.length }})</h4>
                             <div v-for="c in customers" class="mt-3">
                                 <div class="flex flex-row items-center justify-around group border-2 border-transparent hover:border-green-500 rounded-lg px-3 py-2 cursor-pointer mb-3" @click="redirectTo(c, 'customers')">
-                                    <img class="h-12 w-12 rounded-full" :src="`/storage/${c.avatar}`">
-                                    <h4>{{ c.name }}</h4>
+                                    <img class="h-12 w-12 md:h-16 md:w-16 rounded-full object-cover object-center" :src="`/storage/${c.avatar}`">
+                                    <h4>{{ c.first_name }} {{ c.last_name }}</h4>
                                 </div>     
                             </div>
                         </div>
@@ -159,7 +159,7 @@
                 window.location = `http://localhost:8000/admin/${name}/${c.id}-${c.slug}`;   
             }
         }
-    }
+    };
 </script>
 <style scoped>
     

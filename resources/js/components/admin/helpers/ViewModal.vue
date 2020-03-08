@@ -34,7 +34,7 @@
                     <div class="embla__container flex">
                     <div v-for="image in images">
 
-                        <div class="embla__slide relative w-64 h-auto p-1 bg-white rounded-lg hover:shadow-md m-2">
+                        <div class="embla__slide relative w-64 h-64 p-1  rounded-lg hover:shadow-md m-2">
                             <img class="w-full rounded-lg object-cover object-center" :src="`/storage/${image.thumbnail}`">                        
                         </div>
                     </div>
@@ -159,7 +159,7 @@
 	</div>
 </template>
 <script>
-import { serverBus } from '../../../app.js';    
+import { eventBus } from '../../../app.js';    
 import Toast from '../../helpers/Alert';
 import EmblaCarousel from 'embla-carousel';
 import moment from 'moment';
@@ -238,13 +238,13 @@ import moment from 'moment';
         },
         methods: {
         	closeModal(){
-            serverBus.$emit('close-modal');
+            eventBus.$emit('close-modal');
           },
           format(date) {
             return moment().format(date);
           }
         }
-    }
+    };
 </script>
 <style>
 	
