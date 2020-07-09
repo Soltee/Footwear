@@ -1,38 +1,7 @@
-li{list-style-type: none;}
-.hero-background{
-	height: 300;
+li {
+    list-style-type: none;
 }
 
-/*.background{
-	position: absolute;
-	left: 0;
-	width: 100%;
-	object-fit: cover;
-	z-index: -1;
+.hero-background {
+    height: 300;
 }
-
-.header-blob{
-	top: -300px;
-	height: 900px;
-}
-
-.hero{
-	background-image: url('/img/lg-bk.jpg');
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: right;
-	/*background-color: red;*/
-}*/
-/* Create a custom radio button */
-
-
-/*
-
-.footer-blob{
-	transform: rotateX(180deg);
-	height: 500px;
-	bottom: -1200px;	
-
-}
-
-*/

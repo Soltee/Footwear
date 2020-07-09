@@ -12,7 +12,7 @@
 
 @section('content')
     <div class="bg-gray-300">
-      <div class="z-0  px-3  md:px-16 flex flex-col lg:flex-row  mx-auto container">
+      <div class="z-0  px-3  md:px-16 flex flex-col lg:flex-row  mx-auto container my-8">
           
           <!-- Categories -->
          <div class=" overflow-x-scroll lg:w-56 md:px-3 py-3">
@@ -25,7 +25,7 @@
 
                   <ul class="mt-2 flex flex-row lg:flex-col items-left lg:ml-2">
                     @forelse($category->subcategories as $subcategory)
-                      <a class="mr-3 lg:mr-0 mb-2 px-3 py-3 rounded-lg bg-white hover:shadow-lg" href="{{ route('shoes', ['id' => $subcategory->id , 'subcategory' => $subcategory->name]) }}">
+                      <a class="mr-3 lg:mr-0 mb-2 px-3 py-3 rounded-lg  hover:shadow-lg" href="{{ route('shoes', ['id' => $subcategory->id , 'subcategory' => $subcategory->name]) }}">
                           {{ $subcategory->name }}
                       </a>
                     @empty  
@@ -45,7 +45,7 @@
          		</div>
          		<div class="mt-10  w-full products">
          			@forelse($products as $product)
-                  <div class=" bg-white rounded-lg shadow-lg cursor-pointer m-2 hover:-mt-1   p-3  transition-all">
+                  <div class=" rounded-lg hover:shadow-lg cursor-pointer m-2 hover:-mt-1   p-3  transition-all">
                       <a href="/shoes/{{ $product->id }}/{{$product->slug}}">
                           <h3 class="text-lg font-bold my-2 text-gray-900">{{ $product->name }}</h3>
                           <img class="w-full h-40 rounded-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}">  

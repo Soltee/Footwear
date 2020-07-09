@@ -43,6 +43,7 @@ class CheckoutController extends Controller
     */
     public function charge(Request $request){
 
+        // dd($request->all());
         $firstName = request()->firstname;
         $lastName = request()->lastname;
         $email = request()->email;
@@ -159,20 +160,20 @@ class CheckoutController extends Controller
         $Authenticated = ($this->guard()) ? $this->guard()->id : null;
         
         $order = Orders::create([
-            'customer_id' => $Authenticated,
-            'first_name' => $firstName,
-            'last_name' => $lastName, 
-            'email' => $email,
-            'city' => $city, 
+            'customer_id'   => $Authenticated,
+            'first_name'   => $firstName,
+            'last_name'    => $lastName, 
+            'email'        => $email,
+            'city'         => $city, 
             'street_address' => $address, 
-            'phoneNumber' => 9838383838,
+            'phoneNumber'    => 9838383838,
             'payment_method' => $paymentType, 
-            'payment_id' => $paymentId, 
-            'subtotal' => $subTotal, 
-            'discount' => $discount, 
+            'payment_id'    => $paymentId, 
+            'subtotal'    => $subTotal, 
+            'discount'      => $discount, 
             'subafterdiscount' => $subAfterDis, 
-            'tax' => $tax, 
-            'grand' => $grandTotal
+            'tax'         => $tax, 
+            'grand'      => $grandTotal
         ]);
 
         foreach(Cart::content() as $product){
