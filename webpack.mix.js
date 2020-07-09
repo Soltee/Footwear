@@ -13,10 +13,11 @@ require('laravel-mix-purgecss');
  */
 
 //  mix.browserSync('localhost:8000');
-mix.js('resources/js/app.js', 'public/js')
+mix
+    // .js('resources/js/app.js', 'public/js')
     .sass('resources/scss/app.scss', 'public/css')
     .options({
         processCssUrls: false,
         postCss: [tailwindcss('./tailwind.config.js')],
-    });
-// .purgeCss();
+    })
+    .purgeCss();
