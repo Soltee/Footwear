@@ -7,40 +7,49 @@
         "laravel"
     ],
     "license": "MIT",
-    "require": {
-        "php": "^7.2",
+    "require":
+    {
+        "php": "^7.2.5",
+        "brick/math": "^0.8.9",
         "braintree/braintree_php": "^4.5",
         "consoletvs/charts": "6.*",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.4",
         "hardevine/shoppingcart": "^2.7",
-        "laravel/framework": "^6.0",
-        "laravel/tinker": "^1.0",
+        "laravel/framework": "^7.0",
+        "laravel/tinker": "^2.0",
         "league/omnipay": "^3.0",
         "omnipay/stripe": "^3.1",
         "realrashid/sweet-alert": "^3.1",
-        "srmklive/paypal": "^1.6"
+        "srmklive/paypal": "^1.6",
+        "laravel/ui": "^2.1"
     },
-    "require-dev": {
-        "facade/ignition": "^1.4",
-        "fzaninotto/faker": "^1.4",
-        "laravel-frontend-presets/tailwindcss": "^2.0",
+    "require-dev":
+    {
+        "facade/ignition": "^2.0",
+        "fzaninotto/faker": "^1.8",
+        "laravel-frontend-presets/tailwindcss": "^4.1.0",
         "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^3.0",
-        "phpunit/phpunit": "^8.0"
+        "nunomaduro/collision": "^4.1",
+        "phpunit/phpunit": "^8.5"
     },
-    "config": {
+    "config":
+    {
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true
     },
-    "extra": {
-        "laravel": {
+    "extra":
+    {
+        "laravel":
+        {
             "dont-discover": []
         }
     },
-    "autoload": {
-        "psr-4": {
+    "autoload":
+    {
+        "psr-4":
+        {
             "App\\": "app/"
         },
         "classmap": [
@@ -48,14 +57,17 @@
             "database/factories"
         ]
     },
-    "autoload-dev": {
-        "psr-4": {
+    "autoload-dev":
+    {
+        "psr-4":
+        {
             "Tests\\": "tests/"
         }
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "scripts": {
+    "scripts":
+    {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
