@@ -24,6 +24,7 @@
         "resolve-url-loader": "^3.1.1",
         "sass": "^1.26.10",
         "sass-loader": "^9.0.2",
+        "sweetalert": "^2.1.2",
         "sweetalert2": "^9.17.1",
         "swiper": "^6.1.2",
         "tailwindcss": "^1.6.0",

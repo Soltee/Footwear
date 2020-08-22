@@ -15,7 +15,7 @@
       <div class="z-0  flex flex-col lg:flex-row">
           
           <!-- Categories -->
-         <div class=" overflow-x-scroll lg:overflow-x-auto lg:w-48 md:px-3 ">
+         <div class=" overflow-x-scroll lg:overflow-x-auto lg:w-48 md:px-3 z-0">
               <ul class="flex flex-row lg:flex-col items-left md:ml-2">
                 @forelse($categories as $category)
 

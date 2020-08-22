@@ -20,9 +20,10 @@
 <body class="antialiased leading-none text-lg">
     <div id="app"  class="">
                   
-        <!-- Header-->     
-        <navmenu :customer="{{ json_encode(Auth::guard('customer')->user()) }}"></navmenu>
-              
+        <!-- Header--> 
+        @if(Route::currentRouteName() != 'cart.checkout')    
+            <navmenu :customer="{{ json_encode(Auth::guard('customer')->user()) }}"></navmenu>
+        @endif  
 
         @include('sweetalert::alert')
         <!-- Content -->     
@@ -30,8 +31,10 @@
         @yield('content')
         </main>
 
-        <!-- Footer -->     
-        <footer-view></footer-view>
+        <!-- Footer --> 
+        @if(Route::currentRouteName() != 'cart.checkout')    
+            <footer-view></footer-view>
+        @endif      
     </div>
 
 

@@ -2,8 +2,6 @@
     <div class="px-6 py-3  md:py-6 max-w-screen-lg mx-auto">
         <nav class=" flex flex-row justify-between items-center">
             <div class=" flex items-center">
-                <svg v-if="openMenu" @click="openMenu = false;" class="relative  md:hidden  w-8 h-8 text-custom-light-black cursor-pointer hover:text-gray-700" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                    <path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z" /></svg>
                 <svg v-if="!openMenu" @click="openMenu = true;" class="relative  md:hidden w-8 h-8 text-custom-light-black cursor-pointer hover:text-gray-700" viewBox="0 0 34 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <rect x="0.798828" width="33.2015" height="2" rx="2" fill="currentColor" />
                     <rect x="0.798828" y="12" width="33.2015" height="2" rx="2" fill="currentColor" />
@@ -20,51 +18,18 @@
                 </a>
             </div>
             <!-- small screeen nav-->
-            <div v-if="openMenu" class="absolute top-0 mt-24 ml-6 left-0 p-2 md:hidden  flex flex-col ">
-                <li class="mb-4 mr-8">
-                    <a :href="`/#`" @click.prevent="searchModal = true;">
-                        <svg class=" w-6 h-6 cursor-pointer text-custom-light-black hover:opacity-75" viewBox="0 0 47 49" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M36 20C36 28.8366 28.8366 36 20 36C11.1634 36 4 28.8366 4 20C4 11.1634 11.1634 4 20 4C28.8366 4 36 11.1634 36 20ZM31.8692 36.0989C28.5493 38.5507 24.4439 40 20 40C8.9543 40 0 31.0457 0 20C0 8.9543 8.9543 0 20 0C31.0457 0 40 8.9543 40 20C40 25.1631 38.0436 29.8692 34.8316 33.4175L46.142 44.7279C46.923 45.509 46.923 46.7753 46.142 47.5564C45.3609 48.3374 44.0946 48.3374 43.3136 47.5564L31.9998 36.2426C31.9536 36.1964 31.91 36.1484 31.8692 36.0989Z" fill="currentColor" />
-                        </svg>
-                    </a>
-                </li>
-                <li class="relative flex items-center cursor-pointer mb-4 mr-8 ">
-                    <a :href="`/cart-details`">
-                        <svg fill="currentColor" class="h-8 w-8 text-custom-light-black hover:text-gray-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path d="M4 2h16l-3 9H4a1 1 0 1 0 0 2h13v2H4a3 3 0 0 1 0-6h.33L3 5 2 2H0V0h3a1 1 0 0 1 1 1v1zm1 18a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm10 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" /></svg>
-                        <span class="absolute top-0 right-0 -mt-2 -mr-2 text-custom-red-lighter p-1 bg-custom-gray rounded-full">{{ cartTotalQty }}</span>
-                    </a>
-                </li>
-                <li class="mb-4 mr-8">
-                    <a :href="`/shoes`" class="text-lg text-custom-light-black hover:text-gray-700 font-bold">
+            <div v-if="openMenu" class="fixed inset-0  px-6 py-6  md:hidden z-40 flex flex-col bg-custom-light-black rounded w-full ">
+                <svg @click="openMenu = false;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-white cursor-pointer hover:opacity-75 mb-6">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+                <path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z" /></svg>
+                <li class="mb-4">
+                    <a :href="`/shoes`" class="text-md text-white hover:opacity-75 hover:font-semibold">
                         Shoes
                     </a>
                 </li>
-            </div>
-            <!-- Large screeen nav-->
-            <ul class=" md:static md:flex md:flex-row items-center">
-                <div class="hidden md:static md:p-0 md:rounded-none md:flex md:flex-row items-center mt-2">
-                    <li class="mb-4 mr-8">
-                        <a :href="`/#`" @click.prevent="searchModal = true;">
-                            <svg class=" w-6 h-6 cursor-pointer text-custom-light-black hover:opacity-75" viewBox="0 0 47 49" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M36 20C36 28.8366 28.8366 36 20 36C11.1634 36 4 28.8366 4 20C4 11.1634 11.1634 4 20 4C28.8366 4 36 11.1634 36 20ZM31.8692 36.0989C28.5493 38.5507 24.4439 40 20 40C8.9543 40 0 31.0457 0 20C0 8.9543 8.9543 0 20 0C31.0457 0 40 8.9543 40 20C40 25.1631 38.0436 29.8692 34.8316 33.4175L46.142 44.7279C46.923 45.509 46.923 46.7753 46.142 47.5564C45.3609 48.3374 44.0946 48.3374 43.3136 47.5564L31.9998 36.2426C31.9536 36.1964 31.91 36.1484 31.8692 36.0989Z" fill="currentColor" />
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="relative flex items-center cursor-pointer mb-4 mr-8 ">
-                        <a :href="`/cart-details`">
-                            <svg fill="currentColor" class="h-8 w-8 text-custom-light-black hover:text-gray-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M4 2h16l-3 9H4a1 1 0 1 0 0 2h13v2H4a3 3 0 0 1 0-6h.33L3 5 2 2H0V0h3a1 1 0 0 1 1 1v1zm1 18a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm10 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" /></svg>
-                            <span class="absolute top-0 right-0 -mt-2 -mr-2 text-custom-red-lighter p-1 bg-custom-gray rounded-full">{{ cartTotalQty }}</span>
-                        </a>
-                    </li>
-                    <li class="mb-4 mr-8">
-                        <a :href="`/shoes`" class="text-lg text-custom-light-black hover:text-gray-700 font-bold">
-                            Shoes
-                        </a>
-                    </li>
-                </div>
-                <li v-if="customer" class="flex  flex-row items-center mb-4 mt-2">
+                <li v-if="customer" class="flex  flex-row items-center mb-4 mt-2 hidden md:block">
                     <a :href="`/dashboard`" class="mr-3">
                         <img v-if="customer.avatar" :src="`/storage/${customer.avatar}`" class="w-10 h-10 rounded-full object-cover object-center">
                         <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 rounded-full object-cover object-center">
@@ -77,11 +42,49 @@
                             <path d="M16 9v-4l8 7-8 7v-4h-8v-6h8zm-2 10v-.083c-1.178.685-2.542 1.083-4 1.083-4.411 0-8-3.589-8-8s3.589-8 8-8c1.458 0 2.822.398 4 1.083v-2.245c-1.226-.536-2.577-.838-4-.838-5.522 0-10 4.477-10 10s4.478 10 10 10c1.423 0 2.774-.302 4-.838v-2.162z" /></svg>
                     </a>
                 </li>
-                <li v-else class="mt-2 mb-4">
-                    <a href="/login" class="flex items-center justify-around  bg-custom-light-orange hover:bg-custom-dark-orange  px-6 py-2 rounded-lg">
-                        <svg class="w-6 h-6 text-white" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                            <path d="M416 448h-84c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h84c17.7 0 32-14.3 32-32V160c0-17.7-14.3-32-32-32h-84c-6.6 0-12-5.4-12-12V76c0-6.6 5.4-12 12-12h84c53 0 96 43 96 96v192c0 53-43 96-96 96zm-47-201L201 79c-15-15-41-4.5-41 17v96H24c-13.3 0-24 10.7-24 24v96c0 13.3 10.7 24 24 24h136v96c0 21.5 26 32 41 17l168-168c9.3-9.4 9.3-24.6 0-34z" /></svg>
-                        <span class="text-white ml-3 font-bold text-lg">Login</span>
+                <li v-else class="mt-4 ">
+                    <a href="/login" class="flex items-center justify-around  bg-custom-light-orange hover:bg-custom-dark-orange  px-6 py-3 rounded-lg">
+                        <span class="text-white font-bold text-lg">Login</span>
+                    </a>
+                </li>
+            </div>
+            <!-- Large screeen nav-->
+            <ul class="flex lex-row items-center mt-3">
+                <li class="mb-4 mr-6">
+                    <a :href="`/#`" @click.prevent="searchModal = true;">
+                        <svg class=" w-6 h-6 cursor-pointer text-custom-light-black hover:opacity-75" viewBox="0 0 47 49" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M36 20C36 28.8366 28.8366 36 20 36C11.1634 36 4 28.8366 4 20C4 11.1634 11.1634 4 20 4C28.8366 4 36 11.1634 36 20ZM31.8692 36.0989C28.5493 38.5507 24.4439 40 20 40C8.9543 40 0 31.0457 0 20C0 8.9543 8.9543 0 20 0C31.0457 0 40 8.9543 40 20C40 25.1631 38.0436 29.8692 34.8316 33.4175L46.142 44.7279C46.923 45.509 46.923 46.7753 46.142 47.5564C45.3609 48.3374 44.0946 48.3374 43.3136 47.5564L31.9998 36.2426C31.9536 36.1964 31.91 36.1484 31.8692 36.0989Z" fill="currentColor" />
+                        </svg>
+                    </a>
+                </li>
+                <li class="relative flex items-center cursor-pointer mb-6 ">
+                    <a :href="`/cart-details`">
+                        <svg fill="currentColor" class="h-8 w-8 text-custom-light-black hover:text-gray-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M4 2h16l-3 9H4a1 1 0 1 0 0 2h13v2H4a3 3 0 0 1 0-6h.33L3 5 2 2H0V0h3a1 1 0 0 1 1 1v1zm1 18a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm10 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" /></svg>
+                        <span class="absolute top-0 right-0 -mt-2 -mr-2 text-custom-red-lighter p-1 bg-custom-gray rounded-full">{{ cartTotalQty }}</span>
+                    </a>
+                </li>
+                <li class="mb-4 mr-6 hidden md:block">
+                    <a :href="`/shoes`" class="text-lg text-custom-light-black hover:text-gray-700 font-bold">
+                        Shoes
+                    </a>
+                </li>
+                <li v-if="customer" class="flex  flex-row items-center mb-4 mt-2 hidden md:block">
+                    <a :href="`/dashboard`" class="mr-3">
+                        <img v-if="customer.avatar" :src="`/storage/${customer.avatar}`" class="w-10 h-10 rounded-full object-cover object-center">
+                        <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 rounded-full object-cover object-center">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </a>
+                    <a :href="`/#`" @click.prevent="logoutModal = true;">
+                        <svg class="h-8 w-8  text-custom-light-black rounded-full" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M16 9v-4l8 7-8 7v-4h-8v-6h8zm-2 10v-.083c-1.178.685-2.542 1.083-4 1.083-4.411 0-8-3.589-8-8s3.589-8 8-8c1.458 0 2.822.398 4 1.083v-2.245c-1.226-.536-2.577-.838-4-.838-5.522 0-10 4.477-10 10s4.478 10 10 10c1.423 0 2.774-.302 4-.838v-2.162z" /></svg>
+                    </a>
+                </li>
+                <li v-else class="mt-2 mb-4 hidden md:block">
+                    <a href="/login" class="flex items-center justify-around  bg-custom-light-orange hover:bg-custom-dark-orange  px-6 py-3 rounded-lg">
+                        <span class="text-white font-semibold text-md">Login</span>
                     </a>
                 </li>
             </ul>
@@ -108,7 +111,7 @@
                 </div>
             </div>
             <!-- Search Modal -->
-            <div v-if="searchModal" class="fixed inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
+            <div v-if="searchModal" class="fixed inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-40 ">
                 <div class="h-full w-full bg-gray-300" @click="searchModal = false;">
                 </div>
                 <div class="absolute  bg-white left-0 right-0  mx-auto  h-full shadow-lg rounded-lg p-6 z-30">
@@ -121,36 +124,15 @@
                     </div>
                     <div class="">
                         <form @submit.prevent="searchShoes">
-                            <div class=" relative flex flex-row items-center">
-                                <button class="absolute left-0 top-0 mt-6 ml-3 cursor-pointer" type="submit">
-                                    <svg class="h-10 w-10 text-blue-900" fill="currentColor" viewBox="0 0 61 55" xmlns="http://www.w3.org/2000/svg">
-                                        <g filter="url(#filter0_d)">
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M37.2309 34.1598C38.9903 31.1823 40 27.709 40 24C40 12.9543 31.0457 4 20 4C8.9543 4 0 12.9543 0 24C0 35.0457 8.9543 44 20 44C23.709 44 27.1823 42.9904 30.1598 41.2309L37.7487 48.8198C39.7014 50.7724 42.8672 50.7724 44.8198 48.8198C46.7724 46.8672 46.7724 43.7014 44.8198 41.7487L37.2309 34.1598Z" fill="#201E16" />
-                                        </g>
-                                        <circle opacity="0.3" cx="20" cy="24" r="15" fill="white" />
-                                        <defs>
-                                            <filter id="filter0_d" x="0" y="0" width="60.2843" height="54.2843" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                                                <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                                                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
-                                                <feOffset dx="10" />
-                                                <feGaussianBlur stdDeviation="2" />
-                                                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
-                                                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
-                                                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
-                                            </filter>
-                                        </defs>
-                                    </svg>
-                                </button>
-                                <input v-focus :class="(focus) ? 'border-blue-900':''" type="text" name="" v-model="keyword" class="w-full px-16 py-6 mt-3 bg-transparent  text-blue-900 text-md border-b-2 border-transparent" @focus="focus = true">
-                                <svg @click="keyword = ''; shoesArray=[];" class="absolute right-0 top-0 mt-6 h-6 w-6 text-blue-900 mr-3 cursor-pointer" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z" /></svg>
+                            <div class="mt-4 w-full flex flex-row">
+                                <input v-focus v-model="keyword" type="text" class="focus:outline-none  w-2/3 bg-white rounded rounded-l px-6 py-3 sm:mb-0 border" placeholder="Type shoes names..">
+                                <button type="submit" class="focus:outline-none  w-1/3  bg-custom-light-orange hover:opacity-75 rounded rounded-r md:uppercase text-white font-bold md:tracking-wide py-3 px-3 md:px-6 text-center cursor-pointer">Search</button>
                             </div>
                         </form>
-                        <h4 class="text-gray-800 font-semibold text-lg md:text-xl my-3">Search Results : {{ shoesArray.length }}</h4>
-                        <div class="h-90 my-3 overflow-y-scroll">
-                            <div v-for="s in shoesArray" class="my-4 grid grid-flow-row  items-center">
-                                <div class="flex flex-col md:flex-row items-center justify-around group border-2 border-transparent hover:border-gray-400 rounded-lg px-3 py-2 cursor-pointer mb-3">
-                                    <a :href="`/shoes/${s.id}/${s.name}`" class="mb-3 md:mb-0 md:mr-3">{{ s.name }}</a>
+                        <h4 class="text-gray-800 font-semibold text-lg  my-3">Search : {{ shoesArray.length }}</h4>
+                        <div class="h-86 my-3 overflow-y-scroll">
+                            <div class="grid grid-cols-1 cm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 items-center">
+                                <div v-for="s in shoesArray" class="flex flex-col mb-4">
                                     <a :href="`/shoes/${s.id}/${s.name}`">
                                         <img class="w-full md:w-48 rounded-lg" :src="`/storage/${s.imageUrl}`">
                                     </a>

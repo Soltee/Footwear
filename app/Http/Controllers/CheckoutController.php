@@ -14,7 +14,7 @@ use Omnipay\Omnipay;
 class CheckoutController extends Controller
 {
 
-    public function checkout(){
+    public function index(){
 
         $gateway = new \Braintree\Gateway([
             'environment' => config('services.braintree.environment'),
@@ -43,14 +43,18 @@ class CheckoutController extends Controller
     */
     public function charge(Request $request){
 
-        // dd($request->all());
-        $firstName = request()->firstname;
-        $lastName = request()->lastname;
-        $email = request()->email;
-        $city = request()->city;
-        $address = request()->address;
-        $paymentType = request()->_type;
-        $amt = (session('discount'))? session('grand') : Cart::total();
+        dd($request->all());
+        $data = $request->validate([
+                'firstname' => 'required|string',
+                'lastname'  => 'required|string',
+                'email'     => 'required|email',
+                'city'      => 'required|string',
+                'address'   => 'required|string',
+                'method'    => 'required|string',
+                'token'     => 'required|string'
+        ]);
+        
+        $amt          = (session('discount'))? session('grand') : Cart::total();
         // dd($paymentType);
         if($paymentType === 'braintree' || $paymentType === 'paypal'){
                 $gateway = new \Braintree\Gateway([
@@ -59,15 +63,13 @@ class CheckoutController extends Controller
                     'publicKey' => config('services.braintree.publicKey'),
                     'privateKey' => config('services.braintree.privateKey')
                 ]);
-                $amount = $request->amount;
-                $nonce = $request->payment_method_nonce;
                 $result = $gateway->transaction()->sale([
-                    'amount' => $amt,
-                    'paymentMethodNonce' => $nonce,
-                    'customer' => [
-                        'firstName' => $firstName,
-                        'lastName' => $lastName,
-                        'email' => $email,
+                    'amount'             => $amt,
+                    'paymentMethodNonce' => request()->token,
+                    'customer'           => [
+                        'firstName' => $data['firstname'],
+                        'lastName'  => $data['lastname'],
+                        'email'     => $data['email']
                     ],
                     'options' => [
                         'submitForSettlement' => true
@@ -75,74 +77,75 @@ class CheckoutController extends Controller
                 ]);
                 if ($result->success) {
                     $transaction = $result->transaction;
-                    $this->store($firstName, $lastName, $email, $city, $address, $paymentType, $transaction);
-                    return redirect()->route('thank-you');
+                    $this->store($data['firstname'], $data['lastname'], $data['email'], $data['city'], $data['address'], $data['method'], $transaction);
+                    return response()->json(['success' => 'ok'], 201);
                 } else {
                     $errorString = "";
                     foreach ($result->errors->deepAll() as $error) {
                         $errorString .= 'Error: ' . $error->code . ": " . $error->message . "\n";
                     }
-                    return back()->with('error', 'An error occurred with the message: '.$result->message);
+                    return response()->json(['success' => '', 'error' => 'ok'], 503);
                 }
 
             
         }  elseif($paymentType === 'stripe') {
             try {
                 // dd($paymentType);
-                $gateway = Omnipay::create('Stripe');               
+                $gateway   = Omnipay::create('Stripe');               
                 $gateway->setApiKey(env('STRIPE_SECRET_KEY'));
-              
-                $token = $request->input('stripeToken');
-              
-                $response = $gateway->purchase([
-                    'amount' => $amt,
+                            
+                $response  = $gateway->purchase([
+                    'amount'   => $amt,
                     'currency' => 'usd',
-                    'token' => request()->stripeToken,
+                    'token'    => request()->stripeToken,
                 ])->send();
                 
                 // dd($response);
                 if ($response->isSuccessful()) {
                     $transaction = Str::random(10);
-                    $this->store($firstName, $lastName, $email, $city, $address, $paymentType, $transaction);
-                    return redirect()->route('thank-you');
+                    $this->store($data['firstname'], $data['lastname'], $data['email'], $data['city'], $data['address'], $data['method'], $transaction);
+                    return response()->json(['success' => 'ok'], 201);
                 }
                
                 
             } catch (CardErrorException $e) {
-                return back()->with('error', $e->getMessage());
+                return response()->json(['success' => '', 'error' => 'ok'], 503);
+
+                // return back()->with('error', $e->getMessage());
             }
-        }  elseif($paymentType === 'khalti') {
-            $args = http_build_query(array(
-                'token' => request()->khalti_token,
-                'amount'  => $amt * 100
-            ));
+        }  
+        // elseif($paymentType === 'khalti') {
+        //     $args = http_build_query(array(
+        //         'token' => request()->khalti_token,
+        //         'amount'  => $amt * 100
+        //     ));
 
-            $url = "https://khalti.com/api/v2/payment/verify/";
+        //     $url = "https://khalti.com/api/v2/payment/verify/";
 
-            # Make the call using API.
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS,$args);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        //     # Make the call using API.
+        //     $ch = curl_init();
+        //     curl_setopt($ch, CURLOPT_URL, $url);
+        //     curl_setopt($ch, CURLOPT_POST, 1);
+        //     curl_setopt($ch, CURLOPT_POSTFIELDS,$args);
+        //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-            $headers = ['Authorization: Key '. env('KHALTI_SECRET_KEY') . ''];
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        //     $headers = ['Authorization: Key '. env('KHALTI_SECRET_KEY') . ''];
+        //     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-            // Response
-            $response = json_decode(curl_exec($ch));
+        //     // Response
+        //     $response = json_decode(curl_exec($ch));
 
-            $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            curl_close($ch);
+        //     $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        //     curl_close($ch);
 
-            if ($status_code === 200) {
-                $transaction = Str::random(10);
-                $this->store($firstName, $lastName, $email, $city, $address, $paymentType, $transaction);
-                return redirect()->route('thank-you');
-            } else {
-                return back()->with('error', 'An error occurred Please try again. ');
-            }
-        }
+        //     if ($status_code === 200) {
+        //         $transaction = Str::random(10);
+        //         $this->store($firstName, $lastName, $email, $city, $address, $paymentType, $transaction);
+        //         return redirect()->route('thank-you');
+        //     } else {
+        //         return back()->with('error', 'An error occurred Please try again. ');
+        //     }
+        // }
         
     }
 
@@ -185,10 +188,10 @@ class CheckoutController extends Controller
                 'quantity' => $product->qty
             ]);
         }
-        Cart::destroy();
-        session()->forget('discount');
-        session()->forget('subAfterDis');
-        session()->forget('grand');
+        // Cart::destroy();
+        // session()->forget('discount');
+        // session()->forget('subAfterDis');
+        // session()->forget('grand');
         return true;
     }
 

@@ -16,7 +16,9 @@
                     <h4 class=" text-md md:text-lg text-gray-900 opacity-75">Checkout</h4>
                 </div>
                 <!-- <form @submit.prevent="clearCart"> -->
-                <button @click="modal = true;" type="submit" class="p-3 bg-red-500 rounded-lg text-lg font-medium text-white">Clear Cart</button>
+                <button @click="modal = true;" type="submit" class="p-3 bg-red-500 rounded-lg text-lg font-medium text-white">Empty Cart
+
+</button>
                 <!-- </form> -->
             </div>
             <div class="mt-6 overflow-x-scroll  border-b border-gray-200 sm:rounded-lg">
