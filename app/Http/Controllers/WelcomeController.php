@@ -67,12 +67,15 @@ class WelcomeController extends Controller
     {   
         $product = Product::findOrFail($product);
         $images  = $product->images;
-        $paginate = Product::latest()->where('category_id', $product->category_id)->paginate(6);
+        $images_count  = count($images);
+        $paginate = Product::latest()->where('category_id', $product->category_id)
+                                    ->where('id', '!=', $product->id)
+                                    ->get();
         $category = ($product->subcategories)?? null;
-        $recommended = json_encode($paginate->items());
+        // $recommended = json_encode($paginate->items());
         // dd($images);
 
-        return view('home.show', compact('product', 'images', 'category', 'recommended'));
+        return view('home.show', compact('product', 'images_count', 'images', 'category', 'paginate'));
     }
 
     public function test(Request $request){

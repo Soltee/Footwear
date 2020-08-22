@@ -25,11 +25,18 @@
         "sass": "^1.26.10",
         "sass-loader": "^9.0.2",
         "sweetalert2": "^9.17.1",
+        "swiper": "^6.1.2",
         "tailwindcss": "^1.6.0",
         "tailwindcss-transitions": "^2.2.0",
+        "tiny-slider": "^2.9.3",
         "vue": "^2.6.11",
+        "vue-awesome-swiper": "^4.1.1",
+        "vue-carousel": "^0.18.0",
+        "vue-easy-slider": "^5.3.2",
         "vue-scrollto": "^2.18.2",
-        "vue-template-compiler": "^2.6.11"
+        "vue-snap": "0.1.0-beta.8",
+        "vue-template-compiler": "^2.6.11",
+        "vue-tiny-slider": "^0.1.39"
     },
     "dependencies": {}
 }

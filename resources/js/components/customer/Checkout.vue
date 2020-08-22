@@ -1,5 +1,5 @@
 <template>
-    <div class="z-0  px-3  md:px-16   w-full md:my-8">
+    <div class="z-0 w-full md:my-4">
         <div class="flex items-center">
             <a :href="`/shoes`" class="font-bold text-lg text-indigo-900 flex items-center">
                 <svg class="h-6 w-6 text-gray-700 mx-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
