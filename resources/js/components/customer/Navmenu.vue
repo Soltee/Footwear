@@ -2,19 +2,13 @@
     <div class="px-6 py-3  md:py-6 max-w-screen-lg mx-auto">
         <nav class=" flex flex-row justify-between items-center">
             <div class=" flex items-center">
-                <svg v-if="!openMenu" @click="openMenu = true;" class="relative  md:hidden w-8 h-8 text-custom-light-black cursor-pointer hover:text-gray-700" viewBox="0 0 34 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="0.798828" width="33.2015" height="2" rx="2" fill="currentColor" />
-                    <rect x="0.798828" y="12" width="33.2015" height="2" rx="2" fill="currentColor" />
-                    <rect x="0.798828" y="24" width="33.2015" height="2" rx="2" fill="currentColor" />
+                <svg v-if="!openMenu" @click="openMenu = true;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="relative  md:hidden w-8 h-8 text-custom-light-black cursor-pointer hover:opacity-75">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
                 </svg>
                 <a :href="`/`" class="ml-3 md:ml-0 text-lg font-semibold text-custom-light-black    no-underline mr-3">
-                    <svg class="w-10 h-10 " viewBox="0 0 71 71" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <rect y="28.2843" width="8" height="60" rx="4" transform="rotate(-45 0 28.2843)" fill="currentColor" />
-                        <rect y="28.2843" width="40" height="10" rx="5" transform="rotate(-45 0 28.2843)" fill="currentColor" />
-                        <rect x="65.0537" y="48.0833" width="60" height="8" rx="4" transform="rotate(-135 65.0537 48.0833)" fill="currentColor" />
-                        <rect x="17.6777" y="45.9619" width="40" height="10" rx="5" transform="rotate(-45 17.6777 45.9619)" fill="currentColor" />
-                        <rect x="35.3555" y="63.6396" width="40" height="10" rx="5" transform="rotate(-45 35.3555 63.6396)" fill="currentColor" />
-                    </svg>
+                    <img class="h-8 w-8 text-custom-light-black" :src="`/img/shoe.svg`">
                 </a>
             </div>
             <!-- small screeen nav-->
@@ -57,15 +51,18 @@
                         </svg>
                     </a>
                 </li>
-                <li class="relative flex items-center cursor-pointer mb-6 ">
+                <li class="relative flex items-center cursor-pointer mb-6 mr-6 mt-2">
                     <a :href="`/cart-details`">
-                        <svg fill="currentColor" class="h-8 w-8 text-custom-light-black hover:text-gray-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path d="M4 2h16l-3 9H4a1 1 0 1 0 0 2h13v2H4a3 3 0 0 1 0-6h.33L3 5 2 2H0V0h3a1 1 0 0 1 1 1v1zm1 18a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm10 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 text-custom-light-black hover:text-gray-700">
+                            <circle cx="9" cy="21" r="1"></circle>
+                            <circle cx="20" cy="21" r="1"></circle>
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                        </svg>
                         <span class="absolute top-0 right-0 -mt-2 -mr-2 text-custom-red-lighter p-1 bg-custom-gray rounded-full">{{ cartTotalQty }}</span>
                     </a>
                 </li>
                 <li class="mb-4 mr-6 hidden md:block">
-                    <a :href="`/shoes`" class="text-lg text-custom-light-black hover:text-gray-700 font-bold">
+                    <a :href="`/shoes`" class="text-md text-custom-light-black hover:text-gray-700 ">
                         Shoes
                     </a>
                 </li>

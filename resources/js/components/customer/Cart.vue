@@ -1,34 +1,38 @@
 <template>
-    <div class="relative  z-0 flex flex-col  " :class="(modal) ? 'bg-gray-400' : ''">
+    <div class="relative  z-0 flex flex-col  " :class="(modal) ? 'opacity-75' : ''">
         <div v-if="updatedQty > 0" class="">
             <div class="flex justify-between items-center">
                 <div class="flex items-center">
-                    <a :href="`/shoes`" class=" text-md md:text-lg text-indigo-900">Shoes</a>
+                    <a :href="`/shoes`" class=" text-md md:text-lg text-custom-light-black">Shoes</a>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-800 mx-2">
                         <polyline points="13 17 18 12 13 7"></polyline>
                         <polyline points="6 17 11 12 6 7"></polyline>
                     </svg>
-                    <h4 class="font-semibold  text-md md:text-lg text-gray-900">Cart</h4>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-700 mx-2">
+                    <h4 class="font-semibold  text-md md:text-lg text-custom-light-black">Cart</h4>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-700 mx-2 hidden md:block">
                         <polyline points="13 17 18 12 13 7"></polyline>
                         <polyline points="6 17 11 12 6 7"></polyline>
                     </svg>
-                    <h4 class=" text-md md:text-lg text-gray-900 opacity-75">Checkout</h4>
+                    <h4 class=" text-md md:text-lg text-custom-light-black opacity-75 hidden md:block">Checkout</h4>
                 </div>
                 <!-- <form @submit.prevent="clearCart"> -->
-                <button @click="modal = true;" type="submit" class="p-3 bg-red-500 rounded-lg text-lg font-medium text-white">Empty Cart
-
-</button>
+                <button @click="modal = true;" type="submit" class="px-3 py-3  flex items-center justify-around rounded-lg text-lg font-medium text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-red-600  hover:text-red-500">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                    <span class="text-red-600 ml-3 hover:text-red-500">Empty Cart</span>
+                </button>
                 <!-- </form> -->
             </div>
             <div class="mt-6 overflow-x-scroll  border-b border-gray-200 sm:rounded-lg">
                 <table class=" min-w-full  table-auto">
                     <thead>
                         <tr class="bg-white rounded-lg">
-                            <th class="px-6 py-3 text-left text-gray-900">Image</th>
-                            <th class="px-6 py-3 text-left text-gray-900">Name</th>
-                            <th class="px-6 py-3 text-left text-gray-900">Price</th>
-                            <th class="px-6 py-3 text-left text-gray-900">Action</th>
+                            <th class="px-6 py-3 text-left text-custom-light-black">Image</th>
+                            <th class="px-6 py-3 text-left text-custom-light-black">Name</th>
+                            <th class="px-6 py-3 text-left text-custom-light-black">Price</th>
+                            <th class="px-6 py-3 text-left text-custom-light-black">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -99,14 +103,20 @@
                 </div>
             </div>
             <div class="w-full md:w-auto flex flex-col md:flex-row items-center justify-end">
-                <a :href="`/shoes`" class="w-full mt-2 order-1 md:order-0 mb-6 md:mb-0 md:w-auto md:mr-16  text-md bg-gray-100 text-gray-900 px-4 py-3 rounded-lg text-center">Continue Shopping</a>
-                <a :href="`/checkout`" class="w-full md:ml-12 order-0 md:order-1 text-center md:w-auto text-bold text-md bg-custom-light-orange hover:opacity-75 text-white px-4 py-3 rounded-lg">Checkout</a>
+                <a :href="`/shoes`" class="w-full mt-3 md:mt-0 order-1 md:order-0 mb-6 md:mb-0 md:w-auto md:mr-16  text-md  text-custom-light-black px-4 py-4 rounded-lg text-center">Continue Shopping</a>
+                <a :href="`/checkout`" class="w-full md:ml-12 order-0 md:order-1 text-center md:w-auto text-bold text-md bg-custom-light-orange hover:opacity-75 text-white px-6 py-4 rounded-lg">Checkout</a>
             </div>
         </div>
         <div v-else>
-            <div class="flex items-center">
-                <p class="text-medium font-semibold text-blue-500">Oh! My cart is empty.</p>
-                <a :href="`/shoes`" class="ml-4 text-bold text-lg bg-green-900 text-white p-3 rounded-lg">Continue My Shopping</a>
+            <div class="flex items-center w-full flex-col">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 md:h-24 md:w-24 text-red-500">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M16 16s-1.5-2-4-2-4 2-4 2"></path>
+                    <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                    <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                </svg>
+                <p class="text-medium font-semibold text-red-500 mt-4">Oh! My cart is empty.</p>
+                <a :href="`/shoes`" class="w-full mt-4 text-center md:w-auto text-bold text-md bg-custom-light-orange hover:opacity-75 text-white px-6 py-4 rounded-lg">Continue Shopping</a>
             </div>
         </div>
         <!--Clear Cart Modal-->
@@ -114,17 +124,17 @@
             <div class="bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg overflow-y-auto max-w-lg rounded-lg p-6">
                 <div class="flex justify-end rounded-t-lg">
                     <button @click="modal = false; " type="button" class="px-4 py-3 cursor-pointer" data-dismiss="modal" aria-label="Close">
-                        <svg class="fill-current text-gray-900" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                        <svg class="fill-current text-custom-light-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
                             <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
                         </svg>
                     </button>
                 </div>
                 <div class="">
-                    <p class="px-2 py-2 text-lg mb-2"> Are you sure ? </p>
+                    <p class="px-2 py-2 text-lg mb-2 text-red 500 text-center"> Are you sure ? </p>
                 </div>
                 <div class="flex justify-end pt-2">
-                    <button @click="modal = false; " class="px-4 cursor-pointer bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2">Cancel</button>
-                    <button @click="clearCart" class="modal-close cursor-pointer px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400" data-dismiss="modal">Yes</button>
+                    <button @click="modal = false; " class="px-4 cursor-pointer bg-transparent p-3 rounded-lg text-red-600 hover:bg-red-500 hover:text-indigo-400 mr-2">Cancel</button>
+                    <button @click="clearCart" class="modal-close cursor-pointer px-4 bg-red-600 p-3 rounded-lg text-white hover:bg-red-500" data-dismiss="modal">Yes</button>
                 </div>
             </div>
         </div>

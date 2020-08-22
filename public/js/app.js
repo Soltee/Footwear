@@ -5500,6 +5500,16 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5917,6 +5927,14 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'cart-checkout',
@@ -5926,6 +5944,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       firstname: '',
       lastname: '',
       email: ' ',
+      showField: false,
       city: '',
       address: '',
       productsArr: [],
@@ -5940,6 +5959,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
   },
   mounted: function mounted() {
     this.pushProducts();
+    auth ? this.showField = true : this.showField = false;
   },
   methods: {
     pushProducts: function pushProducts() {
@@ -6380,9 +6400,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
-//
-//
 //
 //
 //
@@ -60327,7 +60344,7 @@ var render = function() {
     "div",
     {
       staticClass: "relative  z-0 flex flex-col  ",
-      class: _vm.modal ? "bg-gray-400" : ""
+      class: _vm.modal ? "opacity-75" : ""
     },
     [
       _vm.updatedQty > 0
@@ -60337,7 +60354,7 @@ var render = function() {
                 _c(
                   "a",
                   {
-                    staticClass: " text-md md:text-lg text-indigo-900",
+                    staticClass: " text-md md:text-lg text-custom-light-black",
                     attrs: { href: "/shoes" }
                   },
                   [_vm._v("Shoes")]
@@ -60370,7 +60387,7 @@ var render = function() {
                   "h4",
                   {
                     staticClass:
-                      "font-semibold  text-md md:text-lg text-gray-900"
+                      "font-semibold  text-md md:text-lg text-custom-light-black"
                   },
                   [_vm._v("Cart")]
                 ),
@@ -60378,7 +60395,7 @@ var render = function() {
                 _c(
                   "svg",
                   {
-                    staticClass: "h-6 w-6 text-gray-700 mx-2",
+                    staticClass: "h-6 w-6 text-gray-700 mx-2 hidden md:block",
                     attrs: {
                       xmlns: "http://www.w3.org/2000/svg",
                       width: "24",
@@ -60401,7 +60418,8 @@ var render = function() {
                 _c(
                   "h4",
                   {
-                    staticClass: " text-md md:text-lg text-gray-900 opacity-75"
+                    staticClass:
+                      " text-md md:text-lg text-custom-light-black opacity-75 hidden md:block"
                   },
                   [_vm._v("Checkout")]
                 )
@@ -60411,7 +60429,7 @@ var render = function() {
                 "button",
                 {
                   staticClass:
-                    "p-3 bg-red-500 rounded-lg text-lg font-medium text-white",
+                    "px-3 py-3  flex items-center justify-around rounded-lg text-lg font-medium text-white",
                   attrs: { type: "submit" },
                   on: {
                     click: function($event) {
@@ -60419,7 +60437,39 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Empty Cart\n\n")]
+                [
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "w-8 h-8 text-red-600  hover:text-red-500",
+                      attrs: {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        viewBox: "0 0 24 24",
+                        fill: "none",
+                        stroke: "currentColor",
+                        "stroke-width": "1",
+                        "stroke-linecap": "round",
+                        "stroke-linejoin": "round"
+                      }
+                    },
+                    [
+                      _c("polyline", { attrs: { points: "3 6 5 6 21 6" } }),
+                      _vm._v(" "),
+                      _c("path", {
+                        attrs: {
+                          d:
+                            "M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    { staticClass: "text-red-600 ml-3 hover:text-red-500" },
+                    [_vm._v("Empty Cart")]
+                  )
+                ]
               )
             ]),
             _vm._v(" "),
@@ -60511,7 +60561,7 @@ var render = function() {
                                         },
                                         [
                                           _vm._v(
-                                            "\n                                                Update\n                                            "
+                                            "\n                                            Update\n                                        "
                                           )
                                         ]
                                       )
@@ -60745,7 +60795,7 @@ var render = function() {
                   "a",
                   {
                     staticClass:
-                      "w-full mt-2 order-1 md:order-0 mb-6 md:mb-0 md:w-auto md:mr-16  text-md bg-gray-100 text-gray-900 px-4 py-3 rounded-lg text-center",
+                      "w-full mt-3 md:mt-0 order-1 md:order-0 mb-6 md:mb-0 md:w-auto md:mr-16  text-md  text-custom-light-black px-4 py-4 rounded-lg text-center",
                     attrs: { href: "/shoes" }
                   },
                   [_vm._v("Continue Shopping")]
@@ -60755,7 +60805,7 @@ var render = function() {
                   "a",
                   {
                     staticClass:
-                      "w-full md:ml-12 order-0 md:order-1 text-center md:w-auto text-bold text-md bg-custom-light-orange hover:opacity-75 text-white px-4 py-3 rounded-lg",
+                      "w-full md:ml-12 order-0 md:order-1 text-center md:w-auto text-bold text-md bg-custom-light-orange hover:opacity-75 text-white px-6 py-4 rounded-lg",
                     attrs: { href: "/checkout" }
                   },
                   [_vm._v("Checkout")]
@@ -60764,10 +60814,39 @@ var render = function() {
             )
           ])
         : _c("div", [
-            _c("div", { staticClass: "flex items-center" }, [
+            _c("div", { staticClass: "flex items-center w-full flex-col" }, [
+              _c(
+                "svg",
+                {
+                  staticClass: "w-10 h-10 md:h-24 md:w-24 text-red-500",
+                  attrs: {
+                    xmlns: "http://www.w3.org/2000/svg",
+                    viewBox: "0 0 24 24",
+                    fill: "none",
+                    stroke: "currentColor",
+                    "stroke-width": "1",
+                    "stroke-linecap": "round",
+                    "stroke-linejoin": "round"
+                  }
+                },
+                [
+                  _c("circle", { attrs: { cx: "12", cy: "12", r: "10" } }),
+                  _vm._v(" "),
+                  _c("path", { attrs: { d: "M16 16s-1.5-2-4-2-4 2-4 2" } }),
+                  _vm._v(" "),
+                  _c("line", {
+                    attrs: { x1: "9", y1: "9", x2: "9.01", y2: "9" }
+                  }),
+                  _vm._v(" "),
+                  _c("line", {
+                    attrs: { x1: "15", y1: "9", x2: "15.01", y2: "9" }
+                  })
+                ]
+              ),
+              _vm._v(" "),
               _c(
                 "p",
-                { staticClass: "text-medium font-semibold text-blue-500" },
+                { staticClass: "text-medium font-semibold text-red-500 mt-4" },
                 [_vm._v("Oh! My cart is empty.")]
               ),
               _vm._v(" "),
@@ -60775,10 +60854,10 @@ var render = function() {
                 "a",
                 {
                   staticClass:
-                    "ml-4 text-bold text-lg bg-green-900 text-white p-3 rounded-lg",
+                    "w-full mt-4 text-center md:w-auto text-bold text-md bg-custom-light-orange hover:opacity-75 text-white px-6 py-4 rounded-lg",
                   attrs: { href: "/shoes" }
                 },
-                [_vm._v("Continue My Shopping")]
+                [_vm._v("Continue Shopping")]
               )
             ])
           ]),
@@ -60819,7 +60898,7 @@ var render = function() {
                         _c(
                           "svg",
                           {
-                            staticClass: "fill-current text-gray-900",
+                            staticClass: "fill-current text-custom-light-black",
                             attrs: {
                               xmlns: "http://www.w3.org/2000/svg",
                               width: "18",
@@ -60847,7 +60926,7 @@ var render = function() {
                       "button",
                       {
                         staticClass:
-                          "px-4 cursor-pointer bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2",
+                          "px-4 cursor-pointer bg-transparent p-3 rounded-lg text-red-600 hover:bg-red-500 hover:text-indigo-400 mr-2",
                         on: {
                           click: function($event) {
                             _vm.modal = false
@@ -60861,7 +60940,7 @@ var render = function() {
                       "button",
                       {
                         staticClass:
-                          "modal-close cursor-pointer px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400",
+                          "modal-close cursor-pointer px-4 bg-red-600 p-3 rounded-lg text-white hover:bg-red-500",
                         attrs: { "data-dismiss": "modal" },
                         on: { click: _vm.clearCart }
                       },
@@ -60883,21 +60962,29 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", { staticClass: "bg-white rounded-lg" }, [
-        _c("th", { staticClass: "px-6 py-3 text-left text-gray-900" }, [
-          _vm._v("Image")
-        ]),
+        _c(
+          "th",
+          { staticClass: "px-6 py-3 text-left text-custom-light-black" },
+          [_vm._v("Image")]
+        ),
         _vm._v(" "),
-        _c("th", { staticClass: "px-6 py-3 text-left text-gray-900" }, [
-          _vm._v("Name")
-        ]),
+        _c(
+          "th",
+          { staticClass: "px-6 py-3 text-left text-custom-light-black" },
+          [_vm._v("Name")]
+        ),
         _vm._v(" "),
-        _c("th", { staticClass: "px-6 py-3 text-left text-gray-900" }, [
-          _vm._v("Price")
-        ]),
+        _c(
+          "th",
+          { staticClass: "px-6 py-3 text-left text-custom-light-black" },
+          [_vm._v("Price")]
+        ),
         _vm._v(" "),
-        _c("th", { staticClass: "px-6 py-3 text-left text-gray-900" }, [
-          _vm._v("Action")
-        ])
+        _c(
+          "th",
+          { staticClass: "px-6 py-3 text-left text-custom-light-black" },
+          [_vm._v("Action")]
+        )
       ])
     ])
   },
@@ -60906,9 +60993,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", {}, [
-      _c("p", { staticClass: "px-2 py-2 text-lg mb-2" }, [
-        _vm._v(" Are you sure ? ")
-      ])
+      _c(
+        "p",
+        { staticClass: "px-2 py-2 text-lg mb-2 text-red 500 text-center" },
+        [_vm._v(" Are you sure ? ")]
+      )
     ])
   }
 ]
@@ -60934,763 +61023,929 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "z-0 w-full my-8" }, [
-    _c("div", { staticClass: "flex items-center px-2" }, [
-      _c("div", { staticClass: "flex items-center" }, [
-        _c(
-          "a",
-          {
-            staticClass: " text-md md:text-lg opacity-75",
-            attrs: { href: "/shoes" }
-          },
-          [_vm._v("Shoes")]
-        ),
-        _vm._v(" "),
-        _c(
-          "svg",
-          {
-            staticClass: "h-6 w-6 text-gray-800 mx-2",
-            attrs: {
-              xmlns: "http://www.w3.org/2000/svg",
-              width: "24",
-              height: "24",
-              viewBox: "0 0 24 24",
-              fill: "none",
-              stroke: "currentColor",
-              "stroke-width": "2",
-              "stroke-linecap": "round",
-              "stroke-linejoin": "round"
-            }
-          },
-          [
-            _c("polyline", { attrs: { points: "13 17 18 12 13 7" } }),
-            _vm._v(" "),
-            _c("polyline", { attrs: { points: "6 17 11 12 6 7" } })
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "  text-md md:text-lg text-gray-900 opacity-75",
-            attrs: { href: "/cart-details" }
-          },
-          [_vm._v("Cart")]
-        ),
-        _vm._v(" "),
-        _c(
-          "svg",
-          {
-            staticClass: "h-6 w-6 text-gray-700 mx-2",
-            attrs: {
-              xmlns: "http://www.w3.org/2000/svg",
-              width: "24",
-              height: "24",
-              viewBox: "0 0 24 24",
-              fill: "none",
-              stroke: "currentColor",
-              "stroke-width": "2",
-              "stroke-linecap": "round",
-              "stroke-linejoin": "round"
-            }
-          },
-          [
-            _c("polyline", { attrs: { points: "13 17 18 12 13 7" } }),
-            _vm._v(" "),
-            _c("polyline", { attrs: { points: "6 17 11 12 6 7" } })
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "h4",
-          { staticClass: "font-semibold text-md md:text-lg text-gray-900 " },
-          [_vm._v("Checkout")]
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "flex flex-col md:flex-row justify-between my-8 w-full" },
-      [
-        _c("form", { attrs: { id: "payment-form" } }, [
-          _c("div", { staticClass: "flex-1" }, [
-            _c("div", { staticClass: "w-full mb-6" }, [
+    _vm.showField
+      ? _c("div", { staticClass: "w-full" }, [
+          _c("div", { staticClass: "flex items-center px-2" }, [
+            _c("div", { staticClass: "flex items-center" }, [
               _c(
-                "h3",
+                "a",
                 {
-                  staticClass: "text-lg font-semibold text-gray-900 mb-6 px-2 "
+                  staticClass: " text-md  opacity-75",
+                  attrs: { href: "/shoes" }
                 },
-                [_vm._v("Personal Info")]
+                [_vm._v("Back to Shop")]
               ),
               _vm._v(" "),
-              _c("div", { staticClass: "mb-4  w-full px-2 " }, [
-                _c(
-                  "label",
-                  {
-                    staticClass: "block text-gray-700 text-sm font-bold mb-2",
-                    attrs: { for: "firstname" }
-                  },
-                  [
-                    _vm._v(
-                      "\n                            First Name\n                        "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.firstname,
-                      expression: "firstname"
-                    }
-                  ],
-                  staticClass:
-                    "hadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+              _c(
+                "svg",
+                {
+                  staticClass: "h-6 w-6 text-gray-800 mx-2",
                   attrs: {
-                    id: "firstname",
-                    type: "text",
-                    placeholder: "Roman"
-                  },
-                  domProps: { value: _vm.firstname },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.firstname = $event.target.value
-                    }
+                    xmlns: "http://www.w3.org/2000/svg",
+                    width: "24",
+                    height: "24",
+                    viewBox: "0 0 24 24",
+                    fill: "none",
+                    stroke: "currentColor",
+                    "stroke-width": "2",
+                    "stroke-linecap": "round",
+                    "stroke-linejoin": "round"
                   }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "mb-4 w-full px-2" }, [
-                _c(
-                  "label",
-                  {
-                    staticClass: "block text-gray-700 text-sm font-bold mb-2",
-                    attrs: { for: "lastname" }
-                  },
-                  [
-                    _vm._v(
-                      "\n                            Last Name\n                        "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.lastname,
-                      expression: "lastname"
-                    }
-                  ],
-                  staticClass:
-                    "hadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
-                  attrs: { id: "lastname", type: "text", placeholder: "Dide" },
-                  domProps: { value: _vm.lastname },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.lastname = $event.target.value
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "w-full mb-6 px-2" }, [
-                _c(
-                  "label",
-                  {
-                    staticClass: "block text-gray-700 text-sm font-bold mb-2",
-                    attrs: { for: "email" }
-                  },
-                  [
-                    _vm._v(
-                      "\n                            Email\n                        "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.email,
-                      expression: "email"
-                    }
-                  ],
-                  staticClass:
-                    "shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
-                  attrs: { id: "email", type: "email", placeholder: "email" },
-                  domProps: { value: _vm.email },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.email = $event.target.value
-                    }
-                  }
-                })
-              ]),
+                },
+                [
+                  _c("polyline", { attrs: { points: "13 17 18 12 13 7" } }),
+                  _vm._v(" "),
+                  _c("polyline", { attrs: { points: "6 17 11 12 6 7" } })
+                ]
+              ),
               _vm._v(" "),
               _c(
-                "div",
-                { staticClass: "w-full flex flex-wrap -mx-3 mb-6 px-2" },
+                "a",
+                {
+                  staticClass: "  text-md  text-custom-light-black opacity-75",
+                  attrs: { href: "/cart-details" }
+                },
+                [_vm._v("Cart")]
+              ),
+              _vm._v(" "),
+              _c(
+                "svg",
+                {
+                  staticClass: "h-6 w-6 text-gray-700 mx-2",
+                  attrs: {
+                    xmlns: "http://www.w3.org/2000/svg",
+                    width: "24",
+                    height: "24",
+                    viewBox: "0 0 24 24",
+                    fill: "none",
+                    stroke: "currentColor",
+                    "stroke-width": "2",
+                    "stroke-linecap": "round",
+                    "stroke-linejoin": "round"
+                  }
+                },
                 [
+                  _c("polyline", { attrs: { points: "13 17 18 12 13 7" } }),
+                  _vm._v(" "),
+                  _c("polyline", { attrs: { points: "6 17 11 12 6 7" } })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "h4",
+                {
+                  staticClass: "font-semibold text-md  text-custom-light-black "
+                },
+                [_vm._v("Checkout")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "flex flex-col md:flex-row justify-between my-8 w-full"
+            },
+            [
+              _c("form", { attrs: { id: "payment-form" } }, [
+                _c("div", { staticClass: "flex-1" }, [
                   _c(
                     "div",
-                    { staticClass: "w-full md:w-1/3 px-3 mb-6 md:mb-0" },
+                    { staticClass: "w-full mb-6  border border-gray-300 p-3" },
                     [
                       _c(
-                        "label",
+                        "h3",
                         {
                           staticClass:
-                            "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
-                          attrs: { for: "grid-city" }
+                            "text-lg font-semibold text-custom-light-black mb-6 px-2 "
                         },
-                        [
-                          _vm._v(
-                            "\n                                City\n                            "
-                          )
-                        ]
+                        [_vm._v("Personal Info")]
                       ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "relative" }, [
+                      _c("div", { staticClass: "mb-4  w-full px-2 " }, [
                         _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.city,
-                                expression: "city"
-                              }
-                            ],
-                            staticClass:
-                              "block appearance-none w-full  border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-                            attrs: { id: "grid-city" },
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.city = $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              }
-                            }
-                          },
-                          [_c("option", [_vm._v("Pokhara")])]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
+                          "label",
                           {
                             staticClass:
-                              "pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+                              "block text-gray-700 text-sm font-bold mb-2",
+                            attrs: { for: "firstname" }
                           },
                           [
-                            _c(
-                              "svg",
-                              {
-                                staticClass: "fill-current h-4 w-4",
-                                attrs: {
-                                  xmlns: "http://www.w3.org/2000/svg",
-                                  viewBox: "0 0 20 20"
-                                }
-                              },
-                              [
-                                _c("path", {
-                                  attrs: {
-                                    d:
-                                      "M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-                                  }
-                                })
-                              ]
+                            _vm._v(
+                              "\n                                First Name\n                            "
                             )
                           ]
-                        )
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "w-full md:w-1/3 px-3 mb-6 md:mb-0" },
-                    [
-                      _c(
-                        "label",
-                        {
-                          staticClass:
-                            "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
-                          attrs: { for: "street" }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                Street Address\n                            "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "relative" }, [
+                        ),
+                        _vm._v(" "),
                         _c("input", {
                           directives: [
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.address,
-                              expression: "address"
+                              value: _vm.firstname,
+                              expression: "firstname"
                             }
                           ],
                           staticClass:
-                            "appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                            "hadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
                           attrs: {
-                            id: "street",
+                            id: "firstname",
                             type: "text",
-                            placeholder: "Albuquerque"
+                            placeholder: "Roman"
                           },
-                          domProps: { value: _vm.address },
+                          domProps: { value: _vm.firstname },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.address = $event.target.value
+                              _vm.firstname = $event.target.value
                             }
                           }
                         })
-                      ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "mb-4 w-full px-2" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass:
+                              "block text-gray-700 text-sm font-bold mb-2",
+                            attrs: { for: "lastname" }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                Last Name\n                            "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.lastname,
+                              expression: "lastname"
+                            }
+                          ],
+                          staticClass:
+                            "hadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+                          attrs: {
+                            id: "lastname",
+                            type: "text",
+                            placeholder: "Dide"
+                          },
+                          domProps: { value: _vm.lastname },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.lastname = $event.target.value
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "w-full mb-6 px-2" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass:
+                              "block text-gray-700 text-sm font-bold mb-2",
+                            attrs: { for: "email" }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                Email\n                            "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.email,
+                              expression: "email"
+                            }
+                          ],
+                          staticClass:
+                            "shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+                          attrs: {
+                            id: "email",
+                            type: "email",
+                            placeholder: "email"
+                          },
+                          domProps: { value: _vm.email },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.email = $event.target.value
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "w-full flex flex-wrap -mx-3 mb-6 px-2"
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "w-full md:w-1/3 px-3 mb-6 md:mb-0"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass:
+                                    "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+                                  attrs: { for: "grid-city" }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                    City\n                                "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "relative" }, [
+                                _c(
+                                  "select",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.city,
+                                        expression: "city"
+                                      }
+                                    ],
+                                    staticClass:
+                                      "block appearance-none w-full  border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                                    attrs: { id: "grid-city" },
+                                    on: {
+                                      change: function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.city = $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      }
+                                    }
+                                  },
+                                  [_c("option", [_vm._v("Pokhara")])]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+                                  },
+                                  [
+                                    _c(
+                                      "svg",
+                                      {
+                                        staticClass: "fill-current h-4 w-4",
+                                        attrs: {
+                                          xmlns: "http://www.w3.org/2000/svg",
+                                          viewBox: "0 0 20 20"
+                                        }
+                                      },
+                                      [
+                                        _c("path", {
+                                          attrs: {
+                                            d:
+                                              "M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "w-full md:w-1/3 px-3 mb-6 md:mb-0"
+                            },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  staticClass:
+                                    "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+                                  attrs: { for: "street" }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                    Street Address\n                                "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "relative" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.address,
+                                      expression: "address"
+                                    }
+                                  ],
+                                  staticClass:
+                                    "appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                                  attrs: {
+                                    id: "street",
+                                    type: "text",
+                                    placeholder: "Albuquerque"
+                                  },
+                                  domProps: { value: _vm.address },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.address = $event.target.value
+                                    }
+                                  }
+                                })
+                              ])
+                            ]
+                          )
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "w-full mb-6  border border-gray-300 p-3" },
+                    [
+                      _c(
+                        "h3",
+                        {
+                          staticClass:
+                            "text-lg font-semibold text-custom-light-black mb-6 w-full px-2"
+                        },
+                        [_vm._v("Payment Method")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex items-center mb-4 justify-between rounded w-full border px-4 py-3 border-gray-300 group hover:border-green-600 cursor-pointer",
+                          class:
+                            _vm.method === "stripe" ? "border-green-600" : "",
+                          on: {
+                            click: function($event) {
+                              return _vm.paymentOption("stripe")
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "text-lg ml-8 font-bold text-custom-light-black"
+                            },
+                            [_vm._v("Stripe")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "svg",
+                            {
+                              staticClass:
+                                "w-8 h-8 mr-2 text-custom-light-black",
+                              class:
+                                _vm.method === "stripe" ? "hidden" : "block",
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                viewBox: "0 0 24 24",
+                                fill: "none",
+                                stroke: "currentColor",
+                                "stroke-width": "1",
+                                "stroke-linecap": "round",
+                                "stroke-linejoin": "round"
+                              }
+                            },
+                            [
+                              _c("polyline", {
+                                attrs: { points: "6 9 12 15 18 9" }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "svg",
+                            {
+                              staticClass:
+                                "w-8 h-8 mr-2 text-custom-light-black",
+                              class:
+                                _vm.method === "stripe" ? "block" : "hidden",
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                viewBox: "0 0 24 24",
+                                fill: "none",
+                                stroke: "currentColor",
+                                "stroke-width": "1",
+                                "stroke-linecap": "round",
+                                "stroke-linejoin": "round"
+                              }
+                            },
+                            [
+                              _c("polyline", {
+                                attrs: { points: "18 15 12 9 6 15" }
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex items-center mb-4 justify-between rounded w-full border px-4 py-3 border-gray-300 group hover:border-green-600 cursor-pointer",
+                          class:
+                            _vm.method === "braintree"
+                              ? "border-green-600"
+                              : "",
+                          on: {
+                            click: function($event) {
+                              return _vm.paymentOption("braintree")
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "text-lg ml-8 font-bold text-custom-light-black"
+                            },
+                            [_vm._v("Braintree")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "svg",
+                            {
+                              staticClass:
+                                "w-8 h-8 mr-2 text-custom-light-black",
+                              class:
+                                _vm.method === "braintree" ? "hidden" : "block",
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                viewBox: "0 0 24 24",
+                                fill: "none",
+                                stroke: "currentColor",
+                                "stroke-width": "1",
+                                "stroke-linecap": "round",
+                                "stroke-linejoin": "round"
+                              }
+                            },
+                            [
+                              _c("polyline", {
+                                attrs: { points: "6 9 12 15 18 9" }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "svg",
+                            {
+                              staticClass:
+                                "w-8 h-8 mr-2 text-custom-light-black",
+                              class:
+                                _vm.method === "braintree" ? "block" : "hidden",
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                viewBox: "0 0 24 24",
+                                fill: "none",
+                                stroke: "currentColor",
+                                "stroke-width": "1",
+                                "stroke-linecap": "round",
+                                "stroke-linejoin": "round"
+                              }
+                            },
+                            [
+                              _c("polyline", {
+                                attrs: { points: "18 15 12 9 6 15" }
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "flex items-center mb-4 justify-between rounded w-full border px-4 py-3 border-gray-300 group hover:border-green-600 cursor-pointer",
+                          class:
+                            _vm.method === "paypal" ? "border-green-600" : "",
+                          on: {
+                            click: function($event) {
+                              return _vm.paymentOption("paypal")
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "text-lg ml-8 font-bold text-custom-light-black"
+                            },
+                            [_vm._v("Paypal")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "svg",
+                            {
+                              staticClass:
+                                "w-8 h-8 mr-2 text-custom-light-black",
+                              class:
+                                _vm.method === "paypal" ? "hidden" : "block",
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                viewBox: "0 0 24 24",
+                                fill: "none",
+                                stroke: "currentColor",
+                                "stroke-width": "1",
+                                "stroke-linecap": "round",
+                                "stroke-linejoin": "round"
+                              }
+                            },
+                            [
+                              _c("polyline", {
+                                attrs: { points: "6 9 12 15 18 9" }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "svg",
+                            {
+                              staticClass:
+                                "w-8 h-8 mr-2 text-custom-light-black",
+                              class:
+                                _vm.method === "paypal" ? "block" : "hidden",
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                viewBox: "0 0 24 24",
+                                fill: "none",
+                                stroke: "currentColor",
+                                "stroke-width": "1",
+                                "stroke-linecap": "round",
+                                "stroke-linejoin": "round"
+                              }
+                            },
+                            [
+                              _c("polyline", {
+                                attrs: { points: "18 15 12 9 6 15" }
+                              })
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm.method === "braintree"
+                        ? _c("div", { staticClass: "mt-4" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "hidden",
+                                name: "_type",
+                                value: "braintree"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("input", {
+                              attrs: {
+                                id: "nonce",
+                                name: "payment_method_nonce",
+                                type: "hidden"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm._m(0)
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.method === "stripe"
+                        ? _c("div", { staticClass: "mt-4" }, [_vm._m(1)])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.method === "paypal"
+                        ? _c("div", { staticClass: "mb-3 mt-4" }, [
+                            _c("input", {
+                              attrs: {
+                                type: "hidden",
+                                name: "_type",
+                                value: "paypal"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("input", {
+                              attrs: {
+                                id: "nonce",
+                                name: "payment_method_nonce",
+                                type: "hidden"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("div", { attrs: { id: "paypal-button" } })
+                          ])
+                        : _vm._e()
                     ]
                   )
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "w-full mb-6" }, [
-              _c(
-                "h3",
-                {
-                  staticClass:
-                    "text-lg font-semibold text-gray-900 mb-6 w-full px-2"
-                },
-                [_vm._v("Payment Method")]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "flex items-center mb-4 justify-between rounded w-full border px-4 py-3 border-gray-300 group hover:border-green-600 cursor-pointer",
-                  class: _vm.method === "stripe" ? "border-green-600" : "",
-                  on: {
-                    click: function($event) {
-                      return _vm.paymentOption("stripe")
-                    }
-                  }
-                },
-                [
-                  _c(
-                    "span",
-                    { staticClass: "text-lg ml-8 font-bold text-gray-900" },
-                    [_vm._v("Stripe")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "w-8 h-8 mr-2 text-custom-light-black",
-                      class: _vm.method === "stripe" ? "hidden" : "block",
-                      attrs: {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        viewBox: "0 0 24 24",
-                        fill: "none",
-                        stroke: "currentColor",
-                        "stroke-width": "1",
-                        "stroke-linecap": "round",
-                        "stroke-linejoin": "round"
-                      }
-                    },
-                    [_c("polyline", { attrs: { points: "6 9 12 15 18 9" } })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "w-8 h-8 mr-2 text-custom-light-black",
-                      class: _vm.method === "stripe" ? "block" : "hidden",
-                      attrs: {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        viewBox: "0 0 24 24",
-                        fill: "none",
-                        stroke: "currentColor",
-                        "stroke-width": "1",
-                        "stroke-linecap": "round",
-                        "stroke-linejoin": "round"
-                      }
-                    },
-                    [_c("polyline", { attrs: { points: "18 15 12 9 6 15" } })]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "flex items-center mb-4 justify-between rounded w-full border px-4 py-3 border-gray-300 group hover:border-green-600 cursor-pointer",
-                  class: _vm.method === "braintree" ? "border-green-600" : "",
-                  on: {
-                    click: function($event) {
-                      return _vm.paymentOption("braintree")
-                    }
-                  }
-                },
-                [
-                  _c(
-                    "span",
-                    { staticClass: "text-lg ml-8 font-bold text-gray-900" },
-                    [_vm._v("Braintree")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "w-8 h-8 mr-2 text-custom-light-black",
-                      class: _vm.method === "braintree" ? "hidden" : "block",
-                      attrs: {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        viewBox: "0 0 24 24",
-                        fill: "none",
-                        stroke: "currentColor",
-                        "stroke-width": "1",
-                        "stroke-linecap": "round",
-                        "stroke-linejoin": "round"
-                      }
-                    },
-                    [_c("polyline", { attrs: { points: "6 9 12 15 18 9" } })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "w-8 h-8 mr-2 text-custom-light-black",
-                      class: _vm.method === "braintree" ? "block" : "hidden",
-                      attrs: {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        viewBox: "0 0 24 24",
-                        fill: "none",
-                        stroke: "currentColor",
-                        "stroke-width": "1",
-                        "stroke-linecap": "round",
-                        "stroke-linejoin": "round"
-                      }
-                    },
-                    [_c("polyline", { attrs: { points: "18 15 12 9 6 15" } })]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "flex items-center mb-4 justify-between rounded w-full border px-4 py-3 border-gray-300 group hover:border-green-600 cursor-pointer",
-                  class: _vm.method === "paypal" ? "border-green-600" : "",
-                  on: {
-                    click: function($event) {
-                      return _vm.paymentOption("paypal")
-                    }
-                  }
-                },
-                [
-                  _c(
-                    "span",
-                    { staticClass: "text-lg ml-8 font-bold text-gray-900" },
-                    [_vm._v("Paypal")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "w-8 h-8 mr-2 text-custom-light-black",
-                      class: _vm.method === "paypal" ? "hidden" : "block",
-                      attrs: {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        viewBox: "0 0 24 24",
-                        fill: "none",
-                        stroke: "currentColor",
-                        "stroke-width": "1",
-                        "stroke-linecap": "round",
-                        "stroke-linejoin": "round"
-                      }
-                    },
-                    [_c("polyline", { attrs: { points: "6 9 12 15 18 9" } })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "svg",
-                    {
-                      staticClass: "w-8 h-8 mr-2 text-custom-light-black",
-                      class: _vm.method === "paypal" ? "block" : "hidden",
-                      attrs: {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        viewBox: "0 0 24 24",
-                        fill: "none",
-                        stroke: "currentColor",
-                        "stroke-width": "1",
-                        "stroke-linecap": "round",
-                        "stroke-linejoin": "round"
-                      }
-                    },
-                    [_c("polyline", { attrs: { points: "18 15 12 9 6 15" } })]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _vm.method === "braintree"
-                ? _c("div", { staticClass: "mt-4" }, [
-                    _c("input", {
-                      attrs: {
-                        type: "hidden",
-                        name: "_type",
-                        value: "braintree"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("input", {
-                      attrs: {
-                        id: "nonce",
-                        name: "payment_method_nonce",
-                        type: "hidden"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm._m(0)
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.method === "stripe"
-                ? _c("div", { staticClass: "mt-4" }, [_vm._m(1)])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.method === "paypal"
-                ? _c("div", { staticClass: "mb-3 mt-4" }, [
-                    _c("input", {
-                      attrs: { type: "hidden", name: "_type", value: "paypal" }
-                    }),
-                    _vm._v(" "),
-                    _c("input", {
-                      attrs: {
-                        id: "nonce",
-                        name: "payment_method_nonce",
-                        type: "hidden"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("div", { attrs: { id: "paypal-button" } })
-                  ])
-                : _vm._e()
-            ])
-          ]),
-          _vm._v(" "),
-          _vm._m(2)
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "flex flex-col w-full my-10 md:w-64  lg:w-500" },
-          [
-            _c("div", { staticClass: "flex justify-between w-full px-3 " }, [
-              _c("h3", { staticClass: "text-lg font-bold text-gray-900" }, [
-                _vm._v("My Cart")
+                ]),
+                _vm._v(" "),
+                _vm._m(2)
               ]),
               _vm._v(" "),
               _c(
-                "span",
-                { staticClass: "rounded-full p-1 text-custom-red-darker" },
-                [_vm._v(_vm._s(_vm.updatedQty))]
-              )
-            ]),
-            _vm._v(" "),
-            _vm._l(_vm.products, function(product) {
-              return _c(
                 "div",
-                {
-                  staticClass: "px-3 w-full flex flex-col justify-between mt-4"
-                },
+                { staticClass: "flex flex-col w-full my-10 md:w-64  lg:w-500" },
                 [
+                  _c(
+                    "div",
+                    { staticClass: "flex justify-between w-full px-3 " },
+                    [
+                      _c(
+                        "h3",
+                        {
+                          staticClass:
+                            "text-lg font-bold text-custom-light-black"
+                        },
+                        [_vm._v("My Cart")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        {
+                          staticClass: "rounded-full p-1 text-custom-red-darker"
+                        },
+                        [_vm._v(_vm._s(_vm.updatedQty))]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.products, function(product) {
+                    return _c(
+                      "div",
+                      {
+                        staticClass:
+                          "px-3 w-full flex flex-col justify-between mt-4"
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "flex flex-col md:flex-row justify-between items-center"
+                          },
+                          [
+                            _c("img", {
+                              staticClass:
+                                "h-40 w-full md:w-40 rounded-lg object-cover object-center",
+                              attrs: {
+                                src: "/storage/" + product.options.imageUrl
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "ml-3 flex-1 flex flex-col" },
+                              [
+                                _c("h4", [_vm._v(_vm._s(product.name))]),
+                                _vm._v(" "),
+                                _c("h4", [_vm._v("$ " + _vm._s(product.price))])
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
                   _c(
                     "div",
                     {
                       staticClass:
-                        "flex flex-col md:flex-row justify-between items-center"
+                        "w-full flex flex-col  rounded-lg p-3 my-3 border border-gray-300"
                     },
                     [
-                      _c("img", {
-                        staticClass:
-                          "h-40 w-full md:w-40 rounded-lg object-cover object-center",
-                        attrs: { src: "/storage/" + product.options.imageUrl }
-                      }),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "w-full flex items-center justify-between"
+                        },
+                        [
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2"
+                            },
+                            [_vm._v("SubTotal")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right"
+                            },
+                            [_vm._v("$ " + _vm._s(_vm.sub))]
+                          )
+                        ]
+                      ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "ml-3 flex-1 flex flex-col" }, [
-                        _c("h4", [_vm._v(_vm._s(product.name))]),
-                        _vm._v(" "),
-                        _c("h4", [_vm._v("$ " + _vm._s(product.price))])
-                      ])
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "w-full flex items-center justify-between"
+                        },
+                        [
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2"
+                            },
+                            [_vm._v("Discount")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right"
+                            },
+                            [_vm._v("$ " + _vm._s(_vm.dis))]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "w-full flex items-center justify-between"
+                        },
+                        [
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2"
+                            },
+                            [_vm._v("SubTotal After Discount")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right"
+                            },
+                            [
+                              _vm._v(
+                                "$ " +
+                                  _vm._s(_vm.afterdis ? _vm.afterdis : _vm.sub)
+                              )
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "w-full flex items-center justify-between"
+                        },
+                        [
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2"
+                            },
+                            [_vm._v("Tax")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right"
+                            },
+                            [_vm._v("$ " + _vm._s(_vm.tax))]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "w-full flex items-center justify-between"
+                        },
+                        [
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2"
+                            },
+                            [_vm._v("Grand Total")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right"
+                            },
+                            [_vm._v("$ " + _vm._s(_vm.grand))]
+                          )
+                        ]
+                      )
                     ]
                   )
-                ]
+                ],
+                2
               )
-            }),
-            _vm._v(" "),
+            ]
+          )
+        ])
+      : _c(
+          "div",
+          { staticClass: "flex flex-row justify-center items-center h-screen" },
+          [
             _c(
               "div",
-              { staticClass: "w-full flex flex-col  rounded-lg p-3 mb-3" },
+              {
+                staticClass:
+                  "flex flex-col md:flex-row justify-center items-center border rounded shadow px-6 py-6"
+              },
               [
                 _c(
-                  "div",
-                  { staticClass: "w-full flex items-center justify-between" },
-                  [
-                    _c(
-                      "span",
-                      {
-                        staticClass:
-                          "my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2"
-                      },
-                      [_vm._v("SubTotal")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        staticClass:
-                          "my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right"
-                      },
-                      [_vm._v("$ " + _vm._s(_vm.sub))]
-                    )
-                  ]
+                  "a",
+                  {
+                    staticClass:
+                      "w-full cursor-pointer text-center md:w-auto text-bold text-md md:mr-4 hover:opacity-75 text-custom-light-orange px-6 py-4 rounded-lg",
+                    attrs: { href: "/login" }
+                  },
+                  [_vm._v("Login Now")]
                 ),
                 _vm._v(" "),
                 _c(
-                  "div",
-                  { staticClass: "w-full flex items-center justify-between" },
-                  [
-                    _c(
-                      "span",
-                      {
-                        staticClass:
-                          "my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2"
-                      },
-                      [_vm._v("Discount")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        staticClass:
-                          "my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right"
-                      },
-                      [_vm._v("$ " + _vm._s(_vm.dis))]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "w-full flex items-center justify-between" },
-                  [
-                    _c(
-                      "span",
-                      {
-                        staticClass:
-                          "my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2"
-                      },
-                      [_vm._v("SubTotal After Discount")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        staticClass:
-                          "my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right"
-                      },
-                      [
-                        _vm._v(
-                          "$ " + _vm._s(_vm.afterdis ? _vm.afterdis : _vm.sub)
-                        )
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "w-full flex items-center justify-between" },
-                  [
-                    _c(
-                      "span",
-                      {
-                        staticClass:
-                          "my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2"
-                      },
-                      [_vm._v("Tax")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        staticClass:
-                          "my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right"
-                      },
-                      [_vm._v("$ " + _vm._s(_vm.tax))]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "w-full flex items-center justify-between" },
-                  [
-                    _c(
-                      "span",
-                      {
-                        staticClass:
-                          "my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2"
-                      },
-                      [_vm._v("Grand Total")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        staticClass:
-                          "my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right"
-                      },
-                      [_vm._v("$ " + _vm._s(_vm.grand))]
-                    )
-                  ]
+                  "span",
+                  {
+                    staticClass:
+                      "w-full mt-4 md:mt-0 cursor-pointer text-center md:w-auto text-bold text-md bg-custom-light-orange hover:opacity-75 text-white px-6 py-4 rounded-lg",
+                    on: {
+                      click: function($event) {
+                        _vm.showField = true
+                      }
+                    }
+                  },
+                  [_vm._v("Checkout as Guest")]
                 )
               ]
             )
-          ],
-          2
+          ]
         )
-      ]
-    )
   ])
 }
 var staticRenderFns = [
@@ -62055,11 +62310,15 @@ var render = function() {
                   "svg",
                   {
                     staticClass:
-                      "relative  md:hidden w-8 h-8 text-custom-light-black cursor-pointer hover:text-gray-700",
+                      "relative  md:hidden w-8 h-8 text-custom-light-black cursor-pointer hover:opacity-75",
                     attrs: {
-                      viewBox: "0 0 34 28",
-                      fill: "currentColor",
-                      xmlns: "http://www.w3.org/2000/svg"
+                      xmlns: "http://www.w3.org/2000/svg",
+                      viewBox: "0 0 24 24",
+                      fill: "none",
+                      stroke: "currentColor",
+                      "stroke-width": "1",
+                      "stroke-linecap": "round",
+                      "stroke-linejoin": "round"
                     },
                     on: {
                       click: function($event) {
@@ -62068,36 +62327,16 @@ var render = function() {
                     }
                   },
                   [
-                    _c("rect", {
-                      attrs: {
-                        x: "0.798828",
-                        width: "33.2015",
-                        height: "2",
-                        rx: "2",
-                        fill: "currentColor"
-                      }
+                    _c("line", {
+                      attrs: { x1: "3", y1: "12", x2: "21", y2: "12" }
                     }),
                     _vm._v(" "),
-                    _c("rect", {
-                      attrs: {
-                        x: "0.798828",
-                        y: "12",
-                        width: "33.2015",
-                        height: "2",
-                        rx: "2",
-                        fill: "currentColor"
-                      }
+                    _c("line", {
+                      attrs: { x1: "3", y1: "6", x2: "21", y2: "6" }
                     }),
                     _vm._v(" "),
-                    _c("rect", {
-                      attrs: {
-                        x: "0.798828",
-                        y: "24",
-                        width: "33.2015",
-                        height: "2",
-                        rx: "2",
-                        fill: "currentColor"
-                      }
+                    _c("line", {
+                      attrs: { x1: "3", y1: "18", x2: "21", y2: "18" }
                     })
                   ]
                 )
@@ -62111,76 +62350,10 @@ var render = function() {
                 attrs: { href: "/" }
               },
               [
-                _c(
-                  "svg",
-                  {
-                    staticClass: "w-10 h-10 ",
-                    attrs: {
-                      viewBox: "0 0 71 71",
-                      fill: "currentColor",
-                      xmlns: "http://www.w3.org/2000/svg"
-                    }
-                  },
-                  [
-                    _c("rect", {
-                      attrs: {
-                        y: "28.2843",
-                        width: "8",
-                        height: "60",
-                        rx: "4",
-                        transform: "rotate(-45 0 28.2843)",
-                        fill: "currentColor"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("rect", {
-                      attrs: {
-                        y: "28.2843",
-                        width: "40",
-                        height: "10",
-                        rx: "5",
-                        transform: "rotate(-45 0 28.2843)",
-                        fill: "currentColor"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("rect", {
-                      attrs: {
-                        x: "65.0537",
-                        y: "48.0833",
-                        width: "60",
-                        height: "8",
-                        rx: "4",
-                        transform: "rotate(-135 65.0537 48.0833)",
-                        fill: "currentColor"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("rect", {
-                      attrs: {
-                        x: "17.6777",
-                        y: "45.9619",
-                        width: "40",
-                        height: "10",
-                        rx: "5",
-                        transform: "rotate(-45 17.6777 45.9619)",
-                        fill: "currentColor"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("rect", {
-                      attrs: {
-                        x: "35.3555",
-                        y: "63.6396",
-                        width: "40",
-                        height: "10",
-                        rx: "5",
-                        transform: "rotate(-45 35.3555 63.6396)",
-                        fill: "currentColor"
-                      }
-                    })
-                  ]
-                )
+                _c("img", {
+                  staticClass: "h-8 w-8 text-custom-light-black",
+                  attrs: { src: "/img/shoe.svg" }
+                })
               ]
             )
           ]),
@@ -62382,7 +62555,8 @@ var render = function() {
             _c(
               "li",
               {
-                staticClass: "relative flex items-center cursor-pointer mb-6 "
+                staticClass:
+                  "relative flex items-center cursor-pointer mb-6 mr-6 mt-2"
               },
               [
                 _c("a", { attrs: { href: "/cart-details" } }, [
@@ -62392,16 +62566,24 @@ var render = function() {
                       staticClass:
                         "h-8 w-8 text-custom-light-black hover:text-gray-700",
                       attrs: {
-                        fill: "currentColor",
                         xmlns: "http://www.w3.org/2000/svg",
-                        viewBox: "0 0 20 20"
+                        viewBox: "0 0 24 24",
+                        fill: "none",
+                        stroke: "currentColor",
+                        "stroke-width": "1",
+                        "stroke-linecap": "round",
+                        "stroke-linejoin": "round"
                       }
                     },
                     [
+                      _c("circle", { attrs: { cx: "9", cy: "21", r: "1" } }),
+                      _vm._v(" "),
+                      _c("circle", { attrs: { cx: "20", cy: "21", r: "1" } }),
+                      _vm._v(" "),
                       _c("path", {
                         attrs: {
                           d:
-                            "M4 2h16l-3 9H4a1 1 0 1 0 0 2h13v2H4a3 3 0 0 1 0-6h.33L3 5 2 2H0V0h3a1 1 0 0 1 1 1v1zm1 18a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm10 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"
+                            "M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
                         }
                       })
                     ]
@@ -62424,7 +62606,7 @@ var render = function() {
                 "a",
                 {
                   staticClass:
-                    "text-lg text-custom-light-black hover:text-gray-700 font-bold",
+                    "text-md text-custom-light-black hover:text-gray-700 ",
                   attrs: { href: "/shoes" }
                 },
                 [_vm._v("\n                    Shoes\n                ")]

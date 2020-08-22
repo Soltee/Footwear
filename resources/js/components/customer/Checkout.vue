@@ -1,178 +1,186 @@
 <template>
     <div class="z-0 w-full my-8">
-        <div class="flex items-center px-2">
-            <div class="flex items-center">
-                <a :href="`/shoes`" class=" text-md md:text-lg opacity-75">Shoes</a>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-800 mx-2">
-                    <polyline points="13 17 18 12 13 7"></polyline>
-                    <polyline points="6 17 11 12 6 7"></polyline>
-                </svg>
-                <a :href="`/cart-details`" class="  text-md md:text-lg text-gray-900 opacity-75">Cart</a>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-700 mx-2">
-                    <polyline points="13 17 18 12 13 7"></polyline>
-                    <polyline points="6 17 11 12 6 7"></polyline>
-                </svg>
-                <h4 class="font-semibold text-md md:text-lg text-gray-900 ">Checkout</h4>
+        <div v-if="showField" class="w-full">
+            <div class="flex items-center px-2">
+                <div class="flex items-center">
+                    <a :href="`/shoes`" class=" text-md  opacity-75">Back to Shop</a>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-800 mx-2">
+                        <polyline points="13 17 18 12 13 7"></polyline>
+                        <polyline points="6 17 11 12 6 7"></polyline>
+                    </svg>
+                    <a :href="`/cart-details`" class="  text-md  text-custom-light-black opacity-75">Cart</a>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-700 mx-2">
+                        <polyline points="13 17 18 12 13 7"></polyline>
+                        <polyline points="6 17 11 12 6 7"></polyline>
+                    </svg>
+                    <h4 class="font-semibold text-md  text-custom-light-black ">Checkout</h4>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between my-8 w-full">
+                <form id="payment-form">
+                    <div class="flex-1">
+                        <!-- <input type="hidden" name="_token" :value="csrf"> -->
+                        <!-- <input name="amount" type="hidden" :value="grand" /> -->
+                        <div class="w-full mb-6  border border-gray-300 p-3">
+                            <h3 class="text-lg font-semibold text-custom-light-black mb-6 px-2 ">Personal Info</h3>
+                            <div class="mb-4  w-full px-2 ">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="firstname">
+                                    First Name
+                                </label>
+                                <input class="hadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="firstname" type="text" placeholder="Roman" v-model="firstname">
+                            </div>
+                            <div class="mb-4 w-full px-2">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="lastname">
+                                    Last Name
+                                </label>
+                                <input class="hadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="lastname" type="text" placeholder="Dide" v-model="lastname">
+                            </div>
+                            <div class="w-full mb-6 px-2">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+                                    Email
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" v-model="email" type="email" placeholder="email">
+                            </div>
+                            <div class="w-full flex flex-wrap -mx-3 mb-6 px-2">
+                                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-city">
+                                        City
+                                    </label>
+                                    <div class="relative">
+                                        <select class="block appearance-none w-full  border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" v-model="city">
+                                            <option>Pokhara</option>
+                                        </select>
+                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="street">
+                                        Street Address
+                                    </label>
+                                    <div class="relative">
+                                        <input class="appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="street" type="text" placeholder="Albuquerque" v-model="address">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full mb-6  border border-gray-300 p-3">
+                            <h3 class="text-lg font-semibold text-custom-light-black mb-6 w-full px-2">Payment Method</h3>
+                            <div class="flex items-center mb-4 justify-between rounded w-full border px-4 py-3 border-gray-300 group hover:border-green-600 cursor-pointer" @click="paymentOption('stripe')" :class="(method === 'stripe') ? 'border-green-600' : ''">
+                                <span class="text-lg ml-8 font-bold text-custom-light-black">Stripe</span>
+                                <svg class="w-8 h-8 mr-2 text-custom-light-black" :class="(method === 'stripe') ? 'hidden' : 'block'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                                <svg class="w-8 h-8 mr-2 text-custom-light-black" :class="(method === 'stripe') ? 'block':'hidden' " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="18 15 12 9 6 15"></polyline>
+                                </svg>
+                            </div>
+                            <div class="flex items-center mb-4 justify-between rounded w-full border px-4 py-3 border-gray-300 group hover:border-green-600 cursor-pointer" @click="paymentOption('braintree')" :class="(method === 'braintree') ? 'border-green-600' : ''">
+                                <span class="text-lg ml-8 font-bold text-custom-light-black">Braintree</span>
+                                <svg class="w-8 h-8 mr-2 text-custom-light-black" :class="(method === 'braintree') ? 'hidden' : 'block'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                                <svg class="w-8 h-8 mr-2 text-custom-light-black" :class="(method === 'braintree') ? 'block':'hidden' " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="18 15 12 9 6 15"></polyline>
+                                </svg>
+                            </div>
+                            <div class="flex items-center mb-4 justify-between rounded w-full border px-4 py-3 border-gray-300 group hover:border-green-600 cursor-pointer" @click="paymentOption('paypal')" :class="(method === 'paypal') ? 'border-green-600' : ''">
+                                <span class="text-lg ml-8 font-bold text-custom-light-black">Paypal</span>
+                                <svg class="w-8 h-8 mr-2 text-custom-light-black" :class="(method === 'paypal') ? 'hidden' : 'block'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                                <svg class="w-8 h-8 mr-2 text-custom-light-black" :class="(method === 'paypal') ? 'block':'hidden' " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="18 15 12 9 6 15"></polyline>
+                                </svg>
+                            </div>
+                            <div class="mt-4" v-if="method === 'braintree'">
+                                <input type="hidden" name="_type" value="braintree">
+                                <input id="nonce" name="payment_method_nonce" type="hidden" />
+                                <div class="flex flex-col md:flex-row items-center">
+                                    <div class="flex flex-col w-full">
+                                        <label class="mb-2" for="cc_number">Credit Card</label>
+                                        <div class="px-4 py-3 rounded-lg h-16" id="card-number">
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col w-full">
+                                        <label class="mb-2" for="expiry">Expiry</label>
+                                        <div class="px-4 py-3 rounded-lg h-16" id="expiration-date">
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col w-full">
+                                        <label class="mb-2" for="cvv">CVV</label>
+                                        <div class="px-4 py-3 rounded-lg h-16" id="cvv">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4" v-if="method === 'stripe'">
+                                <div class="ml-3">
+                                    <input type="hidden" name="_type" value="stripe">
+                                    <div class="flex flex-col">
+                                        <div id="card-element" class="mb-3">
+                                        </div>
+                                        <div id="card-errors" role="alert"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-if="method === 'paypal'" class="mb-3 mt-4">
+                                <input type="hidden" name="_type" value="paypal">
+                                <input id="nonce" name="payment_method_nonce" type="hidden" />
+                                <div id="paypal-button"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="submit" class="mt-3 ml-2 px-8 w-full md:w-auto py-4 hover:opacity-75 rounded-lg text-white font-bold text-lg bg-custom-light-orange ">Pay Now</button>
+                    </div>
+                </form>
+                <!--Cart Details-->
+                <div class="flex flex-col w-full my-10 md:w-64  lg:w-500">
+                    <div class="flex justify-between w-full px-3 ">
+                        <h3 class="text-lg font-bold text-custom-light-black">My Cart</h3>
+                        <span class="rounded-full p-1 text-custom-red-darker">{{ updatedQty }}</span>
+                    </div>
+                    <div v-for="product in products" class="px-3 w-full flex flex-col justify-between mt-4">
+                        <div class="flex flex-col md:flex-row justify-between items-center">
+                            <img class="h-40 w-full md:w-40 rounded-lg object-cover object-center" :src="`/storage/${product.options.imageUrl}`">
+                            <div class="ml-3 flex-1 flex flex-col">
+                                <h4>{{ product.name }}</h4>
+                                <h4>$ {{ product.price }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full flex flex-col  rounded-lg p-3 my-3 border border-gray-300">
+                        <div class="w-full flex items-center justify-between">
+                            <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">SubTotal</span>
+                            <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ sub }}</span>
+                        </div>
+                        <div class="w-full flex items-center justify-between">
+                            <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">Discount</span>
+                            <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ dis }}</span>
+                        </div>
+                        <div class="w-full flex items-center justify-between">
+                            <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">SubTotal After Discount</span>
+                            <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ (afterdis) ? afterdis : sub }}</span>
+                        </div>
+                        <div class="w-full flex items-center justify-between">
+                            <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">Tax</span>
+                            <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ tax }}</span>
+                        </div>
+                        <div class="w-full flex items-center justify-between">
+                            <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">Grand Total</span>
+                            <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ grand }}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="flex flex-col md:flex-row justify-between my-8 w-full">
-            <form id="payment-form">
-                <div class="flex-1">
-                    <!-- <input type="hidden" name="_token" :value="csrf"> -->
-                    <!-- <input name="amount" type="hidden" :value="grand" /> -->
-                    <div class="w-full mb-6">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-6 px-2 ">Personal Info</h3>
-                        <div class="mb-4  w-full px-2 ">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="firstname">
-                                First Name
-                            </label>
-                            <input class="hadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="firstname" type="text" placeholder="Roman" v-model="firstname">
-                        </div>
-                        <div class="mb-4 w-full px-2">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="lastname">
-                                Last Name
-                            </label>
-                            <input class="hadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="lastname" type="text" placeholder="Dide" v-model="lastname">
-                        </div>
-                        <div class="w-full mb-6 px-2">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
-                                Email
-                            </label>
-                            <input class="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" v-model="email" type="email" placeholder="email">
-                        </div>
-                        <div class="w-full flex flex-wrap -mx-3 mb-6 px-2">
-                            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-city">
-                                    City
-                                </label>
-                                <div class="relative">
-                                    <select class="block appearance-none w-full  border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" v-model="city">
-                                        <option>Pokhara</option>
-                                    </select>
-                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="street">
-                                    Street Address
-                                </label>
-                                <div class="relative">
-                                    <input class="appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="street" type="text" placeholder="Albuquerque" v-model="address">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full mb-6">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-6 w-full px-2">Payment Method</h3>
-                        <div class="flex items-center mb-4 justify-between rounded w-full border px-4 py-3 border-gray-300 group hover:border-green-600 cursor-pointer" @click="paymentOption('stripe')" :class="(method === 'stripe') ? 'border-green-600' : ''">
-                            <span class="text-lg ml-8 font-bold text-gray-900">Stripe</span>
-                            <svg class="w-8 h-8 mr-2 text-custom-light-black" :class="(method === 'stripe') ? 'hidden' : 'block'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                            <svg class="w-8 h-8 mr-2 text-custom-light-black" :class="(method === 'stripe') ? 'block':'hidden' " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="18 15 12 9 6 15"></polyline>
-                            </svg>
-                        </div>
-                        <div class="flex items-center mb-4 justify-between rounded w-full border px-4 py-3 border-gray-300 group hover:border-green-600 cursor-pointer" @click="paymentOption('braintree')" :class="(method === 'braintree') ? 'border-green-600' : ''">
-                            <span class="text-lg ml-8 font-bold text-gray-900">Braintree</span>
-                            <svg class="w-8 h-8 mr-2 text-custom-light-black" :class="(method === 'braintree') ? 'hidden' : 'block'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                            <svg class="w-8 h-8 mr-2 text-custom-light-black" :class="(method === 'braintree') ? 'block':'hidden' " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="18 15 12 9 6 15"></polyline>
-                            </svg>
-                        </div>
-                        <div class="flex items-center mb-4 justify-between rounded w-full border px-4 py-3 border-gray-300 group hover:border-green-600 cursor-pointer" @click="paymentOption('paypal')" :class="(method === 'paypal') ? 'border-green-600' : ''">
-                            <span class="text-lg ml-8 font-bold text-gray-900">Paypal</span>
-                            <svg class="w-8 h-8 mr-2 text-custom-light-black" :class="(method === 'paypal') ? 'hidden' : 'block'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                            <svg class="w-8 h-8 mr-2 text-custom-light-black" :class="(method === 'paypal') ? 'block':'hidden' " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="18 15 12 9 6 15"></polyline>
-                            </svg>
-                        </div>
-                        <div class="mt-4" v-if="method === 'braintree'">
-                            <input type="hidden" name="_type" value="braintree">
-                            <input id="nonce" name="payment_method_nonce" type="hidden" />
-                            <div class="flex flex-col md:flex-row items-center">
-                                <div class="flex flex-col w-full">
-                                    <label class="mb-2" for="cc_number">Credit Card</label>
-                                    <div class="px-4 py-3 rounded-lg h-16" id="card-number">
-                                    </div>
-                                </div>
-                                <div class="flex flex-col w-full">
-                                    <label class="mb-2" for="expiry">Expiry</label>
-                                    <div class="px-4 py-3 rounded-lg h-16" id="expiration-date">
-                                    </div>
-                                </div>
-                                <div class="flex flex-col w-full">
-                                    <label class="mb-2" for="cvv">CVV</label>
-                                    <div class="px-4 py-3 rounded-lg h-16" id="cvv">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-4" v-if="method === 'stripe'">
-                            <div class="ml-3">
-                                <input type="hidden" name="_type" value="stripe">
-                                <div class="flex flex-col">
-                                    <div id="card-element" class="mb-3">
-                                    </div>
-                                    <div id="card-errors" role="alert"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div v-if="method === 'paypal'" class="mb-3 mt-4">
-                            <input type="hidden" name="_type" value="paypal">
-                            <input id="nonce" name="payment_method_nonce" type="hidden" />
-                            <div id="paypal-button"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex justify-end">
-                    <button type="submit" class="mt-3 ml-2 px-8 w-full md:w-auto py-4 hover:opacity-75 rounded-lg text-white font-bold text-lg bg-custom-light-orange ">Pay Now</button>
-                </div>
-            </form>
-            <!--Cart Details-->
-            <div class="flex flex-col w-full my-10 md:w-64  lg:w-500">
-                <div class="flex justify-between w-full px-3 ">
-                    <h3 class="text-lg font-bold text-gray-900">My Cart</h3>
-                    <span class="rounded-full p-1 text-custom-red-darker">{{ updatedQty }}</span>
-                </div>
-                <div v-for="product in products" class="px-3 w-full flex flex-col justify-between mt-4">
-                    <div class="flex flex-col md:flex-row justify-between items-center">
-                        <img class="h-40 w-full md:w-40 rounded-lg object-cover object-center" :src="`/storage/${product.options.imageUrl}`">
-                        <div class="ml-3 flex-1 flex flex-col">
-                            <h4>{{ product.name }}</h4>
-                            <h4>$ {{ product.price }}</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="w-full flex flex-col  rounded-lg p-3 mb-3">
-                    <div class="w-full flex items-center justify-between">
-                        <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">SubTotal</span>
-                        <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ sub }}</span>
-                    </div>
-                    <div class="w-full flex items-center justify-between">
-                        <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">Discount</span>
-                        <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ dis }}</span>
-                    </div>
-                    <div class="w-full flex items-center justify-between">
-                        <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">SubTotal After Discount</span>
-                        <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ (afterdis) ? afterdis : sub }}</span>
-                    </div>
-                    <div class="w-full flex items-center justify-between">
-                        <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">Tax</span>
-                        <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ tax }}</span>
-                    </div>
-                    <div class="w-full flex items-center justify-between">
-                        <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">Grand Total</span>
-                        <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ grand }}</span>
-                    </div>
-                </div>
+        <div v-else class="flex flex-row justify-center items-center h-screen">
+            <div class="flex flex-col md:flex-row justify-center items-center border rounded shadow px-6 py-6">
+                <a :href="`/login`" class="w-full cursor-pointer text-center md:w-auto text-bold text-md md:mr-4 hover:opacity-75 text-custom-light-orange px-6 py-4 rounded-lg">Login Now</a>
+                <span @click="showField=true;" class="w-full mt-4 md:mt-0 cursor-pointer text-center md:w-auto text-bold text-md bg-custom-light-orange hover:opacity-75 text-white px-6 py-4 rounded-lg">Checkout as Guest</span>
             </div>
         </div>
     </div>
@@ -187,6 +195,7 @@ export default {
             firstname: '',
             lastname: '',
             email: ' ',
+            showField: false,
             city: '',
             address: '',
             productsArr: [],
@@ -201,6 +210,7 @@ export default {
     },
     mounted() {
         this.pushProducts();
+        (auth) ? (this.showField = true) : (this.showField = false);
     },
     methods: {
         pushProducts() {

@@ -19,21 +19,7 @@
           </div>
 
     </div>
-    {{-- <div class="w-full relative   md:px-16 pt-16 pb-24 z-10 flex flex-col  items-center justify-between py-2">
-          <div class="flex-1 mt-0 h-full flex flex-col items-start justify-center md:pr-12 ">
-            <h1 class=" leading-tight font-bold text-3xl md:text-6xl text-black opacity-75">
-              Thousands of shoes.
-            </h1>
-            <p class=" text-lg  md:text-2xl  text-custom-light-black mt-2 font-bold">Get branded shoes for your next wear.</p>
-            <a href="/shoes" class="w-48 px-6 py-4 text-center mt-12 text-lg text-white bg-custom-light-orange hover:bg-custom-dark-orange rounded-lg">
-                Grab Now
-            </a>
-          </div>
-          <div class="w-64 hidden">
-          </div>
 
-        <img class="hero-background absolute top-0 w-full h-94 right-0 opacity-25   object-contain object-center -z-10" src="{{ asset('img/b.jpg') }}" alt="Hero Background">
-    </div> --}}
 
     <div class="mt-16 md:mt-10 py-6 w-full  ">
         <div class="flex  items-center mb-6">
@@ -66,7 +52,7 @@
     <div class="relative w-full md:px-12  flex flex-col md:flex-row justify-between items-center h-86 md:h-auto">
         <div class="flex-1 flex flex-col justify-center text-center md:items-left py-6 md:py-0 z-20">
             <h3 class="text-3xl font-bold text-custom-light-black">Over hundreds of women shoes</h3>
-            <div class="text-lg font-bold flex flex-col md:flex-row items-center text-custom-light-black mt-8">
+            <div class="text-lg font-bold flex flex-col  items-center text-custom-light-black mt-8">
                 <a href="/shoes?type=Women" class="mb-3 md:mb-0">
                     <span class="opacity-75">Grab now to get</span> 
                 </a>
