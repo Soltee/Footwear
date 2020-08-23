@@ -3,25 +3,27 @@
 {{-- Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> --}}
 @section('content')
 
-        <div class="w-full relative py-16  flex flex-col  items-center justify-between py-2">
-          <div class="flex-1 h-full flex flex-col items-start justify-center  ">
-            <h1 class=" leading-tight font-bold text-3xl md:text-6xl text-black opacity-75">
-              Level your standard.
+   
+    <div class="w-full relative pt-6 md:pt-2 pb-8   flex flex-col md:flex-row items-center justify-between py-2">
+        <div class="w-full md:w-1/2 lg:w-2/3  h-full flex flex-col items-start justify-center  ">
+            <h1 class=" leading-tight font-bold text-4xl cm:text-5xl lg:text-6xl text-black opacity-75">
+              Find shoe that matters.
             </h1>
             <p class=" text-lg  md:text-2xl  text-custom-light-black mt-2 font-bold">Branded shoes for your next wear.</p>
 
             <div class="flex">
-                <a href="/shoes" class="w-48 px-6 py-4 text-center mt-12 text-lg text-white bg-custom-light-orange hover:opacity-75 rounded-lg">
+                <a href="/shoes" class="w-auto md:w-48 px-4 py-3 md:px-6 md:py-4 text-center mt-8 md:mt-12 text-md md:text-lg text-white bg-custom-light-orange hover:opacity-75 rounded-lg">
                     Shop Now
                 </a>
             </div>
 
           </div>
+          <img src="{{ asset('/img/her.jpg') }}" class="hidden md:block object-bottom object-cover h-64 md:h-90 w-full md:w-1/2 lg:w-1/3 mt-4 md:mt-0 opacity-75 rounded">
 
     </div>
 
 
-    <div class="mt-16 md:mt-10 py-6 w-full  ">
+    <div class="mt-10 py-6 w-full  ">
         <div class="flex  items-center mb-6">
             <span class="text-custom-light-black font-bold text-center  tracking-wider text-lg md:text-xl">RECOMMENDED</span>
         </div>
@@ -92,6 +94,10 @@
 
         </div>
     </div>
+
+    <subscribe />  
+
+    
     {{-- <div class="mt-6 md:mt-0 py-6 md:py-10 w-full ">
         <div class="flex justify-center items-center">
             <span class="text-custom-light-black font-bold text-center text-lg tracking-wider md:text-xl my-6 ml-4">FEATURED</span>

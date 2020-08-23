@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('extra')
+@section('head')
   <style>
    .products{
      display: grid;
@@ -77,5 +77,6 @@
             
       </div>
     </div>
+    <subscribe />  
 
 @endsection

@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Notifications\CustomerRegistered;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Http;
+
 
 class RegisterController extends Controller
 {
@@ -54,6 +56,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'g-recaptcha-response' => ['required'],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:customers'],
@@ -80,6 +83,14 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
+        $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret'     => env('RECAPTCHA_V2_SECRET'),
+            'response'   => $request->input('g-recaptcha-response')
+        ]);
+
+        if($response->failed()){
+            return redirect()->back()->with('error', 'Reacaptcha error.');
+        } 
 
         event(new Registered($user = $this->create($request->all())));
         $this->guard()->login($user);

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('extra')
+@section('head')
 
     <script src="https://js.braintreegateway.com/web/3.56.0/js/client.min.js"></script>
     <script src="https://js.braintreegateway.com/web/3.56.0/js/hosted-fields.min.js"></script>

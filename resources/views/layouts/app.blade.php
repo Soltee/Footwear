@@ -13,7 +13,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
-    @yield('extra')
+    @yield('head')
     
 
 </head>
@@ -36,7 +36,7 @@
             <footer-view></footer-view>
         @endif 
 
-        <subscribe />     
+           
     </div>
     
 

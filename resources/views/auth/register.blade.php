@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('head')
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+@endsection
 @section('content')
     <div class="flex flex-col md:flex-row py-12">
         <div class="w-full md:w-1/2 hidden md:block">
@@ -9,7 +11,7 @@
         <div class="w-full md:w-1/2 md:px-4 md:py-5">
 
                 <div class="font-semibold text-custom-light-black py-3 md:px-6  mb-4">
-                    {{ __('Login') }}
+                    {{ __('Register') }}
                 </div>
 
 
@@ -79,7 +81,8 @@
 
                             <input id="password-confirm" type="password" class="shadow appearance-none border rounded w-full py-3 px-3 text-custom-light-black leading-tight focus:outline-none focus:shadow-outline" name="password_confirmation" required>
                         </div>
-
+                        <div class="g-recaptcha mb-3" data-sitekey="{{ env('RECAPTCHA_V2_SITE') }}"></div>
+                        
                         <div class="flex flex-col w-full items-center">
                             <button type="submit" class="w-full inline-block align-middle text-center select-none border font-bold whitespace-no-wrap py-3 px-4 rounded text-base leading-normal no-underline text-white bg-custom-light-orange hover:opacity-75">
                                 {{ __('Register') }}

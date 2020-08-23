@@ -1,5 +1,5 @@
 <template>
-    <div class="px-6 py-3  md:py-6 max-w-screen-lg mx-auto">
+    <div class="px-6 py-3  md:py-4 max-w-screen-lg mx-auto">
         <nav class=" flex flex-row justify-between items-center">
             <div class=" flex items-center">
                 <svg v-if="!openMenu" @click="openMenu = true;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="relative  md:hidden w-8 h-8 text-custom-light-black cursor-pointer hover:opacity-75">
@@ -23,17 +23,22 @@
                         Shoes
                     </a>
                 </li>
-                <li v-if="customer" class="flex  flex-row items-center mb-4 mt-2 hidden md:block">
+                <li v-if="customer" class=" mb-4  ">
                     <a :href="`/dashboard`" class="mr-3">
                         <img v-if="customer.avatar" :src="`/storage/${customer.avatar}`" class="w-10 h-10 rounded-full object-cover object-center">
-                        <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 rounded-full object-cover object-center">
+                        <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 rounded-full object-cover object-center text-white ">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
                         </svg>
                     </a>
+                </li>
+                <li v-if="customer" class=" mb-4  ">
                     <a :href="`/#`" @click.prevent="logoutModal = true;">
-                        <svg class="h-8 w-8  text-custom-light-black rounded-full" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M16 9v-4l8 7-8 7v-4h-8v-6h8zm-2 10v-.083c-1.178.685-2.542 1.083-4 1.083-4.411 0-8-3.589-8-8s3.589-8 8-8c1.458 0 2.822.398 4 1.083v-2.245c-1.226-.536-2.577-.838-4-.838-5.522 0-10 4.477-10 10s4.478 10 10 10c1.423 0 2.774-.302 4-.838v-2.162z" /></svg>
+                        <svg <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8  text-white rounded-full">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
                     </a>
                 </li>
                 <li v-else class="mt-4 ">
@@ -66,17 +71,22 @@
                         Shoes
                     </a>
                 </li>
-                <li v-if="customer" class="flex  flex-row items-center mb-4 mt-2 hidden md:block">
+                <li v-if="customer" class="flex  flex-row items-center mb-4 mr-6 mt-2 hidden md:block">
                     <a :href="`/dashboard`" class="mr-3">
-                        <img v-if="customer.avatar" :src="`/storage/${customer.avatar}`" class="w-10 h-10 rounded-full object-cover object-center">
-                        <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 rounded-full object-cover object-center">
+                        <img v-if="customer.avatar" :src="`/storage/${customer.avatar}`" class="w-10 h-10 rounded-full object-cover object-center text-custom-light-black ">
+                        <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 rounded-full object-cover object-center">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
                         </svg>
                     </a>
+                </li>
+                <li v-if="customer" class="flex  flex-row items-center mb-4 -mt-2 hidden md:block">
                     <a :href="`/#`" @click.prevent="logoutModal = true;">
-                        <svg class="h-8 w-8  text-custom-light-black rounded-full" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M16 9v-4l8 7-8 7v-4h-8v-6h8zm-2 10v-.083c-1.178.685-2.542 1.083-4 1.083-4.411 0-8-3.589-8-8s3.589-8 8-8c1.458 0 2.822.398 4 1.083v-2.245c-1.226-.536-2.577-.838-4-.838-5.522 0-10 4.477-10 10s4.478 10 10 10c1.423 0 2.774-.302 4-.838v-2.162z" /></svg>
+                        <svg <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8  text-custom-light-black rounded-full">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
                     </a>
                 </li>
                 <li v-else class="mt-2 mb-4 hidden md:block">
@@ -87,7 +97,7 @@
             </ul>
             <!-- Logout Modal -->
             <div v-if="logoutModal" class="fixed inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-40">
-                <div @click="logoutModal = false" class="h-full w-full bg-transparent">
+                <div @click="logoutModal = false" class="h-full w-full bg-white opacity-25">
                 </div>
                 <div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30">
                     <div class="text-right">
@@ -97,23 +107,23 @@
                             </svg>
                         </button>
                     </div>
-                    <p class="mt-4 text-lg font-semibold text-red-800 text-center">Are you sure? You want to logout ?</p>
+                    <p class="mt-4 text-md font-semibold text-red-500 text-center">Are you sure? You want to logout ?</p>
                     <div class="mt-6 mb-3 flex justify-end">
                         <button @click="logoutModal = false" class="cursor-pointer text-custom-light-black px-4 py-3 rounded-lg mr-4">Discard</button>
                         <form id="logoutForm" class="" :method="`POST`" :action="`/customer-logout`">
                             <input type="hidden" name="_token" :value="`${csrf}`">
-                            <button type="submit" class="cursor-pointer bg-red-600 hover:bg-red-500 text-white px-4 py-3 rounded-lg">Logout</button>
+                            <button type="submit" class="cursor-pointer bg-red-600 hover:bg-red-500 text-white px-4 py-3 rounded">Logout</button>
                         </form>
                     </div>
                 </div>
             </div>
             <!-- Search Modal -->
             <div v-if="searchModal" class="fixed inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-40 ">
-                <div class="h-full w-full bg-gray-300" @click="searchModal = false;">
+                <div class="h-full w-full bg-gray-300" @click="shoesArray = []; keyword = ''; searchModal = false;">
                 </div>
                 <div class="absolute  bg-white left-0 right-0  mx-auto  h-full shadow-lg rounded-lg p-6 z-30">
                     <div class="text-right">
-                        <button @click="searchModal = false;" type="button" class=" cursor-pointer" data-dismiss="modal" aria-label="Close">
+                        <button @click="shoesArray = []; keyword = ''; searchModal = false;" type="button" class=" cursor-pointer" data-dismiss="modal" aria-label="Close">
                             <svg class="fill-current text-gray-900" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
                                 <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
                             </svg>
@@ -123,17 +133,15 @@
                         <form @submit.prevent="searchShoes">
                             <div class="mt-4 w-full flex flex-row">
                                 <input v-focus v-model="keyword" type="text" class="focus:outline-none  w-2/3 bg-white rounded rounded-l px-6 py-3 sm:mb-0 border" placeholder="Type shoes names..">
-                                <button type="submit" class="focus:outline-none  w-1/3  bg-custom-light-orange hover:opacity-75 rounded rounded-r md:uppercase text-white font-bold md:tracking-wide py-3 px-3 md:px-6 text-center cursor-pointer">Search</button>
+                                <button type="submit" class="focus:outline-none  w-1/3 md:w-48 bg-custom-light-orange hover:opacity-75 rounded rounded-r md:uppercase text-white font-bold md:tracking-wide py-3 px-3 md:px-6 text-center cursor-pointer">Search</button>
                             </div>
                         </form>
                         <h4 class="text-gray-800 font-semibold text-lg  my-3">Search : {{ shoesArray.length }}</h4>
                         <div class="h-86 my-3 overflow-y-scroll">
                             <div class="grid grid-cols-1 cm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 items-center">
-                                <div v-for="s in shoesArray" class="flex flex-col mb-4">
-                                    <a :href="`/shoes/${s.id}/${s.name}`">
-                                        <img class="w-full md:w-48 rounded-lg" :src="`/storage/${s.imageUrl}`">
-                                    </a>
-                                </div>
+                                <a v-for="s in shoesArray" class="mb-4 " :href="`/shoes/${s.id}/${s.name}`">
+                                    <img class="w-full h-64 object-cover md:w-48 rounded-lg" :src="`/storage/${s.imageUrl}`">
+                                </a>
                             </div>
                         </div>
                     </div>

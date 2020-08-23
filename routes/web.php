@@ -45,6 +45,9 @@ Route::get('/aftercheckout', 'CheckoutController@sellmoreProduct');
 Route::post('/newsletter/signup', 'NewsletterController@store');
 
 
+//About
+Route::get('/privacy-policy', 'About\AboutController@policy')->name('policy');
+
 //Dashboard
 Route::prefix('admin')->group(function () {
 
