@@ -48,8 +48,8 @@
                     </a>
                     <div class="mt-4  rounded-lg flex flex-row justify-between w-full items-center">
 
-                        <h4 class="text-lg font-bold text-custom-light-black">{{ $product->name }}</h4>                    
-                        <h5 class="text-xl font-bold text-custom-light-black">$ {{ $product->price }}</h5>
+                        <h4 class="text-md font-semibold text-custom-light-black">{{ $product->name }}</h4>                    
+                        <h5 class="text-md font-semibold text-custom-light-black">$ {{ $product->price }}</h5>
                     </div>
                      
                     {{-- <add-to-cart :product="{{ $product }}"   />  --}}

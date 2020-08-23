@@ -58,6 +58,6 @@ export default {
                 }).catch(error => this.err = 'There has been some error.');
         }
     }
-}
+};
 
 </script>

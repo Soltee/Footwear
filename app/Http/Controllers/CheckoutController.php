@@ -43,7 +43,7 @@ class CheckoutController extends Controller
     */
     public function charge(Request $request){
 
-        dd($request->all());
+        // dd($request->all());
         $data = $request->validate([
                 'firstname' => 'required|string',
                 'lastname'  => 'required|string',
@@ -51,12 +51,12 @@ class CheckoutController extends Controller
                 'city'      => 'required|string',
                 'address'   => 'required|string',
                 'method'    => 'required|string',
-                'token'     => 'required|string'
+                'secret_token'     => 'required|string'
         ]);
         
         $amt          = (session('discount'))? session('grand') : Cart::total();
         // dd($paymentType);
-        if($paymentType === 'braintree' || $paymentType === 'paypal'){
+        if($data['method'] === 'braintree' || $data['method'] === 'paypal'){
                 $gateway = new \Braintree\Gateway([
                     'environment' => config('services.braintree.environment'),
                     'merchantId' => config('services.braintree.merchantId'),
@@ -65,7 +65,7 @@ class CheckoutController extends Controller
                 ]);
                 $result = $gateway->transaction()->sale([
                     'amount'             => $amt,
-                    'paymentMethodNonce' => request()->token,
+                    'paymentMethodNonce' => request()->secret_token,
                     'customer'           => [
                         'firstName' => $data['firstname'],
                         'lastName'  => $data['lastname'],
@@ -88,7 +88,7 @@ class CheckoutController extends Controller
                 }
 
             
-        }  elseif($paymentType === 'stripe') {
+        }  elseif($data['method'] === 'stripe') {
             try {
                 // dd($paymentType);
                 $gateway   = Omnipay::create('Stripe');               
@@ -97,7 +97,7 @@ class CheckoutController extends Controller
                 $response  = $gateway->purchase([
                     'amount'   => $amt,
                     'currency' => 'usd',
-                    'token'    => request()->stripeToken,
+                    'token'    => request()->secret_token,
                 ])->send();
                 
                 // dd($response);
@@ -114,38 +114,7 @@ class CheckoutController extends Controller
                 // return back()->with('error', $e->getMessage());
             }
         }  
-        // elseif($paymentType === 'khalti') {
-        //     $args = http_build_query(array(
-        //         'token' => request()->khalti_token,
-        //         'amount'  => $amt * 100
-        //     ));
-
-        //     $url = "https://khalti.com/api/v2/payment/verify/";
-
-        //     # Make the call using API.
-        //     $ch = curl_init();
-        //     curl_setopt($ch, CURLOPT_URL, $url);
-        //     curl_setopt($ch, CURLOPT_POST, 1);
-        //     curl_setopt($ch, CURLOPT_POSTFIELDS,$args);
-        //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-        //     $headers = ['Authorization: Key '. env('KHALTI_SECRET_KEY') . ''];
-        //     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-        //     // Response
-        //     $response = json_decode(curl_exec($ch));
-
-        //     $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        //     curl_close($ch);
-
-        //     if ($status_code === 200) {
-        //         $transaction = Str::random(10);
-        //         $this->store($firstName, $lastName, $email, $city, $address, $paymentType, $transaction);
-        //         return redirect()->route('thank-you');
-        //     } else {
-        //         return back()->with('error', 'An error occurred Please try again. ');
-        //     }
-        // }
+       
         
     }
 
@@ -195,8 +164,9 @@ class CheckoutController extends Controller
         return true;
     }
 
-    public function thankyou(){
-        return view('home.thankyou');
+    public function sellmoreProduct(){
+        $products = Product::latest()->paginate(10);
+        return response()->json(['success' => 'ok', 'products' => $products->items()], 200);
     }
     /**
 		* Returns the Authenticated USER via 'guard'

@@ -37,8 +37,9 @@ Route::post('/customer-logout', 'Auth\LoginController@logout')->name('customer-l
 //Customer Checkout Process 
 Route::get('/cart-details', 'CartController@show')->name('cart.show');
 Route::get('/checkout', 'CheckoutController@index')->name('cart.checkout');
-Route::post('/api/checkout', 'CheckoutController@charge');
-Route::get('/thank-you', 'CheckoutController@thankyou')->name('thank-you');
+Route::post('/charge', 'CheckoutController@charge');
+Route::get('/aftercheckout', 'CheckoutController@sellmoreProduct');
+// Route::get('/thank-you', 'CheckoutController@thankyou')->name('thank-you');
 
 
 //Dashboard

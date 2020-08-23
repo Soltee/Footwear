@@ -114,9 +114,9 @@
           @endif --}}
 
 
-	    <div class="my-8 swiper-container2 w-full relative">
+	    <div class="my-8 {{ $similar_count ? 'swiper-container2' : ''  }} w-full relative">
 		    <div class="swiper-wrapper">
-		    	@forelse($paginate as $image)
+		    	@forelse($similar as $image)
 
 	      			<div class="swiper-slide relative">
 			            <div class="">
