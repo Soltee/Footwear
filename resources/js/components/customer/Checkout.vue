@@ -23,26 +23,26 @@
             <div v-if="checkoutForm" class="w-full">
                 <div class="flex items-center px-2">
                     <div class="flex items-center">
-                        <a :href="`/shoes`" class=" text-md  opacity-75">Back to Shop</a>
+                        <a :href="`/shoes`" class=" text-sm  opacity-75">Back to Shop</a>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-800 mx-2">
                             <polyline points="13 17 18 12 13 7"></polyline>
                             <polyline points="6 17 11 12 6 7"></polyline>
                         </svg>
-                        <a :href="`/cart-details`" class="  text-md  text-custom-light-black opacity-75">Cart</a>
+                        <a :href="`/cart-details`" class="  text-sm  text-custom-light-black opacity-75">Cart</a>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-700 mx-2">
                             <polyline points="13 17 18 12 13 7"></polyline>
                             <polyline points="6 17 11 12 6 7"></polyline>
                         </svg>
-                        <h4 class="font-semibold text-md  text-custom-light-black ">Checkout</h4>
+                        <h4 class="font-semibold text-sm  text-custom-light-black ">Checkout</h4>
                     </div>
                 </div>
                 <div class="flex flex-col md:flex-row justify-between my-8 w-full">
-                    <form @submit.prevent="setupForm" id="payment-form">
+                    <form id="payment-form">
                         <div class="flex-1">
                             <!-- <input type="hidden" name="_token" :value="csrf"> -->
                             <!-- <input name="amount" type="hidden" :value="grand" /> -->
                             <div class="w-full mb-6  border border-gray-300 p-3">
-                                <h3 class="text-lg font-semibold text-custom-light-black mb-6 px-2 ">Personal Info</h3>
+                                <h3 class="text-sm font-semibold text-custom-light-black mb-6 px-2 ">Personal Info</h3>
                                 <div class="mb-4  w-full px-2 ">
                                     <label class="block text-gray-700 text-sm font-bold mb-2" for="firstname">
                                         First Name
@@ -87,9 +87,9 @@
                                 </div>
                             </div>
                             <div class="w-full mb-6  border border-gray-300 p-3">
-                                <h3 class="text-lg font-semibold text-custom-light-black mb-6 w-full px-2">Payment Method</h3>
+                                <h3 class="text-sm font-semibold text-custom-light-black mb-6 w-full px-2">Payment Method</h3>
                                 <div class="flex items-center mb-4 justify-between rounded w-full border px-4 py-3 border-gray-300 group hover:border-green-600 cursor-pointer" @click="paymentOption('stripe')" :class="(method === 'stripe') ? 'border-green-600' : ''">
-                                    <span class="text-lg ml-8 font-bold text-custom-light-black">Stripe</span>
+                                    <span class="text-sm ml-8 font-semibold text-custom-light-black">Stripe</span>
                                     <svg class="w-8 h-8 mr-2 text-custom-light-black" :class="(method === 'stripe') ? 'hidden' : 'block'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
                                         <polyline points="6 9 12 15 18 9"></polyline>
                                     </svg>
@@ -113,7 +113,7 @@
                                     <div id="paypal-button"></div>
                                 </div>
                                 <div class="flex items-center mb-4 justify-between rounded w-full border px-4 py-3 border-gray-300 group hover:border-green-600 cursor-pointer" @click="paymentOption('braintree')" :class="(method === 'braintree') ? 'border-green-600' : ''">
-                                    <span class="text-lg ml-8 font-bold text-custom-light-black">Braintree</span>
+                                    <span class="text-sm ml-8 font-semibold text-custom-light-black">Braintree</span>
                                     <svg class="w-8 h-8 mr-2 text-custom-light-black" :class="(method === 'braintree') ? 'hidden' : 'block'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
                                         <polyline points="6 9 12 15 18 9"></polyline>
                                     </svg>
@@ -241,7 +241,6 @@ export default {
         paymentOption(param) {
             this.method = param;
             let grand = this.grand;
-            const form = document.getElementById('payment-form');
             if (this.method === "stripe") {
                 setTimeout(() => {
                     // Create a Stripe client.
@@ -286,13 +285,32 @@ export default {
                         }
                     });
 
-                    this.stripeObj = stripe;
-                    this.stripeCard = card;
+                    let component = this;
+                    // this.stripeObj = stripe;
+                    // this.stripeCard = card;
+                    document.getElementById('payment-form').addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        stripe.createToken(card).then((result) => {
+                            if (result.error) {
+                                // Inform the user if there was an error.
+                                var errorElement = document.getElementById('card-errors');
+                                errorElement.textContent = result.error.message;
+                            } else {
+                                // eventBus.$emit('token-received', );
+                                component.charge(result.token.id);
+
+                                // data.append('secret_token', result.token.id);
+                                // Send the token to your server.
+                                // stripeTokenHandler(result.token);
+                                // this.submitPayment(result.token.id);
+                            }
+                        });
+                    });
 
                 }, 300);
 
             } else if (this.method === 'braintree') {
-                let me = this;
+                let component = this;
                 braintree.client.create({
                     authorization: `${this.token}`
                 }, function(clientErr, clientInstance) {
@@ -337,17 +355,31 @@ export default {
                         }
                     }, function(hostedFieldsErr, hostedFieldsInstance) {
                         if (hostedFieldsErr) {
-                            // this.status = false;
-                            // this.message = "There was some error. Please try again later";
-                            // this.removeMessage();
-                            // return;
+
                             Toast.fire({
                                 icon: 'error',
                                 title: `There was some error. Please try again later.`
                             });
                         }
 
-                        me.braintreeInstance = hostedFieldsInstance;
+
+
+                        document.getElementById('payment-form').addEventListener('submit', (e) => {
+                            e.preventDefault();
+                            hostedFieldsInstance.tokenize(function(tokenizeErr, payload) {
+                                if (tokenizeErr) {
+                                    Toast.fire({
+                                        icon: 'error',
+                                        title: `Server error.`
+                                    });
+                                }
+
+
+                                component.charge(payload.nonce);
+                            });
+
+                        });
+
 
                     });
                 });
@@ -355,7 +387,8 @@ export default {
             }
 
         },
-        setupForm() {
+        charge(token) {
+            console.log(token);
             this.loading = true;
             let data = new FormData();
 
@@ -366,63 +399,27 @@ export default {
             data.append('address', this.address);
             let paymentMethod = this.method;
             data.append('method', paymentMethod);
-
-            if (this.method === 'stripe') {
-                this.stripeObj.createToken(this.stripeCard).then((result) => {
-                    if (result.error) {
-                        // Inform the user if there was an error.
-                        var errorElement = document.getElementById('card-errors');
-                        errorElement.textContent = result.error.message;
-                    } else {
-                        // eventBus.$emit('token-received', );
-                        data.append('secret_token', result.token.id);
-                        this.charge(data);
-                        // Send the token to your server.
-                        // stripeTokenHandler(result.token);
-                        // this.submitPayment(result.token.id);
-                    }
-                });
-            }
-
-            if (this.method === 'braintree') {
-                this.braintreeInstance.tokenize(function(tokenizeErr, payload) {
-                    if (tokenizeErr) {
-                        Toast.fire({
-                            icon: 'error',
-                            title: `Server error.`
-                        });
-
-
-                        // this.status = false;
-                        // this.message = "There was some error. Please try again later";
-                        // this.removeMessage();
-                        // return;
-                    }
-                    data.append('secret_token', payload.nounce);
-                    this.charge(data);
-                    // this.submitPayment(payload.nounce);
-                    // If this was a real integration, this is where you would
-                    // send the nonce to your server.
-                    // console.log('Got a nonce: ' + payload.nonce);
-                    // document.querySelector('#nonce').value = payload.nonce;
-                    // form.submit();
-                });
-
-            }
-        },
-        charge(data) {
-            console.log(data);
+            data.append('secret_token', token);
             axios.post('/charge', data)
                 .then(res => {
+
                     if (res.status === 201) {
                         this.successCharge = true;
-                        this.loading = false;
                         swal({
                             title: "Horray!",
                             text: "Your checkout is successful.Invoice has been sent to your email.",
                             icon: "success",
                             button: "Close",
                         });
+
+                        this.loading = false;
+                        this.firstname = '';
+                        this.lastname = '';
+                        this.email = '';
+                        this.city = '';
+                        this.address = '';
+                        this.method = '';
+
                         axios.get(`/aftercheckout`)
                             .then(res => {
                                 if (res.status === 200) {
@@ -436,12 +433,16 @@ export default {
                             });
 
                     } else {
-                        Toast.fire({
-                            icon: 'error',
-                            title: `Please try again later.`
+                        swal({
+                            title: "Error!",
+                            text: "Your checkout wasn't successful.",
+                            icon: "error",
+                            button: "Close",
                         });
                     }
                 }).catch(err => {
+                    this.loading = false;
+
                     Toast.fire({
                         icon: 'error',
                         title: `Server error! Please try again later.`

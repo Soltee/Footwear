@@ -80,7 +80,7 @@
                     </a>
                 </li>
                 <li v-else class="mt-2 mb-4 hidden md:block">
-                    <a href="/login" class="flex items-center justify-around  bg-custom-light-orange hover:bg-custom-dark-orange  px-6 py-3 rounded-lg">
+                    <a href="/login" class="flex items-center justify-around  bg-custom-light-orange hover:opacity-75  px-6 py-3 rounded-lg">
                         <span class="text-white font-semibold text-md">Login</span>
                     </a>
                 </li>

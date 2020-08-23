@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
+    <link rel="icon" href="{{ asset('/img/shoe.svg') }}">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
@@ -34,13 +34,18 @@
         <!-- Footer --> 
         @if(Route::currentRouteName() != 'cart.checkout')    
             <footer-view></footer-view>
-        @endif      
-    </div>
+        @endif 
 
+        <subscribe />     
+    </div>
+    
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     @stack('scripts')
+    <script>
+       
+    </script>
 
 </body>
 </html>

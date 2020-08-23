@@ -36,7 +36,7 @@
           <!-- Shoes -->
          <div class="flex-1  mt-5">
          		<div class="flex flex-row justify-between">
-         			<h4 class="text-lg font-bold mb-3">Products</h4>
+         			<h4 class="text-lg font-bold mb-3"></h4>
               <span class="">{{ $count }} / {{ $products->total() }}</span>
          		</div>
          		<div class="mt-4  w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -66,7 +66,8 @@
   			     @if($count > 2)
 
          	    <div class="my-8 flex flex-row justify-center items-center ">
-                {{-- {{ $products->appends(request()->input())->links() }} --}}
+                {{ $products->appends(request()->input())->links() }}
+                
     				    <a href="{{ $products->appends(request()->input())->previousPageUrl() ?? '' }}" class="px-3 py-3   text-center rounded-lg text-custom-light-black hover:text-black  hover:font-bold{{ $products->appends(request()->input())->previousPageUrl() ? '' : 'cursor-not-allowed opacity-75' }}">Prev</a>
     				    <span class="text-bg-custom-gray-lighter px-4">{{ $products->appends(request()->input())->currentPage() }}</span>
            			<a href="{{ $products->appends(request()->input())->nextPageUrl() ?? '#' }}" class="px-3 py-3   text-center rounded-lg text-custom-light-black hover:text-black hover:font-bold{{ $products->appends(request()->input())->nextPageUrl() ? '' : 'cursor-not-allowed opacity-75' }}">Next</a>

@@ -6,13 +6,13 @@
         <div class="w-full relative py-16  flex flex-col  items-center justify-between py-2">
           <div class="flex-1 h-full flex flex-col items-start justify-center  ">
             <h1 class=" leading-tight font-bold text-3xl md:text-6xl text-black opacity-75">
-              Thousands of shoes.
+              Level your standard.
             </h1>
-            <p class=" text-lg  md:text-2xl  text-custom-light-black mt-2 font-bold">Get branded shoes for your next wear.</p>
+            <p class=" text-lg  md:text-2xl  text-custom-light-black mt-2 font-bold">Branded shoes for your next wear.</p>
 
             <div class="flex">
-                <a href="/shoes" class="w-48 px-6 py-4 text-center mt-12 text-lg text-white bg-custom-light-orange hover:bg-custom-dark-orange rounded-lg">
-                    Grab Now
+                <a href="/shoes" class="w-48 px-6 py-4 text-center mt-12 text-lg text-white bg-custom-light-orange hover:opacity-75 rounded-lg">
+                    Shop Now
                 </a>
             </div>
 

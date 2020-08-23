@@ -41,6 +41,9 @@ Route::post('/charge', 'CheckoutController@charge');
 Route::get('/aftercheckout', 'CheckoutController@sellmoreProduct');
 // Route::get('/thank-you', 'CheckoutController@thankyou')->name('thank-you');
 
+//Newsletter
+Route::post('/newsletter/signup', 'NewsletterController@store');
+
 
 //Dashboard
 Route::prefix('admin')->group(function () {

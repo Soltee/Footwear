@@ -156,6 +156,10 @@ class CheckoutController extends Controller
                 'price'    => $product->price, 
                 'quantity' => $product->qty
             ]);
+
+            $db_product = Product::findOrfail($product->rowId);
+            $db_product->qty = ($db_product->qty - $product->qty);
+            $db_product->save();
         }
         // Cart::destroy();
         // session()->forget('discount');
