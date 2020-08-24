@@ -48,14 +48,20 @@ class CartController extends Controller
 	 	* Return @view CART
 	*/
 	public function show(){
-		$products = Cart::content();
-		$totalQuantity = 	Cart::instance('default')->count();
-		$subTotal = Cart::subtotal();
-		$discount = (session('discount'))?? 0;
-		$subAfterDis = (session('subAfterDis'))?? 0;
-		$tax = Cart::tax();
-		$grandTotal = (session('discount'))? session('grand') : Cart::total();
-		return view('home.cart', compact('products', 'totalQuantity', 'subTotal', 'discount', 'subAfterDis', 'tax', 'grandTotal'));
+		// Cart::destroy();
+        session()->forget('percent');
+        session()->forget('discount');
+        session()->forget('subAfterDis');
+        session()->forget('grand');
+		$products        = Cart::content();
+		$totalQuantity   = 	Cart::instance('default')->count();
+		$subTotal        = Cart::subtotal();
+		$percent         = (session('percent'))?? 0;
+		$discount        = (session('discount'))?? 0;
+		$subAfterDis     = (session('subAfterDis'))?? 0;
+		$tax             = Cart::tax();
+		$grandTotal      = (session('discount'))? session('grand') : Cart::total();
+		return view('home.cart', compact('products', 'totalQuantity', 'subTotal', 'discount', 'percent', 'subAfterDis', 'tax', 'grandTotal'));
 	}
 
 	/**
@@ -98,8 +104,9 @@ class CartController extends Controller
 
     	Cart::add($product->id, $product->name, ((!is_null($qty)) ? $qty : 1), $product->price, ['imageUrl' => $product->imageUrl])
 	            ->associate('App\Product');
+	    $this->updateCardDatails();
 
-	    	return response()->json(['success' => 'Ok'], 200);
+	    return response()->json(['success' => 'Ok'], 200);
 
     	
     }
@@ -117,10 +124,11 @@ class CartController extends Controller
 		if($data && $data > 0)
 		{
 			Cart::update($rowId, request()->quantity);
-			
+			$this->updateCardDatails();
     		return response()->json(['success' => 'Ok'], 200);
 		} else {
 			Cart::remove($rowId);
+			$this->updateCardDatails();
     		return response()->json(['success' => 'Ok'], 204);
 		}
    	
@@ -146,17 +154,50 @@ class CartController extends Controller
     public function clearCart()
     {
     	Cart::destroy();
+    	session()->forget('percent');
     	session()->forget('discount');
         session()->forget('subAfterDis');
         session()->forget('grand');
     	return  response()->json(['success' => 'Ok'], 204); 
     }
+    /*
+		* Return the Updated Cart Details 
+    */
+	public function updateCardDatails(){
+		$percent = session('percent');
+		if($percent){
+
+            $percent_off = abs(round((($percent / 100) * Cart::subTotal()), 1));
+            session()->put('discount', $percent_off);
+            $subAfterDis = abs(round((Cart::subTotal() - $percent_off), 1));//6
+            session()->put('subAfterDis', $subAfterDis);
+            $grand = abs(round(($subAfterDis + Cart::tax()), 1));//8
+            session()->put('grand', $grand);  
+
+		}
+	}
+
 
     /*
-		* Return the subTotal 
+		* Return the Updated Cart Details 
     */
 	public function getUpdatedData(){
-    	return response()->json(['success' => 'Ok', 'subTotal' => Cart::subtotal(), 'tax' => Cart::tax(), 'grand' => Cart::total() ,  'updatedQty' => Cart::instance('default')->count()], 200);
+		$percent    = (session('percent'))?? 0;
+		$discount    = (session('discount'))?? 0;
+        $subAfterDis = (session('subAfterDis'))?? 0;
+        $tax         = Cart::tax();
+		$grandTotal  = (session('discount'))? session('grand') : Cart::total();
+
+    	return response()->json([
+    			'success'      => 'Ok', 
+    			'subTotal'     => Cart::subtotal(), 
+    			'percent'      => $percent, 
+    			'discount'     => $discount, 
+    			'subAfterDis'  => $subAfterDis, 
+    			'tax'          => $tax, 
+    			'grand'        => $grandTotal ,  
+    			'updatedQty'   => Cart::instance('default')->count()
+    		], 200);
 	}
 
     /**

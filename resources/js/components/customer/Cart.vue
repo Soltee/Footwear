@@ -25,7 +25,7 @@
                 </button>
                 <!-- </form> -->
             </div>
-            <div class="mt-6 overflow-x-scroll  border-b border-gray-200 sm:rounded-lg">
+            <div class="mt-6 overflow-x-scroll md:overflow-x-auto  border-b border-gray-200 sm:rounded-lg">
                 <table class=" min-w-full  table-auto">
                     <thead>
                         <tr class="bg-white rounded-lg">
@@ -66,31 +66,36 @@
                     </tbody>
                 </table>
             </div>
-            <div class="mt-6 mb-3 flex flex-col md:flex-row justify-end w-auto">
-                <!-- <form @submit.prevent="redeemDiscount"> 
-                    <div class="w-full md:w-auto mb-4 cm:mb-0">
-                        <h3 class="mb-3 text-lg font-bold text-black">Redeem your Coupon</h3>
-                        <div class="flex flex-col cm:flex-row items-center">
-                            <input type="text" v-model="code" class="w-full cm:w-auto px-4 py-3 rounded-t-lg cm:rounded-l-lg bg-gray-100">
-                            <button type="submit"  class="w-full md:w-auto px-4 py-3 rounded-b-lg cm:rounded-r-lg bg-black text-white font-bold text-lg" >
-                                Redeem
-                            </button>
+            <div class="mt-6 mb-3 flex flex-col md:flex-row ">
+                <div class="flex-1">
+                    <form @submit.prevent="redeemDiscount">
+                        <div class="w-full md:w-auto mb-4 cm:mb-0">
+                            <h3 class="mb-3 text-lg font-bold text-black">Have a Coupon?</h3>
+                            <div class="mt-4 w-full flex flex-col md:flex-row">
+                                <input v-model="code" type="text" class="focus:outline-none  w-full md:w-2/3 bg-white rounded-t md:rounded-t-none md:rounded-l px-6 py-2 sm:mb-0 border focus:border-custom-light-orange" placeholder="Enter Coupon..">
+                                <button type="submit" class="focus:outline-none w-full md:w-1/3  bg-custom-light-orange hover:opacity-75 rounded-b md:rounded-b-none md:rounded-r md:uppercase text-white font-bold md:tracking-wide py-2 px-3 md:px-6 text-center cursor-pointer">Apply</button>
+                            </div>
+                            <!-- <div class="flex flex-col md:flex-row items-center">
+                                <input type="text" v-model="code" class="w-full md:w-auto px-4 py-3 border border-gray-300 rounded-t-lg md:rounded-l-lg">
+                                <button type="submit" class="w-full md:w-auto px-4 py-3 rounded-b-lg md:rounded-r-lg bg-custom-light-black hover:opacity-50 text-white font-bold text-lg">
+                                    Apply
+                                </button>
+                            </div> -->
                         </div>
-                    </div>
-                    
-                </form> -->
-                <div class="flex flex-col  rounded-lg md:p-3 mb-3">
+                    </form>
+                </div>
+                <div class="w-full sm:w-400 md:w-500 mt-5 md:mt-0 flex flex-col  rounded-lg md:p-3 mb-3">
                     <div class="flex items-center justify-between">
                         <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">SubTotal</span>
                         <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ subTotal }}</span>
                     </div>
                     <div class="flex items-center justify-between">
-                        <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">Discount</span>
-                        <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ discount }}</span>
+                        <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">Discount {{ percent }} </span>
+                        <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">{{ discount }}</span>
                     </div>
                     <div class="flex items-center justify-between">
                         <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">SubTotal After Discount</span>
-                        <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ (subAfterDis) ? subAfterDis : subTotal }}</span>
+                        <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">{{ (subAfterDis) }}</span>
                     </div>
                     <div class="flex items-center justify-between">
                         <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">Tax</span>
@@ -100,11 +105,11 @@
                         <span class="my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2">Grand Total</span>
                         <span class="my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right">$ {{ grandTotal }}</span>
                     </div>
+                    <div class="mt-5  flex flex-col md:flex-row justify-between items-center ">
+                        <a :href="`/shoes`" class="w-full mt-3 md:mt-0 order-1 md:order-0 mb-6 md:mb-0 md:w-auto   text-md  text-custom-light-black hover:opacity-75 px-4 py-4 rounded-lg text-center">Continue Shopping</a>
+                        <a :href="`/checkout`" class="w-full  order-0 md:order-1 text-center md:w-auto text-bold text-md bg-custom-light-orange hover:opacity-75 text-white px-6 py-4 rounded-lg">Checkout</a>
+                    </div>
                 </div>
-            </div>
-            <div class="w-full md:w-auto flex flex-col md:flex-row items-center justify-end">
-                <a :href="`/shoes`" class="w-full mt-3 md:mt-0 order-1 md:order-0 mb-6 md:mb-0 md:w-auto md:mr-16  text-md  text-custom-light-black px-4 py-4 rounded-lg text-center">Continue Shopping</a>
-                <a :href="`/checkout`" class="w-full md:ml-12 order-0 md:order-1 text-center md:w-auto text-bold text-md bg-custom-light-orange hover:opacity-75 text-white px-6 py-4 rounded-lg">Checkout</a>
             </div>
         </div>
         <div v-else>
@@ -142,10 +147,11 @@
 </template>
 <script>
 import Toast from '../helpers/Alert';
+import swal from 'sweetalert';
 import { eventBus } from '../../app.js';
 export default {
     name: 'cart-view',
-    props: ['products', 'cart', 'sub', 'dis', 'subafterdis', 'taxadded', 'grand'],
+    props: ['products', 'cart', 'per', 'sub', 'dis', 'subafterdis', 'taxadded', 'grand'],
     data() {
         return {
             productsArr: [],
@@ -153,6 +159,7 @@ export default {
             qty: "",
             updatedQty: this.cart,
             subTotal: this.sub,
+            percent: '',
             discount: this.dis,
             subAfterDis: this.subafterdis,
             tax: this.taxadded,
@@ -166,6 +173,22 @@ export default {
     },
     mounted() {
         this.pushProducts();
+        if (this.per > 0) {
+            this.percent = `${this.per}% off`;
+        } else {
+            this.percent = '';
+        }
+        if (this.dis > 0) {
+            this.discount = `$ ${this.dis}`;
+        } else {
+            this.discount = '0';
+        }
+
+        if (this.subafterdis > 0) {
+            this.subAfterDis = `$ ${this.subafterdis}`;
+        } else {
+            this.subAfterDis = '0';
+        }
     },
     methods: {
         pushProducts() {
@@ -197,9 +220,12 @@ export default {
                             }
                         });
                         this.getUpdatedData();
-                        Toast.fire({
-                            icon: 'success',
-                            title: `Item has been updated from my cart.`
+
+                        swal({
+                            title: "Success!",
+                            text: "Item has been updated in the cart!",
+                            icon: "success",
+                            button: "Close",
                         });
                     }
                     if (res.status == 204) {
@@ -210,9 +236,12 @@ export default {
                         });
                         this.getUpdatedData();
                         this.status = false;
-                        Toast.fire({
-                            icon: 'success',
-                            title: `Item has been removed from my cart.`
+
+                        swal({
+                            title: "Success!",
+                            text: "Item has been removed from the cart!",
+                            icon: "success",
+                            button: "Close",
                         });
                     }
                 })
@@ -234,9 +263,11 @@ export default {
                         });
                         this.getUpdatedData();
                         this.status = true;
-                        Toast.fire({
-                            icon: 'success',
-                            title: `Item has been removed from my cart.`
+                        swal({
+                            title: "Success!",
+                            text: "Item has been removed from the cart!",
+                            icon: "success",
+                            button: "Close",
                         });
                     }
                 }).catch(err => {
@@ -252,6 +283,9 @@ export default {
                 .then(res => {
                     if (res.status == 200) {
                         this.subTotal = res.data.subTotal;
+                        this.percent = `${res.data.percent}% off`;
+                        this.discount = `$ ${res.data.discount}`;
+                        this.subAfterDis = `$ ${res.data.subAfterDis}`;
                         this.tax = res.data.tax;
                         this.grandTotal = res.data.grand;
                         this.updatedQty = res.data.updatedQty;
@@ -270,14 +304,18 @@ export default {
                     if (res.status == 204) {
                         eventBus.$emit('cart-cleared');
                         this.productsArr = [];
+                        this.percent = '';
                         this.updatedQty = 0;
                         this.subTotal = 0;
                         this.grandTotal = 0;
                         this.status = true;
                         this.modal = false;
-                        Toast.fire({
-                            icon: 'success',
-                            title: `There was some server error.`
+
+                        swal({
+                            title: "Success!",
+                            text: "You cart is cleared!",
+                            icon: "success",
+                            button: "Close",
                         });
                     }
                 }).catch(err => {
@@ -296,35 +334,57 @@ export default {
                 .then(res => {
                     let data = res.data;
                     if (res.status == 201) {
+
+                        //Set the Updated Cart Data
                         this.status = true;
-                        this.discount = data.discount;
-                        this.subAfterDis = data.subAfterDis;
+                        this.percent = `${data.percent}% off`;
+                        this.discount = `$ ${data.discount}`;
+                        this.subAfterDis = `$ ${data.subAfterDis}`;
                         this.tax = data.tax;
                         this.grandTotal = data.grand;
-                        Toast.fire({
-                            icon: 'success',
-                            title: `My coupon is successfully redeemed.`
+
+                        //Reset The Form
+                        this.code = '';
+
+                        swal({
+                            title: "Success!",
+                            text: "Your coupon has been successfully applied!",
+                            icon: "success",
+                            button: "Close",
                         });
                     } else if (res.status == 200) {
+
+                        //If Coupon has already been applied;
                         this.status = false;
-                        Toast.fire({
-                            icon: 'error',
-                            title: `My coupon has already been redeemed.`
+
+                        swal({
+                            title: "",
+                            text: "Your coupon has been already applied!",
+                            icon: "warning",
+                            button: "Close",
                         });
                     } else if (res.status == 204) {
+                        //If Couon Doesnot matcch;
                         this.status = false;
                         Toast.fire({
                             icon: 'error',
-                            title: `My coupon doesnot match.`
+                            title: `Your coupon doesnot match one of ours.`
                         });
                     }
 
                 }).catch(err => {
                     this.status = false;
+
                     Toast.fire({
                         icon: 'error',
-                        title: `There was some server error.`
+                        title: `There was some server error.Please try again later.`
                     });
+                    if (err.data.errors.code) {
+                        Toast.fire({
+                            icon: 'error',
+                            title: `${err.data.errors.code}.`
+                        });
+                    }
                 });
         },
         removeMessage() {

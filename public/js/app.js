@@ -5322,7 +5322,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_Alert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/Alert */ "./resources/js/components/helpers/Alert.js");
-/* harmony import */ var _app_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../app.js */ "./resources/js/app.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _app_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../app.js */ "./resources/js/app.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -5477,11 +5479,17 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'cart-view',
-  props: ['products', 'cart', 'sub', 'dis', 'subafterdis', 'taxadded', 'grand'],
+  props: ['products', 'cart', 'per', 'sub', 'dis', 'subafterdis', 'taxadded', 'grand'],
   data: function data() {
     return {
       productsArr: [],
@@ -5489,6 +5497,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       qty: "",
       updatedQty: this.cart,
       subTotal: this.sub,
+      percent: '',
       discount: this.dis,
       subAfterDis: this.subafterdis,
       tax: this.taxadded,
@@ -5502,6 +5511,24 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
   },
   mounted: function mounted() {
     this.pushProducts();
+
+    if (this.per > 0) {
+      this.percent = "".concat(this.per, "% off");
+    } else {
+      this.percent = '';
+    }
+
+    if (this.dis > 0) {
+      this.discount = "$ ".concat(this.dis);
+    } else {
+      this.discount = '0';
+    }
+
+    if (this.subafterdis > 0) {
+      this.subAfterDis = "$ ".concat(this.subafterdis);
+    } else {
+      this.subAfterDis = '0';
+    }
   },
   methods: {
     pushProducts: function pushProducts() {
@@ -5522,7 +5549,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       }).then(function (res) {
         if (res.status == 200) {
           _this.status = true;
-          _app_js__WEBPACK_IMPORTED_MODULE_1__["eventBus"].$emit('cart-updated', {
+          _app_js__WEBPACK_IMPORTED_MODULE_2__["eventBus"].$emit('cart-updated', {
             p: p,
             qty: qty
           });
@@ -5543,14 +5570,16 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
           _this.getUpdatedData();
 
-          _helpers_Alert__WEBPACK_IMPORTED_MODULE_0__["default"].fire({
-            icon: 'success',
-            title: "Item has been updated from my cart."
+          sweetalert__WEBPACK_IMPORTED_MODULE_1___default()({
+            title: "Success!",
+            text: "Item has been updated in the cart!",
+            icon: "success",
+            button: "Close"
           });
         }
 
         if (res.status == 204) {
-          _app_js__WEBPACK_IMPORTED_MODULE_1__["eventBus"].$emit('product-removed', p.qty);
+          _app_js__WEBPACK_IMPORTED_MODULE_2__["eventBus"].$emit('product-removed', p.qty);
           _this.productsArr = _this.productsArr.filter(function (state) {
             return state.id !== p.id;
           });
@@ -5558,9 +5587,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           _this.getUpdatedData();
 
           _this.status = false;
-          _helpers_Alert__WEBPACK_IMPORTED_MODULE_0__["default"].fire({
-            icon: 'success',
-            title: "Item has been removed from my cart."
+          sweetalert__WEBPACK_IMPORTED_MODULE_1___default()({
+            title: "Success!",
+            text: "Item has been removed from the cart!",
+            icon: "success",
+            button: "Close"
           });
         }
       })["catch"](function (err) {
@@ -5576,7 +5607,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
       axios.post("/remove-from-cart/".concat(p.rowId)).then(function (res) {
         if (res.status = 204) {
-          _app_js__WEBPACK_IMPORTED_MODULE_1__["eventBus"].$emit('product-removed', p.qty);
+          _app_js__WEBPACK_IMPORTED_MODULE_2__["eventBus"].$emit('product-removed', p.qty);
           _this2.productsArr = _this2.productsArr.filter(function (state) {
             return state.id !== p.id;
           });
@@ -5584,9 +5615,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           _this2.getUpdatedData();
 
           _this2.status = true;
-          _helpers_Alert__WEBPACK_IMPORTED_MODULE_0__["default"].fire({
-            icon: 'success',
-            title: "Item has been removed from my cart."
+          sweetalert__WEBPACK_IMPORTED_MODULE_1___default()({
+            title: "Success!",
+            text: "Item has been removed from the cart!",
+            icon: "success",
+            button: "Close"
           });
         }
       })["catch"](function (err) {
@@ -5603,6 +5636,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       axios.get('/getUpdatedData').then(function (res) {
         if (res.status == 200) {
           _this3.subTotal = res.data.subTotal;
+          _this3.percent = "".concat(res.data.percent, "% off");
+          _this3.discount = "$ ".concat(res.data.discount);
+          _this3.subAfterDis = "$ ".concat(res.data.subAfterDis);
           _this3.tax = res.data.tax;
           _this3.grandTotal = res.data.grand;
           _this3.updatedQty = res.data.updatedQty;
@@ -5620,16 +5656,19 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
       axios.post('/clear-cart', {}).then(function (res) {
         if (res.status == 204) {
-          _app_js__WEBPACK_IMPORTED_MODULE_1__["eventBus"].$emit('cart-cleared');
+          _app_js__WEBPACK_IMPORTED_MODULE_2__["eventBus"].$emit('cart-cleared');
           _this4.productsArr = [];
+          _this4.percent = '';
           _this4.updatedQty = 0;
           _this4.subTotal = 0;
           _this4.grandTotal = 0;
           _this4.status = true;
           _this4.modal = false;
-          _helpers_Alert__WEBPACK_IMPORTED_MODULE_0__["default"].fire({
-            icon: 'success',
-            title: "There was some server error."
+          sweetalert__WEBPACK_IMPORTED_MODULE_1___default()({
+            title: "Success!",
+            text: "You cart is cleared!",
+            icon: "success",
+            button: "Close"
           });
         }
       })["catch"](function (err) {
@@ -5650,34 +5689,51 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         var data = res.data;
 
         if (res.status == 201) {
+          //Set the Updated Cart Data
           _this5.status = true;
-          _this5.discount = data.discount;
-          _this5.subAfterDis = data.subAfterDis;
+          _this5.percent = "".concat(data.percent, "% off");
+          _this5.discount = "$ ".concat(data.discount);
+          _this5.subAfterDis = "$ ".concat(data.subAfterDis);
           _this5.tax = data.tax;
-          _this5.grandTotal = data.grand;
-          _helpers_Alert__WEBPACK_IMPORTED_MODULE_0__["default"].fire({
-            icon: 'success',
-            title: "My coupon is successfully redeemed."
+          _this5.grandTotal = data.grand; //Reset The Form
+
+          _this5.code = '';
+          sweetalert__WEBPACK_IMPORTED_MODULE_1___default()({
+            title: "Success!",
+            text: "Your coupon has been successfully applied!",
+            icon: "success",
+            button: "Close"
           });
         } else if (res.status == 200) {
+          //If Coupon has already been applied;
           _this5.status = false;
-          _helpers_Alert__WEBPACK_IMPORTED_MODULE_0__["default"].fire({
-            icon: 'error',
-            title: "My coupon has already been redeemed."
+          sweetalert__WEBPACK_IMPORTED_MODULE_1___default()({
+            title: "",
+            text: "Your coupon has been already applied!",
+            icon: "warning",
+            button: "Close"
           });
         } else if (res.status == 204) {
+          //If Couon Doesnot matcch;
           _this5.status = false;
           _helpers_Alert__WEBPACK_IMPORTED_MODULE_0__["default"].fire({
             icon: 'error',
-            title: "My coupon doesnot match."
+            title: "Your coupon doesnot match one of ours."
           });
         }
       })["catch"](function (err) {
         _this5.status = false;
         _helpers_Alert__WEBPACK_IMPORTED_MODULE_0__["default"].fire({
           icon: 'error',
-          title: "There was some server error."
+          title: "There was some server error.Please try again later."
         });
+
+        if (err.data.errors.code) {
+          _helpers_Alert__WEBPACK_IMPORTED_MODULE_0__["default"].fire({
+            icon: 'error',
+            title: "".concat(err.data.errors.code, ".")
+          });
+        }
       });
     },
     removeMessage: function removeMessage() {
@@ -6675,6 +6731,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../app.js */ "./resources/js/app.js");
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
 //
 //
 //
@@ -59086,7 +59146,7 @@ var render = function() {
               "div",
               {
                 staticClass:
-                  "mt-6 overflow-x-scroll  border-b border-gray-200 sm:rounded-lg"
+                  "mt-6 overflow-x-scroll md:overflow-x-auto  border-b border-gray-200 sm:rounded-lg"
               },
               [
                 _c("table", { staticClass: " min-w-full  table-auto" }, [
@@ -59249,178 +59309,236 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "mt-6 mb-3 flex flex-col md:flex-row justify-end w-auto"
-              },
-              [
+            _c("div", { staticClass: "mt-6 mb-3 flex flex-col md:flex-row " }, [
+              _c("div", { staticClass: "flex-1" }, [
                 _c(
-                  "div",
-                  { staticClass: "flex flex-col  rounded-lg md:p-3 mb-3" },
+                  "form",
+                  {
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.redeemDiscount($event)
+                      }
+                    }
+                  },
                   [
                     _c(
                       "div",
-                      { staticClass: "flex items-center justify-between" },
+                      { staticClass: "w-full md:w-auto mb-4 cm:mb-0" },
                       [
                         _c(
-                          "span",
-                          {
-                            staticClass:
-                              "my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2"
-                          },
-                          [_vm._v("SubTotal")]
+                          "h3",
+                          { staticClass: "mb-3 text-lg font-bold text-black" },
+                          [_vm._v("Have a Coupon?")]
                         ),
                         _vm._v(" "),
                         _c(
-                          "span",
+                          "div",
                           {
-                            staticClass:
-                              "my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right"
-                          },
-                          [_vm._v("$ " + _vm._s(_vm.subTotal))]
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "flex items-center justify-between" },
-                      [
-                        _c(
-                          "span",
-                          {
-                            staticClass:
-                              "my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2"
-                          },
-                          [_vm._v("Discount")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "span",
-                          {
-                            staticClass:
-                              "my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right"
-                          },
-                          [_vm._v("$ " + _vm._s(_vm.discount))]
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "flex items-center justify-between" },
-                      [
-                        _c(
-                          "span",
-                          {
-                            staticClass:
-                              "my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2"
-                          },
-                          [_vm._v("SubTotal After Discount")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "span",
-                          {
-                            staticClass:
-                              "my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right"
+                            staticClass: "mt-4 w-full flex flex-col md:flex-row"
                           },
                           [
-                            _vm._v(
-                              "$ " +
-                                _vm._s(
-                                  _vm.subAfterDis
-                                    ? _vm.subAfterDis
-                                    : _vm.subTotal
-                                )
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.code,
+                                  expression: "code"
+                                }
+                              ],
+                              staticClass:
+                                "focus:outline-none  w-full md:w-2/3 bg-white rounded-t md:rounded-t-none md:rounded-l px-6 py-2 sm:mb-0 border focus:border-custom-light-orange",
+                              attrs: {
+                                type: "text",
+                                placeholder: "Enter Coupon.."
+                              },
+                              domProps: { value: _vm.code },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.code = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "focus:outline-none w-full md:w-1/3  bg-custom-light-orange hover:opacity-75 rounded-b md:rounded-b-none md:rounded-r md:uppercase text-white font-bold md:tracking-wide py-2 px-3 md:px-6 text-center cursor-pointer",
+                                attrs: { type: "submit" }
+                              },
+                              [_vm._v("Apply")]
                             )
                           ]
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "flex items-center justify-between" },
-                      [
-                        _c(
-                          "span",
-                          {
-                            staticClass:
-                              "my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2"
-                          },
-                          [_vm._v("Tax")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "span",
-                          {
-                            staticClass:
-                              "my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right"
-                          },
-                          [_vm._v("$ " + _vm._s(_vm.tax))]
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "flex items-center justify-between" },
-                      [
-                        _c(
-                          "span",
-                          {
-                            staticClass:
-                              "my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2"
-                          },
-                          [_vm._v("Grand Total")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "span",
-                          {
-                            staticClass:
-                              "my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right"
-                          },
-                          [_vm._v("$ " + _vm._s(_vm.grandTotal))]
                         )
                       ]
                     )
                   ]
                 )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "w-full md:w-auto flex flex-col md:flex-row items-center justify-end"
-              },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass:
-                      "w-full mt-3 md:mt-0 order-1 md:order-0 mb-6 md:mb-0 md:w-auto md:mr-16  text-md  text-custom-light-black px-4 py-4 rounded-lg text-center",
-                    attrs: { href: "/shoes" }
-                  },
-                  [_vm._v("Continue Shopping")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass:
-                      "w-full md:ml-12 order-0 md:order-1 text-center md:w-auto text-bold text-md bg-custom-light-orange hover:opacity-75 text-white px-6 py-4 rounded-lg",
-                    attrs: { href: "/checkout" }
-                  },
-                  [_vm._v("Checkout")]
-                )
-              ]
-            )
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "w-full sm:w-400 md:w-500 mt-5 md:mt-0 flex flex-col  rounded-lg md:p-3 mb-3"
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "flex items-center justify-between" },
+                    [
+                      _c(
+                        "span",
+                        {
+                          staticClass:
+                            "my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2"
+                        },
+                        [_vm._v("SubTotal")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        {
+                          staticClass:
+                            "my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right"
+                        },
+                        [_vm._v("$ " + _vm._s(_vm.subTotal))]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "flex items-center justify-between" },
+                    [
+                      _c(
+                        "span",
+                        {
+                          staticClass:
+                            "my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2"
+                        },
+                        [_vm._v("Discount " + _vm._s(_vm.percent) + " ")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        {
+                          staticClass:
+                            "my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right"
+                        },
+                        [_vm._v(_vm._s(_vm.discount))]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "flex items-center justify-between" },
+                    [
+                      _c(
+                        "span",
+                        {
+                          staticClass:
+                            "my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2"
+                        },
+                        [_vm._v("SubTotal After Discount")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        {
+                          staticClass:
+                            "my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right"
+                        },
+                        [_vm._v(_vm._s(_vm.subAfterDis))]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "flex items-center justify-between" },
+                    [
+                      _c(
+                        "span",
+                        {
+                          staticClass:
+                            "my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2"
+                        },
+                        [_vm._v("Tax")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        {
+                          staticClass:
+                            "my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right"
+                        },
+                        [_vm._v("$ " + _vm._s(_vm.tax))]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "flex items-center justify-between" },
+                    [
+                      _c(
+                        "span",
+                        {
+                          staticClass:
+                            "my-2 px-3 py-3 flex-1 bg-white text-bold text-lg text-black-600 rounded-lg mr-2"
+                        },
+                        [_vm._v("Grand Total")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        {
+                          staticClass:
+                            "my-2 px-3 py-3 flex-1 text-bold text-lg text-black-600 rounded-lg mr-2 text-right"
+                        },
+                        [_vm._v("$ " + _vm._s(_vm.grandTotal))]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "mt-5  flex flex-col md:flex-row justify-between items-center "
+                    },
+                    [
+                      _c(
+                        "a",
+                        {
+                          staticClass:
+                            "w-full mt-3 md:mt-0 order-1 md:order-0 mb-6 md:mb-0 md:w-auto   text-md  text-custom-light-black hover:opacity-75 px-4 py-4 rounded-lg text-center",
+                          attrs: { href: "/shoes" }
+                        },
+                        [_vm._v("Continue Shopping")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass:
+                            "w-full  order-0 md:order-1 text-center md:w-auto text-bold text-md bg-custom-light-orange hover:opacity-75 text-white px-6 py-4 rounded-lg",
+                          attrs: { href: "/checkout" }
+                        },
+                        [_vm._v("Checkout")]
+                      )
+                    ]
+                  )
+                ]
+              )
+            ])
           ])
         : _c("div", [
             _c("div", { staticClass: "flex items-center w-full flex-col" }, [
@@ -62138,19 +62256,28 @@ var render = function() {
               _c(
                 "svg",
                 {
-                  staticClass: "w-16 md:w-24 text-red-500 mb-4",
+                  staticClass: "w-16 md:w-24 text-red-500 mb-40",
                   attrs: {
-                    fill: "currentColor",
                     xmlns: "http://www.w3.org/2000/svg",
-                    viewBox: "0 0 20 20"
+                    viewBox: "0 0 24 24",
+                    fill: "none",
+                    stroke: "currentColor",
+                    "stroke-width": "1",
+                    "stroke-linecap": "round",
+                    "stroke-linejoin": "round"
                   }
                 },
                 [
-                  _c("path", {
-                    attrs: {
-                      d:
-                        "M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 6H4.34a6 6 0 0 1 11.32 0z"
-                    }
+                  _c("circle", { attrs: { cx: "12", cy: "12", r: "10" } }),
+                  _vm._v(" "),
+                  _c("path", { attrs: { d: "M16 16s-1.5-2-4-2-4 2-4 2" } }),
+                  _vm._v(" "),
+                  _c("line", {
+                    attrs: { x1: "9", y1: "9", x2: "9.01", y2: "9" }
+                  }),
+                  _vm._v(" "),
+                  _c("line", {
+                    attrs: { x1: "15", y1: "9", x2: "15.01", y2: "9" }
                   })
                 ]
               ),

@@ -17,7 +17,7 @@ Route::get('/is-already-added/{products}', 'CartController@isProductAlreadyAdded
 Route::post('/clear-cart', 'CartController@clearCart');
 Route::post('/remove-from-cart/{products}', 'CartController@removeProduct');
 Route::post('/update-cart/{rowId}', 'CartController@updateProduct');
-Route::post('/coupon-redeem', 'CouponController@redeem');
+Route::post('/coupon-redeem', 'CouponController@apply');
 
 //Review
 Route::get('/product/{product}/reviews', 'ProductReviewController@index');

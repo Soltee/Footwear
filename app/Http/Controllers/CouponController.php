@@ -10,8 +10,8 @@ use DB;
 
 class CouponController extends Controller
 {
-    public function redeem(Request $request){
-    	$data = $this->validate($request, ['code' => 'min:4']);
+    public function apply(Request $request){
+    	$data = $this->validate($request, ['code' => 'required|string|min:4']);
     	$coupon = Coupon::where('code', $data['code'])->first();
         
 
@@ -24,21 +24,40 @@ class CouponController extends Controller
                     'message' => 'Your coupon has already been redeemed.'
                 ], 200);
             }  else {
-                $percent_off = ($coupon->percent / 100) * Cart::subTotal();///4 
+                // $percent_off = ($coupon->percent / 100) * Cart::subTotal();///4 
+                // $request->session()->put('discount', $percent_off);
+                // $subAfterDis = (Cart::subTotal() - $percent_off);//6
+                // $request->session()->put('subAfterDis', $subAfterDis);
+                // $tax = Cart::tax();//2
+                // $grand = ($subAfterDis + Cart::tax());//8
+                // $request->session()->put('grand', $grand);  
+                // return response()->json([
+                //         'valid' => true,
+                //         'message' => 'Your coupon is successfully redeemed.',
+                //         'discount' => $percent_off, 
+                //         'subAfterDis' => $subAfterDis,
+                //         'tax' => $tax,
+                //         'grand' =>  $grand
+                //     ], 201);
+
+                $percent = $coupon->percent;
+                $request->session()->put('percent', $percent);
+                $percent_off = abs(round((($percent / 100) * Cart::subTotal()), 1));///4 
                 $request->session()->put('discount', $percent_off);
-                $subAfterDis = (Cart::subTotal() - $percent_off);//6
+                $subAfterDis = abs(round((Cart::subTotal() - $percent_off), 1));//6
                 $request->session()->put('subAfterDis', $subAfterDis);
                 $tax = Cart::tax();//2
-                $grand = ($subAfterDis + Cart::tax());//8
+                $grand = abs(round(($subAfterDis + Cart::tax()), 1));//8
                 $request->session()->put('grand', $grand);  
                 return response()->json([
-                        'valid' => true,
-                        'message' => 'Your coupon is successfully redeemed.',
-                        'discount' => $percent_off, 
-                        'subAfterDis' => $subAfterDis,
-                        'tax' => $tax,
-                        'grand' =>  $grand
-                    ], 201); 
+                        'valid'        => true,
+                        'message'      => 'Your coupon is successfully redeemed.',
+                        'percent'      => $percent, 
+                        'discount'     => $percent_off, 
+                        'subAfterDis'  => $subAfterDis,
+                        'tax'          => $tax,
+                        'grand'        => $grand
+                    ], 201);  
             }
                   
         } else {
