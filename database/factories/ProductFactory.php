@@ -36,15 +36,17 @@ $factory->define(Product::class, function (Faker $faker) {
             ];
             return  Arr::random($urls);
         },
-        'name' => $faker->title,
-        'slug' => $faker->title . '-shoe',
-    	'price' => $faker->unique(true)->numberBetween(100, 500),
-        'qty' => $faker->unique(true)->numberBetween(1, 30),
-        'created_at' => function(){
+        'name'           => $faker->title,
+        'average_rating' => $faker->numberBetween(1, 5),
+        'slug'           => $faker->title . '-shoe',
+    	'price'          => $faker->unique(true)->numberBetween(100, 500),
+        'qty'            => $faker->unique(true)->numberBetween(1, 30),
+        'description'    => $faker->text(200),
+        'created_at'     => function(){
             $dates = [1,2,3,5,8, 10, 20];
             return  Arr::random($dates);
         },
-        'featured' => function(){
+        'featured'       => function(){
             $bools = [true, false];
             return Arr::random($bools);
         }

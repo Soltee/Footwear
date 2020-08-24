@@ -4123,9 +4123,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../app.js */ "./resources/js/app.js");
 /* harmony import */ var _helpers_Alert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/Alert */ "./resources/js/components/helpers/Alert.js");
-/* harmony import */ var embla_carousel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! embla-carousel */ "./node_modules/embla-carousel/embla-carousel.esm.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -4273,20 +4272,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 
 
 
@@ -4344,31 +4329,13 @@ __webpack_require__.r(__webpack_exports__);
         title: 'Network Error!'
       });
     });
-    var emblaNode = document.querySelector('.embla');
-    var options = {
-      loop: false
-    };
-    var embla = Object(embla_carousel__WEBPACK_IMPORTED_MODULE_2__["default"])(emblaNode, {
-      align: 'start',
-      containerSelector: '*',
-      slidesToScroll: 1,
-      containScroll: false,
-      draggable: true,
-      dragFree: false,
-      loop: true,
-      speed: 10,
-      startIndex: 0,
-      selectedClass: 'is-selected',
-      draggableClass: 'is-draggable',
-      draggingClass: 'is-dragging'
-    });
   },
   methods: {
     closeModal: function closeModal() {
       _app_js__WEBPACK_IMPORTED_MODULE_0__["eventBus"].$emit('close-modal');
     },
     format: function format(date) {
-      return moment__WEBPACK_IMPORTED_MODULE_3___default()().format(date);
+      return moment__WEBPACK_IMPORTED_MODULE_2___default()().format(date);
     }
   }
 });
@@ -6640,10 +6607,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -6694,6 +6657,183 @@ __webpack_require__.r(__webpack_exports__);
           title: "There was some error."
         });
       });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/customer/Review.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/customer/Review.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _app_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../app.js */ "./resources/js/app.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'review',
+  props: {
+    'auth': {
+      type: Object,
+      required: false
+    },
+    'product': {
+      type: Object,
+      required: true
+    }
+  },
+  component: {},
+  data: function data() {
+    return {
+      reviews: [],
+      hasReview: false,
+      average: 0,
+      isNotRated: false,
+      reviewed: false,
+      rating: 0,
+      message: '',
+      loading: false
+    };
+  },
+  mounted: function mounted() {
+    this.average = this.product.average_rating;
+    this.getReviews();
+  },
+  methods: {
+    review: function review() {
+      var _this = this;
+
+      this.loading = true;
+      var data = new FormData();
+      data.append('customer_id', this.auth.id);
+      data.append('rating', this.rating);
+      data.append('message', this.message);
+      axios.post("/product/".concat(this.product.id, "/review"), data).then(function (res) {
+        _this.loading = false;
+
+        if (res.status === 201) {
+          _this.reviewed = true;
+          _this.isNotRated = false; //Push Review to Reviews array
+
+          _this.reviews.push({
+            customer: _this.customer,
+            rating: _this.rating,
+            message: _this.message
+          }); //Set product Average Rating
+
+
+          _this.average = res.data.average; //Reset Values
+
+          _this.rating = '';
+          _this.message = ''; //throw Success message
+
+          sweetalert__WEBPACK_IMPORTED_MODULE_1___default()({
+            title: "Success!",
+            text: "Thank you for your review.",
+            icon: "success",
+            button: "Close"
+          });
+        } else {
+          sweetalert__WEBPACK_IMPORTED_MODULE_1___default()({
+            title: "Error!",
+            text: "Error. Please try again later.",
+            icon: "error",
+            button: "Close"
+          });
+        }
+      })["catch"](function (err) {
+        sweetalert__WEBPACK_IMPORTED_MODULE_1___default()({
+          title: "Error!",
+          text: "Server Error!",
+          icon: "error",
+          button: "Close"
+        });
+        _this.loading = false;
+      });
+    },
+    getReviews: function getReviews() {
+      var _this2 = this;
+
+      axios.get("/product/".concat(this.product.id, "/reviews")).then(function (res) {
+        if (res.status === 200) {
+          _this2.hasReview = res.data.has_reviews;
+          _this2.reviews = res.data.reviews; // this.isAlreadyreviewed = true;
+        }
+      })["catch"](function (err) {});
     }
   }
 });
@@ -6880,6 +7020,25 @@ exports.push([module.i, ".translateHide[data-v-0091eb91] {\n  transition: transf
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/customer/Review.vue?vue&type=style&index=0&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/customer/Review.vue?vue&type=style&index=0&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".fade-enter-active,\n.fade-leave-active {\n  transition: opacity 0.3s;\n}\n.fade-enter,\n.fade-leave-to {\n  opacity: 0;\n}\n.sk-cube-grid {\n  width: 40px;\n  height: 40px;\n  margin: 100px auto;\n}\n.sk-cube-grid .sk-cube {\n  width: 33%;\n  height: 33%;\n  background-color: #EE6425;\n  float: left;\n  -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;\n  animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;\n}\n.sk-cube-grid .sk-cube1 {\n  -webkit-animation-delay: 0.2s;\n  animation-delay: 0.2s;\n}\n.sk-cube-grid .sk-cube2 {\n  -webkit-animation-delay: 0.3s;\n  animation-delay: 0.3s;\n}\n.sk-cube-grid .sk-cube3 {\n  -webkit-animation-delay: 0.4s;\n  animation-delay: 0.4s;\n}\n.sk-cube-grid .sk-cube4 {\n  -webkit-animation-delay: 0.1s;\n  animation-delay: 0.1s;\n}\n.sk-cube-grid .sk-cube5 {\n  -webkit-animation-delay: 0.2s;\n  animation-delay: 0.2s;\n}\n.sk-cube-grid .sk-cube6 {\n  -webkit-animation-delay: 0.3s;\n  animation-delay: 0.3s;\n}\n.sk-cube-grid .sk-cube7 {\n  -webkit-animation-delay: 0s;\n  animation-delay: 0s;\n}\n.sk-cube-grid .sk-cube8 {\n  -webkit-animation-delay: 0.1s;\n  animation-delay: 0.1s;\n}\n.sk-cube-grid .sk-cube9 {\n  -webkit-animation-delay: 0.2s;\n  animation-delay: 0.2s;\n}\n@-webkit-keyframes sk-cubeGridScaleDelay {\n0%,\n    70%,\n    100% {\n    transform: scale3D(1, 1, 1);\n}\n35% {\n    transform: scale3D(0, 0, 1);\n}\n}\n@keyframes sk-cubeGridScaleDelay {\n0%,\n    70%,\n    100% {\n    transform: scale3D(1, 1, 1);\n}\n35% {\n    transform: scale3D(0, 0, 1);\n}\n}\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/customer/Subscribe.vue?vue&type=style&index=0&lang=css&":
 /*!************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/customer/Subscribe.vue?vue&type=style&index=0&lang=css& ***!
@@ -6982,1777 +7141,6 @@ function toComment(sourceMap) {
 
 	return '/*# ' + data + ' */';
 }
-
-
-/***/ }),
-
-/***/ "./node_modules/embla-carousel/embla-carousel.esm.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/embla-carousel/embla-carousel.esm.js ***!
-  \***********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-function _extends() {
-  _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-function Alignment(params) {
-  var viewSize = params.viewSize,
-      align = params.align;
-  var predefined = {
-    start: start,
-    center: center,
-    end: end
-  };
-
-  function start() {
-    return 0;
-  }
-
-  function center(n) {
-    return (viewSize - n) / 2;
-  }
-
-  function end(n) {
-    return viewSize - n;
-  }
-
-  function percent() {
-    return viewSize * Number(align);
-  }
-
-  function measure(n) {
-    if (typeof align === 'number') return percent();
-    return predefined[align](n);
-  }
-
-  var self = {
-    measure: measure
-  };
-  return self;
-}
-
-function Animation(callback) {
-  var run = requestAnimationFrame.bind(window);
-  var end = cancelAnimationFrame.bind(window);
-  var animationFrame = 0;
-
-  function ifAnimating(active, cb) {
-    return function () {
-      if (active === !!animationFrame) cb();
-    };
-  }
-
-  function start() {
-    animationFrame = run(callback);
-  }
-
-  function stop() {
-    end(animationFrame);
-    animationFrame = 0;
-  }
-
-  var self = {
-    proceed: ifAnimating(true, start),
-    start: ifAnimating(false, start),
-    stop: ifAnimating(true, stop)
-  };
-  return self;
-}
-
-function Axis(axis) {
-  var scroll = axis === 'y' ? 'y' : 'x';
-  var cross = axis === 'y' ? 'x' : 'y';
-
-  function measure(node) {
-    var _a = node.getBoundingClientRect(),
-        width = _a.width,
-        height = _a.height;
-
-    return scroll === 'x' ? width : height;
-  }
-
-  var self = {
-    cross: cross,
-    measure: measure,
-    scroll: scroll
-  };
-  return self;
-}
-
-function Counter(params) {
-  var start = params.start,
-      limit = params.limit,
-      loop = params.loop;
-  var min = limit.min,
-      max = limit.max;
-  var type = loop ? 'loop' : 'constrain';
-  var counter = withinLimit(start);
-
-  function get() {
-    return counter;
-  }
-
-  function set(n) {
-    counter = withinLimit(n);
-    return self;
-  }
-
-  function withinLimit(n) {
-    return limit[type](n);
-  }
-
-  function add(n) {
-    if (n !== 0) {
-      var sign = n / Math.abs(n);
-      set(get() + sign);
-      return add(n + sign * -1);
-    }
-
-    return self;
-  }
-
-  function clone() {
-    return Counter({
-      start: get(),
-      limit: limit,
-      loop: loop
-    });
-  }
-
-  var self = {
-    add: add,
-    clone: clone,
-    get: get,
-    max: max,
-    min: min,
-    set: set
-  };
-  return self;
-}
-
-function Vector1D(value) {
-  var vector = value;
-
-  function get() {
-    return vector;
-  }
-
-  function set(n) {
-    vector = readNumber(n);
-    return self;
-  }
-
-  function add(n) {
-    vector += readNumber(n);
-    return self;
-  }
-
-  function subtract(n) {
-    vector -= readNumber(n);
-    return self;
-  }
-
-  function multiply(n) {
-    vector *= n;
-    return self;
-  }
-
-  function divide(n) {
-    vector /= n;
-    return self;
-  }
-
-  function normalize() {
-    if (vector !== 0) divide(vector);
-    return self;
-  }
-
-  function readNumber(n) {
-    return typeof n === 'number' ? n : n.get();
-  }
-
-  var self = {
-    add: add,
-    divide: divide,
-    get: get,
-    multiply: multiply,
-    normalize: normalize,
-    set: set,
-    subtract: subtract
-  };
-  return self;
-}
-
-function Direction(value) {
-  var direction = Vector1D(normalize(value));
-  var get = direction.get;
-
-  function normalize(n) {
-    return n === 0 ? 0 : n / Math.abs(n);
-  }
-
-  function set(v) {
-    var d = normalize(v.get());
-    if (d !== 0) direction.set(d);
-    return self;
-  }
-
-  var self = {
-    get: get,
-    set: set
-  };
-  return self;
-}
-
-function EventStore() {
-  var listeners = [];
-
-  function add(node, type, handler, options) {
-    if (options === void 0) {
-      options = false;
-    }
-
-    node.addEventListener(type, handler, options);
-    listeners.push(function () {
-      return node.removeEventListener(type, handler, options);
-    });
-    return self;
-  }
-
-  function removeAll() {
-    listeners.filter(function (remove) {
-      return remove();
-    });
-    listeners.length = 0;
-    return self;
-  }
-
-  var self = {
-    add: add,
-    removeAll: removeAll
-  };
-  return self;
-}
-
-function Limit(params) {
-  var min = params.min,
-      max = params.max;
-  var loopLimits = {
-    min: max,
-    max: min
-  };
-  var constrainLimits = {
-    min: min,
-    max: max
-  };
-  var length = Math.abs(min - max);
-
-  function reachedMin(n) {
-    return n < min;
-  }
-
-  function reachedMax(n) {
-    return n > max;
-  }
-
-  function reachedAny(n) {
-    return reachedMin(n) || reachedMax(n);
-  }
-
-  function reachedWhich(n) {
-    if (reachedMin(n)) return 'min';
-    if (reachedMax(n)) return 'max';
-    return '';
-  }
-
-  function removeOffset(n) {
-    if (min === max) return n;
-
-    while (reachedMin(n)) {
-      n += length;
-    }
-
-    while (reachedMax(n)) {
-      n -= length;
-    }
-
-    return n;
-  }
-
-  function loop(n) {
-    var which = reachedWhich(n);
-    return which ? loopLimits[which] : n;
-  }
-
-  function constrain(n) {
-    var which = reachedWhich(n);
-    return which ? constrainLimits[which] : n;
-  }
-
-  var self = {
-    constrain: constrain,
-    length: length,
-    loop: loop,
-    max: max,
-    min: min,
-    reachedAny: reachedAny,
-    reachedMax: reachedMax,
-    reachedMin: reachedMin,
-    removeOffset: removeOffset
-  };
-  return self;
-}
-
-function DragHandler(params) {
-  var target = params.target,
-      scrollBody = params.scrollBody,
-      dragFree = params.dragFree,
-      animation = params.animation,
-      axis = params.axis;
-  var element = params.element,
-      dragTracker = params.dragTracker,
-      location = params.location,
-      events = params.events,
-      limit = params.limit;
-  var scrollAxis = axis.scroll,
-      crossAxis = axis.cross;
-  var focusNodes = ['INPUT', 'SELECT', 'TEXTAREA'];
-  var startScroll = Vector1D(0);
-  var startCross = Vector1D(0);
-  var dragStartPoint = Vector1D(0);
-  var activationEvents = EventStore();
-  var interactionEvents = EventStore();
-  var removeActivationEvents = activationEvents.removeAll;
-  var removeInteractionEvents = interactionEvents.removeAll;
-  var snapForceBoost = {
-    mouse: 2.5,
-    touch: 4
-  };
-  var freeForceBoost = {
-    mouse: 5,
-    touch: 8
-  };
-  var baseSpeed = dragFree ? 5 : 12;
-  var dragThreshold = 4;
-  var edgeLimit = Limit({
-    min: limit.min - 70,
-    max: limit.max + 70
-  });
-  var pointerIsDown = false;
-  var preventScroll = false;
-  var preventClick = false;
-  var isMouse = false;
-
-  function addActivationEvents() {
-    var node = element;
-    activationEvents.add(node, 'touchmove', function () {
-      return undefined;
-    }).add(node, 'touchend', function () {
-      return undefined;
-    }).add(node, 'touchstart', down).add(node, 'mousedown', down).add(node, 'touchcancel', up).add(node, 'contextmenu', up).add(node, 'click', click);
-  }
-
-  function addInteractionEvents() {
-    var node = !isMouse ? element : document;
-    interactionEvents.add(node, 'touchmove', move).add(node, 'touchend', up).add(node, 'mousemove', move).add(node, 'mouseup', up);
-  }
-
-  function isFocusNode(node) {
-    var name = node.nodeName || '';
-    return focusNodes.indexOf(name) > -1;
-  }
-
-  function forceBoost() {
-    var boost = dragFree ? freeForceBoost : snapForceBoost;
-    var type = isMouse ? 'mouse' : 'touch';
-    return boost[type];
-  }
-
-  function speedFactor(forceB, forceA) {
-    var diff = delta(Math.abs(forceB), Math.abs(forceA));
-    if (Math.abs(forceB) <= Math.abs(forceA)) return 0;
-    if (forceB === 0 || forceA === 0) return 0;
-    return Math.abs(diff / forceB);
-  }
-
-  function allowedForce(force) {
-    var scrollTarget = params.scrollTarget,
-        index = params.index;
-    var currentLocation = scrollTarget.byDistance(0, false);
-    var targetChanged = currentLocation.index !== index.get();
-    var seekNext = !targetChanged && Math.abs(force) > dragThreshold;
-    var destination = force + location.get();
-
-    if (seekNext && !dragFree && !limit.reachedAny(destination)) {
-      var next = index.clone().add(Direction(force).get() * -1);
-      return scrollTarget.byIndex(next.get(), 0).distance;
-    }
-
-    if (!params.loop && edgeLimit.reachedAny(destination)) {
-      var edge = edgeLimit.reachedMax(destination) ? 'max' : 'min';
-      return edgeLimit[edge] - target.get();
-    }
-
-    return scrollTarget.byDistance(force, !dragFree).distance;
-  }
-
-  function down(evt) {
-    isMouse = evt.type === 'mousedown';
-    if (isMouse && evt.button !== 0) return;
-    var isMoving = delta(target.get(), location.get()) >= 2;
-    var clearPreventClick = isMouse || !isMoving;
-    var isNotFocusNode = !isFocusNode(evt.target);
-    var preventDefault = isMoving || isMouse && isNotFocusNode;
-    pointerIsDown = true;
-    dragTracker.pointerDown(evt);
-    dragStartPoint.set(target);
-    target.set(location);
-    scrollBody.useDefaultMass().useSpeed(80);
-    addInteractionEvents();
-    startScroll.set(dragTracker.readPoint(evt, scrollAxis));
-    startCross.set(dragTracker.readPoint(evt, crossAxis));
-    events.emit('pointerDown');
-    if (clearPreventClick) preventClick = false;
-    if (preventDefault) evt.preventDefault();
-  }
-
-  function move(evt) {
-    if (!preventScroll && !isMouse) {
-      var moveScroll = dragTracker.readPoint(evt, scrollAxis).get();
-      var moveCross = dragTracker.readPoint(evt, crossAxis).get();
-      var diffScroll = delta(moveScroll, startScroll.get());
-      var diffCross = delta(moveCross, startCross.get());
-      preventScroll = diffScroll > diffCross;
-      if (!preventScroll && !preventClick) return up();
-    }
-
-    var diff = dragTracker.pointerMove(evt);
-    var reachedLimit = limit.reachedAny(location.get());
-    var resist = !params.loop && reachedLimit ? 2 : 1;
-    if (!preventClick && diff) preventClick = true;
-    animation.start();
-    target.add(diff / resist);
-    evt.preventDefault();
-  }
-
-  function up() {
-    var scrollTo = params.scrollTo;
-    var rawForce = dragTracker.pointerUp() * forceBoost();
-    var force = allowedForce(rawForce);
-    var factor = speedFactor(rawForce, force);
-    var isMoving = delta(target.get(), dragStartPoint.get()) >= 0.5;
-    if (isMoving && !isMouse) preventClick = true;
-    preventScroll = false;
-    pointerIsDown = false;
-    interactionEvents.removeAll();
-    scrollBody.useSpeed(baseSpeed + baseSpeed * factor);
-    scrollTo.distance(force, !dragFree);
-    isMouse = false;
-    events.emit('pointerUp');
-  }
-
-  function delta(pointB, pointA) {
-    return Math.abs(pointB - pointA);
-  }
-
-  function click(evt) {
-    if (preventClick) evt.preventDefault();
-  }
-
-  function clickAllowed() {
-    return !preventClick;
-  }
-
-  function pointerDown() {
-    return pointerIsDown;
-  }
-
-  var self = {
-    addActivationEvents: addActivationEvents,
-    clickAllowed: clickAllowed,
-    pointerDown: pointerDown,
-    removeActivationEvents: removeActivationEvents,
-    removeInteractionEvents: removeInteractionEvents
-  };
-  return self;
-}
-
-function DragTracker(params) {
-  var axis = params.axis,
-      pxToPercent = params.pxToPercent;
-  var scrollAxis = axis.scroll;
-  var coords = {
-    x: 'clientX',
-    y: 'clientY'
-  };
-  var startDrag = Vector1D(0);
-  var diffDrag = Vector1D(0);
-  var lastDrag = Vector1D(0);
-  var pointValue = Vector1D(0);
-  var trackInterval = 10;
-  var trackPoints = [];
-  var trackTime = new Date().getTime();
-  var isMouse = false;
-
-  function readPoint(evt, type) {
-    isMouse = !evt.touches;
-    var c = coords[type];
-    var value = isMouse ? evt[c] : evt.touches[0][c];
-    return pointValue.set(value);
-  }
-
-  function pointerDown(evt) {
-    var point = readPoint(evt, scrollAxis);
-    startDrag.set(point);
-    lastDrag.set(point);
-    return pxToPercent.measure(startDrag.get());
-  }
-
-  function pointerMove(evt) {
-    var point = readPoint(evt, scrollAxis);
-    var time2 = new Date().getTime();
-    var time1 = trackTime;
-
-    if (time2 - time1 >= trackInterval) {
-      trackPoints.push(point.get());
-      trackTime = time2;
-    }
-
-    diffDrag.set(point).subtract(lastDrag);
-    lastDrag.set(point);
-    return pxToPercent.measure(diffDrag.get());
-  }
-
-  function pointerUp() {
-    var currentPoint = lastDrag.get();
-    var trackLength = isMouse ? 5 : 4;
-    var point = trackPoints.slice(-trackLength).map(function (trackPoint) {
-      return currentPoint - trackPoint;
-    }).sort(function (p1, p2) {
-      return Math.abs(p1) < Math.abs(p2) ? 1 : -1;
-    })[0];
-    lastDrag.set(point || 0);
-    trackPoints = [];
-    return pxToPercent.measure(lastDrag.get());
-  }
-
-  var self = {
-    pointerDown: pointerDown,
-    pointerMove: pointerMove,
-    pointerUp: pointerUp,
-    readPoint: readPoint
-  };
-  return self;
-}
-
-function PxToPercent(viewInPx) {
-  var totalPercent = 100;
-
-  function measure(n) {
-    return n / viewInPx * totalPercent;
-  }
-
-  var self = {
-    measure: measure,
-    totalPercent: totalPercent
-  };
-  return Object.freeze(self);
-}
-
-function map(value, iStart, iStop, oStart, oStop) {
-  return oStart + (oStop - oStart) * ((value - iStart) / (iStop - iStart));
-}
-function arrayFromCollection(nodeList) {
-  return Array.prototype.slice.call(nodeList);
-}
-function debounce(callback, time) {
-  var timeout = {
-    id: 0
-  };
-  return function () {
-    window.clearTimeout(timeout.id);
-    timeout.id = window.setTimeout(callback, time) || 0;
-  };
-}
-function roundToDecimals(decimalPoints) {
-  var pow = Math.pow(10, decimalPoints);
-  return function (n) {
-    return Math.round(n * pow) / pow;
-  };
-}
-function groupArray(array, size) {
-  var groups = [];
-
-  for (var i = 0; i < array.length; i += size) {
-    groups.push(array.slice(i, i + size));
-  }
-
-  return groups;
-}
-function arrayKeys(array) {
-  return Object.keys(array).map(Number);
-}
-function removeClass(node, className) {
-  var cl = node.classList;
-  if (cl.contains(className)) cl.remove(className);
-}
-function addClass(node, className) {
-  var cl = node.classList;
-  if (!cl.contains(className)) cl.add(className);
-}
-
-function ScrollBody(params) {
-  var location = params.location,
-      speed = params.speed,
-      mass = params.mass;
-  var roundToTwoDecimals = roundToDecimals(2);
-  var velocity = Vector1D(0);
-  var acceleration = Vector1D(0);
-  var attraction = Vector1D(0);
-  var direction = Direction(0);
-  var state = {
-    speed: speed,
-    mass: mass
-  };
-
-  function update() {
-    velocity.add(acceleration);
-    location.add(velocity);
-    acceleration.multiply(0);
-  }
-
-  function applyForce(v) {
-    v.divide(state.mass);
-    acceleration.add(v);
-  }
-
-  function seek(v) {
-    attraction.set(v).subtract(location);
-    var magnitude = attraction.get();
-    var m = map(magnitude, 0, 100, 0, state.speed);
-    direction.set(attraction);
-    attraction.normalize().multiply(m).subtract(velocity);
-    applyForce(attraction);
-    return self;
-  }
-
-  function settle(v) {
-    var diff = v.get() - location.get();
-    var diffRounded = roundToTwoDecimals(diff);
-    var hasSettled = !diffRounded;
-    if (hasSettled) location.set(v);
-    return hasSettled;
-  }
-
-  function useSpeed(n) {
-    state.speed = n;
-    return self;
-  }
-
-  function useDefaultSpeed() {
-    useSpeed(speed);
-    return self;
-  }
-
-  function useMass(n) {
-    state.mass = n;
-    return self;
-  }
-
-  function useDefaultMass() {
-    useMass(mass);
-    return self;
-  }
-
-  var self = {
-    direction: direction,
-    location: location,
-    seek: seek,
-    settle: settle,
-    update: update,
-    useDefaultMass: useDefaultMass,
-    useDefaultSpeed: useDefaultSpeed,
-    useMass: useMass,
-    useSpeed: useSpeed
-  };
-  return self;
-}
-
-function ScrollBounds(params) {
-  var limit = params.limit,
-      location = params.location,
-      scrollBody = params.scrollBody,
-      animation = params.animation;
-  var min = limit.min,
-      max = limit.max,
-      reachedMin = limit.reachedMin,
-      reachedMax = limit.reachedMax;
-  var tolerance = 50;
-  var disabled = false;
-  var timeout = 0;
-
-  function shouldConstrain(v) {
-    if (disabled || timeout) return false;
-    if (reachedMin(location.get())) return v.get() !== min;
-    if (reachedMax(location.get())) return v.get() !== max;
-    return false;
-  }
-
-  function constrain(v) {
-    if (!shouldConstrain(v)) return;
-    timeout = window.setTimeout(function () {
-      var constraint = limit.constrain(v.get());
-      v.set(constraint);
-      scrollBody.useSpeed(10).useMass(3);
-      animation.start();
-      timeout = 0;
-    }, tolerance);
-  }
-
-  function toggleActive(active) {
-    disabled = !active;
-  }
-
-  var self = {
-    constrain: constrain,
-    toggleActive: toggleActive
-  };
-  return self;
-}
-
-function ScrollContain(params) {
-  var alignment = params.alignment,
-      contentSize = params.contentSize,
-      viewSize = params.viewSize;
-  var scrollBounds = Limit({
-    min: -contentSize + viewSize,
-    max: 0
-  });
-  var alignedWithinView = [alignment.measure(contentSize)];
-  var contentExceedsView = contentSize > viewSize;
-
-  function findDuplicates(scrollSnaps) {
-    var startSnap = scrollSnaps[0];
-    var endSnap = scrollSnaps[scrollSnaps.length - 1];
-    var min = scrollSnaps.lastIndexOf(startSnap) + 1;
-    var max = scrollSnaps.indexOf(endSnap);
-    return Limit({
-      min: min,
-      max: max
-    });
-  }
-
-  function measure(scrollSnaps, trim) {
-    var containedSnaps = scrollSnaps.map(scrollBounds.constrain);
-
-    var _a = findDuplicates(containedSnaps),
-        min = _a.min,
-        max = _a.max;
-
-    if (!contentExceedsView) return alignedWithinView;
-    if (!trim) return containedSnaps;
-    return containedSnaps.slice(min - 1, max + 1);
-  }
-
-  var self = {
-    measure: measure
-  };
-  return self;
-}
-
-function ScrollLimit(params) {
-  var contentSize = params.contentSize,
-      loop = params.loop;
-
-  function measure(scrollSnaps) {
-    var startSnap = scrollSnaps[0];
-    var endSnap = scrollSnaps[scrollSnaps.length - 1];
-    var min = loop ? startSnap - contentSize : endSnap;
-    var max = startSnap;
-    return Limit({
-      min: min,
-      max: max
-    });
-  }
-
-  var self = {
-    measure: measure
-  };
-  return self;
-}
-
-function ScrollLooper(params) {
-  var contentSize = params.contentSize,
-      location = params.location,
-      limit = params.limit,
-      pxToPercent = params.pxToPercent;
-  var min = limit.min + pxToPercent.measure(0.1);
-  var max = limit.max + pxToPercent.measure(0.1);
-
-  var _a = Limit({
-    min: min,
-    max: max
-  }),
-      reachedMin = _a.reachedMin,
-      reachedMax = _a.reachedMax;
-
-  function shouldLoop(direction) {
-    if (direction === 1) return reachedMax(location.get());
-    if (direction === -1) return reachedMin(location.get());
-    return false;
-  }
-
-  function loop(vectors, direction) {
-    if (!shouldLoop(direction)) return;
-    var loopDistance = contentSize * (direction * -1);
-    vectors.forEach(function (v) {
-      return v.add(loopDistance);
-    });
-  }
-
-  var self = {
-    loop: loop
-  };
-  return self;
-}
-
-function ScrollProgress(params) {
-  var _a = params.limit,
-      max = _a.max,
-      scrollLength = _a.length;
-
-  function get(n) {
-    var currentLocation = n - max;
-    return currentLocation / -scrollLength;
-  }
-
-  var self = {
-    get: get
-  };
-  return self;
-}
-
-function ScrollSnap(params) {
-  var snapSizes = params.snapSizes,
-      alignment = params.alignment,
-      loop = params.loop;
-  var alignments = snapSizes.map(alignment.measure);
-  var distancesBetween = distancesBetweenScrollSnaps();
-
-  function distancesBetweenScrollSnaps() {
-    var limit = Limit({
-      min: 0,
-      max: snapSizes.length - 1
-    });
-    var counter = Counter({
-      limit: limit,
-      start: 0,
-      loop: loop
-    });
-    return snapSizes.map(function (size, index) {
-      var next = counter.set(index + 1).get();
-      return size + alignments[index] - alignments[next];
-    });
-  }
-
-  function measure(index) {
-    var sizes = distancesBetween.slice(0, index);
-    return sizes.reduce(function (a, s) {
-      return a - s;
-    }, alignments[0]);
-  }
-
-  var self = {
-    measure: measure
-  };
-  return self;
-}
-
-function ScrollTarget(params) {
-  var loop = params.loop,
-      limit = params.limit,
-      scrollSnaps = params.scrollSnaps,
-      contentSize = params.contentSize;
-  var reachedMax = limit.reachedMax,
-      reachedAny = limit.reachedAny,
-      removeOffset = limit.removeOffset;
-
-  function minDistance(d1, d2) {
-    return Math.abs(d1) < Math.abs(d2) ? d1 : d2;
-  }
-
-  function findTargetSnap(target) {
-    var distance = removeOffset(target);
-    var ascDiffsToSnaps = scrollSnaps.map(function (scrollSnap) {
-      return scrollSnap - distance;
-    }).map(function (diffToSnap) {
-      return shortcut(diffToSnap, 0);
-    }).map(function (diff, i) {
-      return {
-        diff: diff,
-        index: i
-      };
-    }).sort(function (d1, d2) {
-      return Math.abs(d1.diff) - Math.abs(d2.diff);
-    });
-    var index = ascDiffsToSnaps[0].index;
-    return {
-      index: index,
-      distance: distance
-    };
-  }
-
-  function shortcut(target, direction) {
-    var t1 = target;
-    var t2 = target + contentSize;
-    var t3 = target - contentSize;
-    if (!loop) return t1;
-    if (!direction) return minDistance(minDistance(t1, t2), t3);
-    var shortest = minDistance(t1, direction === 1 ? t2 : t3);
-    return Math.abs(shortest) * direction;
-  }
-
-  function findTargetIndex(target, index) {
-    var reachedBound = !loop && reachedAny(target);
-    if (!reachedBound) return index;
-    var _a = params.index,
-        min = _a.min,
-        max = _a.max;
-    return reachedMax(target) ? min : max;
-  }
-
-  function byIndex(index, direction) {
-    var diffToSnap = scrollSnaps[index] - params.target.get();
-    var distance = shortcut(diffToSnap, direction);
-    return {
-      index: index,
-      distance: distance
-    };
-  }
-
-  function byDistance(distance, snap) {
-    var target = params.target.get() + distance;
-    var targetSnap = findTargetSnap(target);
-    var index = findTargetIndex(target, targetSnap.index);
-    var reachedBound = !loop && reachedAny(target);
-    if (!snap || reachedBound) return {
-      index: index,
-      distance: distance
-    };
-    var diffToSnap = scrollSnaps[index] - targetSnap.distance;
-    var snapDistance = distance + shortcut(diffToSnap, 0);
-    return {
-      index: index,
-      distance: snapDistance
-    };
-  }
-
-  var self = {
-    byDistance: byDistance,
-    byIndex: byIndex,
-    shortcut: shortcut
-  };
-  return self;
-}
-
-function ScrollTo(params) {
-  var indexCurrent = params.index,
-      scrollTarget = params.scrollTarget,
-      animation = params.animation;
-  var indexPrevious = params.indexPrevious,
-      events = params.events,
-      targetDistance = params.target;
-
-  function scrollTo(target) {
-    var distanceDiff = target.distance;
-    var indexDiff = target.index !== indexCurrent.get();
-
-    if (distanceDiff) {
-      animation.start();
-      targetDistance.add(distanceDiff);
-    }
-
-    if (indexDiff) {
-      indexPrevious.set(indexCurrent.get());
-      indexCurrent.set(target.index);
-      events.emit('select');
-    }
-  }
-
-  function distance(n, snap) {
-    var target = scrollTarget.byDistance(n, snap);
-    scrollTo(target);
-  }
-
-  function index(n, direction) {
-    var targetIndex = indexCurrent.clone().set(n);
-    var target = scrollTarget.byIndex(targetIndex.get(), direction);
-    scrollTo(target);
-  }
-
-  var self = {
-    distance: distance,
-    index: index
-  };
-  return self;
-}
-
-function SlideLooper(params) {
-  var axis = params.axis,
-      containerLocation = params.location;
-  var contentSize = params.contentSize,
-      viewSize = params.viewSize,
-      slideSizes = params.slideSizes,
-      scrollSnaps = params.scrollSnaps;
-  var ascItems = arrayKeys(slideSizes);
-  var descItems = arrayKeys(slideSizes).reverse();
-  var loopPoints = startPoints().concat(endPoints());
-  var loopStyle = axis.scroll === 'x' ? 'left' : 'top';
-
-  function subtractItemSizes(indexes, from) {
-    return indexes.reduce(function (a, i) {
-      var size = slideSizes[i];
-      return a - size;
-    }, from);
-  }
-
-  function loopItemsIn(sizeOfGap, indexes) {
-    return indexes.reduce(function (a, i) {
-      var gapLeft = subtractItemSizes(a, sizeOfGap);
-      return gapLeft > 0 ? a.concat([i]) : a;
-    }, []);
-  }
-
-  function loopStart(sizeOfGap, indexes, from) {
-    return indexes.reduce(function (a, i) {
-      var gapFilled = a + slideSizes[i];
-      return gapFilled < sizeOfGap ? gapFilled : a;
-    }, from);
-  }
-
-  function loopPointFor(indexes, from, direction) {
-    var slideCount = ascItems.length - 1;
-    return subtractItemSizes(indexes.map(function (i) {
-      return (i + direction) % slideCount;
-    }), from);
-  }
-
-  function loopPointsFor(indexes, from, direction) {
-    var ascIndexes = indexes.slice().sort(function (a, b) {
-      return a - b;
-    });
-    return ascIndexes.map(function (index, loopIndex) {
-      var initial = contentSize * (!direction ? 0 : -1);
-      var offset = contentSize * (!direction ? 1 : 0);
-      var slidesInSpan = ascIndexes.slice(0, loopIndex);
-      var point = loopPointFor(slidesInSpan, from, direction);
-
-      var getTarget = function getTarget(location) {
-        return location > point ? initial : offset;
-      };
-
-      return {
-        point: point,
-        getTarget: getTarget,
-        index: index,
-        location: -1
-      };
-    });
-  }
-
-  function startPoints() {
-    var gap = scrollSnaps[0] - 1;
-    var indexes = loopItemsIn(gap, descItems);
-    var start = loopStart(gap, indexes, 0);
-    return loopPointsFor(indexes, start, 1);
-  }
-
-  function endPoints() {
-    var gap = viewSize - scrollSnaps[0] - 1;
-    var indexes = loopItemsIn(gap, ascItems);
-    var start = loopStart(contentSize, ascItems, -viewSize);
-    return loopPointsFor(indexes, -start, 0);
-  }
-
-  function canLoop() {
-    return loopPoints.every(function (_a) {
-      var index = _a.index;
-      var otherIndexes = ascItems.filter(function (i) {
-        return i !== index;
-      });
-      return subtractItemSizes(otherIndexes, viewSize) <= 0;
-    });
-  }
-
-  function loop(slides) {
-    loopPoints.forEach(function (loopPoint) {
-      var getTarget = loopPoint.getTarget,
-          location = loopPoint.location,
-          index = loopPoint.index;
-      var target = getTarget(containerLocation.get());
-
-      if (target !== location) {
-        slides[index].style[loopStyle] = target + "%";
-        loopPoint.location = target;
-      }
-    });
-  }
-
-  function clear(slides) {
-    loopPoints.forEach(function (_a) {
-      var index = _a.index;
-      slides[index].style[loopStyle] = '';
-    });
-  }
-
-  var self = {
-    canLoop: canLoop,
-    clear: clear,
-    loop: loop,
-    loopPoints: loopPoints
-  };
-  return self;
-}
-
-function SlidesInView(params) {
-  var contentSize = params.contentSize,
-      slideSizes = params.slideSizes,
-      viewSize = params.viewSize;
-  var inViewThreshold = params.inViewThreshold,
-      loop = params.loop;
-  var thresholds = slideSizes.map(function (s) {
-    return s * inViewThreshold;
-  });
-  var scrollSnaps = arrayKeys(slideSizes).map(scrollSnap);
-  var pointsToCheck = concatSlidePoints();
-
-  function scrollSnap(index) {
-    var span = slideSizes.slice(0, index);
-    return span.reduce(function (a, s) {
-      return a - s;
-    }, 0);
-  }
-
-  function concatSlidePoints() {
-    var offsets = loop ? [0, contentSize, -contentSize] : [0];
-    return offsets.map(slidePoints).reduce(function (a, b) {
-      return a.concat(b);
-    }, []);
-  }
-
-  function slidePoints(offset) {
-    return scrollSnaps.map(function (snap, index) {
-      return {
-        start: snap - slideSizes[index] + thresholds[index] + offset,
-        end: snap + viewSize - thresholds[index] + offset,
-        index: index
-      };
-    });
-  }
-
-  function check(location) {
-    return pointsToCheck.reduce(function (list, point) {
-      var index = point.index,
-          start = point.start,
-          end = point.end;
-      var inList = list.indexOf(index) !== -1;
-      var inView = start < location && end > location;
-      return !inList && inView ? list.concat([index]) : list;
-    }, []);
-  }
-
-  var self = {
-    check: check
-  };
-  return self;
-}
-
-function Translate(params) {
-  var axis = params.axis,
-      container = params.container;
-  var translates = {
-    x: x,
-    y: y
-  };
-  var translateAxis = translates[axis.scroll];
-  var roundToTwoDecimals = roundToDecimals(2);
-  var containerStyle = container.style;
-  var disabled = false;
-  var location = 0;
-
-  function x(n) {
-    return "translate3d(" + n + "%,0px,0px)";
-  }
-
-  function y(n) {
-    return "translate3d(0px," + n + "%,0px)";
-  }
-
-  function to(v) {
-    if (disabled) return;
-    var target = roundToTwoDecimals(v.get());
-
-    if (location !== target) {
-      getComputedStyle(container).transform;
-      containerStyle.transform = translateAxis(target);
-      location = target;
-    }
-  }
-
-  function toggleActive(active) {
-    disabled = !active;
-  }
-
-  function clear() {
-    containerStyle.transform = '';
-    location = 0;
-  }
-
-  var self = {
-    clear: clear,
-    to: to,
-    toggleActive: toggleActive
-  };
-  return self;
-}
-
-function Engine(root, container, slides, options, events) {
-  // Options
-  var align = options.align,
-      scrollAxis = options.axis,
-      startIndex = options.startIndex,
-      inViewThreshold = options.inViewThreshold,
-      loop = options.loop,
-      speed = options.speed,
-      dragFree = options.dragFree,
-      slidesToScroll = options.slidesToScroll,
-      containScroll = options.containScroll; // Measurements
-
-  var axis = Axis(scrollAxis);
-  var pxToPercent = PxToPercent(axis.measure(container));
-  var viewSize = pxToPercent.totalPercent;
-  var slideSizes = slides.map(axis.measure).map(pxToPercent.measure);
-  var groupedSizes = groupArray(slideSizes, slidesToScroll);
-  var snapSizes = groupedSizes.map(function (g) {
-    return g.reduce(function (a, s) {
-      return a + s;
-    });
-  });
-  var snapIndexes = arrayKeys(snapSizes);
-  var contentSize = slideSizes.reduce(function (a, s) {
-    return a + s;
-  }, 0);
-  var alignment = Alignment({
-    align: align,
-    viewSize: viewSize
-  });
-  var scrollSnap = ScrollSnap({
-    snapSizes: snapSizes,
-    alignment: alignment,
-    loop: loop
-  });
-  var defaultSnaps = snapIndexes.map(scrollSnap.measure);
-  var contain = ScrollContain({
-    alignment: alignment,
-    contentSize: contentSize,
-    viewSize: viewSize
-  });
-  var shouldContain = !loop && containScroll !== '';
-  var trimSnaps = containScroll === 'trimSnaps';
-  var containedSnaps = contain.measure(defaultSnaps, trimSnaps);
-  var scrollSnaps = shouldContain ? containedSnaps : defaultSnaps; // Index
-
-  var indexSpan = Limit({
-    min: 0,
-    max: scrollSnaps.length - 1
-  });
-  var index = Counter({
-    limit: indexSpan,
-    start: startIndex,
-    loop: loop
-  });
-  var indexPrevious = index.clone(); // ScrollLimit
-
-  var scrollLimit = ScrollLimit({
-    loop: loop,
-    contentSize: contentSize
-  });
-  var limit = scrollLimit.measure(scrollSnaps); // Draw
-
-  var update = function update() {
-    engine.scrollBody.seek(target).update();
-    var settled = engine.scrollBody.settle(target);
-
-    if (!dragHandler.pointerDown()) {
-      if (!loop) engine.scrollBounds.constrain(target);
-
-      if (settled) {
-        engine.animation.stop();
-        events.emit('settle');
-      }
-    }
-
-    if (loop) {
-      var direction = engine.scrollBody.direction.get();
-      engine.scrollLooper.loop(loopVectors, direction);
-      engine.slideLooper.loop(slides);
-    }
-
-    if (!settled) events.emit('scroll');
-    engine.translate.to(engine.scrollBody.location);
-    engine.animation.proceed();
-  }; // Shared
-
-
-  var animation = Animation(update);
-  var startLocation = scrollSnaps[index.get()];
-  var location = Vector1D(startLocation);
-  var target = Vector1D(startLocation);
-  var loopVectors = [location, target];
-  var scrollBody = ScrollBody({
-    location: location,
-    speed: speed,
-    mass: 1
-  });
-  var scrollTarget = ScrollTarget({
-    contentSize: contentSize,
-    index: index,
-    limit: limit,
-    loop: loop,
-    scrollSnaps: scrollSnaps,
-    target: target
-  });
-  var scrollTo = ScrollTo({
-    animation: animation,
-    events: events,
-    index: index,
-    indexPrevious: indexPrevious,
-    scrollTarget: scrollTarget,
-    target: target
-  }); // DragHandler
-
-  var dragHandler = DragHandler({
-    animation: animation,
-    axis: axis,
-    dragFree: dragFree,
-    dragTracker: DragTracker({
-      axis: axis,
-      pxToPercent: pxToPercent
-    }),
-    element: root,
-    events: events,
-    index: index,
-    limit: limit,
-    location: location,
-    loop: loop,
-    scrollBody: scrollBody,
-    scrollTo: scrollTo,
-    scrollTarget: scrollTarget,
-    target: target
-  }); // Slider
-
-  var engine = {
-    animation: animation,
-    axis: axis,
-    dragHandler: dragHandler,
-    pxToPercent: pxToPercent,
-    index: index,
-    indexPrevious: indexPrevious,
-    limit: limit,
-    location: location,
-    options: options,
-    scrollBody: scrollBody,
-    scrollBounds: ScrollBounds({
-      animation: animation,
-      limit: limit,
-      location: location,
-      scrollBody: scrollBody
-    }),
-    scrollLooper: ScrollLooper({
-      contentSize: contentSize,
-      limit: limit,
-      location: location,
-      pxToPercent: pxToPercent
-    }),
-    scrollProgress: ScrollProgress({
-      limit: limit
-    }),
-    scrollSnaps: scrollSnaps,
-    scrollTarget: scrollTarget,
-    scrollTo: scrollTo,
-    slideLooper: SlideLooper({
-      axis: axis,
-      contentSize: contentSize,
-      location: location,
-      scrollSnaps: scrollSnaps,
-      slideSizes: slideSizes,
-      viewSize: viewSize
-    }),
-    slidesInView: SlidesInView({
-      contentSize: contentSize,
-      inViewThreshold: inViewThreshold,
-      loop: loop,
-      slideSizes: slideSizes,
-      viewSize: viewSize
-    }),
-    snapIndexes: snapIndexes,
-    target: target,
-    translate: Translate({
-      axis: axis,
-      container: container
-    })
-  };
-  return engine;
-}
-
-function EventEmitter() {
-  var listeners = {
-    destroy: [],
-    pointerDown: [],
-    pointerUp: [],
-    init: [],
-    reInit: [],
-    resize: [],
-    scroll: [],
-    select: [],
-    settle: []
-  };
-
-  function emit(evt) {
-    listeners[evt].forEach(function (e) {
-      return e(evt);
-    });
-    return self;
-  }
-
-  function on(evt, cb) {
-    listeners[evt] = listeners[evt].concat([cb]);
-    return self;
-  }
-
-  function off(evt, cb) {
-    listeners[evt] = listeners[evt].filter(function (e) {
-      return e !== cb;
-    });
-    return self;
-  }
-
-  var self = {
-    emit: emit,
-    off: off,
-    on: on
-  };
-  return self;
-}
-
-var defaultOptions = {
-  align: 'center',
-  axis: 'x',
-  containScroll: '',
-  containerSelector: '*',
-  dragFree: false,
-  draggable: true,
-  draggableClass: 'is-draggable',
-  draggingClass: 'is-dragging',
-  inViewThreshold: 0,
-  loop: false,
-  selectedClass: 'is-selected',
-  slidesToScroll: 1,
-  speed: 10,
-  startIndex: 0
-};
-
-function EmblaCarousel(sliderRoot, userOptions) {
-  if (userOptions === void 0) {
-    userOptions = {};
-  }
-
-  var events = EventEmitter();
-  var eventStore = EventStore();
-  var debouncedResize = debounce(resize, 500);
-  var reInit = reActivate;
-  var on = events.on,
-      off = events.off;
-  var engine;
-  var activated = false;
-
-  var options = _extends({}, defaultOptions);
-
-  var containerSize = 0;
-  var container;
-  var slides;
-  activate(userOptions);
-
-  function storeElements() {
-    if (!sliderRoot) throw new Error('Missing root node 😢');
-    var selector = options.containerSelector;
-    var sliderContainer = sliderRoot.querySelector(selector);
-    if (!sliderContainer) throw new Error('Missing container node 😢');
-    container = sliderContainer;
-    slides = arrayFromCollection(container.children);
-  }
-
-  function activate(partialOptions) {
-    if (partialOptions === void 0) {
-      partialOptions = {};
-    }
-
-    storeElements();
-    options = _extends(options, partialOptions);
-    engine = Engine(sliderRoot, container, slides, options, events);
-    var axis = engine.axis,
-        scrollBody = engine.scrollBody,
-        translate = engine.translate,
-        dragHandler = engine.dragHandler,
-        slideLooper = engine.slideLooper;
-    var loop = options.loop,
-        draggable = options.draggable,
-        draggableClass = options.draggableClass,
-        selectedClass = options.selectedClass,
-        draggingClass = options.draggingClass;
-    containerSize = axis.measure(container);
-    eventStore.add(window, 'resize', debouncedResize);
-    translate.to(scrollBody.location);
-    slides.forEach(slideFocusEvent);
-    dragHandler.addActivationEvents();
-
-    if (loop) {
-      if (!slideLooper.canLoop()) return reActivate({
-        loop: false
-      });
-      slideLooper.loop(slides);
-    }
-
-    if (draggable) {
-      if (draggableClass) {
-        addClass(sliderRoot, draggableClass);
-      }
-
-      if (draggingClass) {
-        events.on('pointerDown', toggleDraggingClass);
-        events.on('pointerUp', toggleDraggingClass);
-      }
-    } else {
-      events.on('pointerDown', dragHandler.removeInteractionEvents);
-    }
-
-    if (selectedClass) {
-      toggleSelectedClass();
-      events.on('select', toggleSelectedClass);
-      events.on('pointerUp', toggleSelectedClass);
-    }
-
-    if (!activated) {
-      setTimeout(function () {
-        return events.emit('init');
-      }, 0);
-      activated = true;
-    }
-  }
-
-  function toggleDraggingClass(evt) {
-    var draggingClass = options.draggingClass;
-    if (evt === 'pointerDown') addClass(sliderRoot, draggingClass);else removeClass(sliderRoot, draggingClass);
-  }
-
-  function toggleSelectedClass() {
-    var selectedClass = options.selectedClass;
-    var inView = slidesInView(true);
-    var notInView = slidesNotInView(true);
-    notInView.forEach(function (i) {
-      return removeClass(slides[i], selectedClass);
-    });
-    inView.forEach(function (i) {
-      return addClass(slides[i], selectedClass);
-    });
-  }
-
-  function slideFocusEvent(slide, index) {
-    var focus = function focus() {
-      var groupIndex = Math.floor(index / options.slidesToScroll);
-      var selectedGroup = index ? groupIndex : index;
-      sliderRoot.scrollLeft = 0;
-      scrollTo(selectedGroup);
-    };
-
-    eventStore.add(slide, 'focus', focus, true);
-  }
-
-  function reActivate(partialOptions) {
-    if (partialOptions === void 0) {
-      partialOptions = {};
-    }
-
-    var startIndex = engine.index.get();
-
-    var newOptions = _extends({
-      startIndex: startIndex
-    }, partialOptions);
-
-    deActivate();
-    activate(newOptions);
-    events.emit('reInit');
-  }
-
-  function deActivate() {
-    var selectedClass = options.selectedClass,
-        draggableClass = options.draggableClass;
-    engine.dragHandler.removeActivationEvents();
-    engine.dragHandler.removeInteractionEvents();
-    engine.animation.stop();
-    eventStore.removeAll();
-    engine.translate.clear();
-    engine.slideLooper.clear(slides);
-    removeClass(sliderRoot, draggableClass);
-    slides.forEach(function (s) {
-      return removeClass(s, selectedClass);
-    });
-    events.off('select', toggleSelectedClass);
-    events.off('pointerUp', toggleSelectedClass);
-    events.off('pointerDown', toggleDraggingClass);
-    events.off('pointerUp', toggleDraggingClass);
-  }
-
-  function destroy() {
-    if (!activated) return;
-    deActivate();
-    activated = false;
-    engine = {};
-    events.emit('destroy');
-  }
-
-  function resize() {
-    var newContainerSize = engine.axis.measure(container);
-    if (containerSize !== newContainerSize) reActivate();
-    events.emit('resize');
-  }
-
-  function slidesInView(target) {
-    if (target === void 0) {
-      target = false;
-    }
-
-    var location = engine[target ? 'target' : 'location'].get();
-    var type = options.loop ? 'removeOffset' : 'constrain';
-    return engine.slidesInView.check(engine.limit[type](location));
-  }
-
-  function slidesNotInView(target) {
-    if (target === void 0) {
-      target = false;
-    }
-
-    var inView = slidesInView(target);
-    return engine.snapIndexes.filter(function (i) {
-      return inView.indexOf(i) === -1;
-    });
-  }
-
-  function scrollSnapList() {
-    var getScrollProgress = engine.scrollProgress.get;
-    return engine.scrollSnaps.map(getScrollProgress);
-  }
-
-  function scrollTo(index) {
-    engine.scrollBody.useDefaultMass().useDefaultSpeed();
-    engine.scrollTo.index(index, 0);
-  }
-
-  function scrollNext() {
-    var next = engine.index.clone().add(1);
-    engine.scrollBody.useDefaultMass().useDefaultSpeed();
-    engine.scrollTo.index(next.get(), -1);
-  }
-
-  function scrollPrev() {
-    var prev = engine.index.clone().add(-1);
-    engine.scrollBody.useDefaultMass().useDefaultSpeed();
-    engine.scrollTo.index(prev.get(), 1);
-  }
-
-  function canScrollPrev() {
-    var index = engine.index;
-    return options.loop || index.get() !== index.min;
-  }
-
-  function canScrollNext() {
-    var index = engine.index;
-    return options.loop || index.get() !== index.max;
-  }
-
-  function scrollProgress() {
-    var location = engine.location.get();
-    return engine.scrollProgress.get(location);
-  }
-
-  function selectedScrollSnap() {
-    return engine.index.get();
-  }
-
-  function previousScrollSnap() {
-    return engine.indexPrevious.get();
-  }
-
-  function clickAllowed() {
-    return engine.dragHandler.clickAllowed();
-  }
-
-  function dangerouslyGetEngine() {
-    return engine;
-  }
-
-  function containerNode() {
-    return container;
-  }
-
-  function slideNodes() {
-    return slides;
-  }
-
-  var self = {
-    canScrollNext: canScrollNext,
-    canScrollPrev: canScrollPrev,
-    clickAllowed: clickAllowed,
-    containerNode: containerNode,
-    dangerouslyGetEngine: dangerouslyGetEngine,
-    destroy: destroy,
-    off: off,
-    on: on,
-    previousScrollSnap: previousScrollSnap,
-    reInit: reInit,
-    scrollNext: scrollNext,
-    scrollPrev: scrollPrev,
-    scrollProgress: scrollProgress,
-    scrollSnapList: scrollSnapList,
-    scrollTo: scrollTo,
-    selectedScrollSnap: selectedScrollSnap,
-    slideNodes: slideNodes,
-    slidesInView: slidesInView,
-    slidesNotInView: slidesNotInView
-  };
-  return self;
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (EmblaCarousel);
-//# sourceMappingURL=embla-carousel.esm.js.map
 
 
 /***/ }),
@@ -48356,6 +46744,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/customer/Review.vue?vue&type=style&index=0&lang=css&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/customer/Review.vue?vue&type=style&index=0&lang=css& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Review.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/customer/Review.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/customer/Subscribe.vue?vue&type=style&index=0&lang=css&":
 /*!****************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/customer/Subscribe.vue?vue&type=style&index=0&lang=css& ***!
@@ -57944,27 +56362,19 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _c("div", { staticClass: "embla overflow-x-scroll w-full" }, [
+                _c("div", { staticClass: "overflow-x-scroll w-full" }, [
                   _c(
                     "div",
-                    { staticClass: "embla__container flex" },
+                    {
+                      staticClass:
+                        "grid grid-cols-1 cm:grid-cols-2 md:grid-cols-4"
+                    },
                     _vm._l(_vm.images, function(image) {
-                      return _c("div", [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "embla__slide relative w-64 h-64 p-1  rounded-lg hover:shadow-md m-2"
-                          },
-                          [
-                            _c("img", {
-                              staticClass:
-                                "w-full rounded-lg object-cover object-center",
-                              attrs: { src: "/storage/" + image.thumbnail }
-                            })
-                          ]
-                        )
-                      ])
+                      return _c("img", {
+                        staticClass:
+                          "w-full w-64 h-64 hover:shadow rounded-lg object-cover object-center",
+                        attrs: { src: "/storage/" + image.thumbnail }
+                      })
                     }),
                     0
                   )
@@ -58011,6 +56421,7 @@ var render = function() {
                                   d: "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
                                 }
                               }),
+                              _vm._v(" "),
                               _c("circle", {
                                 attrs: { cx: "12", cy: "7", r: "4" }
                               })
@@ -58105,6 +56516,7 @@ var render = function() {
                                   d: "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
                                 }
                               }),
+                              _vm._v(" "),
                               _c("circle", {
                                 attrs: { cx: "12", cy: "7", r: "4" }
                               })
@@ -62720,7 +61132,7 @@ var render = function() {
                 "div",
                 {
                   staticClass:
-                    "fixed inset-0  px-6 py-6  md:hidden z-40 flex flex-col bg-custom-light-black rounded w-full "
+                    "fixed inset-0  px-6 py-6  md:hidden z-40 flex flex-col bg-custom-light-black  w-full "
                 },
                 [
                   _c(
@@ -63490,6 +61902,299 @@ var render = function() {
   ])
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/customer/Review.vue?vue&type=template&id=3ae106ce&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/customer/Review.vue?vue&type=template&id=3ae106ce& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "z-0 w-full my-6 flex flex-col md:flex-row" },
+    [
+      _c("div", { staticClass: "w-full md:w-1/2" }, [
+        _vm.auth
+          ? _c("div", { staticClass: "relative" }, [
+              _vm.loading
+                ? _c("div", { staticClass: "sk-cube-grid" }, [
+                    _c("div", { staticClass: "sk-cube sk-cube1" }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "sk-cube sk-cube2" }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "sk-cube sk-cube3" }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "sk-cube sk-cube4" }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "sk-cube sk-cube5" }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "sk-cube sk-cube6" }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "sk-cube sk-cube7" }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "sk-cube sk-cube8" }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "sk-cube sk-cube9" })
+                  ])
+                : _c(
+                    "form",
+                    {
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.review($event)
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "h3",
+                        {
+                          staticClass:
+                            "text-lg font-semibold text-custom-light-black mb-4"
+                        },
+                        [
+                          _vm._v(
+                            "Review " +
+                              _vm._s(
+                                _vm.average ? _vm.average : "Not reviewed."
+                              )
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "mb-4  w-full px-2 " },
+                        [
+                          _c(
+                            "label",
+                            {
+                              staticClass:
+                                "block text-gray-700 text-sm font-bold mb-2",
+                              attrs: { for: "rating" }
+                            },
+                            [
+                              _vm._v(
+                                "\n                        Rating\n                    "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("star-rating", {
+                            attrs: {
+                              "rounded-corners": "true",
+                              increment: 0.5
+                            },
+                            model: {
+                              value: _vm.rating,
+                              callback: function($$v) {
+                                _vm.rating = $$v
+                              },
+                              expression: "rating"
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "mb-4  w-full px-2 " }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass:
+                              "block text-gray-700 text-sm font-bold mb-2",
+                            attrs: { for: "message" }
+                          },
+                          [
+                            _vm._v(
+                              "\n                        Comment\n                    "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.message,
+                              expression: "message"
+                            }
+                          ],
+                          staticClass:
+                            "hadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+                          attrs: {
+                            id: "message",
+                            type: "text",
+                            placeholder: "Roman"
+                          },
+                          domProps: { value: _vm.message },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.message = $event.target.value
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(0)
+                    ]
+                  )
+            ])
+          : _c(
+              "a",
+              {
+                staticClass: "my-4 text-custom-light-black text-md border py-2",
+                attrs: { href: "/login" }
+              },
+              [_vm._v("Login tor review")]
+            )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "w-full md:w-1/2 mt-6 md:mt-0" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _vm.hasReview
+          ? _c(
+              "div",
+              { staticClass: "flex flex-col" },
+              _vm._l(_vm.reviews, function(review) {
+                return _c("div", { staticClass: "flex flex-row  mb-6" }, [
+                  _c(
+                    "div",
+                    { staticClass: "flex flex-col mr-3 items-center " },
+                    [
+                      review.customer.avatar
+                        ? _c("img", {
+                            staticClass:
+                              "w-12 md:w-16 object-center object-cover rounded-full",
+                            attrs: {
+                              src:
+                                "/storage/customers/" + review.customer.avatar
+                            }
+                          })
+                        : _c(
+                            "div",
+                            {
+                              staticClass:
+                                "w-12 md:w-16  rounded-full text-transparent"
+                            },
+                            [_vm._v("ff")]
+                          )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "flex flex-col " }, [
+                    _c(
+                      "div",
+                      { staticClass: "flex flex-col items-start mb-4" },
+                      [
+                        _c("star-rating", {
+                          attrs: {
+                            rating: review.rating,
+                            "star-size": 30,
+                            "rounded-corners": true,
+                            "show-rating": false,
+                            "read-only": _vm.isNotRated
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("h5", { staticClass: "mt-2 text-sm font-light" }, [
+                          _vm._v(_vm._s(review.customer.first_name))
+                        ])
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "p",
+                      { staticClass: "text-md leading-6 font-semibold" },
+                      [_vm._v(_vm._s(review.message))]
+                    )
+                  ])
+                ])
+              }),
+              0
+            )
+          : _c("div", { staticClass: " py-2 flex flex-col items-center" }, [
+              _c(
+                "svg",
+                {
+                  staticClass: "w-16 md:w-24 text-red-500 mb-4",
+                  attrs: {
+                    fill: "currentColor",
+                    xmlns: "http://www.w3.org/2000/svg",
+                    viewBox: "0 0 20 20"
+                  }
+                },
+                [
+                  _c("path", {
+                    attrs: {
+                      d:
+                        "M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 6H4.34a6 6 0 0 1 11.32 0z"
+                    }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-gray-900 text-xl py-3 text-left" }, [
+                _vm._v("No reviews received.")
+              ])
+            ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex " }, [
+      _c(
+        "button",
+        {
+          staticClass:
+            "mt-3 ml-2 px-6 w-48 md:w-auto py-3 hover:opacity-75 rounded-lg text-white font-bold text-lg bg-custom-light-orange ",
+          attrs: { type: "submit" }
+        },
+        [_vm._v("Submit")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "flex flex-col md:flex-row md:items-start mb-4 w-full" },
+      [
+        _c("p", { staticClass: "w-full  py-3 rounded text-lg" }, [
+          _vm._v("Reviews")
+        ])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -64394,6 +63099,18 @@ function normalizeComponent (
 
 })));
 
+
+/***/ }),
+
+/***/ "./node_modules/vue-star-rating/dist/star-rating.min.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/vue-star-rating/dist/star-rating.min.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(t,e){ true?module.exports=e():undefined}(this,function(){return function(t){function e(n){if(r[n])return r[n].exports;var i=r[n]={i:n,l:!1,exports:{}};return t[n].call(i.exports,i,i.exports,e),i.l=!0,i.exports}var r={};return e.m=t,e.c=r,e.i=function(t){return t},e.d=function(t,r,n){e.o(t,r)||Object.defineProperty(t,r,{configurable:!1,enumerable:!0,get:n})},e.n=function(t){var r=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(r,"a",r),r},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="/dist/",e(e.s=4)}([function(t,e){function r(t,e){var r=t[1]||"",i=t[3];if(!i)return r;if(e&&"function"==typeof btoa){var o=n(i);return[r].concat(i.sources.map(function(t){return"/*# sourceURL="+i.sourceRoot+t+" */"})).concat([o]).join("\n")}return[r].join("\n")}function n(t){return"/*# sourceMappingURL=data:application/json;charset=utf-8;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(t))))+" */"}t.exports=function(t){var e=[];return e.toString=function(){return this.map(function(e){var n=r(e,t);return e[2]?"@media "+e[2]+"{"+n+"}":n}).join("")},e.i=function(t,r){"string"==typeof t&&(t=[[null,t,""]]);for(var n={},i=0;i<this.length;i++){var o=this[i][0];"number"==typeof o&&(n[o]=!0)}for(i=0;i<t.length;i++){var a=t[i];"number"==typeof a[0]&&n[a[0]]||(r&&!a[2]?a[2]=r:r&&(a[2]="("+a[2]+") and ("+r+")"),e.push(a))}},e}},function(t,e){t.exports=function(t,e,r,n,i){var o,a=t=t||{},s=typeof t.default;"object"!==s&&"function"!==s||(o=t,a=t.default);var u="function"==typeof a?a.options:a;e&&(u.render=e.render,u.staticRenderFns=e.staticRenderFns),n&&(u._scopeId=n);var d;if(i?(d=function(t){t=t||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext,t||"undefined"==typeof __VUE_SSR_CONTEXT__||(t=__VUE_SSR_CONTEXT__),r&&r.call(this,t),t&&t._registeredComponents&&t._registeredComponents.add(i)},u._ssrRegister=d):r&&(d=r),d){var l=u.functional,c=l?u.render:u.beforeCreate;l?u.render=function(t,e){return d.call(e),c(t,e)}:u.beforeCreate=c?[].concat(c,d):[d]}return{esModule:o,exports:a,options:u}}},function(t,e,r){function n(t){for(var e=0;e<t.length;e++){var r=t[e],n=l[r.id];if(n){n.refs++;for(var i=0;i<n.parts.length;i++)n.parts[i](r.parts[i]);for(;i<r.parts.length;i++)n.parts.push(o(r.parts[i]));n.parts.length>r.parts.length&&(n.parts.length=r.parts.length)}else{for(var a=[],i=0;i<r.parts.length;i++)a.push(o(r.parts[i]));l[r.id]={id:r.id,refs:1,parts:a}}}}function i(){var t=document.createElement("style");return t.type="text/css",c.appendChild(t),t}function o(t){var e,r,n=document.querySelector('style[data-vue-ssr-id~="'+t.id+'"]');if(n){if(h)return g;n.parentNode.removeChild(n)}if(v){var o=p++;n=f||(f=i()),e=a.bind(null,n,o,!1),r=a.bind(null,n,o,!0)}else n=i(),e=s.bind(null,n),r=function(){n.parentNode.removeChild(n)};return e(t),function(n){if(n){if(n.css===t.css&&n.media===t.media&&n.sourceMap===t.sourceMap)return;e(t=n)}else r()}}function a(t,e,r,n){var i=r?"":n.css;if(t.styleSheet)t.styleSheet.cssText=m(e,i);else{var o=document.createTextNode(i),a=t.childNodes;a[e]&&t.removeChild(a[e]),a.length?t.insertBefore(o,a[e]):t.appendChild(o)}}function s(t,e){var r=e.css,n=e.media,i=e.sourceMap;if(n&&t.setAttribute("media",n),i&&(r+="\n/*# sourceURL="+i.sources[0]+" */",r+="\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(i))))+" */"),t.styleSheet)t.styleSheet.cssText=r;else{for(;t.firstChild;)t.removeChild(t.firstChild);t.appendChild(document.createTextNode(r))}}var u="undefined"!=typeof document;if("undefined"!=typeof DEBUG&&DEBUG&&!u)throw new Error("vue-style-loader cannot be used in a non-browser environment. Use { target: 'node' } in your Webpack config to indicate a server-rendering environment.");var d=r(14),l={},c=u&&(document.head||document.getElementsByTagName("head")[0]),f=null,p=0,h=!1,g=function(){},v="undefined"!=typeof navigator&&/msie [6-9]\b/.test(navigator.userAgent.toLowerCase());t.exports=function(t,e,r){h=r;var i=d(t,e);return n(i),function(e){for(var r=[],o=0;o<i.length;o++){var a=i[o],s=l[a.id];s.refs--,r.push(s)}e?(i=d(t,e),n(i)):i=[];for(var o=0;o<r.length;o++){var s=r[o];if(0===s.refs){for(var u=0;u<s.parts.length;u++)s.parts[u]();delete l[s.id]}}}};var m=function(){var t=[];return function(e,r){return t[e]=r,t.filter(Boolean).join("\n")}}()},function(t,e,r){function n(t){r(13)}var i=r(1)(r(5),r(11),n,"data-v-34cbeed1",null);t.exports=i.exports},function(t,e,r){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var n=r(3),i=function(t){return t&&t.__esModule?t:{default:t}}(n);e.default=i.default},function(t,e,r){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var n=r(9),i=function(t){return t&&t.__esModule?t:{default:t}}(n);e.default={components:{star:i.default},model:{prop:"rating",event:"rating-selected"},props:{increment:{type:Number,default:1},rating:{type:Number,default:0},roundStartRating:{type:Boolean,default:!0},activeColor:{type:String,default:"#ffd055"},inactiveColor:{type:String,default:"#d8d8d8"},maxRating:{type:Number,default:5},starPoints:{type:Array,default:function(){return[]}},starSize:{type:Number,default:50},showRating:{type:Boolean,default:!0},readOnly:{type:Boolean,default:!1},textClass:{type:String,default:""},inline:{type:Boolean,default:!1},borderColor:{type:String,default:"#999"},borderWidth:{type:Number,default:0},roundedCorners:{type:Boolean,default:!1},padding:{type:Number,default:0},rtl:{type:Boolean,default:!1},fixedPoints:{type:Number,default:null},glow:{type:Number,default:0},glowColor:{type:String,default:"#fff"}},created:function(){this.step=100*this.increment,this.currentRating=this.rating,this.selectedRating=this.currentRating,this.createStars(this.roundStartRating)},methods:{setRating:function(t,e){if(!this.readOnly){var r=this.rtl?(100-t.position)/100:t.position/100;this.currentRating=(t.id+r-1).toFixed(2),this.currentRating=this.currentRating>this.maxRating?this.maxRating:this.currentRating,this.createStars(),e?(this.selectedRating=this.currentRating,this.$emit("rating-selected",this.selectedRating),this.ratingSelected=!0):this.$emit("current-rating",this.currentRating)}},resetRating:function(){this.readOnly||(this.currentRating=this.selectedRating,this.createStars(this.shouldRound))},createStars:function(){(!(arguments.length>0&&void 0!==arguments[0])||arguments[0])&&this.round();for(var t=0;t<this.maxRating;t++){var e=0;t<this.currentRating&&(e=this.currentRating-t>1?100:100*(this.currentRating-t)),this.$set(this.fillLevel,t,Math.round(e))}},round:function(){var t=1/this.increment;this.currentRating=Math.min(this.maxRating,Math.ceil(this.currentRating*t)/t)}},computed:{formattedRating:function(){return null===this.fixedPoints?this.currentRating:this.currentRating.toFixed(this.fixedPoints)},shouldRound:function(){return this.ratingSelected||this.roundStartRating},margin:function(){return this.padding+this.borderWidth}},watch:{rating:function(t){this.currentRating=t,this.selectedRating=t,this.createStars(this.shouldRound)}},data:function(){return{step:0,fillLevel:[],currentRating:0,selectedRating:0,ratingSelected:!1}}}},function(t,e,r){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.default={props:{fill:{type:Number,default:0},points:{type:Array,default:function(){return[]}},size:{type:Number,default:50},starId:{type:Number,required:!0},activeColor:{type:String,required:!0},inactiveColor:{type:String,required:!0},borderColor:{type:String,default:"#000"},borderWidth:{type:Number,default:0},roundedCorners:{type:Boolean,default:!1},rtl:{type:Boolean,default:!1},glow:{type:Number,default:0},glowColor:{type:String,required:!1}},created:function(){this.starPoints=this.points.length?this.points:this.starPoints,this.calculatePoints(),this.grad=this.getRandomId(),this.glowId=this.getRandomId()},computed:{starPointsToString:function(){return this.starPoints.join(",")},getGradId:function(){return"url(#"+this.grad+")"},getSize:function(){var t=this.roundedCorners&&this.borderWidth<=0?parseInt(this.size)-parseInt(this.border):this.size;return parseInt(t)+parseInt(this.border)},getFill:function(){return this.rtl?100-this.fill+"%":this.fill+"%"},border:function(){return this.roundedCorners&&this.borderWidth<=0?6:this.borderWidth},getBorderColor:function(){return this.roundedCorners&&this.borderWidth<=0?this.fill<=0?this.inactiveColor:this.activeColor:this.borderColor},maxSize:function(){return this.starPoints.reduce(function(t,e){return Math.max(t,e)})},viewBox:function(){return"0 0 "+this.maxSize+" "+this.maxSize}},methods:{mouseMoving:function(t){this.$emit("star-mouse-move",{event:t,position:this.getPosition(t),id:this.starId})},getPosition:function(t){var e=.92*this.size,r=this.rtl?Math.min(t.offsetX,45):Math.max(t.offsetX,1),n=Math.round(100/e*r);return Math.min(n,100)},selected:function(t){this.$emit("star-selected",{id:this.starId,position:this.getPosition(t)})},getRandomId:function(){return Math.random().toString(36).substring(7)},calculatePoints:function(){var t=this;this.starPoints=this.starPoints.map(function(e){return t.size/t.maxSize*e+1.5*t.border})}},data:function(){return{starPoints:[19.8,2.2,6.6,43.56,39.6,17.16,0,17.16,33,43.56],grad:"",glowId:""}}}},function(t,e,r){e=t.exports=r(0)(void 0),e.push([t.i,".vue-star-rating-star[data-v-21f5376e]{overflow:visible!important}",""])},function(t,e,r){e=t.exports=r(0)(void 0),e.push([t.i,".vue-star-rating-star[data-v-34cbeed1]{display:inline-block}.vue-star-rating-pointer[data-v-34cbeed1]{cursor:pointer}.vue-star-rating[data-v-34cbeed1]{display:flex;align-items:center}.vue-star-rating-inline[data-v-34cbeed1]{display:inline-flex}.vue-star-rating-rating-text[data-v-34cbeed1]{margin-top:7px;margin-left:7px}.vue-star-rating-rtl[data-v-34cbeed1]{direction:rtl}.vue-star-rating-rtl .vue-star-rating-rating-text[data-v-34cbeed1]{margin-right:10px;direction:rtl}",""])},function(t,e,r){function n(t){r(12)}var i=r(1)(r(6),r(10),n,"data-v-21f5376e",null);t.exports=i.exports},function(t,e){t.exports={render:function(){var t=this,e=t.$createElement,r=t._self._c||e;return r("svg",{staticClass:"vue-star-rating-star",attrs:{height:t.getSize,width:t.getSize,viewBox:t.viewBox},on:{mousemove:t.mouseMoving,click:t.selected}},[r("linearGradient",{attrs:{id:t.grad,x1:"0",x2:"100%",y1:"0",y2:"0"}},[r("stop",{attrs:{offset:t.getFill,"stop-color":t.rtl?t.inactiveColor:t.activeColor}}),t._v(" "),r("stop",{attrs:{offset:t.getFill,"stop-color":t.rtl?t.activeColor:t.inactiveColor}})],1),t._v(" "),r("filter",{attrs:{id:t.glowId,height:"130%",width:"130%",filterUnits:"userSpaceOnUse"}},[r("feGaussianBlur",{attrs:{stdDeviation:t.glow,result:"coloredBlur"}}),t._v(" "),r("feMerge",[r("feMergeNode",{attrs:{in:"coloredBlur"}}),t._v(" "),r("feMergeNode",{attrs:{in:"SourceGraphic"}})],1)],1),t._v(" "),r("polygon",{directives:[{name:"show",rawName:"v-show",value:t.fill>1,expression:"fill > 1"}],attrs:{points:t.starPointsToString,fill:t.getGradId,stroke:t.glowColor,filter:"url(#"+this.glowId+")"}}),t._v(" "),r("polygon",{attrs:{points:t.starPointsToString,fill:t.getGradId,stroke:t.getBorderColor,"stroke-width":t.border,"stroke-linejoin":t.roundedCorners?"round":"miter"}}),t._v(" "),r("polygon",{attrs:{points:t.starPointsToString,fill:t.getGradId}})],1)},staticRenderFns:[]}},function(t,e){t.exports={render:function(){var t=this,e=t.$createElement,r=t._self._c||e;return r("div",{class:["vue-star-rating",{"vue-star-rating-rtl":t.rtl},{"vue-star-rating-inline":t.inline}]},[r("div",{staticClass:"vue-star-rating",on:{mouseleave:t.resetRating}},[t._l(t.maxRating,function(e){return r("span",{key:e,class:[{"vue-star-rating-pointer":!t.readOnly},"vue-star-rating-star"],style:{"margin-right":t.margin+"px"}},[r("star",{attrs:{fill:t.fillLevel[e-1],size:t.starSize,points:t.starPoints,"star-id":e,step:t.step,"active-color":t.activeColor,"inactive-color":t.inactiveColor,"border-color":t.borderColor,"border-width":t.borderWidth,"rounded-corners":t.roundedCorners,rtl:t.rtl,glow:t.glow,"glow-color":t.glowColor},on:{"star-selected":function(e){t.setRating(e,!0)},"star-mouse-move":t.setRating}})],1)}),t._v(" "),t.showRating?r("span",{class:["vue-star-rating-rating-text",t.textClass]},[t._v(" "+t._s(t.formattedRating))]):t._e()],2)])},staticRenderFns:[]}},function(t,e,r){var n=r(7);"string"==typeof n&&(n=[[t.i,n,""]]),n.locals&&(t.exports=n.locals);r(2)("0ab8a16d",n,!0)},function(t,e,r){var n=r(8);"string"==typeof n&&(n=[[t.i,n,""]]),n.locals&&(t.exports=n.locals);r(2)("2e648ff1",n,!0)},function(t,e){t.exports=function(t,e){for(var r=[],n={},i=0;i<e.length;i++){var o=e[i],a=o[0],s=o[1],u=o[2],d=o[3],l={id:t+":"+i,css:s,media:u,sourceMap:d};n[a]?n[a].parts.push(l):r.push(n[a]={id:a,parts:[l]})}return r}}])});
+//# sourceMappingURL=star-rating.min.js.map
 
 /***/ }),
 
@@ -76457,6 +75174,8 @@ module.exports = function(module) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "eventBus", function() { return eventBus; });
+/* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-star-rating */ "./node_modules/vue-star-rating/dist/star-rating.min.js");
+/* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_star_rating__WEBPACK_IMPORTED_MODULE_0__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -76469,6 +75188,8 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 var VueScrollTo = __webpack_require__(/*! vue-scrollto */ "./node_modules/vue-scrollto/vue-scrollto.js");
 
 Vue.use(VueScrollTo);
+
+Vue.component('star-rating', vue_star_rating__WEBPACK_IMPORTED_MODULE_0___default.a);
 var eventBus = new Vue();
 /**
  * The following block of code may be used to automatically register your
@@ -76503,6 +75224,7 @@ Vue.component('subscribe', __webpack_require__(/*! ./components/customer/Subscri
 Vue.component('cart-checkout', __webpack_require__(/*! ./components/customer/Checkout.vue */ "./resources/js/components/customer/Checkout.vue")["default"]);
 Vue.component('cart-view', __webpack_require__(/*! ./components/customer/Cart.vue */ "./resources/js/components/customer/Cart.vue")["default"]);
 Vue.component('add-cart', __webpack_require__(/*! ./components/customer/AddToCart.vue */ "./resources/js/components/customer/AddToCart.vue")["default"]);
+Vue.component('review', __webpack_require__(/*! ./components/customer/Review.vue */ "./resources/js/components/customer/Review.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -77992,19 +76714,105 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/customer/Review.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/customer/Review.vue ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Review_vue_vue_type_template_id_3ae106ce___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Review.vue?vue&type=template&id=3ae106ce& */ "./resources/js/components/customer/Review.vue?vue&type=template&id=3ae106ce&");
+/* harmony import */ var _Review_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Review.vue?vue&type=script&lang=js& */ "./resources/js/components/customer/Review.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Review_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Review.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/customer/Review.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _Review_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Review_vue_vue_type_template_id_3ae106ce___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Review_vue_vue_type_template_id_3ae106ce___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/customer/Review.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/customer/Review.vue?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/customer/Review.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Review_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Review.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/customer/Review.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Review_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/customer/Review.vue?vue&type=style&index=0&lang=css&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/customer/Review.vue?vue&type=style&index=0&lang=css& ***!
+  \**************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Review_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Review.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/customer/Review.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Review_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Review_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Review_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Review_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Review_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/customer/Review.vue?vue&type=template&id=3ae106ce&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/customer/Review.vue?vue&type=template&id=3ae106ce& ***!
+  \************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Review_vue_vue_type_template_id_3ae106ce___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Review.vue?vue&type=template&id=3ae106ce& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/customer/Review.vue?vue&type=template&id=3ae106ce&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Review_vue_vue_type_template_id_3ae106ce___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Review_vue_vue_type_template_id_3ae106ce___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/customer/Subscribe.vue":
 /*!********************************************************!*\
   !*** ./resources/js/components/customer/Subscribe.vue ***!
   \********************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Subscribe_vue_vue_type_template_id_013bfd44___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Subscribe.vue?vue&type=template&id=013bfd44& */ "./resources/js/components/customer/Subscribe.vue?vue&type=template&id=013bfd44&");
 /* harmony import */ var _Subscribe_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Subscribe.vue?vue&type=script&lang=js& */ "./resources/js/components/customer/Subscribe.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Subscribe_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Subscribe_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _Subscribe_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Subscribe.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/customer/Subscribe.vue?vue&type=style&index=0&lang=css&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Subscribe_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Subscribe.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/customer/Subscribe.vue?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -78036,7 +76844,7 @@ component.options.__file = "resources/js/components/customer/Subscribe.vue"
 /*!*********************************************************************************!*\
   !*** ./resources/js/components/customer/Subscribe.vue?vue&type=script&lang=js& ***!
   \*********************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

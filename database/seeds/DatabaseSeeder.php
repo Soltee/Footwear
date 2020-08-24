@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
     	factory(App\Customer::class , 20)->create();
         factory(App\Administrator::class)->create(['avatar'=>'1.jpg', 'last_name' => 'Munu','first_name' => 'Admin', 'email'=>'admin@example.com', 'email_verified_at' => now(), 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'remember_token' => Str::random()]);
-        factory(App\Administrator::class)->create(['avatar'=>'1.jpg', 'last_name' => 'Nari','first_name' => 'role', 'email'=>'role@example.com', 'email_verified_at' => now(), 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'remember_token' => Str::random()]);
+        factory(App\Customer::class)->create(['last_name' => 'Nari','first_name' => 'role', 'email'=>'customer@example.com', 'email_verified_at' => now(), 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'remember_token' => Str::random()]);
         factory(App\Administrator::class)->create();
 
         $category1 = factory(App\Category::class)->create(['name' => 'Brands', 'slug' => 'brands' ]);
@@ -38,7 +38,8 @@ class DatabaseSeeder extends Seeder
         factory(App\Orders::class, 50)->create();
         factory(App\Order_Items::class, 100)->create();
 
-    
+        factory(App\Review::class, 100)->create();
+
         factory(\App\Coupon::class)->create(['code' => 'CODE1', 'percent' => 2,'expires_on' => \Carbon\Carbon::yesterday()]);
         factory(\App\Coupon::class)->create(['code' => 'CODE2', 'percent' => 2,'expires_on' => \Carbon\Carbon::yesterday()]);
         factory(\App\Coupon::class)->create([ 'code' => 'CODE3', 'percent' => 4,'expires_on' => \Carbon\Carbon::now()]);

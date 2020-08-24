@@ -65,18 +65,16 @@ class WelcomeController extends Controller
 
     public function show($product, $slug)
     {   
-        $product = Product::findOrFail($product);
-        $images  = $product->images;
-        $images_count  = count($images);
-        $similar = Product::latest()->where('category_id', $product->category_id)
+        $product        = Product::findOrFail($product);
+        $images         = $product->images;
+        $images_count   = count($images);
+        $similar        = Product::latest()->where('category_id', $product->category_id)
                                     ->where('id', '!=', $product->id)
                                     ->get();
         $similar_count  = count($images);
-        $category = ($product->subcategories)?? null;
-        // $recommended = json_encode($similar->items());
-        // dd($images);
-
-        return view('home.show', compact('product', 'images_count', 'images', 'category', 'similar', 'similar_count'));
+        $category       = ($product->subcategories)?? null;
+        $auth = Auth::guard('customer')->user() ?? null;
+        return view('home.show', compact('product', 'images_count', 'images', 'category', 'auth', 'similar', 'similar_count'));
     }
 
     public function test(Request $request){

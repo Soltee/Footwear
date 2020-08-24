@@ -10,21 +10,18 @@ Route::get('/shoes/{product}/{slug}', 'WelcomeController@show')->name('show');
 Route::post('/add-cart/{products}', 'CartController@addProduct');
 
 //Cart
-
 Route::get('/add-to-cart/{products}', 'CartController@addProduct');
-
 Route::get('/getCartProducts', 'CartController@getCartProducts');
-
 Route::get('/getUpdatedData', 'CartController@getUpdatedData');
-
 Route::get('/is-already-added/{products}', 'CartController@isProductAlreadyAdded');
-
 Route::post('/clear-cart', 'CartController@clearCart');
-
 Route::post('/remove-from-cart/{products}', 'CartController@removeProduct');
-
 Route::post('/update-cart/{rowId}', 'CartController@updateProduct');
 Route::post('/coupon-redeem', 'CouponController@redeem');
+
+//Review
+Route::get('/product/{product}/reviews', 'ProductReviewController@index');
+Route::post('/product/{product}/review', 'ProductReviewController@store');
 
 //Customer
 Auth::routes();

@@ -8,7 +8,7 @@ class Product extends Model
 {
     use UsesUuid;
     protected $fillable = [
-      'category_id', 'subcategory_id', 'imageUrl', 'name', 'slug', 'price', 'qty', 'excerpt', 'description', 'visible',
+      'category_id', 'subcategory_id', 'imageUrl', 'name', 'slug', 'price', 'qty', 'excerpt', 'average_rating', 'description', 'visible',
     ];
 
 
@@ -16,10 +16,6 @@ class Product extends Model
         
     ];
 
-    // public function getRouteKeyName()
-    // {
-    //     return "id";
-    // }
 
     public function categories()
     {
@@ -34,6 +30,11 @@ class Product extends Model
     public function images()
     {
         return $this->hasMany(ProductImages::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 
     public static function boot() {

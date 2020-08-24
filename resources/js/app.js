@@ -10,6 +10,8 @@ window.Vue = require('vue');
 var VueScrollTo = require('vue-scrollto');
 Vue.use(VueScrollTo);
 
+import StarRating from 'vue-star-rating';
+Vue.component('star-rating', StarRating);
 export const eventBus = new Vue();
 
 /**
@@ -50,6 +52,7 @@ Vue.component('subscribe', require('./components/customer/Subscribe.vue').defaul
 Vue.component('cart-checkout', require('./components/customer/Checkout.vue').default);
 Vue.component('cart-view', require('./components/customer/Cart.vue').default);
 Vue.component('add-cart', require('./components/customer/AddToCart.vue').default);
+Vue.component('review', require('./components/customer/Review.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

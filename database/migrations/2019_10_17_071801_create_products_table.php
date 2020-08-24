@@ -23,6 +23,7 @@ class CreateProductsTable extends Migration
             $table->string('slug');
             $table->integer('price');
             $table->string('qty');
+            $table->integer('average_rating')->nullable();
             $table->string('excerpt')->nullable();
             $table->text('description')->nullable();
             $table->boolean('visible')->default(true);

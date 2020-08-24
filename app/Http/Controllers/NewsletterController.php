@@ -21,7 +21,7 @@ class NewsletterController extends Controller
     	return response()->json(['is_subscribed' => true], 201);    	
     }
 
-    public function isSubscribed($user)
+    protected function isSubscribed($user)
     {
     	return Newsletter::isSubscribed($user);
     }

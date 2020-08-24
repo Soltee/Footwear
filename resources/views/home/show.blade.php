@@ -99,7 +99,7 @@
         <div class="my-4">
         	@if($product->description)
 	        	<div class="">
-	        		<h3 class="text-lg text-custom-light-black mb-4">Details</h3>
+	        		<h3 class="text-lg font-semibold text-custom-light-black mb-4">Details</h3>
 	        		<p class="w-full leading-relaxed">
 	        			{{ $product->description }}
 	        		</p>
@@ -107,6 +107,13 @@
         	@endif
 
         </div>
+
+        <!-- View Rating --->
+        @if($auth)
+        <review :product="{{ $product }}" :auth="{{ $auth }}" /> 
+        @else
+        <review :product="{{ $product }}"/> 
+        @endif
           {{-- @if($category)
           <add-cart :product="{{ $product }}" :images="{{$images}}"  :category="{{ $category }}" :recommended="{{ $recommended }}"/> 
           @else
@@ -114,13 +121,13 @@
           @endif --}}
 
 
-	    <div class="my-8 {{ $similar_count ? 'swiper-container2' : ''  }} w-full relative">
+	    {{-- <div class="my-8 {{ $similar_count ? 'swiper-container2' : ''  }} w-full relative">
 		    <div class="swiper-wrapper">
 		    	@forelse($similar as $image)
 
 	      			<div class="swiper-slide relative">
 			            <div class="">
-			              <img class="w-full md:h-64 md:w-64 rounded object-cover swiper-lazy" src="/storage/{{ $image->imageUrl }}" />
+			              <img class="w-full h-64 md:w-64 rounded object-cover swiper-lazy" src="/storage/{{ $image->imageUrl }}" />
 			            </div>
 			            <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
 		          	</div>
@@ -133,10 +140,9 @@
 		        @endforelse
 			      
 		    </div>
-		    <!-- Add Pagination -->
 		    <div class="swiper-pagination"></div>
 		</div>
-
+ --}}
           
     </div>
 @endsection
@@ -196,35 +202,35 @@
 			   	}
 			});
 
-			var swiper = new Swiper('.swiper-container2', {
-			    slidesPerView: 1,
-			    spaceBetween: 10,
-			      // init: false,
-			    lazy: true,
-	      		grabCursor: true,
-	      		pagination: {
-			        el: '.swiper-pagination',
-			        clickable: true,
-			    },
-			    breakpoints: {
-			        500: {
-			          slidesPerView: 1,
-			          spaceBetween: 20,
-			        },
-			        640: {
-			          slidesPerView: 2,
-			          spaceBetween: 20,
-			        },
-			        768: {
-			          slidesPerView: 4,
-			          spaceBetween: 20,
-			        },
-			        1024: {
-			          slidesPerView: 4,
-			          spaceBetween: 20,
-			        },
-			   	}
-			});
+			// var swiper2 = new Swiper('.swiper-container2', {
+			//     slidesPerView: 1,
+			//     spaceBetween: 10,
+			//       // init: false,
+			//     lazy: true,
+	  //     		grabCursor: true,
+	  //     		pagination: {
+			//         el: '.swiper-pagination',
+			//         clickable: true,
+			//     },
+			//     breakpoints: {
+			//         500: {
+			//           slidesPerView: 1,
+			//           spaceBetween: 10,
+			//         },
+			//         640: {
+			//           slidesPerView: 2,
+			//           spaceBetween: 20,
+			//         },
+			//         768: {
+			//           slidesPerView: 4,
+			//           spaceBetween: 20,
+			//         },
+			//         1024: {
+			//           slidesPerView: 4,
+			//           spaceBetween: 20,
+			//         },
+			//    	}
+			// });
 
 
 		});
