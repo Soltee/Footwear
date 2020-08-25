@@ -41,7 +41,6 @@ Route::get('/aftercheckout', 'CheckoutController@sellmoreProduct');
 //Newsletter
 Route::post('/newsletter/signup', 'NewsletterController@store');
 
-
 //About
 Route::get('/privacy-policy', 'About\AboutController@policy')->name('policy');
 

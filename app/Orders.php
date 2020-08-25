@@ -9,7 +9,7 @@ class Orders extends Model
     use UsesUuid;
     
     protected $fillable = [
-      'customer_id', 'first_name', 'last_name', 'email', 'phoneNumber', 'city', 'street_address', 'payment_method', 'payment_id', 'subtotal', 'discount', 'subafterdiscount', 'tax', 'grand'
+      'customer_id', 'first_name', 'last_name', 'email', 'phoneNumber', 'city', 'street_address', 'payment_method', 'payment_id', 'subtotal', 'discount', 'subafterdiscount', 'tax', 'grand', 'completed'
     ];
 
     public function items(){

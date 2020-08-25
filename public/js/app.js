@@ -59573,7 +59573,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "p",
-                { staticClass: "text-medium font-semibold text-red-500 mt-4" },
+                { staticClass: "text-sm font-semibold text-red-500 mt-4" },
                 [_vm._v("Oh! My cart is empty.")]
               ),
               _vm._v(" "),
@@ -61857,7 +61857,7 @@ var render = function() {
                                   "button",
                                   {
                                     staticClass:
-                                      "focus:outline-none  w-1/3 md:w-48 bg-custom-light-orange hover:opacity-75 rounded rounded-r md:uppercase text-white font-bold md:tracking-wide py-3 px-3 md:px-6 text-center cursor-pointer",
+                                      "focus:outline-none md:w-48 bg-custom-light-orange hover:opacity-75 rounded rounded-r md:uppercase text-white font-bold md:tracking-wide py-3 px-3 md:px-6 text-center cursor-pointer",
                                     attrs: { type: "submit" }
                                   },
                                   [_vm._v("Search")]
@@ -61884,7 +61884,7 @@ var render = function() {
                               "div",
                               {
                                 staticClass:
-                                  "grid grid-cols-1 cm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 items-center"
+                                  "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 items-center"
                               },
                               _vm._l(_vm.shoesArray, function(s) {
                                 return _c(

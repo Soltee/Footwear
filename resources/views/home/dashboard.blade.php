@@ -14,20 +14,24 @@
 
                 <div class="" >
                     <div class="flex items-center mb-6">
-                        <a href="/dashboard"><h2 class="text-custom-light-black py-4 px-6 block hover:opacity-50 focus:outline-none {{ Route::currentRouteName() == 'dashboard' ? 'opacity-50 border-b-2 font-medium border-blue-500' : '' }} ">My Purchases</h2></a>
+                        <a href="/dashboard" class="px-4 py-3 rounded block hover:opacity-50 relative flex justify-between items-center {{ Route::currentRouteName() == 'dashboard' ? ' text-white font-medium bg-custom-light-orange' : 'text-custom-light-orange rounded' }} ">
+                            <h2 class="  focus:outline-none ">My Orders</h2>
+                            <span class="ml-2 text-white">( {{ $new}} )</span>
+                        </a>
 
-                        <a href="/customer-profile"><h2 class="ml-3 ttext-custom-light-black py-4 px-6 block hover:opacity-50 focus:outline-none {{ Route::currentRouteName() == 'customer-profile' ? 'opacity-50 border-b-2 font-medium border-blue-500' : '' }}">Profile</h2></a>
+                        <a href="/customer-profile"><h2 class="ml-3  px-4 py-3 rounded block hover:opacity-50 focus:outline-none">Profile</h2></a>
                     </div>
+                    
                     
                     <div  class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                         <div  class="inline-block min-w-full shadow rounded-lg overflow-hidden">
                             <table class="min-w-full leading-normal">
                                 <thead>
                                     <tr>
-                                       {{--  <th
+                                        <th
                                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
                                             User
-                                        </th> --}}
+                                        </th>
                                         <th
                                             class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-custom-light-black uppercase tracking-wider">
                                             Name
@@ -54,20 +58,16 @@
                                 <tbody>
                                     @forelse($items as $item)
                                     <tr>
-                                        {{-- <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                             <div class="flex items-center">
                                                 <div class="flex-shrink-0 w-10 h-10">
                                                     <img class="w-full h-full rounded-full"
                                                         src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
                                                         alt="" />
                                                 </div>
-                                                <div class="ml-3">
-                                                    <p class="text-gray-900 whitespace-no-wrap">
-                                                        Vera Carpenter
-                                                    </p>
-                                                </div>
+                                                
                                             </div>
-                                        </td> --}}
+                                        </td>
                                         <td class="px-5 whitespace-no-wrap py-5 border-b border-gray-200 bg-white text-sm">
                                             <p class="text-gray-900 whitespace-no-wrap">{{ $item->name }}</p>
                                         </td>

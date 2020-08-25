@@ -120,7 +120,7 @@
                     <line x1="9" y1="9" x2="9.01" y2="9"></line>
                     <line x1="15" y1="9" x2="15.01" y2="9"></line>
                 </svg>
-                <p class="text-medium font-semibold text-red-500 mt-4">Oh! My cart is empty.</p>
+                <p class="text-sm font-semibold text-red-500 mt-4">Oh! My cart is empty.</p>
                 <a :href="`/shoes`" class="w-full mt-4 text-center md:w-auto text-bold text-md bg-custom-light-orange hover:opacity-75 text-white px-6 py-4 rounded-lg">Continue Shopping</a>
             </div>
         </div>

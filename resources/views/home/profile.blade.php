@@ -10,10 +10,15 @@
 
         <div class="flex flex-col w-full bg-white rounded-lg">
             <div class="flex items-center mb-6">
-                <a href="/dashboard"><h2 class="text-custom-light-black py-4 px-6 block hover:opacity-50 focus:outline-none {{ Route::currentRouteName() == 'dashboard' ? 'opacity-50 border-b-2 font-medium border-blue-500' : '' }} ">My Purchases</h2></a>
-
-                <a href="/#"><h2 class="ml-3 ttext-custom-light-black py-4 px-6 block hover:opacity-50 focus:outline-none {{ Route::currentRouteName() == 'customer-profile' ? 'opacity-50 border-b-2 font-medium border-blue-500' : '' }}">Profile</h2></a>
+                <a href="/dashboard" class="px-4 py-3 rounded block hover:opacity-50 relative flex justify-between items-center {{ Route::currentRouteName() == 'dashboard' ? ' text-white font-medium bg-custom-light-orange' : 'text-custom-light-orange rounded' }} ">
+                    <h2 class="  focus:outline-none ">My Orders</h2>
+                    <span class="ml-2 text-white">( {{ $new}} )</span>
+                </a>
+                <a href="/customer-profile" class="px-4 py-3 rounded block hover:opacity-50 relative flex justify-between items-center {{ Route::currentRouteName() == 'customer-profile' ? ' text-white font-medium bg-custom-light-orange' : 'text-custom-light-orange rounded' }} ">
+                    <h2 class="  focus:outline-none ">My Profile</h2>
+                </a>
             </div>
+            
 	        <div class="flex-1 flex flex-col md:flex-row justify-between">
 	        	<div class="w-full md:w-64">
 	        		<form method="POST" action="{{ route('customer-pic', $customer->id) }}" enctype="multipart/form-data">

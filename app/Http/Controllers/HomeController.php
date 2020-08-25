@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Customer;
 use App\Order_Items;
+use App\Orders;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,21 +27,25 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $purchases = Order_Items::latest();
-        $paginate = $purchases->where('customer_id', $this->guard()->user()->id)->paginate(10);
-        $items = $paginate->items();
-        $first = $paginate->firstItem();
-        $last = $paginate->lastItem();
-        $total = $paginate->total();
+        $purchases    = Order_Items::latest();
+        $paginate     = $purchases->where('customer_id', $this->guard()->user()->id)->paginate(10);
+        $new          = Orders::where('customer_id', $this->guard()->user()->id)
+                            ->where('completed', true)->count();
+        $items        = $paginate->items();
+        $first        = $paginate->firstItem();
+        $last         = $paginate->lastItem();
+        $total        = $paginate->total();
         $has_previous = $paginate->previousPageUrl();
-        $has_next = $paginate->nextPageUrl();
-        return view('home.dashboard', compact('items', 'first', 'last', 'total', 'has_previous', 'has_next'));
+        $has_next     = $paginate->nextPageUrl();
+        return view('home.dashboard', compact('items', 'first', 'last', 'total', 'has_previous', 'new','has_next'));
     }
 
     public function profile()
     {
         $customer = $this->guard()->user();
-        return view('home.profile', compact('customer'));
+        $new      = Orders::where('customer_id', $customer->id)
+                            ->where('completed', true)->count();
+        return view('home.profile', compact('customer', 'new'));
     }
 
     public function profilePic(Request $request){

@@ -25,6 +25,7 @@ class CreateOrdersTable extends Migration
             $table->string('street_address');
             $table->string('payment_method');
             $table->string('payment_id');
+            $table->boolean('completed')->default(false);
             $table->integer('subtotal');
             $table->integer('discount')->nullable();
             $table->integer('subafterdiscount')->nullable();

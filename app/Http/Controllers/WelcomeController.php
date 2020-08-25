@@ -37,30 +37,45 @@ class WelcomeController extends Controller
 
     public function shoes()
     {
+        $category    = request()->category;
+        $subcategory = request()->subcategory;
+        $from        = request()->from;
+        $to          = request()->to;
         $categories = Category::orderBy('name')->with('subcategories')->get();
 
-        if(request()->category){
-            // $category = Category::findOrfail(request()->id);
-            $products = Product::where('category_id', request()->id)->paginate(8);
-
-            $count = count($products);
-        } elseif (request()->subcategory) {
-            // $subcategory = Subcategory::findOrfail(request()->id);
-            $products = Product::where('subcategory_id', request()->id)->paginate(8);
-            $count = count($products);
+        if($category){
+            $category      = Category::findOrfail($category);
+            $p             = Product::where('category_id', $category->id)->paginate(9);
+            $count         = count($p);
+        } elseif ($subcategory) {
+            $subcategory = Subcategory::findOrfail($subcategory);
+            $p = Product::where('subcategory_id', $subcategory->id)->paginate(9);
+            $count = count($p);
         } elseif (request()->type) {
             // dd(request()->type);
             $subcategory = Subcategory::where('name', request()->type)->first();
             // dd($subcategory->id);
-            $products = Product::where('subcategory_id', $subcategory->id)->paginate(8);
-            // dd($products);
-            $count = count($products);
+            $p = Product::where('subcategory_id', $subcategory->id)->paginate(9);
+            // dd($p);
+            $count = count($p);
+        } elseif ($to) {
+
+            $p = Product::whereBetween('price', [$from, $to])->paginate(9);
+            $count = count($p);
         } else {
-            $products = Product::latest()->paginate(8);
-            $count = count($products);
+            $p = Product::latest()->paginate(9);
+            $count = count($p);
         }
 
-        return view('home.shoes', compact('products', 'categories', 'count'));
+        $products = $p->items();
+        $first    = $p->appends(request()->input())->firstItem();
+        $last     = $p->appends(request()->input())->lastItem();
+        $next     = $p->appends(request()->input())->nextPageUrl();
+        $prev     = $p->appends(request()->input())->previousPageUrl();
+        $current  = $p->appends(request()->input())->currentPage();
+        $total    = $p->appends(request()->input())->total();
+
+        return view('home.shoes', compact('products', 'next', 'prev', 'current', 'categories','category', 'subcategory', 'count', 'first', 'last', 'total'));
     }
 
     public function show($product, $slug)
