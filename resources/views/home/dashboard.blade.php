@@ -14,12 +14,12 @@
 
                 <div class="" >
                     <div class="flex items-center mb-6">
-                        <a href="/dashboard" class="px-4 py-3 rounded block hover:opacity-50 relative flex justify-between items-center {{ Route::currentRouteName() == 'dashboard' ? ' text-white font-medium bg-custom-light-orange' : 'text-custom-light-orange rounded' }} ">
+                        <a href="/dashboard" class="px-2 py-3 rounded block hover:opacity-50 relative flex justify-between items-center {{ Route::currentRouteName() == 'dashboard' ? 'border font-medium border-custom-light-orange text-custom-light-orange' : 'text-custom-light-orange rounded' }} ">
                             <h2 class="  focus:outline-none ">My Orders</h2>
-                            <span class="ml-2 text-white">( {{ $new}} )</span>
+                            <span class="ml-2 text-custom-light-orange">( {{ $new}} )</span>
                         </a>
 
-                        <a href="/customer-profile"><h2 class="ml-3  px-4 py-3 rounded block hover:opacity-50 focus:outline-none">Profile</h2></a>
+                        <a href="/customer-profile"><h2 class="  px-2 py-3 rounded block hover:opacity-50 focus:outline-none">Profile</h2></a>
                     </div>
                     
                     

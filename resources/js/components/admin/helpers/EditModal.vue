@@ -98,8 +98,11 @@
 
                         <div class="flex flex-col  rounded-lg mb-3">
                             <label for="description" class=" px-2 py-3 text-gray-800 text-md font-semibold ">Description</label>
-                            <textarea id="description" v-model="description" class="px-3 py-3 rounded-lg  bg-gray-300 text-gray-900 w-full h-24">
+                          <!-- <textarea id="description" v-model="description" class="px-3 py-3 rounded-lg  bg-gray-300 text-gray-900 w-full h-24">
                             </textarea>
+ -->
+                            <wysiwyg v-model="description" />
+
                         </div>
                         <div class="flex flex-col  rounded-lg mb-3">
                             <label for="description" class=" px-2 py-3 text-gray-800 text-md font-semibold ">Excerpt</label>

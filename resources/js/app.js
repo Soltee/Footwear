@@ -14,6 +14,8 @@ import StarRating from 'vue-star-rating';
 Vue.component('star-rating', StarRating);
 export const eventBus = new Vue();
 
+import wysiwyg from "vue-wysiwyg";
+Vue.use(wysiwyg, {}); // config is optional. more below
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -33,6 +35,9 @@ Vue.component('admin-profile', require('./components/admin/AdminProfile.vue').de
 //Products
 Vue.component('create-product', require('./components/admin/products/CreateProduct.vue').default);
 Vue.component('products-view', require('./components/admin/products/Products.vue').default);
+
+//Products REVIEWS
+Vue.component('product-reviews', require('./components/admin/reviews/Index.vue').default);
 
 //Categories
 Vue.component('categories-view', require('./components/admin/categories/Categories.vue').default);

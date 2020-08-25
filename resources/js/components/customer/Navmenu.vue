@@ -140,7 +140,7 @@
                         <div class="h-86 my-3 overflow-y-scroll">
                             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 items-center">
                                 <a v-for="s in shoesArray" class="mb-4 " :href="`/shoes/${s.id}/${s.name}`">
-                                    <img class="w-full h-64 object-cover md:w-48 rounded-lg" :src="`/storage/${s.imageUrl}`">
+                                    <img class="w-full h-64 object-cover md:w-64 rounded-lg" :src="`/storage/${s.imageUrl}`">
                                 </a>
                             </div>
                         </div>

@@ -3,36 +3,17 @@
         <nav class="py-2 md:py-6 px-3 md:px-10">
             <div class="md:px-0">
                 <div class="relative flex items-center justify-between">
-                    <div v-if="expandMenu" class="absolute left-0 top-0 mt-16 w-full sm:w-40 md:hidden z-20">
+                    <div v-if="expandMenu" class="absolute left-0 top-0 mt-16 w-full sm:w-40 md:hidden z-20  bg-admin-bk">
                         <Menu></Menu>
                     </div>
                     <div class="mr-6 flex items-center justify-between">
-                        <svg @click="expandMenu = !expandMenu" class="md:hidden w-16 h-16 text-gray-900 cursor-pointer hover:text-custom-gray-lighter" viewBox="0 0 34 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="0.798828" width="33.2015" height="4" rx="2" fill="currentColor" />
-                            <rect x="0.798828" y="12" width="33.2015" height="4" rx="2" fill="currentColor" />
-                            <rect x="0.798828" y="24" width="33.2015" height="4" rx="2" fill="currentColor" />
+                        <svg @click="expandMenu = !expandMenu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="relative  md:hidden w-8 h-8 text-custom-light-black cursor-pointer hover:opacity-75">
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
                         </svg>
                         <a :href="`/#`" class="ml-3 mt-0 md:-mt-1 md:ml-0 text-lg font-semibold text-gray-100 no-underline mr-3">
-                            <svg class="h-12 w-12 md:h-16 md:w-16" viewBox="0 0 95 79" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g filter="url(#filter0_d)">
-                                    <rect y="28.2843" width="8" height="60" rx="4" transform="rotate(-45 0 28.2843)" fill="#201E16" />
-                                    <rect y="28.2843" width="40" height="10" rx="5" transform="rotate(-45 0 28.2843)" fill="#201E16" />
-                                    <rect x="65.0537" y="48.0833" width="60" height="8" rx="4" transform="rotate(-135 65.0537 48.0833)" fill="#201E16" />
-                                    <rect x="17.6777" y="45.9619" width="40" height="10" rx="5" transform="rotate(-45 17.6777 45.9619)" fill="#201E16" />
-                                    <rect x="35.3552" y="63.6396" width="40" height="10" rx="5" transform="rotate(-45 35.3552 63.6396)" fill="#201E16" />
-                                </g>
-                                <defs>
-                                    <filter id="filter0_d" x="0" y="0" width="94.7106" height="78.7107" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                                        <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                                        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
-                                        <feOffset dx="20" dy="4" />
-                                        <feGaussianBlur stdDeviation="2" />
-                                        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
-                                        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
-                                        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
-                                    </filter>
-                                </defs>
-                            </svg>
+                            <img class="h-12 w-12 text-custom-light-black" :src="`/img/shoe.svg`">
                         </a>
                     </div>
                     <div class="relative flex flex-row items-center text-right">
@@ -89,7 +70,8 @@ export default {
         admin: {
             type: Object,
             required: true
-        }
+        },
+
     },
     components: {
         Menu

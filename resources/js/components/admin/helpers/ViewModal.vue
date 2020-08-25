@@ -10,9 +10,14 @@
                     </svg>
                 </button>
             </div>
+            <!--- Product TYPE -->
             <div v-if="type == 'product'" class="overflow-y-scroll h-86">
                 <div class="flex flex-col md:flex-row justify-around items-center">
                     <div class="flex-1 flex flex-col ml-2">
+                        <div class="flex items-center mb-2">
+                            <span class="text-md font-md text-gray-800 w-40">Date</span>
+                            <span class="text-lg font-lg text-gray-900">{{ format(item.created_at) }}</span>
+                        </div>
                         <div class="flex items-center mb-2">
                             <span class="text-md font-md text-gray-800 w-40">Name</span>
                             <span class="text-lg font-lg text-gray-900">{{ item.name}}</span>
@@ -25,6 +30,14 @@
                             <span class="text-md font-md text-gray-800 w-40">Quantity</span>
                             <span class="text-lg font-lg text-gray-900">{{ item.qty}}</span>
                         </div>
+                        <div class="flex items-center mb-3">
+                            <a class="text-blue-500 hover:opacity-75" :href="`/admin/reviews/${item.id}`">
+                                <span class="text-md font-md text-gray-800 w-40">Reviews</span>
+                            </a>
+                            <a class="text-blue-500 hover:opacity-75" :href="`/admin/reviews/${item.id}`">
+                                <span class="text-lg font-lg text-gray-900">{{ reviews}}</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="overflow-x-scroll w-full">
@@ -33,6 +46,7 @@
                     </div>
                 </div>
             </div>
+            <!--- Customer TYPE -->
             <div v-if="type == 'customer'" class="overflow-y-scroll h-86">
                 <div class="flex flex-col md:flex-row justify-around items-center">
                     <div v-if="customer">
@@ -45,6 +59,10 @@
                         </svg>
                     </div>
                     <div class="flex-1 flex flex-col ml-2">
+                        <div class="flex items-center mb-2">
+                            <span class="text-md font-md text-gray-800 w-40">Date</span>
+                            <span class="text-lg font-lg text-gray-900">{{ format(customer.created_at) }}</span>
+                        </div>
                         <div class="flex items-center mb-2">
                             <span class="text-md font-md text-gray-800 w-40">Name</span>
                             <span class="text-lg font-lg text-gray-900">{{ customer.name}}</span>
@@ -60,6 +78,7 @@
                     </div>
                 </div>
             </div>
+            <!--- order -->
             <div v-if="type == 'order'" class="overflow-y-scroll h-86">
                 <div class="flex flex-col md:flex-row justify-around items-center">
                     <div v-if="customer">
@@ -72,6 +91,10 @@
                         </svg>
                     </div>
                     <div class="flex-1 flex flex-col ml-2">
+                        <div class="flex items-center mb-2">
+                            <span class="text-md font-md text-gray-800 w-40">Date</span>
+                            <span class="text-lg font-lg text-gray-900">{{ format(order.created_at) }}</span>
+                        </div>
                         <div class="flex items-center mb-2">
                             <span class="text-md font-md text-gray-800 w-40">Name</span>
                             <span class="text-lg font-lg text-gray-900">{{ order.first_name}} {{order.last_name}}</span>
@@ -148,8 +171,7 @@
 <script>
 import { eventBus } from '../../../app.js';
 import Toast from '../../helpers/Alert';
-import moment from 'moment';
-
+let dayjs = require('dayjs');
 export default {
     name: 'ViewModal',
     props: ['type', 'data'],
@@ -163,6 +185,7 @@ export default {
             orderItems: {},
             item: {},
             images: [],
+            reviews: 0
         }
     },
     mounted() {
@@ -183,6 +206,7 @@ export default {
                     if (this.type == 'product') {
                         this.item = data.product;
                         this.images = data.images;
+                        this.reviews = data.reviews;
                     } else if (this.type == 'customer') {
                         this.customer = data.customer;
                     } else if (this.type == 'order') {
@@ -212,7 +236,7 @@ export default {
             eventBus.$emit('close-modal');
         },
         format(date) {
-            return moment().format(date);
+            return dayjs(date).format('dddd, MMMM D, YYYY');
         }
     }
 };

@@ -41,39 +41,48 @@ class WelcomeController extends Controller
         $subcategory = request()->subcategory;
         $from        = request()->from;
         $to          = request()->to;
+        $sort        = request()->sort;
         $categories = Category::orderBy('name')->with('subcategories')->get();
+
+        $p = Product::latest();
 
         if($category){
             $category      = Category::findOrfail($category);
-            $p             = Product::where('category_id', $category->id)->paginate(9);
-            $count         = count($p);
-        } elseif ($subcategory) {
+            $p             = $p->where('category_id', $category->id);
+        } 
+
+        if($subcategory) {
             $subcategory = Subcategory::findOrfail($subcategory);
-            $p = Product::where('subcategory_id', $subcategory->id)->paginate(9);
-            $count = count($p);
-        } elseif (request()->type) {
+            $p = $p->where('subcategory_id', $subcategory->id);
+        } 
+
+        if(request()->type) {
             // dd(request()->type);
             $subcategory = Subcategory::where('name', request()->type)->first();
             // dd($subcategory->id);
-            $p = Product::where('subcategory_id', $subcategory->id)->paginate(9);
+            $p = $p->where('subcategory_id', $subcategory->id);
             // dd($p);
-            $count = count($p);
-        } elseif ($to) {
+        } 
 
-            $p = Product::whereBetween('price', [$from, $to])->paginate(9);
-            $count = count($p);
-        } else {
-            $p = Product::latest()->paginate(9);
-            $count = count($p);
-        }
+        if($to) {
 
-        $products = $p->items();
-        $first    = $p->appends(request()->input())->firstItem();
-        $last     = $p->appends(request()->input())->lastItem();
-        $next     = $p->appends(request()->input())->nextPageUrl();
-        $prev     = $p->appends(request()->input())->previousPageUrl();
-        $current  = $p->appends(request()->input())->currentPage();
-        $total    = $p->appends(request()->input())->total();
+            $p = $p->whereBetween('price', [$from, $to]);
+        } 
+
+        if($sort) {
+
+            // $p = $p->sort('price', [$from, $to]);
+        } 
+        $paginate = $p->paginate(10);
+        $count = count($paginate);
+
+        $products = $paginate->items();
+        $first    = $paginate->appends(request()->input())->firstItem();
+        $last     = $paginate->appends(request()->input())->lastItem();
+        $next     = $paginate->appends(request()->input())->nextPageUrl();
+        $prev     = $paginate->appends(request()->input())->previousPageUrl();
+        $current  = $paginate->appends(request()->input())->currentPage();
+        $total    = $paginate->appends(request()->input())->total();
 
         return view('home.shoes', compact('products', 'next', 'prev', 'current', 'categories','category', 'subcategory', 'count', 'first', 'last', 'total'));
     }

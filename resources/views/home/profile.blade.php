@@ -10,11 +10,11 @@
 
         <div class="flex flex-col w-full bg-white rounded-lg">
             <div class="flex items-center mb-6">
-                <a href="/dashboard" class="px-4 py-3 rounded block hover:opacity-50 relative flex justify-between items-center {{ Route::currentRouteName() == 'dashboard' ? ' text-white font-medium bg-custom-light-orange' : 'text-custom-light-orange rounded' }} ">
+                <a href="/dashboard" class="px-2 py-3 rounded block hover:opacity-50 relative flex justify-between items-center {{ Route::currentRouteName() == 'dashboard' ? 'border font-medium border-custom-light-orange text-custom-light-orange' : 'text-custom-light-orange rounded' }} ">
                     <h2 class="  focus:outline-none ">My Orders</h2>
                     <span class="ml-2 text-white">( {{ $new}} )</span>
                 </a>
-                <a href="/customer-profile" class="px-4 py-3 rounded block hover:opacity-50 relative flex justify-between items-center {{ Route::currentRouteName() == 'customer-profile' ? ' text-white font-medium bg-custom-light-orange' : 'text-custom-light-orange rounded' }} ">
+                <a href="/customer-profile" class="px-2 py-3 rounded block hover:opacity-50 relative flex justify-between items-center {{ Route::currentRouteName() == 'customer-profile' ? 'border font-medium border-custom-light-orange text-custom-light-orange' : 'text-custom-light-orange rounded' }} ">
                     <h2 class="  focus:outline-none ">My Profile</h2>
                 </a>
             </div>
@@ -25,7 +25,7 @@
 		        		@csrf
 		        		@method('PATCH')
 		        		<div class="flex flex-row justify-between items-center mb-3">
-		        			<h1 class="m-0 text-lg text-gray-900 ml-3">Profile Picture</h1>
+		        			<h1 class="m-0 text-lg text-gray-900 md:ml-3">Profile Picture</h1>
 		        			<button type="submit" class="bg-custom-light-orange hover:opacity-75 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline">
 	                                {{ __('Save Pic') }}
 	                        </button>

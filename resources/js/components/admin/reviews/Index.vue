@@ -2,9 +2,9 @@
     <div class="w-full">
         <div class="flex flex-row justify-between items-center w-full rounded-lg">
             <div class="flex items-center">
-                <h3 class="text-admin-btn text-lg font-bold">Products</h3>
+                <h3 class="text-admin-btn text-lg font-bold">Reviews</h3>
                 <div class="ml-3 relative flex items-center">
-                    <input v-model="keyword" @keyup="searchStatus = true; getProducts();" class="relative w-40 md:w-64  block appearance-none rounded-full  bg-white border border-gray-400 hover:border-gray-500 pl-16 py-2 pr-8  shadow leading-tight focus:outline-none focus:shadow-outline" id="" type="text" name="name" placeholder="Search Table">
+                    <input v-model="keyword" @keyup="searchStatus = true; getReviews();" class="relative w-40 md:w-64  block appearance-none rounded-full  bg-white border border-gray-400 hover:border-gray-500 pl-16 py-2 pr-8  shadow leading-tight focus:outline-none focus:shadow-outline" id="" type="text" name="name" placeholder="Search Table">
                     <svg class="absolute left-0 top-0 mt-1 ml-2 h-8 w-8" viewBox="0 0 47 47" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M37.2309 30.1598C38.9903 27.1823 40 23.709 40 20C40 8.9543 31.0457 0 20 0C8.9543 0 0 8.9543 0 20C0 31.0457 8.9543 40 20 40C23.709 40 27.1823 38.9904 30.1598 37.2309L37.7487 44.8198C39.7014 46.7724 42.8672 46.7724 44.8198 44.8198C46.7724 42.8672 46.7724 39.7014 44.8198 37.7487L37.2309 30.1598Z" fill="#201E16" />
                         <circle opacity="0.3" cx="20" cy="20" r="15" fill="white" />
@@ -15,75 +15,89 @@
                     </svg>
                 </div>
             </div>
-            <a class="flex flex-row sm:items-center fixed bottom-0 right-0 mr-16 mb-16 h-16 w-16 p-3 text-white bg-admin-btn rounded-full hover:opacity-75
-" :href="`/admin/products/create`">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6  md:mr-3">
+            <a class="flex flex-row sm:items-center" :href="`/admin/products`">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6  mr-3">
                     <line x1="12" y1="5" x2="12" y2="19"></line>
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                 </svg>
-                <span class="hidden md:inline text-admin-btn text-lg font-semibold">New Product</span>
+                <span class="hidden md:inline text-admin-btn text-lg font-semibold">{{ product.name }}</span>
             </a>
         </div>
         <div>
-            <div class="overflow-x-scroll min-w-full mt-6 md:overflow-hidden md:w-auto">
-                <table class="min-w-full table-auto">
+            <div class="overflow-x-scroll min-w-64 mt-6 md:overflow-hidden md:w-auto">
+                <table class="w-full table-auto">
                     <thead>
                         <tr class="bg-white rounded-lg">
-                            <th class="whitespace-no-wrap px-4 py-3 text-left text-gray-900 whitespace-no-wrap">Image</th>
-                            <th class="whitespace-no-wrap px-4 py-3 text-left text-gray-900 whitespace-no-wrap">Name</th>
-                            <th class="whitespace-no-wrap px-4 py-3 text-left text-gray-900 whitespace-no-wrap">Price</th>
-                            <th class="whitespace-no-wrap px-4 py-3 text-left text-gray-900 whitespace-no-wrap">Action</th>
+                            <th class="px-4 py-3 text-left text-gray-900">Avatar</th>
+                            <th class="px-4 py-3 text-left text-gray-900">Rating</th>
+                            <th class="px-4 py-3 text-left text-gray-900">Message</th>
+                            <th class="px-4 py-3 text-left text-gray-900">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-if="!searchStatus" v-for="p in productArray">
-                            <td class="whitespace-no-wrap border px-4 py-2 text-gray-900 whitespace-no-wrap">
-                                <img class="h-16 w-16 md:h-24 md:w-24 rounded-full" :src="`/storage/${p.imageUrl}`">
+                        <tr v-if="!searchStatus" v-for="review in productReviewArray">
+                            <td class="border px-4 py-2 text-gray-900">
+                                <div v-if="review.customer.avatar">
+                                    <img :src="`/storage/${review.customer.avatar}`" class="w-16 h-16 rounded-full object-cover object-center">
+                                </div>
+                                <div v-else>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 rounded-full object-cover object-center">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                </div>
                             </td>
-                            <td class="whitespace-no-wrap border px-4 py-2 text-gray-900 whitespace-no-wrap">{{ p.name }}</td>
-                            <td class="whitespace-no-wrap border px-4 py-2 text-gray-900 whitespace-no-wrap">Rs {{ p.price }}</td>
-                            <td class="whitespace-no-wrap ">
-                                <div class="flex flex-row justify-around items-center">
-                                    <svg @click="displayEditModal(p)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 cursor-pointer">
+                            <td class="border px-4 py-2 text-gray-900">
+                                <star-rating :rating="review.rating" :star-size="30" :rounded-corners="true" :show-rating="false" :read-only="true"></star-rating>
+                            </td>
+                            <td class="border px-4 py-2 text-gray-900">Rs {{ review.message }}</td>
+                            <td class="">
+                                <div class="flex flex-col md:flex-row justify-around items-center">
+                                    <svg @click="displayEditModal(review)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 cursor-pointer">
                                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                                         <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                                     </svg>
-                                    <svg @click="displayDeleteModal(p)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-admin-red">
+                                    <svg @click="displayDeleteModal(review)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-admin-red">
                                         <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
                                         <line x1="18" y1="9" x2="12" y2="15"></line>
                                         <line x1="12" y1="9" x2="18" y2="15"></line>
                                     </svg>
-                                    <svg @click="displayViewModal(p)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-gray-600 cursor-pointer ">
+                                    <svg @click="displayViewModal(review)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-gray-600 cursor-pointer ">
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                                         <circle cx="12" cy="12" r="3"></circle>
                                     </svg>
                                 </div>
                             </td>
                         </tr>
-                        <tr v-if="searchStatus" v-for="p in searchArray">
-                            <td class="whitespace-no-wrap border px-4 py-2 text-gray-900 whitespace-no-wrap">
-                                <img class="h-24 w-24 rounded-full" :src="`/storage/${p.imageUrl}`">
+                        <!-- <tr v-if="searchStatus" v-for="review in searchArray">
+                            <td class="border px-4 py-2 text-gray-900">
+                                <div v-if="review.customer.avatar">
+                                    <img :src="`/storage/${review.customer.avatar}`" class="w-16 h-16 rounded-full object-cover object-center">
+                                </div>
+                                <div v-else>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 rounded-full object-cover object-center"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                </div>
                             </td>
-                            <td class="whitespace-no-wrap border px-4 py-2 text-gray-900 whitespace-no-wrap">{{ p.name }}</td>
-                            <td class="whitespace-no-wrap border px-4 py-2 text-gray-900 whitespace-no-wrap">Rs {{ p.price }}</td>
-                            <td class="whitespace-no-wrap ">
-                                <div class="flex flex-row justify-around items-center">
-                                    <svg @click="displayEditModal(p)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 cursor-pointer">
+                            <td class="border px-4 py-2 text-gray-900">star-rating :rating="review.rating" :star-size="30" :rounded-corners="true" :show-rating="false" :read-only="true"></star-rating></td>
+                            <td class="border px-4 py-2 text-gray-900">Rs {{ review.message }}</td>
+                            <td class="">
+                                <div class="flex flex-col md:flex-row justify-around items-center">
+                                    <svg @click="displayEditModal(review)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 cursor-pointer">
                                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                                         <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                                     </svg>
-                                    <svg @click="displayDeleteModal(p)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-admin-red">
+                                    <svg @click="displayDeleteModal(review)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-admin-red">
                                         <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
                                         <line x1="18" y1="9" x2="12" y2="15"></line>
                                         <line x1="12" y1="9" x2="18" y2="15"></line>
                                     </svg>
-                                    <svg @click="displayViewModal(p)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-gray-600 cursor-pointer ">
+                                    <svg @click="displayViewModal(review)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-gray-600 cursor-pointer ">
                                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                                         <circle cx="12" cy="12" r="3"></circle>
                                     </svg>
                                 </div>
                             </td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
             </div>
@@ -97,9 +111,9 @@
                         <span class="px-4 py-3 text-gray-800 font-bold text-lg"> {{ searchLinks.total_count }}</span>
                     </div>
                     <div>
-                        <button class="px-4 py-3 rounded-full text-white bg-admin-btn hover:bg-admin-btn-hover" @click="page = searchLinks.previous_page_url; getProducts()" :class="(!searchLinks.previous_page_url) ? 'cursor-not-allowed' : ''">Prev</button>
+                        <button class="px-4 py-3 rounded-full text-white bg-admin-btn hover:bg-admin-btn-hover" @click="page = searchLinks.previous_page_url; getReviews()" :class="(!searchLinks.previous_page_url) ? 'cursor-not-allowed' : ''">Prev</button>
                         <span class="text-gray-800 mx-4 font-semibold">{{ searchLinks.current_page }}</span>
-                        <button class="px-4 py-3 rounded-full text-white bg-admin-btn hover:bg-admin-btn-hover" @click="page = searchLinks.next_page_url; getProducts()" :class="(!searchLinks.next_page_url) ? 'cursor-not-allowed' : ''">Next</button>
+                        <button class="px-4 py-3 rounded-full text-white bg-admin-btn hover:bg-admin-btn-hover" @click="page = searchLinks.next_page_url; getReviews()" :class="(!searchLinks.next_page_url) ? 'cursor-not-allowed' : ''">Next</button>
                     </div>
                 </div>
             </div>
@@ -113,9 +127,9 @@
                         <span class="px-4 py-3 text-gray-800 font-bold text-lg"> {{ links.total_count }}</span>
                     </div>
                     <div>
-                        <button class="px-4 py-3 rounded-full text-white bg-admin-btn hover:bg-admin-btn-hover" @click="page = links.previous_page_url; getProducts()" :class="(!links.previous_page_url) ? 'cursor-not-allowed' : ''">Prev</button>
+                        <button class="px-4 py-3 rounded-full text-white bg-admin-btn hover:bg-admin-btn-hover" @click="page = links.previous_page_url; getReviews()" :class="(!links.previous_page_url) ? 'cursor-not-allowed' : ''">Prev</button>
                         <span class="text-gray-800 mx-4 font-semibold">{{ links.current_page }}</span>
-                        <button class="px-4 py-3 rounded-full text-white bg-admin-btn hover:bg-admin-btn-hover" @click="page = links.next_page_url; getProducts()" :class="(!links.next_page_url) ? 'cursor-not-allowed' : ''">Next</button>
+                        <button class="px-4 py-3 rounded-full text-white bg-admin-btn hover:bg-admin-btn-hover" @click="page = links.next_page_url; getReviews()" :class="(!links.next_page_url) ? 'cursor-not-allowed' : ''">Next</button>
                     </div>
                 </div>
             </div>
@@ -126,9 +140,9 @@
         <div v-if="deleteModal">
             <DeleteModal :type="selected"></DeleteModal>
         </div>
-        <div v-if="viewModal">
+        <!--  <div v-if="viewModal">
             <ViewModal type="product" :data="selected"></ViewModal>
-        </div>
+        </div> -->
     </div>
 </template>
 <script>
@@ -139,7 +153,13 @@ import DeleteModal from '../helpers/DeleteModal';
 import ViewModal from '../helpers/ViewModal';
 
 export default {
-    name: 'products-view',
+    name: 'product-reviews',
+    props: {
+        'product': {
+            type: Object,
+            required: true
+        }
+    },
     components: {
         EditModal,
         DeleteModal,
@@ -147,7 +167,7 @@ export default {
     },
     data() {
         return {
-            productArray: [],
+            productReviewArray: [],
             links: null,
             searchStatus: false,
             keyword: '',
@@ -164,7 +184,7 @@ export default {
         }
     },
     mounted() {
-        this.getProducts();
+        this.getReviews();
     },
     created() {
         eventBus.$on('close-modal', () => {
@@ -176,12 +196,12 @@ export default {
         });
     },
     methods: {
-        getProducts() {
-            let endpoint = '/admin/getProducts';
+        getReviews() {
+            let endpoint = `/admin/reviews/${this.product.id}/get`;
 
 
             if (this.searchStatus) {
-                endpoint = `/admin/getProducts?search=${this.keyword}`;
+                endpoint = `/admin/reviews/${this.product.id}/get?search=${this.keyword}`;
                 if (this.page) {
                     endpoint = `${this.page}&search=${this.keyword}`;
                 }
@@ -203,9 +223,9 @@ export default {
                             });
                             this.searchLinks = data.paginate;
                         } else {
-                            this.productArray = [];
+                            this.productReviewArray = [];
                             data.products.forEach((product) => {
-                                this.productArray.push(product);
+                                this.productReviewArray.push(product);
                             });
                             this.links = data.paginate;
                         }
@@ -222,7 +242,7 @@ export default {
         },
         dropProduct() {
             console.log('hhh2');
-            axios.delete(`/admin/products/${this.selected.id}`)
+            axios.delete(`/admin/reviews/${this.selected.id}`)
                 .then(res => {
                     if (res.status == 204) {
                         Toast.fire({
@@ -259,7 +279,7 @@ export default {
             this.selected = {};
             this.deleteModal = false;
             this.editModal = false;
-            this.getProducts();
+            this.getReviews();
         },
         closeModal() {
             this.selected = {};
@@ -269,7 +289,7 @@ export default {
         },
 
     }
-}
+};
 
 </script>
 <style>

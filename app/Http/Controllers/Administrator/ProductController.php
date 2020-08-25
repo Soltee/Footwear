@@ -34,7 +34,7 @@ class ProductController extends Controller
     {
         $search = request()->search;
 
-        $query = Product::latest();
+        $query = Product::latest()->withCount('reviews');
         if($search){
             $query = $query->where('name', 'LIKE', '%'.$search.'%')
                             ->orWhere('price', 'LIKE', '%'.$search.'%');
@@ -139,10 +139,11 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         return response()->json([
-            'product' => $product,
-            'category' => $product->categories,
+            'product'     => $product,
+            'category'    => $product->categories,
             'subcategory' => $product->subcategories,
-            'images'  => $product->images
+            'images'      => $product->images,
+            'reviews'    => count($product->reviews)
         ], 200);
     }
 
@@ -158,10 +159,10 @@ class ProductController extends Controller
     {
         // dd($request->all());
         $data = $this->validate($request, [
-            'name' => ['required','string', 'min:2'],
-            'price' => ['required', 'int', 'min:1'],
-            'qty' => ['required', 'int', 'min:1'],
-            'category' => ['required', 'string', 'min:1'],
+            'name'         => ['required','string', 'min:2'],
+            'price'       => ['required', 'int', 'min:1'],
+            'qty'         => ['required', 'int', 'min:1'],
+            'category'    => ['required', 'string', 'min:1'],
             'subcategory' => ['required', 'string', 'min:1'],
         ]);
 
@@ -197,12 +198,12 @@ class ProductController extends Controller
         $excerptArray      = ['excerpt' => $request->input('excerpt')];
         // dd($paths);
         $new_product = $product->update(array_merge([
-            'category_id' => $data['category'],
+            'category_id'    => $data['category'],
             'subcategory_id' => $data['subcategory'],
-            'name' => $data['name'],
-            'slug' => Str::slug($data['name'], '-'),
-            'price' => $data['price'],
-            'qty' => $data['qty']
+            'name'           => $data['name'],
+            'slug'           => Str::slug($data['name'], '-'),
+            'price'          => $data['price'],
+            'qty'            => $data['qty']
         ], ($excerptArray) ?? [], ($descriptionArray) ?? []));
 
         return response()->json(['success' => 'true'], 200);

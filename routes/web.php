@@ -60,6 +60,15 @@ Route::prefix('admin')->group(function () {
 	//Categories
 	Route::get('/categories', 'Administrator\CategoryController@index')->name('categories');
 
+	//Customers
+	Route::get('/customers', 'Administrator\CustomerController@index')->name('customers');
+	
+	//CustomerApi
+	Route::get('/getCustomers', 'Administrator\CustomerController@get');
+	Route::get('/customers/{customer}', 'Administrator\CustomerController@show');
+	Route::delete('/customers/{customer}', 'Administrator\CustomerController@destroy');
+
+
 	//Category Api
 	Route::get('/getCategories', 'Administrator\CategoryController@getCategories');
 	Route::get('/getSubCategories/{category}', 'SubCategoryController@index');
@@ -90,13 +99,11 @@ Route::prefix('admin')->group(function () {
 	Route::get('/productsImage/{product}', 'ProductImagesController@index');	
 	Route::delete('/productsImage/{ProductImages}', 'ProductImagesController@destroy');
 
-	//Customers
-	Route::get('/customers', 'Administrator\CustomerController@index')->name('customers');
 	
-	//CustomerApi
-	Route::get('/getCustomers', 'Administrator\CustomerController@get');
-	Route::get('/customers/{customer}', 'Administrator\CustomerController@show');
-	Route::delete('/customers/{customer}', 'Administrator\CustomerController@destroy');
+	//ProductReview Api
+	Route::get('/reviews/{product}', 'ProductReviewController@index');	
+	// Route::get('/reviews/{product}/get', 'ProductReviewController@getReviews');	
+	// Route::delete('/reviews/{product}', 'ProductReviewController@destroy');
 
 	//Payments
 	Route::get('/payments', 'Administrator\PaymentController@index')->name('payments');
