@@ -1,8 +1,9 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="">
-        <div class="fixed inset-0 mx-auto max-w-md rounded-lg flex flex-col  justify-center rounded-lg">
+    <div class="bg-white fixed inset-0 flex justify-center
+     items-center flex-col">
+        <div class="  mx-auto max-w-md rounded-lg flex flex-col  justify-center rounded-lg">
             <div class="w-full max-w-sm">
             
                 <div class="flex flex-col break-words bg-white border border-2 rounded shadow-md">

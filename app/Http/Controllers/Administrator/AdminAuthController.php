@@ -61,7 +61,7 @@ class AdminAuthController extends Controller
 
         $request->session()->invalidate();
 
-        return $this->loggedOut($request) ?: redirect('/')->with('toast_success', 'Logged out');
+        return $this->loggedOut($request) ?: redirect('/admin/login')->with('toast_success', 'Logged out');
     }
 
     protected function guard()

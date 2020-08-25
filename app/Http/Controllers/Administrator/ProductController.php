@@ -26,7 +26,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('products.index');
+        return view('administrator.products.index');
     }
 
 
@@ -64,7 +64,7 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::latest()->get();
-        return view('products.create', compact('categories'));
+        return view('administrator.products.create', compact('categories'));
     }
 
     /**

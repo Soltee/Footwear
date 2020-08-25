@@ -8,8 +8,13 @@ use App\Http\Controllers\Controller;
 
 class PaymentController extends Controller
 {
+	public function __construct()
+    {
+        $this->middleware('auth:administrator');
+    }
+    
     public function index(){
-    	return view('payments.index');
+    	return view('administrator.payments.index');
     }
 
 }
