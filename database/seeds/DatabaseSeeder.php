@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         $category1 = factory(App\Category::class)->create(['name' => 'Brands', 'slug' => 'brands' ]);
         $category2 = factory(App\Category::class)->create(['name' => 'Type', 'slug' => 'type' ]);
 
-        $subcategory1 = factory(App\Subcategory::class)->create(['category_id' => $category1->id, 'name' => 'featured' , 'slug' => 'featured']);
+        $subcategory1 = factory(App\Subcategory::class)->create(['category_id' => $category1->id, 'name' => 'Featured' , 'slug' => 'featured']);
         $subcategory2 = factory(App\Subcategory::class)->create(['category_id' => $category1->id, 'name' => 'Adidas' , 'slug' => 'adidas']);
         $subcategory3 = factory(App\Subcategory::class)->create(['category_id' => $category1->id, 'name' => 'Converse' , 'slug' => 'converse']);
         $subcategory4 = factory(App\Subcategory::class)->create(['category_id' => $category1->id, 'name' => 'DC' , 'slug' => 'dc']);

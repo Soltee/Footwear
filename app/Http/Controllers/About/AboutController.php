@@ -11,4 +11,10 @@ class AboutController extends Controller
     {
     	return view('about.privacy');
     }
+
+
+    public function sitemap()
+    {
+    	return view('about.sitemap');
+    }
 }

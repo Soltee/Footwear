@@ -132,11 +132,11 @@
                     <div class="">
                         <form @submit.prevent="searchShoes">
                             <div class="mt-4 w-full flex flex-row">
-                                <input v-focus v-model="keyword" type="text" class="focus:outline-none  w-2/3 bg-white rounded rounded-l px-6 py-3 sm:mb-0 border" placeholder="Type shoes names..">
-                                <button type="submit" class="focus:outline-none md:w-48 bg-custom-light-orange hover:opacity-75 rounded rounded-r md:uppercase text-white font-bold md:tracking-wide py-3 px-3 md:px-6 text-center cursor-pointer">Search</button>
+                                <input v-focus v-model="keyword" type="text" class="focus:outline-none  w-2/3 bg-white rounded-l px-6 py-3 sm:mb-0 border" placeholder="Type shoes names..">
+                                <button type="submit" class="focus:outline-none md:w-1/3  bg-custom-light-orange hover:opacity-75 rounded-r md:uppercase text-white font-bold md:tracking-wide py-3 px-3 md:px-6 text-center cursor-pointer">Search</button>
                             </div>
                         </form>
-                        <h4 class="text-gray-800 font-semibold text-lg  my-3">Search : {{ shoesArray.length }}</h4>
+                        <h4 class="text-gray-800 font-semibold text-lg  mt-4">Search : {{ shoesArray.length }}</h4>
                         <div class="h-86 my-3 overflow-y-scroll">
                             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 items-center">
                                 <a v-for="s in shoesArray" class="mb-4 " :href="`/shoes/${s.id}/${s.name}`">

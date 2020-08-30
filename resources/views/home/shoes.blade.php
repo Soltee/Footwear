@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title' , '- Shop Page')
+
 @section('head')
   <link rel="stylesheet" href="http://meyerweb.com/eric/tools/css/reset/reset.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/mt.min.css') }}">
@@ -96,11 +98,12 @@
                 <div class="mt-3 overflow-x-scroll lg:overflow-x-auto lg:w-full">
       
                   <ul class="flex flex-row lg:flex-col items-left md:ml-2 mb-3">
+
                     @forelse($categories as $cat)
                       @if($category)
                         <label  class="custom_checkbox relative flex flex items-center">
                           <div class="flex items-center border">
-                            <input class="hidden" class="roleCheckbox border border-custom-light-orange" type="radio"  
+                            <input class="hidden" class="roleCheckbox border border-custom-light-orange" type="checkbox"  
                             name="category" value="{{ $cat->id }}" {{ ($cat->id == $category->id) ? 'checked' : '' }}>
                             <svg class="check h-8 w-8 text-blue-900 border border-custom-light-orange rounded" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
                           </div>
@@ -117,8 +120,8 @@
                         <label  class="custom_checkbox relative flex flex items-center">
 
                           <div class="flex items-center border">
-                            <input class="hidden" class="roleCheckbox" type="radio"  
-                            name="subcategory" value="{{ $cat->id }}">
+                            <input class="hidden" class="roleCheckbox" type="checkbox"  
+                            name="category" value="{{ $cat->id }}">
                             <svg class="check h-8 w-8 text-blue-900 border rounded" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
                           </div>
 
@@ -135,7 +138,7 @@
                           @if($subcategory)
                             <label  class="custom_checkbox relative flex flex items-center">
                               <div class="flex items-center border">
-                                <input class="hidden" class="roleCheckbox" type="radio"  
+                                <input class="hidden" class="roleCheckbox" type="checkbox"  
                                 name="subcategory" value="{{ $sub_cat->id }}" {{ ($sub_cat->id == $subcategory->id) ? 'checked' : '' }}>
                                 <svg class="check h-8 w-8 text-blue-900 border rounded" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
                               </div>
@@ -152,7 +155,7 @@
                             <label  class="custom_checkbox relative flex flex items-center">
 
                               <div class="flex items-center border">
-                                <input class="hidden" class="roleCheckbox" type="radio"  
+                                <input class="hidden" class="roleCheckbox" type="checkbox"  
                                 name="subcategory" value="{{ $sub_cat->id }}">
                                 <svg class="check h-8 w-8 text-blue-900 border rounded" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
                               </div>
@@ -181,12 +184,24 @@
          </div>
 
           <!-- Shoes -->
-         <div class="flex-1 mt-4 lg:mt-0">
-            <div class="flex flex-row justify-between">
-              <div class="flex flex-row">
-                <h4 class="text-md font-semibold">{{ ($category) ? $category->name : '' }}</h4>
+         <div class="flex-1  lg:mt-0">
+            <div class="flex flex-row justify-between mb-3">
+              <div class="flex flex-row items-center">
+                <a href="/" class=" text-md md:text-lg  text-custom-light-black">Home</a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-800 mx-2">
+                    <polyline points="13 17 18 12 13 7"></polyline>
+                    <polyline points="6 17 11 12 6 7"></polyline>
+                </svg>
+                <h4 class=" text-md md:text-lg md:text-lg  text-custom-light-black {{ Route::currentRouteName() === 'shoes' ? 'font-bold' : '' }}">Shoes</h4>
+                @if($category || $subcategory)
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-gray-800 mx-2">
+                    <polyline points="13 17 18 12 13 7"></polyline>
+                    <polyline points="6 17 11 12 6 7"></polyline>
+                </svg>
+                @endif
+                <h4 class="text-md md:text-lg font-semibold md:font-bold">{{ ($category) ? $category->name : '' }}</h4>
 
-                <h4 class="text-md font-semibold ml-3">{{ ($subcategory) ? $subcategory->name : '' }}</h4>
+                <h4 class="text-md md:text-lg font-semibold md:font-bold">{{ ($subcategory) ? $subcategory->name : '' }}</h4>
               </div>
               <span class="">{{ $first }} - {{ $last }} of {{ $total }}</span>
          		</div>

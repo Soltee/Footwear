@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('title', '- Login')
+
 @section('content')
-    <div class="flex flex-col md:flex-row py-12 md:h-screen">
+    <div class="flex flex-col md:flex-row py-12">
         <div class="w-full md:w-1/2 hidden md:block">
              <img class="h-full w-full object-cover object-center rounded-lg" src="{{ asset('img/auth.jpg') }}">
         </div>

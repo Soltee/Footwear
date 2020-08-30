@@ -17,7 +17,7 @@
                 Go To Cart
             </a>
             <button @click="addToCart" type="submit" class="mt-8 px-4 py-3 rounded-lg bg-custom-light-orange text-md
- hover:opacity-75 text-white"> Add To Cart</button>
+ hover:opacity-75 text-white focus:border-none"> Add To Cart</button>
         </div>
     </div>
 </template>

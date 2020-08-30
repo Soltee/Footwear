@@ -19,12 +19,19 @@
                 </div>
                 <div v-if="!subscribed" class="absolute  bg-white left-0 right-0  mx-auto  max-w-4xl shadow rounded-lg z-30 flex flex-row items-center">
                     <div class="w-full md:w-1/3 hidden md:block">
-                        <img class="h-full w-full object-cover object-center" :src="`/img/news.jpg`">
+                        <img class="h-full rounded-l-lg w-full object-cover object-center" :src="`/img/news.jpg`">
                     </div>
                     <div class="w-full md:w-2/3 px-4 py-4 flex flex-col">
-                        <div class="font-bold text-xl opacity-75 md:text-4xl text-custom-light-black  mb-4">
+                        <h2 class="font-bold text-3xl opacity-75 md:text-4xl text-custom-light-black  mb-4 uppercase">
                             Exciting News and Disounts
+                        </h2>
+                        <div class="flex mb-6">
+                            <input type="checkbox" class="w-8 h-8" name="remember" id="remember">
+                            <h5 class="ml-3 text-md text-custom-light-black leading-6">
+                                Yes! Sign me up to receive Email Notifications from Foot-wear with the latest deals, sales and updates. I agree to Foot-wear's Terms of Service and 
+                            </h5>
                         </div>
+
                         <form @submit.prevent="subscribe">
                             <div class="mt-4 w-full flex flex-col md:flex-row">
                                 <input v-model="email" type="email" class="focus:outline-none  w-full md:w-2/3 bg-white rounded-t md:rounded-t-none md:rounded-l px-6 py-3 sm:mb-0 border focus:border-custom-light-orange" placeholder="Enter email..">

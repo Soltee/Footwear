@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title' , '- Checkout')
+
 @section('head')
 
     <script src="https://js.braintreegateway.com/web/3.56.0/js/client.min.js"></script>

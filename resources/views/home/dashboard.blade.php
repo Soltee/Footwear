@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title' , '- My Dashboard')
+
 @section('content')
     <div class="flex flex-row  items-center "> 
         @if (session('status'))

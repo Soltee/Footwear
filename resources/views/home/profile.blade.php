@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title', '- Profile Page')
 @section('content')
     <div class="flex flex-row  items-center "> 
         @if (session('status'))

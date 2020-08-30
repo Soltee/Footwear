@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', '- Reset Password')
+
 @section('content')
     <div class="container mx-auto py-12 bg-gray-300">
         <div class="flex flex-wrap justify-center">

@@ -43,6 +43,7 @@ Route::post('/newsletter/signup', 'NewsletterController@store');
 
 //About
 Route::get('/privacy-policy', 'About\AboutController@policy')->name('policy');
+Route::get('/sitemap', 'About\AboutController@sitemap')->name('sitemap');
 
 //Dashboard
 Route::prefix('admin')->group(function () {

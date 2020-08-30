@@ -197,7 +197,6 @@ export default {
             }
         },
         updateCart(p) {
-
             let qty = this.qty;
             axios.post(`/update-cart/${p.rowId}`, {
                     quantity: qty
@@ -327,6 +326,16 @@ export default {
                 });
         },
         redeemDiscount() {
+            if(this.code === '') {;
+                swal({
+                    title: "Oops!",
+                    text: " You may have incorrect coupon.",
+                    icon: "warning",
+                    button: "Close",
+                });
+                return;
+            }
+
             let code = this.code;
             axios.post('/coupon-redeem', {
                     code: code
@@ -366,24 +375,30 @@ export default {
                     } else if (res.status == 204) {
                         //If Couon Doesnot matcch;
                         this.status = false;
-                        Toast.fire({
-                            icon: 'error',
-                            title: `Your coupon doesnot match one of ours.`
+                        
+                        swal({
+                            title: "Oops!",
+                            text: `Your coupon doesnot match one of ours.`,
+                            icon: "warning",
+                            button: "Close",
                         });
                     }
 
                 }).catch(err => {
                     this.status = false;
 
-                    Toast.fire({
-                        icon: 'error',
-                        title: `There was some server error.Please try again later.`
-                    });
+                    // Toast.fire({
+                    //     icon: 'error',
+                    //     title: `There was some server error.Please try again later.`
+                    // });
                     if (err.data.errors.code) {
-                        Toast.fire({
-                            icon: 'error',
-                            title: `${err.data.errors.code}.`
+                        swal({
+                            title: "Oops!",
+                            text: `${err.data.errors.code}.`,
+                            icon: "warning",
+                            button: "Close",
                         });
+                      
                     }
                 });
         },
