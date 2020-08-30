@@ -42,6 +42,7 @@ Route::get('/aftercheckout', 'CheckoutController@sellmoreProduct');
 Route::post('/newsletter/signup', 'NewsletterController@store');
 
 //About
+Route::get('/faq', 'About\AboutController@faq')->name('faq');
 Route::get('/privacy-policy', 'About\AboutController@policy')->name('policy');
 Route::get('/sitemap', 'About\AboutController@sitemap')->name('sitemap');
 

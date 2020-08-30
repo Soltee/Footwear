@@ -86,6 +86,12 @@
                                     </a>
                                 </li>
                                 <li class="mb-4 md:mb-2">
+                                    <a href="/faq" class="text-white hover:opacity-75 {{  Route::currentRouteName() === 'faq' ? 'opacity-75' : ''}}" 
+                                        >
+                                        FAQs
+                                    </a>
+                                </li>
+                                <li class="mb-4 md:mb-2">
                                     <a href="/privacy-policy" class="text-white hover:opacity-75 {{  Route::currentRouteName() === 'policy' ? 'opacity-75' : ''}}">
                                         Privacy Policy
                                     </a>

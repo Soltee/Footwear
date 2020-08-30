@@ -103,7 +103,7 @@
                       @if($category)
                         <label  class="custom_checkbox relative flex flex items-center">
                           <div class="flex items-center border">
-                            <input class="hidden" class="roleCheckbox border border-custom-light-orange" type="checkbox"  
+                            <input class="hidden" class="roleCheckbox border border-custom-light-orange" type="radio"  
                             name="category" value="{{ $cat->id }}" {{ ($cat->id == $category->id) ? 'checked' : '' }}>
                             <svg class="check h-8 w-8 text-blue-900 border border-custom-light-orange rounded" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
                           </div>
@@ -120,7 +120,7 @@
                         <label  class="custom_checkbox relative flex flex items-center">
 
                           <div class="flex items-center border">
-                            <input class="hidden" class="roleCheckbox" type="checkbox"  
+                            <input class="hidden" class="roleCheckbox" type="radio"  
                             name="category" value="{{ $cat->id }}">
                             <svg class="check h-8 w-8 text-blue-900 border rounded" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
                           </div>
@@ -138,7 +138,7 @@
                           @if($subcategory)
                             <label  class="custom_checkbox relative flex flex items-center">
                               <div class="flex items-center border">
-                                <input class="hidden" class="roleCheckbox" type="checkbox"  
+                                <input class="hidden" class="roleCheckbox" type="radio"  
                                 name="subcategory" value="{{ $sub_cat->id }}" {{ ($sub_cat->id == $subcategory->id) ? 'checked' : '' }}>
                                 <svg class="check h-8 w-8 text-blue-900 border rounded" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
                               </div>
@@ -155,7 +155,7 @@
                             <label  class="custom_checkbox relative flex flex items-center">
 
                               <div class="flex items-center border">
-                                <input class="hidden" class="roleCheckbox" type="checkbox"  
+                                <input class="hidden" class="roleCheckbox" type="radio"  
                                 name="subcategory" value="{{ $sub_cat->id }}">
                                 <svg class="check h-8 w-8 text-blue-900 border rounded" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
                               </div>
@@ -201,7 +201,7 @@
                 @endif
                 <h4 class="text-md md:text-lg font-semibold md:font-bold">{{ ($category) ? $category->name : '' }}</h4>
 
-                <h4 class="text-md md:text-lg font-semibold md:font-bold">{{ ($subcategory) ? $subcategory->name : '' }}</h4>
+                <h4 class="text-md md:text-lg font-semibold md:font-bold {{  $category ? 'ml-3' : ''}}">{{ ($subcategory) ? $subcategory->name : '' }}</h4>
               </div>
               <span class="">{{ $first }} - {{ $last }} of {{ $total }}</span>
          		</div>

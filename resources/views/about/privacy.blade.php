@@ -2,7 +2,7 @@
 {{-- <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> --}}
 {{-- Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> --}}
 
-@section('title', '- Privacy Policy')
+@section('title', 'Privacy Policy')
 
 @section('head')
 	<meta property="og:title" content="Privacy Policy">
@@ -23,7 +23,7 @@
             </svg>
             <h4 class=" text-md md:text-lg md:text-lg  text-custom-light-black {{ Route::currentRouteName() === 'policy' ? 'font-bold' : '' }}">Privacy Policy</h4>
         </div>
-		<h1 class="text-2xl text-center bg-custom-light-black text-white px-3 py-3 rounded font-bold mb-5">Footwear Privacy Policy</h1>
+		<h1 class="text-2xl text-center text-custom-light-black  px-3 py-3 rounded font-bold mb-5">Foot-wear Privacy Policy</h1>
 		<h5 class="text-custom-light-black mb-3 ">Effective as of May 31, 2020.</h5>
 
 
