@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title') </title>
-    <link rel="icon" href="{{ asset('/img/shoe.svg') }}">
+    <link rel="icon" href="{{ asset('/img/logo.svg') }}">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">

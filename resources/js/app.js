@@ -59,6 +59,10 @@ Vue.component('cart-checkout', require('./components/customer/Checkout.vue').def
 Vue.component('cart-view', require('./components/customer/Cart.vue').default);
 Vue.component('add-cart', require('./components/customer/AddToCart.vue').default);
 Vue.component('review', require('./components/customer/Review.vue').default);
+
+/*Miscellaneous*/
+Vue.component('main-categories', require('./components/customer/Categories.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

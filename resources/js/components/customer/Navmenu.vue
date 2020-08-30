@@ -8,7 +8,8 @@
                     <line x1="3" y1="18" x2="21" y2="18"></line>
                 </svg>
                 <a :href="`/`" class="ml-3 md:ml-0 text-lg font-semibold text-custom-light-black    no-underline mr-3">
-                    <img class="h-8 w-8 text-custom-light-black" :src="`/img/shoe.svg`">
+                    <img class="h-8 w-8 text-custom-light-black" :src="`/img/logo.svg`">
+
                 </a>
             </div>
             <!-- small screeen nav-->

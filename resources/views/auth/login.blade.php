@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '- Login')
+@section('title', 'Login')
 
 @section('content')
     <div class="flex flex-col md:flex-row py-12">
