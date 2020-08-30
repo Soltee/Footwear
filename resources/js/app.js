@@ -35,6 +35,7 @@ Vue.component('admin-profile', require('./components/admin/AdminProfile.vue').de
 //Products
 Vue.component('create-product', require('./components/admin/products/CreateProduct.vue').default);
 Vue.component('products-view', require('./components/admin/products/Products.vue').default);
+Vue.component('show-product', require('./components/admin/products/ShowProduct.vue').default);
 
 //Products REVIEWS
 Vue.component('product-reviews', require('./components/admin/reviews/Index.vue').default);

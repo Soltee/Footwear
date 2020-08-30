@@ -40,7 +40,7 @@
                             <td class="whitespace-no-wrap border px-4 py-2 text-gray-900 whitespace-no-wrap">
                                 <img class="h-16 w-16 md:h-24 md:w-24 rounded-full" :src="`/storage/${p.imageUrl}`">
                             </td>
-                            <td class="whitespace-no-wrap border px-4 py-2 text-gray-900 whitespace-no-wrap">{{ p.name }}</td>
+                            <td class="whitespace-no-wrap border px-4 py-2 text-gray-900 whitespace-no-wrap"><a :href="`/admin/products/${p.id}/show`" class="text-blue-500 hover:text-blue-600">{{ p.name }}</a></td>
                             <td class="whitespace-no-wrap border px-4 py-2 text-gray-900 whitespace-no-wrap">Rs {{ p.price }}</td>
                             <td class="whitespace-no-wrap ">
                                 <div class="flex flex-row justify-around items-center">
@@ -64,7 +64,7 @@
                             <td class="whitespace-no-wrap border px-4 py-2 text-gray-900 whitespace-no-wrap">
                                 <img class="h-24 w-24 rounded-full" :src="`/storage/${p.imageUrl}`">
                             </td>
-                            <td class="whitespace-no-wrap border px-4 py-2 text-gray-900 whitespace-no-wrap">{{ p.name }}</td>
+                            <td class="whitespace-no-wrap border px-4 py-2 text-gray-900 whitespace-no-wrap"><a :href="`/admin/products/${p.id}/show`" class="text-blue-500 hover:text-blue-600">{{ p.name }}</a></td>
                             <td class="whitespace-no-wrap border px-4 py-2 text-gray-900 whitespace-no-wrap">Rs {{ p.price }}</td>
                             <td class="whitespace-no-wrap ">
                                 <div class="flex flex-row justify-around items-center">

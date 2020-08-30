@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Administrator;
 use App\Product;
 use App\Customer;
 use App\Category;
+use App\Review;
 use App\Orders;
 use App\Order_Items;
 use App\Administrator;
@@ -22,6 +23,13 @@ class AdministratorController extends Controller
 
     public function index()
     {
+        $products_query      = Product::latest();
+        $categories_query    = Category::latest();
+        $customers_query     = Customer::latest();
+        $orders_query        = Orders::latest();
+        $order_items_query   = Order_Items::latest();
+
+
         $today_users      = Customer::whereDate('created_at', today())->count();
         $yesterday_users  = Customer::whereDate('created_at', today()->subDays(1))->count();
         $users_2_days_ago = Customer::whereDate('created_at', today()->subDays(2))->count();
@@ -49,23 +57,25 @@ class AdministratorController extends Controller
 
         $chart->dataset('Orders', 'line', [$orders_last_ten_days_ago, $orders_2_days_ago, $yesterday_orders, $today_orders])->options([
                 'color' => '#000000',
-            ]);;
-        $categories = Category::all()->count();
-        $products = Product::all()->count();
-        $customers = Customer::all()->count();
-        $orders = Orders::all()->count();
-    	$grandTotals = Orders::latest()->pluck('grand');
+            ]);
 
-        $sales = 0;
+        $categories   = $categories_query->count();
+        $products     = $products_query->count();
+        $customers    = $customers_query->count();
+        $orders       = $orders_query->count();
+
+    	$grandTotals  = $orders_query->pluck('grand');
+
+        $sales        = 0;
         foreach ($grandTotals as $grand) {
-            $sales += $grand;
+            $sales   += $grand;
         }
 
-        $orderItems = Order_Items::latest()->pluck('quantity');
+        $orderItems   = $order_items_query->pluck('quantity');
 
-        $items = 0;
+        $items        = 0;
         foreach ($orderItems as $amt) {
-            $items += $amt;
+            $items   += $amt;
         }
 
     	return view('administrator.dashboard', compact('categories', 'products' ,'customers', 'sales', 'orders', 'items' ,'chart'));

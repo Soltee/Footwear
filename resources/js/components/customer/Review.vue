@@ -49,7 +49,7 @@
                     </div>
                     <div class="flex flex-col ">
                         <div class="flex flex-col items-start mb-4">
-                            <star-rating :rating="review.rating" :star-size="30" :rounded-corners="true" :show-rating="false" :read-only="isNotRated"></star-rating>
+                            <star-rating :rating="review.rating" :star-size="30" :rounded-corners="true" :show-rating="false" :read-only="true"></star-rating>
                             <h5 class="mt-2 text-sm font-light">{{ review.customer.first_name }}</h5>
                         </div>
                         <p class="text-md leading-6 font-semibold">{{ review.message }}</p>

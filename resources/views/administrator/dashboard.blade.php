@@ -57,7 +57,7 @@
 
 	        			<div class="ml-2 flex-1 px-3 py-3 rounded-lg bg-green-500">
 	        				<h4 class="text-right pb-2">
-	        					<span class="font-semibold text-lg text-gray-300">Items</span>
+	        					<span class="font-semibold text-lg text-gray-300">Order Items</span>
 	        				</h4>
 	        				<div class="text-left font-bold text-white">
 	        					{{$items}}

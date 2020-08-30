@@ -205,6 +205,8 @@ export default {
                         this.passErr = false;
                         this.passErrArray = [];
 
+                        window.location.reload();
+
                     } else {
                         Toast.fire({
                             icon: 'error',
@@ -255,6 +257,6 @@ export default {
             this.fileRead = '';
         },
     }
-}
+};
 
 </script>
