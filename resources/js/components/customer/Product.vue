@@ -6,7 +6,7 @@
             </a>
         </div>
         <form v-else @submit.prevent="addToCart">
-            <button type="submit" :class="(isAdded) ? 'cursor-not-allowed bg-green-900 opacity-50' : 'bg-black'" class="p-3 rounded-lg text-white text-md hover:opacity-75"> Add To Cart</button>
+            <button type="submit" :class="(isAdded) ? 'cursor-not-allowed  opacity-50' : 'bg-custom-light-orange'" class="p-3  rounded-lg text-white text-md hover:opacity-75"> Add to Cart</button>
         </form>
     </div>
 </template>

@@ -56,7 +56,10 @@
       font-weight: bold;
     }
 
-
+    .cartBtnParent:hover  .cartBtn{
+      opacity: 1;
+      visibility: initial;
+    }
 
   
 
@@ -208,17 +211,26 @@
          		<div class="mt-2  w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
          			@forelse($products as $product)
                   <div class=" rounded-lg  cursor-pointer mb-6 hover:-mt-1  transition-all">
-                    <a href="shoes/{{ $product->id }}/{{ $product->slug }}">
-                        
-                        <img class="w-full h-64 rounded-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}">
-                    </a>
+                    <div class="cartBtnParent relative">
+
+                      <a href="shoes/{{ $product->id }}/{{ $product->slug }}">
+                          
+                          <img 
+                            class="w-full rounded-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}"
+                            onerror="this.src='https://via.placeholder.com/300'">
+                      </a>
+
+                      <div class="cartBtn absolute inset-0 flex justify-center items-center opacity-0">
+                        <add-to-cart :product="{{ $product }}"   /> 
+                      </div>
+
+                    </div>
                     <div class="mt-4  rounded-lg flex flex-row justify-between w-full items-center">
 
                         <h4 class="tbext-md font-semibold text-custom-light-black">{{ $product->name }}</h4>                    
                         <h5 class="text-md font-semibold text-custom-light-black">$ {{ $product->price }}</h5>
                     </div>
                      
-                    {{-- <add-to-cart :product="{{ $product }}"   />  --}}
 
                   </div>
   	            @empty 

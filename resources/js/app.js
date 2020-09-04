@@ -10,6 +10,10 @@ window.Vue = require('vue');
 var VueScrollTo = require('vue-scrollto');
 Vue.use(VueScrollTo);
 
+import Vue from 'vue'
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate);
+
 import StarRating from 'vue-star-rating';
 Vue.component('star-rating', StarRating);
 export const eventBus = new Vue();

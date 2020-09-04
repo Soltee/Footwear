@@ -6307,10 +6307,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var _helpers_Alert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/Alert */ "./resources/js/components/helpers/Alert.js");
+/* harmony import */ var _helpers_Alert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/Alert */ "./resources/js/components/helpers/Alert.js");
 /* harmony import */ var _app_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../app.js */ "./resources/js/app.js");
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -6522,6 +6524,51 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -6530,6 +6577,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
   props: ['auth', 'products', 'cart', 'sub', 'dis', 'afterdis', 'tax', 'grand', 'token'],
   data: function data() {
     return {
+      test: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
       firstname: '',
       lastname: '',
       email: ' ',
@@ -6549,8 +6597,30 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       stripeCard: null,
       braintreeInstance: null,
       loading: false,
+      submitStatus: false,
       csrf: document.head.querySelector('meta[name="csrf-token"]').content
     };
+  },
+  validations: {
+    firstname: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"],
+      minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["minLength"])(3)
+    },
+    lastname: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"],
+      minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["minLength"])(3)
+    },
+    email: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"],
+      email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["email"]
+    },
+    city: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"]
+    },
+    address: {
+      required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"],
+      minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["minLength"])(3)
+    }
   },
   mounted: function mounted() {
     this.pushProducts();
@@ -6567,74 +6637,72 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       }
     },
     paymentOption: function paymentOption(param) {
-      var _this = this;
-
       this.method = param;
       var grand = this.grand;
+      this.submitStatus = true;
 
       if (this.method === "stripe") {
-        setTimeout(function () {
-          // Create a Stripe client.
-          // alert(process.env.MIX_STRIPE_APP_KEY);
-          var key = process.env.MIX_STRIPE_APP_KEY;
-          var stripe = Stripe("".concat(key)); // Create an instance of Elements.
-
-          var elements = stripe.elements(); // Custom styling can be passed to options when creating an Element.
-          // (Note that this demo uses a wider set of styles than the guide below.)
-
-          var style = {
-            base: {
-              color: '#32325d',
-              fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-              fontSmoothing: 'antialiased',
-              fontSize: '16px',
-              '::placeholder': {
-                color: '#aab7c4'
-              }
-            },
-            invalid: {
-              color: '#fa755a',
-              iconColor: '#fa755a'
-            }
-          }; // Create an instance of the card Element.
-
-          var card = elements.create('card', {
-            style: style
-          }); // Add an instance of the card Element into the `card-element` <div>.
-
-          card.mount('#card-element'); // Handle real-time validation errors from the card Element.
-
-          card.addEventListener('change', function (event) {
-            var displayError = document.getElementById('card-errors');
-
-            if (event.error) {
-              displayError.textContent = event.error.message;
-            } else {
-              displayError.textContent = '';
-            }
-          });
-          var component = _this; // this.stripeObj = stripe;
-          // this.stripeCard = card;
-
-          document.getElementById('payment-form').addEventListener('submit', function (e) {
-            e.preventDefault();
-            stripe.createToken(card).then(function (result) {
-              if (result.error) {
-                // Inform the user if there was an error.
-                var errorElement = document.getElementById('card-errors');
-                errorElement.textContent = result.error.message;
-              } else {
-                // eventBus.$emit('token-received', );
-                component.charge(result.token.id); // data.append('secret_token', result.token.id);
-                // Send the token to your server.
-                // stripeTokenHandler(result.token);
-                // this.submitPayment(result.token.id);
-              }
-            });
-          });
-        }, 300);
-      } else if (this.method === 'braintree') {
+        // setTimeout(() => {
+        //     // Create a Stripe client.
+        //     // alert(process.env.MIX_STRIPE_APP_KEY);
+        //     let key = process.env.MIX_STRIPE_APP_KEY;
+        //     var stripe = Stripe(`${key}`);
+        //     // Create an instance of Elements.
+        //     var elements = stripe.elements();
+        //     // Custom styling can be passed to options when creating an Element.
+        //     // (Note that this demo uses a wider set of styles than the guide below.)
+        //     var style = {
+        //         base: {
+        //             color: '#32325d',
+        //             fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        //             fontSmoothing: 'antialiased',
+        //             fontSize: '16px',
+        //             '::placeholder': {
+        //                 color: '#aab7c4'
+        //             }
+        //         },
+        //         invalid: {
+        //             color: '#fa755a',
+        //             iconColor: '#fa755a'
+        //         }
+        //     };
+        // // Create an instance of the card Element.
+        // var card = elements.create('card', { style: style });
+        // // Add an instance of the card Element into the `card-element` <div>.
+        // card.mount('#card-element');
+        // // Handle real-time validation errors from the card Element.
+        // card.addEventListener('change', function(event) {
+        //     var displayError = document.getElementById('card-errors');
+        //     if (event.error) {
+        //         displayError.textContent = event.error.message;
+        //     } else {
+        //         displayError.textContent = '';
+        //     }
+        // });
         var component = this;
+        component.submitStatus = true; // this.stripeObj = stripe;
+        // this.stripeCard = card;
+
+        document.getElementById('payment-form').addEventListener('submit', function (e) {
+          e.preventDefault(); // stripe.createToken(card).then((result) => {
+          //     if (result.error) {
+          //         // Inform the user if there was an error.
+          //         var errorElement = document.getElementById('card-errors');
+          //         errorElement.textContent = result.error.message;
+          //     } else {
+          // eventBus.$emit('token-received', );
+          // component.charge(result.token.id);
+
+          component.charge('jjjjj'); // data.append('secret_token', result.token.id);
+          // Send the token to your server.
+          // stripeTokenHandler(result.token);
+          // this.submitPayment(result.token.id);
+          //         }
+          //     });
+        }); // }, 300);
+      } else if (this.method === 'braintree') {
+        var _component = this;
+
         braintree.client.create({
           authorization: "".concat(this.token)
         }, function (clientErr, clientInstance) {
@@ -6686,6 +6754,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
               });
             }
 
+            _component.submitStatus = true;
             document.getElementById('payment-form').addEventListener('submit', function (e) {
               e.preventDefault();
               hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
@@ -6696,7 +6765,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
                   });
                 }
 
-                component.charge(payload.nonce);
+                _component.charge(payload.nonce);
               });
             });
           });
@@ -6704,68 +6773,117 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       }
     },
     charge: function charge(token) {
-      var _this2 = this;
+      var _this = this;
 
       console.log(token);
       this.loading = true;
-      var data = new FormData();
-      data.append('firstname', this.firstname);
-      data.append('lastname', this.lastname);
-      data.append('email', this.email);
-      data.append('city', this.city);
-      data.append('address', this.address);
-      var paymentMethod = this.method;
-      data.append('method', paymentMethod);
-      data.append('secret_token', token);
-      axios.post('/charge', data).then(function (res) {
-        if (res.status === 201) {
-          _this2.successCharge = true;
-          sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({
-            title: "Horray!",
-            text: "Your checkout is successful.Invoice has been sent to your email.",
-            icon: "success",
-            button: "Close"
-          });
-          _this2.loading = false;
-          _this2.firstname = '';
-          _this2.lastname = '';
-          _this2.email = '';
-          _this2.city = '';
-          _this2.address = '';
-          _this2.method = '';
-          axios.get("/aftercheckout").then(function (res) {
-            if (res.status === 200) {
-              _this2.successCharge = true;
-              _this2.otherProducts = res.data.products;
-            }
-          })["catch"](function (err) {});
-        } else {
-          sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({
-            title: "Error!",
-            text: "Your checkout wasn't successful.",
-            icon: "error",
-            button: "Close"
-          });
-        }
-      })["catch"](function (err) {
-        _this2.loading = false;
-        _helpers_Alert__WEBPACK_IMPORTED_MODULE_0__["default"].fire({
-          icon: 'error',
-          title: "Server error! Please try again later."
+      this.$v.$touch();
+
+      if (this.$v.$error) {
+        this.loading = false;
+        sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({
+          title: "Error!",
+          text: "Please fill form correctly!",
+          icon: "error",
+          button: "Close"
         });
-      });
+      } else {
+        var data = new FormData();
+        data.append('firstname', this.firstname);
+        data.append('lastname', this.lastname);
+        data.append('email', this.email);
+        data.append('city', this.city);
+        data.append('address', this.address);
+        var paymentMethod = this.method;
+        data.append('method', paymentMethod);
+        data.append('secret_token', token); //Post
+
+        axios.post('/charge', data).then(function (res) {
+          if (res.status === 201) {
+            _this.successCharge = true;
+            sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({
+              title: "Horray!",
+              text: "Your checkout is successful.Invoice has been sent to your email.",
+              icon: "success",
+              button: "Close"
+            });
+            _this.loading = false;
+            _this.firstname = '';
+            _this.lastname = '';
+            _this.email = '';
+            _this.city = '';
+            _this.address = '';
+            _this.method = '';
+            axios.get("/aftercheckout").then(function (res) {
+              if (res.status === 200) {
+                _this.successCharge = true;
+                _this.otherProducts = res.data.products;
+              }
+            })["catch"](function (err) {});
+          } else {
+            sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({
+              title: "Error!",
+              text: "Your checkout wasn't successful. Please try again.",
+              icon: "error",
+              button: "Close"
+            });
+          }
+        })["catch"](function (err) {
+          _this.loading = false;
+          var errors = err.response.data.errors;
+
+          if (errors) {
+            if (errors.firstname) {
+              errors.firstname.forEach(function (err) {
+                sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({
+                  title: "Error!",
+                  text: "".concat(err),
+                  icon: "error",
+                  button: "Close"
+                });
+              });
+            }
+
+            if (errors.lastname) {
+              errors.lastname.forEach(function (err) {
+                sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({
+                  title: "Error!",
+                  text: "".concat(err),
+                  icon: "error",
+                  button: "Close"
+                });
+              });
+            }
+
+            if (errors.email) {
+              _this.emailErr = errors.email;
+            }
+
+            if (errors.city) {
+              _this.cityErr = errors.city;
+            }
+
+            if (errors.address) {
+              _this.addressErr = errors.address;
+            }
+
+            if (errors.secret_token) {
+              _this.tokenErr = errors.secret_token;
+            }
+          }
+        });
+      }
     },
     removeMessage: function removeMessage() {
-      var _this3 = this;
+      var _this2 = this;
 
       setTimeout(function () {
-        _this3.message = null;
-        _this3.err = null;
+        _this2.message = null;
+        _this2.err = null;
       }, 3000);
     }
   }
 });
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../node_modules/process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 
@@ -39750,7 +39868,11 @@ var render = function() {
                             _c("img", {
                               staticClass:
                                 "h-24 w-24 rounded-lg object-cover object-center",
-                              attrs: { src: "/storage/" + p.options.imageUrl }
+                              attrs: {
+                                src: "/storage/" + p.options.imageUrl,
+                                onerror:
+                                  "this.src='https://via.placeholder.com/300'"
+                              }
                             })
                           ]
                         ),
@@ -40402,19 +40524,30 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _vm.successCharge
-      ? _c("div", {}, [
+      ? _c("div", { staticClass: "flex flex-col" }, [
           _c(
             "div",
             {
               staticClass:
-                "grid grid-cols-1 cm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+                "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 items-center gap-4"
             },
             _vm._l(_vm.otherProducts, function(pro) {
-              return _c("img", {
-                staticClass:
-                  "w-full h-64 object-cover rounded-lg object-center ",
-                attrs: { src: "/storage/" + pro.imageUrl }
-              })
+              return _c(
+                "a",
+                {
+                  staticClass: "mb-4 ",
+                  attrs: { href: "/shoes/" + pro.id + "/" + pro.slug }
+                },
+                [
+                  _c("img", {
+                    staticClass: "w-full object-cover  rounded-lg",
+                    attrs: {
+                      src: "/storage/" + pro.imageUrl,
+                      onerror: "this.src='https://via.placeholder.com/300'"
+                    }
+                  })
+                ]
+              )
             }),
             0
           ),
@@ -40521,537 +40654,819 @@ var render = function() {
                       "flex flex-col md:flex-row justify-between my-8 w-full"
                   },
                   [
-                    _c("form", { attrs: { id: "payment-form" } }, [
-                      _c("div", { staticClass: "flex-1" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "w-full mb-6  border border-gray-300 p-3"
-                          },
-                          [
-                            _c(
-                              "h3",
-                              {
-                                staticClass:
-                                  "text-sm font-semibold text-custom-light-black mb-6 px-2 "
-                              },
-                              [_vm._v("Personal Info")]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "mb-4  w-full px-2 " }, [
+                    _c(
+                      "form",
+                      {
+                        attrs: { id: "payment-form" },
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                          }
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "flex-1" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "w-full mb-6  border border-gray-300 p-3"
+                            },
+                            [
                               _c(
-                                "label",
+                                "h3",
                                 {
                                   staticClass:
-                                    "block text-gray-700 text-sm font-bold mb-2",
-                                  attrs: { for: "firstname" }
+                                    "text-sm font-semibold text-custom-light-black mb-6 px-2 "
                                 },
-                                [
-                                  _vm._v(
-                                    "\n                                    First Name\n                                "
-                                  )
-                                ]
+                                [_vm._v("Personal Info")]
                               ),
                               _vm._v(" "),
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.firstname,
-                                    expression: "firstname"
-                                  }
-                                ],
-                                staticClass:
-                                  "hadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
-                                attrs: {
-                                  id: "firstname",
-                                  type: "text",
-                                  placeholder: "Roman"
-                                },
-                                domProps: { value: _vm.firstname },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.firstname = $event.target.value
-                                  }
-                                }
-                              })
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "mb-4 w-full px-2" }, [
-                              _c(
-                                "label",
-                                {
-                                  staticClass:
-                                    "block text-gray-700 text-sm font-bold mb-2",
-                                  attrs: { for: "lastname" }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                    Last Name\n                                "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.lastname,
-                                    expression: "lastname"
-                                  }
-                                ],
-                                staticClass:
-                                  "hadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
-                                attrs: {
-                                  id: "lastname",
-                                  type: "text",
-                                  placeholder: "Dide"
-                                },
-                                domProps: { value: _vm.lastname },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.lastname = $event.target.value
-                                  }
-                                }
-                              })
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "w-full mb-6 px-2" }, [
-                              _c(
-                                "label",
-                                {
-                                  staticClass:
-                                    "block text-gray-700 text-sm font-bold mb-2",
-                                  attrs: { for: "email" }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                    Email\n                                "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.email,
-                                    expression: "email"
-                                  }
-                                ],
-                                staticClass:
-                                  "shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
-                                attrs: {
-                                  id: "email",
-                                  type: "email",
-                                  placeholder: "email"
-                                },
-                                domProps: { value: _vm.email },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.email = $event.target.value
-                                  }
-                                }
-                              })
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "w-full flex flex-wrap -mx-3 mb-6 px-2"
-                              },
-                              [
+                              _c("div", { staticClass: "mb-4  w-full px-2 " }, [
                                 _c(
-                                  "div",
+                                  "label",
                                   {
                                     staticClass:
-                                      "w-full md:w-1/3 px-3 mb-6 md:mb-0"
+                                      "block text-gray-700 text-sm font-bold mb-2",
+                                    attrs: { for: "firstname" }
                                   },
                                   [
-                                    _c(
-                                      "label",
-                                      {
-                                        staticClass:
-                                          "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
-                                        attrs: { for: "grid-city" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                        City\n                                    "
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "relative" }, [
+                                    _vm._v(
+                                      "\n                                    First Name\n                                "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model.trim",
+                                      value: _vm.$v.firstname.$model,
+                                      expression: "$v.firstname.$model",
+                                      modifiers: { trim: true }
+                                    }
+                                  ],
+                                  staticClass:
+                                    "hadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+                                  attrs: {
+                                    id: "firstname",
+                                    type: "text",
+                                    placeholder: "Roman"
+                                  },
+                                  domProps: { value: _vm.$v.firstname.$model },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.$v.firstname,
+                                        "$model",
+                                        $event.target.value.trim()
+                                      )
+                                    },
+                                    blur: function($event) {
+                                      return _vm.$forceUpdate()
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _vm.$v.firstname.$error
+                                  ? _c("div", [
+                                      !_vm.$v.firstname.required
+                                        ? _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "mt-2 p-2 border text-red-500"
+                                            },
+                                            [_vm._v("Field is required.")]
+                                          )
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      !_vm.$v.firstname.minLength
+                                        ? _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "p-2 border text-red-500"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "Field must have at least " +
+                                                  _vm._s(
+                                                    _vm.$v.firstname.$params
+                                                      .minLength.min
+                                                  ) +
+                                                  " characters."
+                                              )
+                                            ]
+                                          )
+                                        : _vm._e()
+                                    ])
+                                  : _vm._e()
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "mb-4 w-full px-2" }, [
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass:
+                                      "block text-gray-700 text-sm font-bold mb-2",
+                                    attrs: { for: "lastname" }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    Last Name\n                                "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model.trim",
+                                      value: _vm.$v.lastname.$model,
+                                      expression: "$v.lastname.$model",
+                                      modifiers: { trim: true }
+                                    }
+                                  ],
+                                  staticClass:
+                                    "hadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+                                  attrs: {
+                                    id: "lastname",
+                                    type: "text",
+                                    placeholder: "Dide"
+                                  },
+                                  domProps: { value: _vm.$v.lastname.$model },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.$v.lastname,
+                                        "$model",
+                                        $event.target.value.trim()
+                                      )
+                                    },
+                                    blur: function($event) {
+                                      return _vm.$forceUpdate()
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _vm.$v.lastname.$error
+                                  ? _c("div", [
+                                      !_vm.$v.lastname.required
+                                        ? _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "mt-2 p-2 border text-red-500"
+                                            },
+                                            [_vm._v("Field is required.")]
+                                          )
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      !_vm.$v.lastname.minLength
+                                        ? _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "p-2 border text-red-500"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "Field must have at least " +
+                                                  _vm._s(
+                                                    _vm.$v.lastname.$params
+                                                      .minLength.min
+                                                  ) +
+                                                  " characters."
+                                              )
+                                            ]
+                                          )
+                                        : _vm._e()
+                                    ])
+                                  : _vm._e()
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "w-full mb-6 px-2" }, [
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass:
+                                      "block text-gray-700 text-sm font-bold mb-2",
+                                    attrs: { for: "email" }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    Email\n                                "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model.trim",
+                                      value: _vm.$v.email.$model,
+                                      expression: "$v.email.$model",
+                                      modifiers: { trim: true }
+                                    }
+                                  ],
+                                  staticClass:
+                                    "shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+                                  attrs: {
+                                    id: "email",
+                                    type: "email",
+                                    placeholder: "Rakesh@gmail.com"
+                                  },
+                                  domProps: { value: _vm.$v.email.$model },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.$v.email,
+                                        "$model",
+                                        $event.target.value.trim()
+                                      )
+                                    },
+                                    blur: function($event) {
+                                      return _vm.$forceUpdate()
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _vm.$v.email.$error
+                                  ? _c("div", [
+                                      !_vm.$v.email.required
+                                        ? _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "mt-2 p-2 border text-red-500"
+                                            },
+                                            [_vm._v("Field is required.")]
+                                          )
+                                        : _vm._e()
+                                    ])
+                                  : _vm._e()
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "w-full flex flex-col md:flex-row -mx-3 mb-6 px-2"
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "w-full md:w-1/2 px-3 mb-6 md:mb-0"
+                                    },
+                                    [
                                       _c(
-                                        "select",
+                                        "label",
                                         {
+                                          staticClass:
+                                            "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+                                          attrs: { for: "grid-city" }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                        City\n                                    "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "relative" }, [
+                                        _c(
+                                          "select",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model.trim",
+                                                value: _vm.$v.city.$model,
+                                                expression: "$v.city.$model",
+                                                modifiers: { trim: true }
+                                              }
+                                            ],
+                                            staticClass:
+                                              "block appearance-none w-full  border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                                            attrs: { id: "grid-city" },
+                                            on: {
+                                              change: function($event) {
+                                                var $$selectedVal = Array.prototype.filter
+                                                  .call(
+                                                    $event.target.options,
+                                                    function(o) {
+                                                      return o.selected
+                                                    }
+                                                  )
+                                                  .map(function(o) {
+                                                    var val =
+                                                      "_value" in o
+                                                        ? o._value
+                                                        : o.value
+                                                    return val
+                                                  })
+                                                _vm.$set(
+                                                  _vm.$v.city,
+                                                  "$model",
+                                                  $event.target.multiple
+                                                    ? $$selectedVal
+                                                    : $$selectedVal[0]
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [_c("option", [_vm._v("Pokhara")])]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+                                          },
+                                          [
+                                            _c(
+                                              "svg",
+                                              {
+                                                staticClass:
+                                                  "fill-current h-4 w-4",
+                                                attrs: {
+                                                  xmlns:
+                                                    "http://www.w3.org/2000/svg",
+                                                  viewBox: "0 0 20 20"
+                                                }
+                                              },
+                                              [
+                                                _c("path", {
+                                                  attrs: {
+                                                    d:
+                                                      "M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                                                  }
+                                                })
+                                              ]
+                                            )
+                                          ]
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _vm.$v.city.$error
+                                        ? _c(
+                                            "div",
+                                            { staticClass: "md:hidden" },
+                                            [
+                                              !_vm.$v.city.required
+                                                ? _c(
+                                                    "div",
+                                                    {
+                                                      staticClass:
+                                                        "mt-2 p-2 border text-red-500"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "Field is required."
+                                                      )
+                                                    ]
+                                                  )
+                                                : _vm._e()
+                                            ]
+                                          )
+                                        : _vm._e()
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "w-full md:w-1/2 px-3 mb-6 md:mb-0"
+                                    },
+                                    [
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass:
+                                            "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
+                                          attrs: { for: "street" }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                        Street Address\n                                    "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "relative" }, [
+                                        _c("input", {
                                           directives: [
                                             {
                                               name: "model",
-                                              rawName: "v-model",
-                                              value: _vm.city,
-                                              expression: "city"
+                                              rawName: "v-model.trim",
+                                              value: _vm.$v.address.$model,
+                                              expression: "$v.address.$model",
+                                              modifiers: { trim: true }
                                             }
                                           ],
                                           staticClass:
-                                            "block appearance-none w-full  border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-                                          attrs: { id: "grid-city" },
+                                            "appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                                          attrs: {
+                                            id: "street",
+                                            type: "text",
+                                            placeholder: "Albuquerque"
+                                          },
+                                          domProps: {
+                                            value: _vm.$v.address.$model
+                                          },
                                           on: {
-                                            change: function($event) {
-                                              var $$selectedVal = Array.prototype.filter
-                                                .call(
-                                                  $event.target.options,
-                                                  function(o) {
-                                                    return o.selected
-                                                  }
-                                                )
-                                                .map(function(o) {
-                                                  var val =
-                                                    "_value" in o
-                                                      ? o._value
-                                                      : o.value
-                                                  return val
-                                                })
-                                              _vm.city = $event.target.multiple
-                                                ? $$selectedVal
-                                                : $$selectedVal[0]
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.$set(
+                                                _vm.$v.address,
+                                                "$model",
+                                                $event.target.value.trim()
+                                              )
+                                            },
+                                            blur: function($event) {
+                                              return _vm.$forceUpdate()
                                             }
                                           }
-                                        },
-                                        [_c("option", [_vm._v("Pokhara")])]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
+                                        })
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _vm.$v.address.$error
+                                    ? _c(
                                         "div",
-                                        {
-                                          staticClass:
-                                            "pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
-                                        },
+                                        { staticClass: " md:hidden mt-2" },
                                         [
-                                          _c(
-                                            "svg",
-                                            {
-                                              staticClass:
-                                                "fill-current h-4 w-4",
-                                              attrs: {
-                                                xmlns:
-                                                  "http://www.w3.org/2000/svg",
-                                                viewBox: "0 0 20 20"
-                                              }
-                                            },
-                                            [
-                                              _c("path", {
-                                                attrs: {
-                                                  d:
-                                                    "M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-                                                }
-                                              })
-                                            ]
-                                          )
+                                          !_vm.$v.address.required
+                                            ? _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    " p-2 border text-red-500"
+                                                },
+                                                [_vm._v("Field is required.")]
+                                              )
+                                            : _vm._e(),
+                                          _vm._v(" "),
+                                          !_vm.$v.address.minLength
+                                            ? _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "p-2 border text-red-500"
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "Field must have at least " +
+                                                      _vm._s(
+                                                        _vm.$v.address.$params
+                                                          .minLength.min
+                                                      ) +
+                                                      " characters."
+                                                  )
+                                                ]
+                                              )
+                                            : _vm._e()
                                         ]
                                       )
-                                    ])
+                                    : _vm._e()
+                                ]
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "mt-2  hidden md:block flex" },
+                            [
+                              _vm.$v.city.$error
+                                ? _c("div", { staticClass: "w-1/2" }, [
+                                    !_vm.$v.city.required
+                                      ? _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              " p-2 border text-red-500"
+                                          },
+                                          [_vm._v("Field is required.")]
+                                        )
+                                      : _vm._e()
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm.$v.address.$error
+                                ? _c(
+                                    "div",
+                                    { staticClass: "w-1/2  md:hidden" },
+                                    [
+                                      !_vm.$v.address.required
+                                        ? _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "p-2 border text-red-500"
+                                            },
+                                            [_vm._v("Field is required.")]
+                                          )
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      !_vm.$v.address.minLength
+                                        ? _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "p-2 border text-red-500"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "Field must have at least " +
+                                                  _vm._s(
+                                                    _vm.$v.address.$params
+                                                      .minLength.min
+                                                  ) +
+                                                  " characters."
+                                              )
+                                            ]
+                                          )
+                                        : _vm._e()
+                                    ]
+                                  )
+                                : _vm._e()
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "w-full mb-6  border border-gray-300 p-3"
+                            },
+                            [
+                              _c(
+                                "h3",
+                                {
+                                  staticClass:
+                                    "text-sm font-semibold text-custom-light-black mb-6 w-full px-2"
+                                },
+                                [_vm._v("Payment Method")]
+                              ),
+                              _vm._v(" "),
+                              _c("div", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "flex items-center mb-4 justify-between rounded w-full border px-4 py-3 border-gray-300 group hover:border-green-600 cursor-pointer",
+                                    class:
+                                      _vm.method === "stripe"
+                                        ? "border-green-600"
+                                        : "",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.paymentOption("stripe")
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "text-sm ml-8 font-semibold text-custom-light-black"
+                                      },
+                                      [_vm._v("Stripe")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "svg",
+                                      {
+                                        staticClass:
+                                          "w-8 h-8 mr-2 text-custom-light-black",
+                                        class:
+                                          _vm.method === "stripe"
+                                            ? "hidden"
+                                            : "block",
+                                        attrs: {
+                                          xmlns: "http://www.w3.org/2000/svg",
+                                          viewBox: "0 0 24 24",
+                                          fill: "none",
+                                          stroke: "currentColor",
+                                          "stroke-width": "1",
+                                          "stroke-linecap": "round",
+                                          "stroke-linejoin": "round"
+                                        }
+                                      },
+                                      [
+                                        _c("polyline", {
+                                          attrs: { points: "6 9 12 15 18 9" }
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "svg",
+                                      {
+                                        staticClass:
+                                          "w-8 h-8 mr-2 text-custom-light-black",
+                                        class:
+                                          _vm.method === "stripe"
+                                            ? "block"
+                                            : "hidden",
+                                        attrs: {
+                                          xmlns: "http://www.w3.org/2000/svg",
+                                          viewBox: "0 0 24 24",
+                                          fill: "none",
+                                          stroke: "currentColor",
+                                          "stroke-width": "1",
+                                          "stroke-linecap": "round",
+                                          "stroke-linejoin": "round"
+                                        }
+                                      },
+                                      [
+                                        _c("polyline", {
+                                          attrs: { points: "18 15 12 9 6 15" }
+                                        })
+                                      ]
+                                    )
                                   ]
                                 ),
+                                _vm._v(" "),
+                                _vm.method === "stripe"
+                                  ? _c("div", { staticClass: "mt-4" }, [
+                                      _vm._m(1)
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _vm.method === "paypal"
+                                  ? _c("div", { staticClass: "mb-3 mt-4" }, [
+                                      _c("input", {
+                                        attrs: {
+                                          type: "hidden",
+                                          name: "_type",
+                                          value: "paypal"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        attrs: {
+                                          id: "nonce",
+                                          name: "payment_method_nonce",
+                                          type: "hidden"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("div", {
+                                        attrs: { id: "paypal-button" }
+                                      })
+                                    ])
+                                  : _vm._e(),
                                 _vm._v(" "),
                                 _c(
                                   "div",
                                   {
                                     staticClass:
-                                      "w-full md:w-1/3 px-3 mb-6 md:mb-0"
+                                      "flex items-center mb-4 justify-between rounded w-full border px-4 py-3 border-gray-300 group hover:border-green-600 cursor-pointer",
+                                    class:
+                                      _vm.method === "braintree"
+                                        ? "border-green-600"
+                                        : "",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.paymentOption("braintree")
+                                      }
+                                    }
                                   },
                                   [
                                     _c(
-                                      "label",
+                                      "span",
                                       {
                                         staticClass:
-                                          "block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2",
-                                        attrs: { for: "street" }
+                                          "text-sm ml-8 font-semibold text-custom-light-black"
+                                      },
+                                      [_vm._v("Braintree")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "svg",
+                                      {
+                                        staticClass:
+                                          "w-8 h-8 mr-2 text-custom-light-black",
+                                        class:
+                                          _vm.method === "braintree"
+                                            ? "hidden"
+                                            : "block",
+                                        attrs: {
+                                          xmlns: "http://www.w3.org/2000/svg",
+                                          viewBox: "0 0 24 24",
+                                          fill: "none",
+                                          stroke: "currentColor",
+                                          "stroke-width": "1",
+                                          "stroke-linecap": "round",
+                                          "stroke-linejoin": "round"
+                                        }
                                       },
                                       [
-                                        _vm._v(
-                                          "\n                                        Street Address\n                                    "
-                                        )
+                                        _c("polyline", {
+                                          attrs: { points: "6 9 12 15 18 9" }
+                                        })
                                       ]
                                     ),
                                     _vm._v(" "),
-                                    _c("div", { staticClass: "relative" }, [
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.address,
-                                            expression: "address"
-                                          }
-                                        ],
+                                    _c(
+                                      "svg",
+                                      {
                                         staticClass:
-                                          "appearance-none block w-full  text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+                                          "w-8 h-8 mr-2 text-custom-light-black",
+                                        class:
+                                          _vm.method === "braintree"
+                                            ? "block"
+                                            : "hidden",
                                         attrs: {
-                                          id: "street",
-                                          type: "text",
-                                          placeholder: "Albuquerque"
-                                        },
-                                        domProps: { value: _vm.address },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.address = $event.target.value
-                                          }
+                                          xmlns: "http://www.w3.org/2000/svg",
+                                          viewBox: "0 0 24 24",
+                                          fill: "none",
+                                          stroke: "currentColor",
+                                          "stroke-width": "1",
+                                          "stroke-linecap": "round",
+                                          "stroke-linejoin": "round"
                                         }
-                                      })
+                                      },
+                                      [
+                                        _c("polyline", {
+                                          attrs: { points: "18 15 12 9 6 15" }
+                                        })
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _vm.method === "braintree"
+                                  ? _c("div", { staticClass: "mt-4" }, [
+                                      _c("input", {
+                                        attrs: {
+                                          type: "hidden",
+                                          name: "_type",
+                                          value: "braintree"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        attrs: {
+                                          id: "nonce",
+                                          name: "payment_method_nonce",
+                                          type: "hidden"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _vm._m(2)
                                     ])
-                                  ]
-                                )
-                              ]
-                            )
-                          ]
-                        ),
+                                  : _vm._e()
+                              ])
+                            ]
+                          )
+                        ]),
                         _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "w-full mb-6  border border-gray-300 p-3"
-                          },
-                          [
-                            _c(
-                              "h3",
-                              {
-                                staticClass:
-                                  "text-sm font-semibold text-custom-light-black mb-6 w-full px-2"
-                              },
-                              [_vm._v("Payment Method")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "flex items-center mb-4 justify-between rounded w-full border px-4 py-3 border-gray-300 group hover:border-green-600 cursor-pointer",
-                                class:
-                                  _vm.method === "stripe"
-                                    ? "border-green-600"
-                                    : "",
-                                on: {
-                                  click: function($event) {
-                                    return _vm.paymentOption("stripe")
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  {
-                                    staticClass:
-                                      "text-sm ml-8 font-semibold text-custom-light-black"
-                                  },
-                                  [_vm._v("Stripe")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "svg",
-                                  {
-                                    staticClass:
-                                      "w-8 h-8 mr-2 text-custom-light-black",
-                                    class:
-                                      _vm.method === "stripe"
-                                        ? "hidden"
-                                        : "block",
-                                    attrs: {
-                                      xmlns: "http://www.w3.org/2000/svg",
-                                      viewBox: "0 0 24 24",
-                                      fill: "none",
-                                      stroke: "currentColor",
-                                      "stroke-width": "1",
-                                      "stroke-linecap": "round",
-                                      "stroke-linejoin": "round"
-                                    }
-                                  },
-                                  [
-                                    _c("polyline", {
-                                      attrs: { points: "6 9 12 15 18 9" }
-                                    })
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "svg",
-                                  {
-                                    staticClass:
-                                      "w-8 h-8 mr-2 text-custom-light-black",
-                                    class:
-                                      _vm.method === "stripe"
-                                        ? "block"
-                                        : "hidden",
-                                    attrs: {
-                                      xmlns: "http://www.w3.org/2000/svg",
-                                      viewBox: "0 0 24 24",
-                                      fill: "none",
-                                      stroke: "currentColor",
-                                      "stroke-width": "1",
-                                      "stroke-linecap": "round",
-                                      "stroke-linejoin": "round"
-                                    }
-                                  },
-                                  [
-                                    _c("polyline", {
-                                      attrs: { points: "18 15 12 9 6 15" }
-                                    })
-                                  ]
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _vm.method === "stripe"
-                              ? _c("div", { staticClass: "mt-4" }, [_vm._m(1)])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _vm.method === "paypal"
-                              ? _c("div", { staticClass: "mb-3 mt-4" }, [
-                                  _c("input", {
-                                    attrs: {
-                                      type: "hidden",
-                                      name: "_type",
-                                      value: "paypal"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    attrs: {
-                                      id: "nonce",
-                                      name: "payment_method_nonce",
-                                      type: "hidden"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("div", { attrs: { id: "paypal-button" } })
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "flex items-center mb-4 justify-between rounded w-full border px-4 py-3 border-gray-300 group hover:border-green-600 cursor-pointer",
-                                class:
-                                  _vm.method === "braintree"
-                                    ? "border-green-600"
-                                    : "",
-                                on: {
-                                  click: function($event) {
-                                    return _vm.paymentOption("braintree")
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  {
-                                    staticClass:
-                                      "text-sm ml-8 font-semibold text-custom-light-black"
-                                  },
-                                  [_vm._v("Braintree")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "svg",
-                                  {
-                                    staticClass:
-                                      "w-8 h-8 mr-2 text-custom-light-black",
-                                    class:
-                                      _vm.method === "braintree"
-                                        ? "hidden"
-                                        : "block",
-                                    attrs: {
-                                      xmlns: "http://www.w3.org/2000/svg",
-                                      viewBox: "0 0 24 24",
-                                      fill: "none",
-                                      stroke: "currentColor",
-                                      "stroke-width": "1",
-                                      "stroke-linecap": "round",
-                                      "stroke-linejoin": "round"
-                                    }
-                                  },
-                                  [
-                                    _c("polyline", {
-                                      attrs: { points: "6 9 12 15 18 9" }
-                                    })
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "svg",
-                                  {
-                                    staticClass:
-                                      "w-8 h-8 mr-2 text-custom-light-black",
-                                    class:
-                                      _vm.method === "braintree"
-                                        ? "block"
-                                        : "hidden",
-                                    attrs: {
-                                      xmlns: "http://www.w3.org/2000/svg",
-                                      viewBox: "0 0 24 24",
-                                      fill: "none",
-                                      stroke: "currentColor",
-                                      "stroke-width": "1",
-                                      "stroke-linecap": "round",
-                                      "stroke-linejoin": "round"
-                                    }
-                                  },
-                                  [
-                                    _c("polyline", {
-                                      attrs: { points: "18 15 12 9 6 15" }
-                                    })
-                                  ]
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _vm.method === "braintree"
-                              ? _c("div", { staticClass: "mt-4" }, [
-                                  _c("input", {
-                                    attrs: {
-                                      type: "hidden",
-                                      name: "_type",
-                                      value: "braintree"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    attrs: {
-                                      id: "nonce",
-                                      name: "payment_method_nonce",
-                                      type: "hidden"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm._m(2)
-                                ])
-                              : _vm._e()
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _vm._m(3)
-                    ]),
+                        !_vm.$v.$error
+                          ? _c("div", { staticClass: "flex justify-end" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "mt-3 ml-2 px-8 w-full md:w-auto py-4 hover:opacity-75 rounded-lg text-white font-bold text-lg bg-custom-light-orange ",
+                                  class: _vm.submitStatus
+                                    ? "visible"
+                                    : "invisible",
+                                  attrs: { type: "submit" }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                            Pay Now\n                        "
+                                  )
+                                ]
+                              )
+                            ])
+                          : _vm._e()
+                      ]
+                    ),
                     _vm._v(" "),
                     _c(
                       "div",
@@ -41104,7 +41519,9 @@ var render = function() {
                                       "h-40 w-full md:w-40 rounded-lg object-cover object-center",
                                     attrs: {
                                       src:
-                                        "/storage/" + product.options.imageUrl
+                                        "/storage/" + product.options.imageUrl,
+                                      onerror:
+                                        "this.src='https://via.placeholder.com/300'"
                                     }
                                   }),
                                   _vm._v(" "),
@@ -41411,22 +41828,6 @@ var staticRenderFns = [
         ])
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex justify-end" }, [
-      _c(
-        "button",
-        {
-          staticClass:
-            "mt-3 ml-2 px-8 w-full md:w-auto py-4 hover:opacity-75 rounded-lg text-white font-bold text-lg bg-custom-light-orange ",
-          attrs: { type: "submit" }
-        },
-        [_vm._v("Pay Now")]
-      )
-    ])
   }
 ]
 render._withStripped = true
@@ -42339,7 +42740,11 @@ var render = function() {
                           ? _c("img", {
                               staticClass:
                                 "w-10 h-10 rounded-full object-cover object-center text-custom-light-black ",
-                              attrs: { src: "/storage/" + _vm.customer.avatar }
+                              attrs: {
+                                src: "/storage/" + _vm.customer.avatar,
+                                onerror:
+                                  "this.src='https://via.placeholder.com/300'"
+                              }
                             })
                           : _c(
                               "svg",
@@ -42695,7 +43100,7 @@ var render = function() {
                               "div",
                               {
                                 staticClass:
-                                  "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 items-center"
+                                  "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 items-center gap-4"
                               },
                               _vm._l(_vm.shoesArray, function(s) {
                                 return _c(
@@ -42709,8 +43114,12 @@ var render = function() {
                                   [
                                     _c("img", {
                                       staticClass:
-                                        "w-full h-64 object-cover md:w-64 rounded-lg",
-                                      attrs: { src: "/storage/" + s.imageUrl }
+                                        "w-full object-cover  rounded-lg",
+                                      attrs: {
+                                        src: "/storage/" + s.imageUrl,
+                                        onerror:
+                                          "this.src='https://via.placeholder.com/300'"
+                                      }
                                     })
                                   ]
                                 )
@@ -42818,13 +43227,13 @@ var render = function() {
               "button",
               {
                 staticClass:
-                  "p-3 rounded-lg text-white text-md hover:opacity-75",
+                  "p-3  rounded-lg text-white text-md hover:opacity-75",
                 class: _vm.isAdded
-                  ? "cursor-not-allowed bg-green-900 opacity-50"
-                  : "bg-black",
+                  ? "cursor-not-allowed  opacity-50"
+                  : "bg-custom-light-orange",
                 attrs: { type: "submit" }
               },
-              [_vm._v(" Add To Cart")]
+              [_vm._v(" Add to Cart")]
             )
           ]
         )
@@ -56073,6 +56482,1951 @@ if (false) {} else {
 
 /***/ }),
 
+/***/ "./node_modules/vuelidate/lib/index.js":
+/*!*********************************************!*\
+  !*** ./node_modules/vuelidate/lib/index.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Vuelidate = Vuelidate;
+Object.defineProperty(exports, "withParams", {
+  enumerable: true,
+  get: function get() {
+    return _params.withParams;
+  }
+});
+exports.default = exports.validationMixin = void 0;
+
+var _vval = __webpack_require__(/*! ./vval */ "./node_modules/vuelidate/lib/vval.js");
+
+var _params = __webpack_require__(/*! ./params */ "./node_modules/vuelidate/lib/params.js");
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var NIL = function NIL() {
+  return null;
+};
+
+var buildFromKeys = function buildFromKeys(keys, fn, keyFn) {
+  return keys.reduce(function (build, key) {
+    build[keyFn ? keyFn(key) : key] = fn(key);
+    return build;
+  }, {});
+};
+
+function isFunction(val) {
+  return typeof val === 'function';
+}
+
+function isObject(val) {
+  return val !== null && (_typeof(val) === 'object' || isFunction(val));
+}
+
+function isPromise(object) {
+  return isObject(object) && isFunction(object.then);
+}
+
+var getPath = function getPath(ctx, obj, path, fallback) {
+  if (typeof path === 'function') {
+    return path.call(ctx, obj, fallback);
+  }
+
+  path = Array.isArray(path) ? path : path.split('.');
+
+  for (var i = 0; i < path.length; i++) {
+    if (obj && _typeof(obj) === 'object') {
+      obj = obj[path[i]];
+    } else {
+      return fallback;
+    }
+  }
+
+  return typeof obj === 'undefined' ? fallback : obj;
+};
+
+var __isVuelidateAsyncVm = '__isVuelidateAsyncVm';
+
+function makePendingAsyncVm(Vue, promise) {
+  var asyncVm = new Vue({
+    data: {
+      p: true,
+      v: false
+    }
+  });
+  promise.then(function (value) {
+    asyncVm.p = false;
+    asyncVm.v = value;
+  }, function (error) {
+    asyncVm.p = false;
+    asyncVm.v = false;
+    throw error;
+  });
+  asyncVm[__isVuelidateAsyncVm] = true;
+  return asyncVm;
+}
+
+var validationGetters = {
+  $invalid: function $invalid() {
+    var _this = this;
+
+    var proxy = this.proxy;
+    return this.nestedKeys.some(function (nested) {
+      return _this.refProxy(nested).$invalid;
+    }) || this.ruleKeys.some(function (rule) {
+      return !proxy[rule];
+    });
+  },
+  $dirty: function $dirty() {
+    var _this2 = this;
+
+    if (this.dirty) {
+      return true;
+    }
+
+    if (this.nestedKeys.length === 0) {
+      return false;
+    }
+
+    return this.nestedKeys.every(function (key) {
+      return _this2.refProxy(key).$dirty;
+    });
+  },
+  $anyDirty: function $anyDirty() {
+    var _this3 = this;
+
+    if (this.dirty) {
+      return true;
+    }
+
+    if (this.nestedKeys.length === 0) {
+      return false;
+    }
+
+    return this.nestedKeys.some(function (key) {
+      return _this3.refProxy(key).$anyDirty;
+    });
+  },
+  $error: function $error() {
+    return this.$dirty && !this.$pending && this.$invalid;
+  },
+  $anyError: function $anyError() {
+    var _this4 = this;
+
+    if (this.$error) return true;
+    return this.nestedKeys.some(function (key) {
+      return _this4.refProxy(key).$anyError;
+    });
+  },
+  $pending: function $pending() {
+    var _this5 = this;
+
+    return this.ruleKeys.some(function (key) {
+      return _this5.getRef(key).$pending;
+    }) || this.nestedKeys.some(function (key) {
+      return _this5.refProxy(key).$pending;
+    });
+  },
+  $params: function $params() {
+    var _this6 = this;
+
+    var vals = this.validations;
+    return _objectSpread({}, buildFromKeys(this.nestedKeys, function (key) {
+      return vals[key] && vals[key].$params || null;
+    }), {}, buildFromKeys(this.ruleKeys, function (key) {
+      return _this6.getRef(key).$params;
+    }));
+  }
+};
+
+function setDirtyRecursive(newState) {
+  this.dirty = newState;
+  var proxy = this.proxy;
+  var method = newState ? '$touch' : '$reset';
+  this.nestedKeys.forEach(function (key) {
+    proxy[key][method]();
+  });
+}
+
+var validationMethods = {
+  $touch: function $touch() {
+    setDirtyRecursive.call(this, true);
+  },
+  $reset: function $reset() {
+    setDirtyRecursive.call(this, false);
+  },
+  $flattenParams: function $flattenParams() {
+    var proxy = this.proxy;
+    var params = [];
+
+    for (var key in this.$params) {
+      if (this.isNested(key)) {
+        var childParams = proxy[key].$flattenParams();
+
+        for (var j = 0; j < childParams.length; j++) {
+          childParams[j].path.unshift(key);
+        }
+
+        params = params.concat(childParams);
+      } else {
+        params.push({
+          path: [],
+          name: key,
+          params: this.$params[key]
+        });
+      }
+    }
+
+    return params;
+  }
+};
+var getterNames = Object.keys(validationGetters);
+var methodNames = Object.keys(validationMethods);
+var _cachedComponent = null;
+
+var getComponent = function getComponent(Vue) {
+  if (_cachedComponent) {
+    return _cachedComponent;
+  }
+
+  var VBase = Vue.extend({
+    computed: {
+      refs: function refs() {
+        var oldVval = this._vval;
+        this._vval = this.children;
+        (0, _vval.patchChildren)(oldVval, this._vval);
+        var refs = {};
+
+        this._vval.forEach(function (c) {
+          refs[c.key] = c.vm;
+        });
+
+        return refs;
+      }
+    },
+    beforeCreate: function beforeCreate() {
+      this._vval = null;
+    },
+    beforeDestroy: function beforeDestroy() {
+      if (this._vval) {
+        (0, _vval.patchChildren)(this._vval);
+        this._vval = null;
+      }
+    },
+    methods: {
+      getModel: function getModel() {
+        return this.lazyModel ? this.lazyModel(this.prop) : this.model;
+      },
+      getModelKey: function getModelKey(key) {
+        var model = this.getModel();
+
+        if (model) {
+          return model[key];
+        }
+      },
+      hasIter: function hasIter() {
+        return false;
+      }
+    }
+  });
+  var ValidationRule = VBase.extend({
+    data: function data() {
+      return {
+        rule: null,
+        lazyModel: null,
+        model: null,
+        lazyParentModel: null,
+        rootModel: null
+      };
+    },
+    methods: {
+      runRule: function runRule(parent) {
+        var model = this.getModel();
+        (0, _params.pushParams)();
+        var rawOutput = this.rule.call(this.rootModel, model, parent);
+        var output = isPromise(rawOutput) ? makePendingAsyncVm(Vue, rawOutput) : rawOutput;
+        var rawParams = (0, _params.popParams)();
+        var params = rawParams && rawParams.$sub ? rawParams.$sub.length > 1 ? rawParams : rawParams.$sub[0] : null;
+        return {
+          output: output,
+          params: params
+        };
+      }
+    },
+    computed: {
+      run: function run() {
+        var _this7 = this;
+
+        var parent = this.lazyParentModel();
+
+        var isArrayDependant = Array.isArray(parent) && parent.__ob__;
+
+        if (isArrayDependant) {
+          var arrayDep = parent.__ob__.dep;
+          arrayDep.depend();
+          var target = arrayDep.constructor.target;
+
+          if (!this._indirectWatcher) {
+            var Watcher = target.constructor;
+            this._indirectWatcher = new Watcher(this, function () {
+              return _this7.runRule(parent);
+            }, null, {
+              lazy: true
+            });
+          }
+
+          var model = this.getModel();
+
+          if (!this._indirectWatcher.dirty && this._lastModel === model) {
+            this._indirectWatcher.depend();
+
+            return target.value;
+          }
+
+          this._lastModel = model;
+
+          this._indirectWatcher.evaluate();
+
+          this._indirectWatcher.depend();
+        } else if (this._indirectWatcher) {
+          this._indirectWatcher.teardown();
+
+          this._indirectWatcher = null;
+        }
+
+        return this._indirectWatcher ? this._indirectWatcher.value : this.runRule(parent);
+      },
+      $params: function $params() {
+        return this.run.params;
+      },
+      proxy: function proxy() {
+        var output = this.run.output;
+
+        if (output[__isVuelidateAsyncVm]) {
+          return !!output.v;
+        }
+
+        return !!output;
+      },
+      $pending: function $pending() {
+        var output = this.run.output;
+
+        if (output[__isVuelidateAsyncVm]) {
+          return output.p;
+        }
+
+        return false;
+      }
+    },
+    destroyed: function destroyed() {
+      if (this._indirectWatcher) {
+        this._indirectWatcher.teardown();
+
+        this._indirectWatcher = null;
+      }
+    }
+  });
+  var Validation = VBase.extend({
+    data: function data() {
+      return {
+        dirty: false,
+        validations: null,
+        lazyModel: null,
+        model: null,
+        prop: null,
+        lazyParentModel: null,
+        rootModel: null
+      };
+    },
+    methods: _objectSpread({}, validationMethods, {
+      refProxy: function refProxy(key) {
+        return this.getRef(key).proxy;
+      },
+      getRef: function getRef(key) {
+        return this.refs[key];
+      },
+      isNested: function isNested(key) {
+        return typeof this.validations[key] !== 'function';
+      }
+    }),
+    computed: _objectSpread({}, validationGetters, {
+      nestedKeys: function nestedKeys() {
+        return this.keys.filter(this.isNested);
+      },
+      ruleKeys: function ruleKeys() {
+        var _this8 = this;
+
+        return this.keys.filter(function (k) {
+          return !_this8.isNested(k);
+        });
+      },
+      keys: function keys() {
+        return Object.keys(this.validations).filter(function (k) {
+          return k !== '$params';
+        });
+      },
+      proxy: function proxy() {
+        var _this9 = this;
+
+        var keyDefs = buildFromKeys(this.keys, function (key) {
+          return {
+            enumerable: true,
+            configurable: true,
+            get: function get() {
+              return _this9.refProxy(key);
+            }
+          };
+        });
+        var getterDefs = buildFromKeys(getterNames, function (key) {
+          return {
+            enumerable: true,
+            configurable: true,
+            get: function get() {
+              return _this9[key];
+            }
+          };
+        });
+        var methodDefs = buildFromKeys(methodNames, function (key) {
+          return {
+            enumerable: false,
+            configurable: true,
+            get: function get() {
+              return _this9[key];
+            }
+          };
+        });
+        var iterDefs = this.hasIter() ? {
+          $iter: {
+            enumerable: true,
+            value: Object.defineProperties({}, _objectSpread({}, keyDefs))
+          }
+        } : {};
+        return Object.defineProperties({}, _objectSpread({}, keyDefs, {}, iterDefs, {
+          $model: {
+            enumerable: true,
+            get: function get() {
+              var parent = _this9.lazyParentModel();
+
+              if (parent != null) {
+                return parent[_this9.prop];
+              } else {
+                return null;
+              }
+            },
+            set: function set(value) {
+              var parent = _this9.lazyParentModel();
+
+              if (parent != null) {
+                parent[_this9.prop] = value;
+
+                _this9.$touch();
+              }
+            }
+          }
+        }, getterDefs, {}, methodDefs));
+      },
+      children: function children() {
+        var _this10 = this;
+
+        return [].concat(_toConsumableArray(this.nestedKeys.map(function (key) {
+          return renderNested(_this10, key);
+        })), _toConsumableArray(this.ruleKeys.map(function (key) {
+          return renderRule(_this10, key);
+        }))).filter(Boolean);
+      }
+    })
+  });
+  var GroupValidation = Validation.extend({
+    methods: {
+      isNested: function isNested(key) {
+        return typeof this.validations[key]() !== 'undefined';
+      },
+      getRef: function getRef(key) {
+        var vm = this;
+        return {
+          get proxy() {
+            return vm.validations[key]() || false;
+          }
+
+        };
+      }
+    }
+  });
+  var EachValidation = Validation.extend({
+    computed: {
+      keys: function keys() {
+        var model = this.getModel();
+
+        if (isObject(model)) {
+          return Object.keys(model);
+        } else {
+          return [];
+        }
+      },
+      tracker: function tracker() {
+        var _this11 = this;
+
+        var trackBy = this.validations.$trackBy;
+        return trackBy ? function (key) {
+          return "".concat(getPath(_this11.rootModel, _this11.getModelKey(key), trackBy));
+        } : function (x) {
+          return "".concat(x);
+        };
+      },
+      getModelLazy: function getModelLazy() {
+        var _this12 = this;
+
+        return function () {
+          return _this12.getModel();
+        };
+      },
+      children: function children() {
+        var _this13 = this;
+
+        var def = this.validations;
+        var model = this.getModel();
+
+        var validations = _objectSpread({}, def);
+
+        delete validations['$trackBy'];
+        var usedTracks = {};
+        return this.keys.map(function (key) {
+          var track = _this13.tracker(key);
+
+          if (usedTracks.hasOwnProperty(track)) {
+            return null;
+          }
+
+          usedTracks[track] = true;
+          return (0, _vval.h)(Validation, track, {
+            validations: validations,
+            prop: key,
+            lazyParentModel: _this13.getModelLazy,
+            model: model[key],
+            rootModel: _this13.rootModel
+          });
+        }).filter(Boolean);
+      }
+    },
+    methods: {
+      isNested: function isNested() {
+        return true;
+      },
+      getRef: function getRef(key) {
+        return this.refs[this.tracker(key)];
+      },
+      hasIter: function hasIter() {
+        return true;
+      }
+    }
+  });
+
+  var renderNested = function renderNested(vm, key) {
+    if (key === '$each') {
+      return (0, _vval.h)(EachValidation, key, {
+        validations: vm.validations[key],
+        lazyParentModel: vm.lazyParentModel,
+        prop: key,
+        lazyModel: vm.getModel,
+        rootModel: vm.rootModel
+      });
+    }
+
+    var validations = vm.validations[key];
+
+    if (Array.isArray(validations)) {
+      var root = vm.rootModel;
+      var refVals = buildFromKeys(validations, function (path) {
+        return function () {
+          return getPath(root, root.$v, path);
+        };
+      }, function (v) {
+        return Array.isArray(v) ? v.join('.') : v;
+      });
+      return (0, _vval.h)(GroupValidation, key, {
+        validations: refVals,
+        lazyParentModel: NIL,
+        prop: key,
+        lazyModel: NIL,
+        rootModel: root
+      });
+    }
+
+    return (0, _vval.h)(Validation, key, {
+      validations: validations,
+      lazyParentModel: vm.getModel,
+      prop: key,
+      lazyModel: vm.getModelKey,
+      rootModel: vm.rootModel
+    });
+  };
+
+  var renderRule = function renderRule(vm, key) {
+    return (0, _vval.h)(ValidationRule, key, {
+      rule: vm.validations[key],
+      lazyParentModel: vm.lazyParentModel,
+      lazyModel: vm.getModel,
+      rootModel: vm.rootModel
+    });
+  };
+
+  _cachedComponent = {
+    VBase: VBase,
+    Validation: Validation
+  };
+  return _cachedComponent;
+};
+
+var _cachedVue = null;
+
+function getVue(rootVm) {
+  if (_cachedVue) return _cachedVue;
+  var Vue = rootVm.constructor;
+
+  while (Vue.super) {
+    Vue = Vue.super;
+  }
+
+  _cachedVue = Vue;
+  return Vue;
+}
+
+var validateModel = function validateModel(model, validations) {
+  var Vue = getVue(model);
+
+  var _getComponent = getComponent(Vue),
+      Validation = _getComponent.Validation,
+      VBase = _getComponent.VBase;
+
+  var root = new VBase({
+    computed: {
+      children: function children() {
+        var vals = typeof validations === 'function' ? validations.call(model) : validations;
+        return [(0, _vval.h)(Validation, '$v', {
+          validations: vals,
+          lazyParentModel: NIL,
+          prop: '$v',
+          model: model,
+          rootModel: model
+        })];
+      }
+    }
+  });
+  return root;
+};
+
+var validationMixin = {
+  data: function data() {
+    var vals = this.$options.validations;
+
+    if (vals) {
+      this._vuelidate = validateModel(this, vals);
+    }
+
+    return {};
+  },
+  beforeCreate: function beforeCreate() {
+    var options = this.$options;
+    var vals = options.validations;
+    if (!vals) return;
+    if (!options.computed) options.computed = {};
+    if (options.computed.$v) return;
+
+    options.computed.$v = function () {
+      return this._vuelidate ? this._vuelidate.refs.$v.proxy : null;
+    };
+  },
+  beforeDestroy: function beforeDestroy() {
+    if (this._vuelidate) {
+      this._vuelidate.$destroy();
+
+      this._vuelidate = null;
+    }
+  }
+};
+exports.validationMixin = validationMixin;
+
+function Vuelidate(Vue) {
+  Vue.mixin(validationMixin);
+}
+
+var _default = Vuelidate;
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/params.js":
+/*!**********************************************!*\
+  !*** ./node_modules/vuelidate/lib/params.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.pushParams = pushParams;
+exports.popParams = popParams;
+exports.withParams = withParams;
+exports._setTarget = exports.target = void 0;
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var stack = [];
+var target = null;
+exports.target = target;
+
+var _setTarget = function _setTarget(x) {
+  exports.target = target = x;
+};
+
+exports._setTarget = _setTarget;
+
+function pushParams() {
+  if (target !== null) {
+    stack.push(target);
+  }
+
+  exports.target = target = {};
+}
+
+function popParams() {
+  var lastTarget = target;
+  var newTarget = exports.target = target = stack.pop() || null;
+
+  if (newTarget) {
+    if (!Array.isArray(newTarget.$sub)) {
+      newTarget.$sub = [];
+    }
+
+    newTarget.$sub.push(lastTarget);
+  }
+
+  return lastTarget;
+}
+
+function addParams(params) {
+  if (_typeof(params) === 'object' && !Array.isArray(params)) {
+    exports.target = target = _objectSpread({}, target, {}, params);
+  } else {
+    throw new Error('params must be an object');
+  }
+}
+
+function withParamsDirect(params, validator) {
+  return withParamsClosure(function (add) {
+    return function () {
+      add(params);
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return validator.apply(this, args);
+    };
+  });
+}
+
+function withParamsClosure(closure) {
+  var validator = closure(addParams);
+  return function () {
+    pushParams();
+
+    try {
+      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+      }
+
+      return validator.apply(this, args);
+    } finally {
+      popParams();
+    }
+  };
+}
+
+function withParams(paramsOrClosure, maybeValidator) {
+  if (_typeof(paramsOrClosure) === 'object' && maybeValidator !== undefined) {
+    return withParamsDirect(paramsOrClosure, maybeValidator);
+  }
+
+  return withParamsClosure(paramsOrClosure);
+}
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/alpha.js":
+/*!********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/alpha.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = (0, _common.regex)('alpha', /^[a-zA-Z]*$/);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/alphaNum.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/alphaNum.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = (0, _common.regex)('alphaNum', /^[a-zA-Z0-9]*$/);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/and.js":
+/*!******************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/and.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default() {
+  for (var _len = arguments.length, validators = new Array(_len), _key = 0; _key < _len; _key++) {
+    validators[_key] = arguments[_key];
+  }
+
+  return (0, _common.withParams)({
+    type: 'and'
+  }, function () {
+    var _this = this;
+
+    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+
+    return validators.length > 0 && validators.reduce(function (valid, fn) {
+      return valid && fn.apply(_this, args);
+    }, true);
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/between.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/between.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(min, max) {
+  return (0, _common.withParams)({
+    type: 'between',
+    min: min,
+    max: max
+  }, function (value) {
+    return !(0, _common.req)(value) || (!/\s/.test(value) || value instanceof Date) && +min <= +value && +max >= +value;
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/common.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/common.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "withParams", {
+  enumerable: true,
+  get: function get() {
+    return _withParams.default;
+  }
+});
+exports.regex = exports.ref = exports.len = exports.req = void 0;
+
+var _withParams = _interopRequireDefault(__webpack_require__(/*! ../withParams */ "./node_modules/vuelidate/lib/withParams.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var req = function req(value) {
+  if (Array.isArray(value)) return !!value.length;
+
+  if (value === undefined || value === null) {
+    return false;
+  }
+
+  if (value === false) {
+    return true;
+  }
+
+  if (value instanceof Date) {
+    return !isNaN(value.getTime());
+  }
+
+  if (_typeof(value) === 'object') {
+    for (var _ in value) {
+      return true;
+    }
+
+    return false;
+  }
+
+  return !!String(value).length;
+};
+
+exports.req = req;
+
+var len = function len(value) {
+  if (Array.isArray(value)) return value.length;
+
+  if (_typeof(value) === 'object') {
+    return Object.keys(value).length;
+  }
+
+  return String(value).length;
+};
+
+exports.len = len;
+
+var ref = function ref(reference, vm, parentVm) {
+  return typeof reference === 'function' ? reference.call(vm, parentVm) : parentVm[reference];
+};
+
+exports.ref = ref;
+
+var regex = function regex(type, expr) {
+  return (0, _withParams.default)({
+    type: type
+  }, function (value) {
+    return !req(value) || expr.test(value);
+  });
+};
+
+exports.regex = regex;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/decimal.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/decimal.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = (0, _common.regex)('decimal', /^[-]?\d*(\.\d+)?$/);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/email.js":
+/*!********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/email.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var emailRegex = /(^$|^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$)/;
+
+var _default = (0, _common.regex)('email', emailRegex);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/index.js":
+/*!********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/index.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "alpha", {
+  enumerable: true,
+  get: function get() {
+    return _alpha.default;
+  }
+});
+Object.defineProperty(exports, "alphaNum", {
+  enumerable: true,
+  get: function get() {
+    return _alphaNum.default;
+  }
+});
+Object.defineProperty(exports, "numeric", {
+  enumerable: true,
+  get: function get() {
+    return _numeric.default;
+  }
+});
+Object.defineProperty(exports, "between", {
+  enumerable: true,
+  get: function get() {
+    return _between.default;
+  }
+});
+Object.defineProperty(exports, "email", {
+  enumerable: true,
+  get: function get() {
+    return _email.default;
+  }
+});
+Object.defineProperty(exports, "ipAddress", {
+  enumerable: true,
+  get: function get() {
+    return _ipAddress.default;
+  }
+});
+Object.defineProperty(exports, "macAddress", {
+  enumerable: true,
+  get: function get() {
+    return _macAddress.default;
+  }
+});
+Object.defineProperty(exports, "maxLength", {
+  enumerable: true,
+  get: function get() {
+    return _maxLength.default;
+  }
+});
+Object.defineProperty(exports, "minLength", {
+  enumerable: true,
+  get: function get() {
+    return _minLength.default;
+  }
+});
+Object.defineProperty(exports, "required", {
+  enumerable: true,
+  get: function get() {
+    return _required.default;
+  }
+});
+Object.defineProperty(exports, "requiredIf", {
+  enumerable: true,
+  get: function get() {
+    return _requiredIf.default;
+  }
+});
+Object.defineProperty(exports, "requiredUnless", {
+  enumerable: true,
+  get: function get() {
+    return _requiredUnless.default;
+  }
+});
+Object.defineProperty(exports, "sameAs", {
+  enumerable: true,
+  get: function get() {
+    return _sameAs.default;
+  }
+});
+Object.defineProperty(exports, "url", {
+  enumerable: true,
+  get: function get() {
+    return _url.default;
+  }
+});
+Object.defineProperty(exports, "or", {
+  enumerable: true,
+  get: function get() {
+    return _or.default;
+  }
+});
+Object.defineProperty(exports, "and", {
+  enumerable: true,
+  get: function get() {
+    return _and.default;
+  }
+});
+Object.defineProperty(exports, "not", {
+  enumerable: true,
+  get: function get() {
+    return _not.default;
+  }
+});
+Object.defineProperty(exports, "minValue", {
+  enumerable: true,
+  get: function get() {
+    return _minValue.default;
+  }
+});
+Object.defineProperty(exports, "maxValue", {
+  enumerable: true,
+  get: function get() {
+    return _maxValue.default;
+  }
+});
+Object.defineProperty(exports, "integer", {
+  enumerable: true,
+  get: function get() {
+    return _integer.default;
+  }
+});
+Object.defineProperty(exports, "decimal", {
+  enumerable: true,
+  get: function get() {
+    return _decimal.default;
+  }
+});
+exports.helpers = void 0;
+
+var _alpha = _interopRequireDefault(__webpack_require__(/*! ./alpha */ "./node_modules/vuelidate/lib/validators/alpha.js"));
+
+var _alphaNum = _interopRequireDefault(__webpack_require__(/*! ./alphaNum */ "./node_modules/vuelidate/lib/validators/alphaNum.js"));
+
+var _numeric = _interopRequireDefault(__webpack_require__(/*! ./numeric */ "./node_modules/vuelidate/lib/validators/numeric.js"));
+
+var _between = _interopRequireDefault(__webpack_require__(/*! ./between */ "./node_modules/vuelidate/lib/validators/between.js"));
+
+var _email = _interopRequireDefault(__webpack_require__(/*! ./email */ "./node_modules/vuelidate/lib/validators/email.js"));
+
+var _ipAddress = _interopRequireDefault(__webpack_require__(/*! ./ipAddress */ "./node_modules/vuelidate/lib/validators/ipAddress.js"));
+
+var _macAddress = _interopRequireDefault(__webpack_require__(/*! ./macAddress */ "./node_modules/vuelidate/lib/validators/macAddress.js"));
+
+var _maxLength = _interopRequireDefault(__webpack_require__(/*! ./maxLength */ "./node_modules/vuelidate/lib/validators/maxLength.js"));
+
+var _minLength = _interopRequireDefault(__webpack_require__(/*! ./minLength */ "./node_modules/vuelidate/lib/validators/minLength.js"));
+
+var _required = _interopRequireDefault(__webpack_require__(/*! ./required */ "./node_modules/vuelidate/lib/validators/required.js"));
+
+var _requiredIf = _interopRequireDefault(__webpack_require__(/*! ./requiredIf */ "./node_modules/vuelidate/lib/validators/requiredIf.js"));
+
+var _requiredUnless = _interopRequireDefault(__webpack_require__(/*! ./requiredUnless */ "./node_modules/vuelidate/lib/validators/requiredUnless.js"));
+
+var _sameAs = _interopRequireDefault(__webpack_require__(/*! ./sameAs */ "./node_modules/vuelidate/lib/validators/sameAs.js"));
+
+var _url = _interopRequireDefault(__webpack_require__(/*! ./url */ "./node_modules/vuelidate/lib/validators/url.js"));
+
+var _or = _interopRequireDefault(__webpack_require__(/*! ./or */ "./node_modules/vuelidate/lib/validators/or.js"));
+
+var _and = _interopRequireDefault(__webpack_require__(/*! ./and */ "./node_modules/vuelidate/lib/validators/and.js"));
+
+var _not = _interopRequireDefault(__webpack_require__(/*! ./not */ "./node_modules/vuelidate/lib/validators/not.js"));
+
+var _minValue = _interopRequireDefault(__webpack_require__(/*! ./minValue */ "./node_modules/vuelidate/lib/validators/minValue.js"));
+
+var _maxValue = _interopRequireDefault(__webpack_require__(/*! ./maxValue */ "./node_modules/vuelidate/lib/validators/maxValue.js"));
+
+var _integer = _interopRequireDefault(__webpack_require__(/*! ./integer */ "./node_modules/vuelidate/lib/validators/integer.js"));
+
+var _decimal = _interopRequireDefault(__webpack_require__(/*! ./decimal */ "./node_modules/vuelidate/lib/validators/decimal.js"));
+
+var helpers = _interopRequireWildcard(__webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js"));
+
+exports.helpers = helpers;
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/integer.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/integer.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = (0, _common.regex)('integer', /(^[0-9]*$)|(^-[0-9]+$)/);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/ipAddress.js":
+/*!************************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/ipAddress.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = (0, _common.withParams)({
+  type: 'ipAddress'
+}, function (value) {
+  if (!(0, _common.req)(value)) {
+    return true;
+  }
+
+  if (typeof value !== 'string') {
+    return false;
+  }
+
+  var nibbles = value.split('.');
+  return nibbles.length === 4 && nibbles.every(nibbleValid);
+});
+
+exports.default = _default;
+
+var nibbleValid = function nibbleValid(nibble) {
+  if (nibble.length > 3 || nibble.length === 0) {
+    return false;
+  }
+
+  if (nibble[0] === '0' && nibble !== '0') {
+    return false;
+  }
+
+  if (!nibble.match(/^\d+$/)) {
+    return false;
+  }
+
+  var numeric = +nibble | 0;
+  return numeric >= 0 && numeric <= 255;
+};
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/macAddress.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/macAddress.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default() {
+  var separator = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ':';
+  return (0, _common.withParams)({
+    type: 'macAddress'
+  }, function (value) {
+    if (!(0, _common.req)(value)) {
+      return true;
+    }
+
+    if (typeof value !== 'string') {
+      return false;
+    }
+
+    var parts = typeof separator === 'string' && separator !== '' ? value.split(separator) : value.length === 12 || value.length === 16 ? value.match(/.{2}/g) : null;
+    return parts !== null && (parts.length === 6 || parts.length === 8) && parts.every(hexValid);
+  });
+};
+
+exports.default = _default;
+
+var hexValid = function hexValid(hex) {
+  return hex.toLowerCase().match(/^[0-9a-f]{2}$/);
+};
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/maxLength.js":
+/*!************************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/maxLength.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(length) {
+  return (0, _common.withParams)({
+    type: 'maxLength',
+    max: length
+  }, function (value) {
+    return !(0, _common.req)(value) || (0, _common.len)(value) <= length;
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/maxValue.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/maxValue.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(max) {
+  return (0, _common.withParams)({
+    type: 'maxValue',
+    max: max
+  }, function (value) {
+    return !(0, _common.req)(value) || (!/\s/.test(value) || value instanceof Date) && +value <= +max;
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/minLength.js":
+/*!************************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/minLength.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(length) {
+  return (0, _common.withParams)({
+    type: 'minLength',
+    min: length
+  }, function (value) {
+    return !(0, _common.req)(value) || (0, _common.len)(value) >= length;
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/minValue.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/minValue.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(min) {
+  return (0, _common.withParams)({
+    type: 'minValue',
+    min: min
+  }, function (value) {
+    return !(0, _common.req)(value) || (!/\s/.test(value) || value instanceof Date) && +value >= +min;
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/not.js":
+/*!******************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/not.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(validator) {
+  return (0, _common.withParams)({
+    type: 'not'
+  }, function (value, vm) {
+    return !(0, _common.req)(value) || !validator.call(this, value, vm);
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/numeric.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/numeric.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = (0, _common.regex)('numeric', /^[0-9]*$/);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/or.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/or.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default() {
+  for (var _len = arguments.length, validators = new Array(_len), _key = 0; _key < _len; _key++) {
+    validators[_key] = arguments[_key];
+  }
+
+  return (0, _common.withParams)({
+    type: 'or'
+  }, function () {
+    var _this = this;
+
+    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+
+    return validators.length > 0 && validators.reduce(function (valid, fn) {
+      return valid || fn.apply(_this, args);
+    }, false);
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/required.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/required.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = (0, _common.withParams)({
+  type: 'required'
+}, function (value) {
+  if (typeof value === 'string') {
+    return (0, _common.req)(value.trim());
+  }
+
+  return (0, _common.req)(value);
+});
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/requiredIf.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/requiredIf.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(prop) {
+  return (0, _common.withParams)({
+    type: 'requiredIf',
+    prop: prop
+  }, function (value, parentVm) {
+    return (0, _common.ref)(prop, this, parentVm) ? (0, _common.req)(value) : true;
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/requiredUnless.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/requiredUnless.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(prop) {
+  return (0, _common.withParams)({
+    type: 'requiredUnless',
+    prop: prop
+  }, function (value, parentVm) {
+    return !(0, _common.ref)(prop, this, parentVm) ? (0, _common.req)(value) : true;
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/sameAs.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/sameAs.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(equalTo) {
+  return (0, _common.withParams)({
+    type: 'sameAs',
+    eq: equalTo
+  }, function (value, parentVm) {
+    return value === (0, _common.ref)(equalTo, this, parentVm);
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/url.js":
+/*!******************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/url.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var urlRegex = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i;
+
+var _default = (0, _common.regex)('url', urlRegex);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/vval.js":
+/*!********************************************!*\
+  !*** ./node_modules/vuelidate/lib/vval.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.patchChildren = patchChildren;
+exports.h = h;
+
+function isUndef(v) {
+  return v === null || v === undefined;
+}
+
+function isDef(v) {
+  return v !== null && v !== undefined;
+}
+
+function sameVval(oldVval, vval) {
+  return vval.tag === oldVval.tag && vval.key === oldVval.key;
+}
+
+function createVm(vval) {
+  var Vm = vval.tag;
+  vval.vm = new Vm({
+    data: vval.args
+  });
+}
+
+function updateVval(vval) {
+  var keys = Object.keys(vval.args);
+
+  for (var i = 0; i < keys.length; i++) {
+    keys.forEach(function (k) {
+      vval.vm[k] = vval.args[k];
+    });
+  }
+}
+
+function createKeyToOldIdx(children, beginIdx, endIdx) {
+  var i, key;
+  var map = {};
+
+  for (i = beginIdx; i <= endIdx; ++i) {
+    key = children[i].key;
+    if (isDef(key)) map[key] = i;
+  }
+
+  return map;
+}
+
+function updateChildren(oldCh, newCh) {
+  var oldStartIdx = 0;
+  var newStartIdx = 0;
+  var oldEndIdx = oldCh.length - 1;
+  var oldStartVval = oldCh[0];
+  var oldEndVval = oldCh[oldEndIdx];
+  var newEndIdx = newCh.length - 1;
+  var newStartVval = newCh[0];
+  var newEndVval = newCh[newEndIdx];
+  var oldKeyToIdx, idxInOld, elmToMove;
+
+  while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) {
+    if (isUndef(oldStartVval)) {
+      oldStartVval = oldCh[++oldStartIdx];
+    } else if (isUndef(oldEndVval)) {
+      oldEndVval = oldCh[--oldEndIdx];
+    } else if (sameVval(oldStartVval, newStartVval)) {
+      patchVval(oldStartVval, newStartVval);
+      oldStartVval = oldCh[++oldStartIdx];
+      newStartVval = newCh[++newStartIdx];
+    } else if (sameVval(oldEndVval, newEndVval)) {
+      patchVval(oldEndVval, newEndVval);
+      oldEndVval = oldCh[--oldEndIdx];
+      newEndVval = newCh[--newEndIdx];
+    } else if (sameVval(oldStartVval, newEndVval)) {
+      patchVval(oldStartVval, newEndVval);
+      oldStartVval = oldCh[++oldStartIdx];
+      newEndVval = newCh[--newEndIdx];
+    } else if (sameVval(oldEndVval, newStartVval)) {
+      patchVval(oldEndVval, newStartVval);
+      oldEndVval = oldCh[--oldEndIdx];
+      newStartVval = newCh[++newStartIdx];
+    } else {
+      if (isUndef(oldKeyToIdx)) oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx);
+      idxInOld = isDef(newStartVval.key) ? oldKeyToIdx[newStartVval.key] : null;
+
+      if (isUndef(idxInOld)) {
+        createVm(newStartVval);
+        newStartVval = newCh[++newStartIdx];
+      } else {
+        elmToMove = oldCh[idxInOld];
+
+        if (sameVval(elmToMove, newStartVval)) {
+          patchVval(elmToMove, newStartVval);
+          oldCh[idxInOld] = undefined;
+          newStartVval = newCh[++newStartIdx];
+        } else {
+          createVm(newStartVval);
+          newStartVval = newCh[++newStartIdx];
+        }
+      }
+    }
+  }
+
+  if (oldStartIdx > oldEndIdx) {
+    addVvals(newCh, newStartIdx, newEndIdx);
+  } else if (newStartIdx > newEndIdx) {
+    removeVvals(oldCh, oldStartIdx, oldEndIdx);
+  }
+}
+
+function addVvals(vvals, startIdx, endIdx) {
+  for (; startIdx <= endIdx; ++startIdx) {
+    createVm(vvals[startIdx]);
+  }
+}
+
+function removeVvals(vvals, startIdx, endIdx) {
+  for (; startIdx <= endIdx; ++startIdx) {
+    var ch = vvals[startIdx];
+
+    if (isDef(ch)) {
+      ch.vm.$destroy();
+      ch.vm = null;
+    }
+  }
+}
+
+function patchVval(oldVval, vval) {
+  if (oldVval === vval) {
+    return;
+  }
+
+  vval.vm = oldVval.vm;
+  updateVval(vval);
+}
+
+function patchChildren(oldCh, ch) {
+  if (isDef(oldCh) && isDef(ch)) {
+    if (oldCh !== ch) updateChildren(oldCh, ch);
+  } else if (isDef(ch)) {
+    addVvals(ch, 0, ch.length - 1);
+  } else if (isDef(oldCh)) {
+    removeVvals(oldCh, 0, oldCh.length - 1);
+  }
+}
+
+function h(tag, key, args) {
+  return {
+    tag: tag,
+    key: key,
+    args: args
+  };
+}
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/withParams.js":
+/*!**************************************************!*\
+  !*** ./node_modules/vuelidate/lib/withParams.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var withParams = process.env.BUILD === 'web' ? __webpack_require__(/*! ./withParamsBrowser */ "./node_modules/vuelidate/lib/withParamsBrowser.js").withParams : __webpack_require__(/*! ./params */ "./node_modules/vuelidate/lib/params.js").withParams;
+var _default = withParams;
+exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "./node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/withParamsBrowser.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/withParamsBrowser.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.withParams = void 0;
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var root = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : {};
+
+var fakeWithParams = function fakeWithParams(paramsOrClosure, maybeValidator) {
+  if (_typeof(paramsOrClosure) === 'object' && maybeValidator !== undefined) {
+    return maybeValidator;
+  }
+
+  return paramsOrClosure(function () {});
+};
+
+var withParams = root.vuelidate ? root.vuelidate.withParams : fakeWithParams;
+exports.withParams = withParams;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
 /***/ "./node_modules/webpack/buildin/global.js":
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
@@ -56147,10 +58501,14 @@ module.exports = function(module) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "eventBus", function() { return eventBus; });
-/* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-star-rating */ "./node_modules/vue-star-rating/dist/star-rating.min.js");
-/* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_star_rating__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_wysiwyg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-wysiwyg */ "./node_modules/vue-wysiwyg/dist/vueWysiwyg.js");
-/* harmony import */ var vue_wysiwyg__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_wysiwyg__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate */ "./node_modules/vuelidate/lib/index.js");
+/* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-star-rating */ "./node_modules/vue-star-rating/dist/star-rating.min.js");
+/* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_star_rating__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue_wysiwyg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-wysiwyg */ "./node_modules/vue-wysiwyg/dist/vueWysiwyg.js");
+/* harmony import */ var vue_wysiwyg__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_wysiwyg__WEBPACK_IMPORTED_MODULE_3__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -56162,12 +58520,15 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 var VueScrollTo = __webpack_require__(/*! vue-scrollto */ "./node_modules/vue-scrollto/vue-scrollto.js");
 
-Vue.use(VueScrollTo);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(VueScrollTo);
 
-Vue.component('star-rating', vue_star_rating__WEBPACK_IMPORTED_MODULE_0___default.a);
-var eventBus = new Vue();
 
-Vue.use(vue_wysiwyg__WEBPACK_IMPORTED_MODULE_1___default.a, {}); // config is optional. more below
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuelidate__WEBPACK_IMPORTED_MODULE_1___default.a);
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('star-rating', vue_star_rating__WEBPACK_IMPORTED_MODULE_2___default.a);
+var eventBus = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_wysiwyg__WEBPACK_IMPORTED_MODULE_3___default.a, {}); // config is optional. more below
 
 /**
  * The following block of code may be used to automatically register your
@@ -56181,41 +58542,41 @@ Vue.use(vue_wysiwyg__WEBPACK_IMPORTED_MODULE_1___default.a, {}); // config is op
 
 /****** Components For Administrator ******/
 
-Vue.component('admin-bar', __webpack_require__(/*! ./components/admin/AdminBar.vue */ "./resources/js/components/admin/AdminBar.vue")["default"]);
-Vue.component('search-all-view', __webpack_require__(/*! ./components/admin/SearchAll.vue */ "./resources/js/components/admin/SearchAll.vue")["default"]);
-Vue.component('admin-profile', __webpack_require__(/*! ./components/admin/AdminProfile.vue */ "./resources/js/components/admin/AdminProfile.vue")["default"]); //Products
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('admin-bar', __webpack_require__(/*! ./components/admin/AdminBar.vue */ "./resources/js/components/admin/AdminBar.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('search-all-view', __webpack_require__(/*! ./components/admin/SearchAll.vue */ "./resources/js/components/admin/SearchAll.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('admin-profile', __webpack_require__(/*! ./components/admin/AdminProfile.vue */ "./resources/js/components/admin/AdminProfile.vue")["default"]); //Products
 
-Vue.component('create-product', __webpack_require__(/*! ./components/admin/products/CreateProduct.vue */ "./resources/js/components/admin/products/CreateProduct.vue")["default"]);
-Vue.component('products-view', __webpack_require__(/*! ./components/admin/products/Products.vue */ "./resources/js/components/admin/products/Products.vue")["default"]);
-Vue.component('show-product', __webpack_require__(/*! ./components/admin/products/ShowProduct.vue */ "./resources/js/components/admin/products/ShowProduct.vue")["default"]); //Products REVIEWS
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('create-product', __webpack_require__(/*! ./components/admin/products/CreateProduct.vue */ "./resources/js/components/admin/products/CreateProduct.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('products-view', __webpack_require__(/*! ./components/admin/products/Products.vue */ "./resources/js/components/admin/products/Products.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('show-product', __webpack_require__(/*! ./components/admin/products/ShowProduct.vue */ "./resources/js/components/admin/products/ShowProduct.vue")["default"]); //Products REVIEWS
 
-Vue.component('product-reviews', __webpack_require__(/*! ./components/admin/reviews/Index.vue */ "./resources/js/components/admin/reviews/Index.vue")["default"]); //Categories
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('product-reviews', __webpack_require__(/*! ./components/admin/reviews/Index.vue */ "./resources/js/components/admin/reviews/Index.vue")["default"]); //Categories
 
-Vue.component('categories-view', __webpack_require__(/*! ./components/admin/categories/Categories.vue */ "./resources/js/components/admin/categories/Categories.vue")["default"]); //Customers
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('categories-view', __webpack_require__(/*! ./components/admin/categories/Categories.vue */ "./resources/js/components/admin/categories/Categories.vue")["default"]); //Customers
 
-Vue.component('customers-view', __webpack_require__(/*! ./components/admin/customers/Customers.vue */ "./resources/js/components/admin/customers/Customers.vue")["default"]); //Payments
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('customers-view', __webpack_require__(/*! ./components/admin/customers/Customers.vue */ "./resources/js/components/admin/customers/Customers.vue")["default"]); //Payments
 
-Vue.component('payments-view', __webpack_require__(/*! ./components/admin/payments/Payments.vue */ "./resources/js/components/admin/payments/Payments.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('payments-view', __webpack_require__(/*! ./components/admin/payments/Payments.vue */ "./resources/js/components/admin/payments/Payments.vue")["default"]);
 /***** Components for Customers ******/
 
-Vue.component('navmenu', __webpack_require__(/*! ./components/customer/Navmenu.vue */ "./resources/js/components/customer/Navmenu.vue")["default"]);
-Vue.component('add-to-cart', __webpack_require__(/*! ./components/customer/Product.vue */ "./resources/js/components/customer/Product.vue")["default"]);
-Vue.component('footer-view', __webpack_require__(/*! ./components/customer/Footer.vue */ "./resources/js/components/customer/Footer.vue")["default"]);
-Vue.component('subscribe', __webpack_require__(/*! ./components/customer/Subscribe.vue */ "./resources/js/components/customer/Subscribe.vue")["default"]);
-Vue.component('cart-checkout', __webpack_require__(/*! ./components/customer/Checkout.vue */ "./resources/js/components/customer/Checkout.vue")["default"]);
-Vue.component('cart-view', __webpack_require__(/*! ./components/customer/Cart.vue */ "./resources/js/components/customer/Cart.vue")["default"]);
-Vue.component('add-cart', __webpack_require__(/*! ./components/customer/AddToCart.vue */ "./resources/js/components/customer/AddToCart.vue")["default"]);
-Vue.component('review', __webpack_require__(/*! ./components/customer/Review.vue */ "./resources/js/components/customer/Review.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('navmenu', __webpack_require__(/*! ./components/customer/Navmenu.vue */ "./resources/js/components/customer/Navmenu.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('add-to-cart', __webpack_require__(/*! ./components/customer/Product.vue */ "./resources/js/components/customer/Product.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('footer-view', __webpack_require__(/*! ./components/customer/Footer.vue */ "./resources/js/components/customer/Footer.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('subscribe', __webpack_require__(/*! ./components/customer/Subscribe.vue */ "./resources/js/components/customer/Subscribe.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('cart-checkout', __webpack_require__(/*! ./components/customer/Checkout.vue */ "./resources/js/components/customer/Checkout.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('cart-view', __webpack_require__(/*! ./components/customer/Cart.vue */ "./resources/js/components/customer/Cart.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('add-cart', __webpack_require__(/*! ./components/customer/AddToCart.vue */ "./resources/js/components/customer/AddToCart.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('review', __webpack_require__(/*! ./components/customer/Review.vue */ "./resources/js/components/customer/Review.vue")["default"]);
 /*Miscellaneous*/
 
-Vue.component('main-categories', __webpack_require__(/*! ./components/customer/Categories.vue */ "./resources/js/components/customer/Categories.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('main-categories', __webpack_require__(/*! ./components/customer/Categories.vue */ "./resources/js/components/customer/Categories.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-var app = new Vue({
+var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app'
 });
 

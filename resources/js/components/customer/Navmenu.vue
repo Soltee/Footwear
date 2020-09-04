@@ -74,7 +74,7 @@
                 </li>
                 <li v-if="customer" class="flex  flex-row items-center mb-4 mr-6 mt-2 hidden md:block">
                     <a :href="`/dashboard`" class="mr-3">
-                        <img v-if="customer.avatar" :src="`/storage/${customer.avatar}`" class="w-10 h-10 rounded-full object-cover object-center text-custom-light-black ">
+                        <img v-if="customer.avatar" :src="`/storage/${customer.avatar}`" class="w-10 h-10 rounded-full object-cover object-center text-custom-light-black " onerror="this.src='https://via.placeholder.com/300'">
                         <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 rounded-full object-cover object-center">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
@@ -139,9 +139,9 @@
                         </form>
                         <h4 class="text-gray-800 font-semibold text-lg  mt-4">Search : {{ shoesArray.length }}</h4>
                         <div class="h-86 my-3 overflow-y-scroll">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 items-center">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 items-center gap-4">
                                 <a v-for="s in shoesArray" class="mb-4 " :href="`/shoes/${s.id}/${s.name}`">
-                                    <img class="w-full h-64 object-cover md:w-64 rounded-lg" :src="`/storage/${s.imageUrl}`">
+                                    <img class="w-full object-cover  rounded-lg" :src="`/storage/${s.imageUrl}`" onerror="this.src='https://via.placeholder.com/300'">
                                 </a>
                             </div>
                         </div>

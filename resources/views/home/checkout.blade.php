@@ -53,7 +53,7 @@
 
     	@if(Auth::guard('customer')->user())
         	<cart-checkout  :auth="{{ Auth::guard('customer')->user()  }}" :products="{{ $products->toJson() }}" :cart="{{ $totalQuantity }}" sub="{{ $subTotal }}" dis="{{ $discount }}" afterdis="{{ $subAfterDis }}" tax="{{ $tax }}" grand="{{ $grandTotal }}" token="{{ $token }}"></cart-checkout>
-        @else
+      @else
 			<cart-checkout :products="{{ $products->toJson() }}" :cart="{{ $totalQuantity }}" sub="{{ $subTotal }}" dis="{{ $discount }}" afterdis="{{ $subAfterDis }}" tax="{{ $tax }}" grand="{{ $grandTotal }}" token="{{ $token }}"></cart-checkout>
         @endif
             

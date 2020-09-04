@@ -22,7 +22,7 @@ $factory->define(Product::class, function (Faker $faker) {
         },
         'imageUrl' => function(){
             $urls = [
-                 'products/b2.jpg', 
+                'products/b2.jpg', 
                 'products/m2.jpg',
                 'products/w2.jpg',
                 'products/c2.jpg',
@@ -73,7 +73,7 @@ $factory->define(ProductImages::class, function (Faker $faker) {
                 'products/m3.jpg',
                 'products/m4.jpg',
                 'products/m5.jpg',
-                 'products/m6.jpg', 
+                'products/m6.jpg', 
                 'products/m7.jpg',
                 'products/m8.jpg',
                 'products/m9.jpg',

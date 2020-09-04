@@ -9,6 +9,10 @@
 
     <title>@yield('title') </title>
     <link rel="icon" href="{{ asset('/img/logo.svg') }}">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
@@ -144,11 +148,11 @@
 
                         <div class="flex items-center">
                             <div class="payment-info flex items-center" >
-                                <img :src="`/img/braintree.png`" class="mr-3 h-12 w-12 object-contain rounded" />
-                                <img :src="`/img/visa.png`" class="mr-3 h-12 w-12 object-contain rounded" />
-                                <img :src="`/img/stripe.png`" class="mr-3 h-12 w-12 object-contain rounded" />
+                                <img src="/img/braintree.png" class="mr-3 h-12 w-12 object-contain rounded" />
+                                <img src="/img/visa.png" class="mr-3 h-12 w-12 object-contain rounded" />
+                                <img src="/img/stripe.png" class="mr-3 h-12 w-12 object-contain rounded" />
                             </div>
-                            <a href="/#" v-scroll-to="`#app`">
+                            <a href="/#" >
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white hover:opacity-75" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
                                     <circle cx="12" cy="12" r="10"></circle>
                                     <polyline points="16 12 12 8 8 12"></polyline>

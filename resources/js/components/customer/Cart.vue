@@ -38,7 +38,7 @@
                     <tbody>
                         <tr v-for="p in productsArr">
                             <td class=" px-6 py-3  whitespace-no-wrap">
-                                <img class="h-24 w-24 rounded-lg object-cover object-center" :src="`/storage/${p.options.imageUrl}`">
+                                <img class="h-24 w-24 rounded-lg object-cover object-center" :src="`/storage/${p.options.imageUrl}`" onerror="this.src='https://via.placeholder.com/300'">
                             </td>
                             <td class=" px-6 py-3  whitespace-no-wrap">{{ p.name }}</td>
                             <td class=" px-6 py-3  whitespace-no-wrap">Rs {{ p.price }}</td>

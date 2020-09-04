@@ -16,12 +16,12 @@ class CheckoutController extends Controller
 
     public function index(){
 
-        $gateway = new \Braintree\Gateway([
-            'environment' => config('services.braintree.environment'),
-            'merchantId' => config('services.braintree.merchantId'),
-            'publicKey' => config('services.braintree.publicKey'),
-            'privateKey' => config('services.braintree.privateKey')
-        ]);
+        // $gateway = new \Braintree\Gateway([
+        //     'environment' => config('services.braintree.environment'),
+        //     'merchantId' => config('services.braintree.merchantId'),
+        //     'publicKey' => config('services.braintree.publicKey'),
+        //     'privateKey' => config('services.braintree.privateKey')
+        // ]);
 
 
     	$products = Cart::content();
@@ -31,7 +31,8 @@ class CheckoutController extends Controller
         $subAfterDis = (session('subAfterDis'))?? 0;
         $tax = Cart::tax();
 		$grandTotal = (session('discount'))? session('grand') : Cart::total();
-        $token = $gateway->ClientToken()->generate();
+        // $token = $gateway->ClientToken()->generate();
+        $token = "someRandomCLientTOken";
 		return view('home.checkout', compact('products', 'totalQuantity', 'subTotal', 'discount', 'subAfterDis', 'tax', 'grandTotal', 'token'));
     }
 
@@ -51,8 +52,12 @@ class CheckoutController extends Controller
                 'city'      => 'required|string',
                 'address'   => 'required|string',
                 'method'    => 'required|string',
-                'secret_token'     => 'required|string'
+                // 'secret_token'     => 'required|string'
         ]);
+        
+        //JUst For Testing
+        return response()->json(['success' => 'ok'], 201);
+
         
         $amt          = (session('discount'))? session('grand') : Cart::total();
         // dd($paymentType);

@@ -36,12 +36,13 @@
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                     @forelse($products as $product)
-                    <div class="mb-6 p-2 w-full flex flex-col items-start  hover:shadow  transition-all">
+                    <div class="mb-6 w-full flex flex-col items-start  hover:shadow  transition-all">
                         <a href="shoes/{{ $product->id }}/{{ $product->slug }}">
                             
-                            <img class="w-full h-64 rounded-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}">
+                            <img class="w-full rounded-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}" 
+                                onerror="this.src='https://via.placeholder.com/300'">
                         </a>
-                        <div class=" my-6  rounded-lg flex flex-row justify-between w-full items-center">
+                        <div class=" mt-6 mb-3  rounded-lg flex flex-row justify-between w-full items-center">
 
                             <h4 class="text-lg font-bold text-custom-light-black">{{ $product->name }}</h4>                    
                             <h5 class="text-xl font-bold text-custom-light-black">$ {{ $product->price }}</h5>
@@ -84,9 +85,10 @@
                     <div class="mb-6 p-2 w-full flex flex-col items-start  hover:shadow  transition-all">
                         <a href="shoes/{{ $product->id }}/{{ $product->slug }}">
                             
-                            <img class="w-full h-64 rounded-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}">
+                            <img class="w-full rounded-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}" 
+                                onerror="this.src='https://via.placeholder.com/300'">
                         </a>
-                        <div class=" my-6  rounded-lg flex flex-row justify-between w-full items-center">
+                        <div class=" mt-6 mb-3  rounded-lg flex flex-row justify-between w-full items-center">
 
                             <h4 class="text-lg font-bold text-custom-light-black">{{ $product->name }}</h4>                    
                             <h5 class="text-xl font-bold text-custom-light-black">$ {{ $product->price }}</h5>
