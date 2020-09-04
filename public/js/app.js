@@ -7508,6 +7508,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -7530,6 +7533,7 @@ __webpack_require__.r(__webpack_exports__);
       average: 0,
       isNotRated: false,
       reviewed: false,
+      max: 5,
       rating: 0,
       message: '',
       loading: false
@@ -7540,6 +7544,19 @@ __webpack_require__.r(__webpack_exports__);
     this.getReviews();
   },
   methods: {
+    isCurrentStar: function isCurrentStar(index) {
+      var diff = this.rating - index + 1;
+      return diff > 0 && diff < 1;
+    },
+    getStarPercentage: function getStarPercentage(index) {
+      return (this.rating - (index - 1)) * 100 + '%';
+    },
+    getStarClass: function getStarClass(index) {
+      var classNames = ['star'];
+      this.rating > index - 1 && classNames.push('filled');
+      index === parseInt(this.rating) + 1 && classNames.push('gradient');
+      return classNames.join(' ');
+    },
     review: function review() {
       var _this = this;
 
@@ -7600,6 +7617,9 @@ __webpack_require__.r(__webpack_exports__);
           _this2.reviews = res.data.reviews; // this.isAlreadyreviewed = true;
         }
       })["catch"](function (err) {});
+    },
+    toNumber: function toNumber(string) {
+      return Number(string);
     }
   }
 });
@@ -43334,10 +43354,7 @@ var render = function() {
                           ),
                           _vm._v(" "),
                           _c("star-rating", {
-                            attrs: {
-                              "rounded-corners": "true",
-                              increment: 0.5
-                            },
+                            attrs: { "rounded-corners": true, increment: 0.5 },
                             model: {
                               value: _vm.rating,
                               callback: function($$v) {
@@ -43426,7 +43443,9 @@ var render = function() {
                               "w-12 md:w-16 object-center object-cover rounded-full",
                             attrs: {
                               src:
-                                "/storage/customers/" + review.customer.avatar
+                                "/storage/customers/" + review.customer.avatar,
+                              onerror:
+                                "this.src='https://via.placeholder.com/300'"
                             }
                           })
                         : _c(
@@ -43445,21 +43464,37 @@ var render = function() {
                       "div",
                       { staticClass: "flex flex-col items-start mb-4" },
                       [
-                        _c("star-rating", {
-                          attrs: {
-                            rating: review.rating,
-                            "star-size": 30,
-                            "rounded-corners": true,
-                            "show-rating": false,
-                            "read-only": true
-                          }
-                        }),
+                        _c(
+                          "div",
+                          { staticClass: "flex items-center" },
+                          _vm._l(_vm.toNumber(review.rating), function(rate) {
+                            return _c(
+                              "svg",
+                              {
+                                staticClass: "w-10 h-10 text-custom-yellow",
+                                attrs: {
+                                  xmlns: "http://www.w3.org/2000/svg",
+                                  fill: "currentColor",
+                                  viewBox: "0 0 20 20"
+                                }
+                              },
+                              [
+                                _c("path", {
+                                  attrs: {
+                                    d:
+                                      "M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"
+                                  }
+                                })
+                              ]
+                            )
+                          }),
+                          0
+                        ),
                         _vm._v(" "),
                         _c("h5", { staticClass: "mt-2 text-sm font-light" }, [
                           _vm._v(_vm._s(review.customer.first_name))
                         ])
-                      ],
-                      1
+                      ]
                     ),
                     _vm._v(" "),
                     _c(

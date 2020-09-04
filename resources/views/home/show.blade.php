@@ -19,7 +19,10 @@
             height: auto;
             backface-visibility: hidden;
         }
-    
+    	
+    	.swiper-button-next, .swiper-button-prev {
+    		color: gray;
+    	}
 
       	.swiper-slide {
 	      text-align: center;
@@ -56,7 +59,7 @@
 					 ">
 					{{-- <figure class="zoomy"> --}}
 					<img id="featured" 
-					  class="focus-img  cursor-move grabbable featured w-full h-64 object-cover object-center rounded" src="/storage/{{ $product->imageUrl }}">
+					  class="focus-img  cursor-move grabbable featured w-full h-64 object-cover object-center rounded" src="/storage/{{ $product->imageUrl }}" onerror="this.src='https://via.placeholder.com/300'">
 					{{-- </figure> --}}
 					
 					
@@ -69,7 +72,7 @@
 
 				      			<div class="swiper-slide swiper-zoom-container relative">
 						            <div class="">
-						              <img class="thumbnail w-24 h-24 cm:h-24 cm:w-24 rounded object-cover swiper-lazy cursor-pointer" src="/storage/{{ $image->imageUrl }}" />
+						              <img class="thumbnail w-24 h-24 cm:h-24 cm:w-24 rounded object-cover swiper-lazy cursor-pointer" src="/storage/{{ $image->imageUrl }}" onerror="this.src='https://via.placeholder.com/300'" />
 						            </div>
 						            <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
 					          	</div>
@@ -114,39 +117,36 @@
 
         <!-- View Rating --->
         @if($auth)
-        <review :product="{{ $product }}" :auth="{{ $auth }}" /> 
+        	<review :product="{{ $product }}" :auth="{{ $auth }}" /> 
         @else
-        <review :product="{{ $product }}"/> 
+        	<review :product="{{ $product }}"/> 
         @endif
-          {{-- @if($category)
-          <add-cart :product="{{ $product }}" :images="{{$images}}"  :category="{{ $category }}" :recommended="{{ $recommended }}"/> 
-          @else
-          <add-cart :product="{{ $product }}" :images="{{$images}}"  :recommended="{{ $recommended }}"/> 
-          @endif --}}
 
-
-	    {{-- <div class="my-8 {{ $similar_count ? 'swiper-container2' : ''  }} w-full relative">
-		    <div class="swiper-wrapper">
+        <div class="my-8 {{ $similar_count ? 'swiper-container2' : ''  }} w-full relative overflow-hidden">
+        	<h3 class="font-semibold text-lg mb-4 text-gray-800">Similar Products</h3>
+		    <div class="swiper-wrapper ">
 		    	@forelse($similar as $image)
 
-	      			<div class="swiper-slide relative">
-			            <div class="">
-			              <img class="w-full h-64 md:w-64 rounded object-cover swiper-lazy" src="/storage/{{ $image->imageUrl }}" />
-			            </div>
+	      			<div class="swiper-slide relative bg-gray-400 rounded-lg w-full flex flex-col items-center">
+			            <a href="{{ url('images', $image->id . '-' . $image->slug)}}"><img data-src="/storage/{{$image->imageUrl}}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='https://via.placeholder.com/300'"></a>
+			            <div class="mt-2 flex flex-col">
+					      	<span class="mb-2">{{ $image->name }}
+					      	</span>
+					    </div>
 			            <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
 		          	</div>
 		       
 
 		        @empty
-		        	<div class="">
-
-		        	</div>
 		        @endforelse
 			      
 		    </div>
-		    <div class="swiper-pagination"></div>
+			   <!-- Add Pagination -->
+		      <!-- <div class="swiper-pagination"></div> -->
+		    <div class="swiper-button-next"></div>
+		    <div class="swiper-button-prev"></div>
 		</div>
- --}}
+	
           
     </div>
 @endsection
@@ -206,35 +206,39 @@
 			   	}
 			});
 
-			// var swiper2 = new Swiper('.swiper-container2', {
-			//     slidesPerView: 1,
-			//     spaceBetween: 10,
-			//       // init: false,
-			//     lazy: true,
-	  //     		grabCursor: true,
-	  //     		pagination: {
-			//         el: '.swiper-pagination',
-			//         clickable: true,
-			//     },
-			//     breakpoints: {
-			//         500: {
-			//           slidesPerView: 1,
-			//           spaceBetween: 10,
-			//         },
-			//         640: {
-			//           slidesPerView: 2,
-			//           spaceBetween: 20,
-			//         },
-			//         768: {
-			//           slidesPerView: 4,
-			//           spaceBetween: 20,
-			//         },
-			//         1024: {
-			//           slidesPerView: 4,
-			//           spaceBetween: 20,
-			//         },
-			//    	}
-			// });
+			var swiper2 = new Swiper('.swiper-container2', {
+			    slidesPerView: 1,
+			    spaceBetween: 10,
+			      // init: false,
+			    lazy: true,
+	      		grabCursor: true,
+	      		pagination: {
+			        el: '.swiper-pagination',
+			        clickable: true,
+			    },
+			    navigation: {
+			        nextEl: '.swiper-button-next',
+			        prevEl: '.swiper-button-prev',
+			    },
+			    breakpoints: {
+			        500: {
+			          slidesPerView: 1,
+			          spaceBetween: 10,
+			        },
+			        640: {
+			          slidesPerView: 2,
+			          spaceBetween: 20,
+			        },
+			        768: {
+			          slidesPerView: 4,
+			          spaceBetween: 20,
+			        },
+			        1024: {
+			          slidesPerView: 4,
+			          spaceBetween: 20,
+			        },
+			   	}
+			});
 
 
 		});

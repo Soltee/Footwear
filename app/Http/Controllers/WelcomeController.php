@@ -94,7 +94,7 @@ class WelcomeController extends Controller
         $images_count   = count($images);
         $similar        = Product::latest()->where('category_id', $product->category_id)
                                     ->where('id', '!=', $product->id)
-                                    ->get();
+                                    ->paginate(8);
         $similar_count  = count($images);
         $category       = ($product->subcategories)?? null;
         $auth = Auth::guard('customer')->user() ?? null;

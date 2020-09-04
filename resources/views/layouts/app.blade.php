@@ -102,7 +102,7 @@
                                 </li>
                                 <li class="mb-4 md:mb-2">
                                     <a href="/#" class="text-white hover:opacity-75" 
-                                        :class="`${(url === '') ? 'opacity-75' : ''}`">
+                                        >
                                         Terms of Service
                                     </a>
                                 </li>

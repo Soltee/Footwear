@@ -20,7 +20,7 @@
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="rating">
                             Rating
                         </label>
-                        <star-rating rounded-corners="true" :increment="0.5" v-model="rating"></star-rating>
+                        <star-rating v-bind:rounded-corners="true" v-bind:increment="0.5" v-model="rating"></star-rating>
                     </div>
                     <div class="mb-4  w-full px-2 ">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="message">
@@ -44,12 +44,15 @@
             <div v-if="hasReview" class="flex flex-col">
                 <div v-for="review in reviews" class="flex flex-row  mb-6">
                     <div class="flex flex-col mr-3 items-center ">
-                        <img v-if="review.customer.avatar" class="w-12 md:w-16 object-center object-cover rounded-full" :src="`/storage/customers/${review.customer.avatar}`">
+                        <img v-if="review.customer.avatar" class="w-12 md:w-16 object-center object-cover rounded-full" :src="`/storage/customers/${review.customer.avatar}`" onerror="this.src='https://via.placeholder.com/300'">
                         <div v-else class="w-12 md:w-16  rounded-full text-transparent">ff</div>
                     </div>
                     <div class="flex flex-col ">
                         <div class="flex flex-col items-start mb-4">
-                            <star-rating :rating="review.rating" :star-size="30" :rounded-corners="true" :show-rating="false" :read-only="true"></star-rating>
+                            <div class="flex items-center">
+                                
+                                <svg v-for="rate in toNumber(review.rating)" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" class="w-10 h-10 text-custom-yellow"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                            </div>
                             <h5 class="mt-2 text-sm font-light">{{ review.customer.first_name }}</h5>
                         </div>
                         <p class="text-md leading-6 font-semibold">{{ review.message }}</p>
@@ -94,6 +97,7 @@ export default {
             average: 0,
             isNotRated: false,
             reviewed: false,
+            max:5,
             rating: 0,
             message: '',
             loading: false
@@ -105,6 +109,19 @@ export default {
     },
 
     methods: {
+        isCurrentStar(index) {
+          const diff = this.rating - index + 1;
+          return diff > 0 && diff < 1;
+        },
+        getStarPercentage(index) {
+          return (this.rating - (index - 1)) * 100 + '%';
+        },
+        getStarClass(index) {
+          const classNames = ['star'];
+          (this.rating > index - 1) && classNames.push('filled');
+          (index === parseInt(this.rating) + 1) && classNames.push('gradient');
+          return classNames.join(' ');
+        },
         review() {
             this.loading = true;
             let data = new FormData();
@@ -165,6 +182,9 @@ export default {
                         // this.isAlreadyreviewed = true;
                     }
                 }).catch(err => {});
+        },
+        toNumber(string){
+            return Number(string);
         }
     }
 };

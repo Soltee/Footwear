@@ -103,7 +103,7 @@
                   <ul class="flex flex-row lg:flex-col items-left md:ml-2 mb-3">
 
                     @forelse($categories as $cat)
-                      @if($category)
+                      {{-- @if($category)
                         <label  class="custom_checkbox relative flex flex items-center">
                           <div class="flex items-center border">
                             <input class="hidden" class="roleCheckbox border border-custom-light-orange" type="radio"  
@@ -135,7 +135,7 @@
                           </span>
                           
                         </label>  
-                      @endif
+                      @endif --}}
                       <ul class="mt-2 flex flex-row lg:flex-col items-left ">
                         @forelse($cat->subcategories as $sub_cat)
                           @if($subcategory)
@@ -211,12 +211,10 @@
          		<div class="mt-2  w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
          			@forelse($products as $product)
                   <div class=" rounded-lg  cursor-pointer mb-6 hover:-mt-1  transition-all">
-                    <div class="cartBtnParent relative">
-
-                      <a href="shoes/{{ $product->id }}/{{ $product->slug }}">
+                    <div class="cartBtnParent relative" >
                           
-                          <img 
-                            class="w-full rounded-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}"
+                      <a href="shoes/{{ $product->id }}/{{ $product->slug }}">   <img 
+                            class="w-full h-64 rounded-t-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}"
                             onerror="this.src='https://via.placeholder.com/300'">
                       </a>
 
@@ -225,9 +223,11 @@
                       </div>
 
                     </div>
-                    <div class="mt-4  rounded-lg flex flex-row justify-between w-full items-center">
+                    <div class="px-3 py-3  rounded-b-lg flex flex-row justify-between bg-gray-400 w-full items-center">
 
-                        <h4 class="tbext-md font-semibold text-custom-light-black">{{ $product->name }}</h4>                    
+                        <a href="shoes/{{ $product->id }}/{{ $product->slug }}">
+                          <h4 class="text-md font-semibold text-custom-light-black">{{ $product->name }}</h4>
+                        </a>                    
                         <h5 class="text-md font-semibold text-custom-light-black">$ {{ $product->price }}</h5>
                     </div>
                      

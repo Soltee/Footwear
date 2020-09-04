@@ -18,7 +18,8 @@ module.exports = {
                     'red-light': '#8a3231',
                     'light-black': '#333333',
                     'dark-orange': '#D65A21',
-                    'light-orange': '#EE6425'
+                    'light-orange': '#EE6425',
+                    'yellow' : '#FFD055'
                 },
                 admin: {
                     'bk': '#c2c49f',
