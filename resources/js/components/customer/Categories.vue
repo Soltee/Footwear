@@ -1,9 +1,6 @@
 <template>
-    <div class="flex flex-wrap items-center">
-        <a v-for="category in categories" :href="`/shoes?category=${category.slug}`" class="mr-4 mb-3 px-6 py-3 bg-custom-light-orange rounded text-white">
-            {{ category.name }}
-        </a>
-        <a v-for="sub in subcategories" :href="`/shoes?subcategory=${sub.slug}`" class="mr-4 mb-3 px-6 py-3 bg-custom-light-orange rounded text-white">
+    <div class="flex items-center w-auto overflow-x-scroll md:overflow-hidden mb-2   rounded pl-0">
+        <a v-for="(sub, index) in subcategories" :href="`/shoes?subcategory=${sub.id}`" class="mr-4 px-2 py-2  text-custom-light-orange border-r  border-transparent  hover:border-custom-light-orange hover:opacity-75" >
             {{ sub.name }}
         </a>
     </div>
@@ -12,11 +9,10 @@
 import { eventBus } from '../../app.js';
 import swal from 'sweetalert';
 export default {
-    name: 'main-categories',
+    name: 'categories',
     props: [],
     data() {
         return {
-            categories     : [],
             subcategories  : [],
             csrf           : document.head.querySelector('meta[name="csrf-token"]').content
         }
@@ -30,12 +26,9 @@ export default {
             axios.get('/categories')
             .then(res => {
                 if (res.status = 200) {
-                    res.data.categories.forEach((c) => {
-                        this.categories.push(c);
 
-                        c.subcategories.forEach((s) => {
-                            this.subcategories.push(s);
-                        });
+                    res.data.subcategories.forEach((s) => {
+                        this.subcategories.push(s);
                     });
                 }
             }).catch((err) => {

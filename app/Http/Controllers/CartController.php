@@ -106,6 +106,7 @@ class CartController extends Controller
 	            ->associate('App\Product');
 	    $this->updateCardDatails();
 
+	    
 	    return response()->json(['success' => 'Ok'], 200);
 
     	
@@ -142,7 +143,9 @@ class CartController extends Controller
     {
 
 		$found = Cart::remove($rowId); 
-
+		if(Cart::count() < 1){
+			$this->clearCart();
+		}
     	return response()->json(['success' => 'Ok'], 204);
     	
     }

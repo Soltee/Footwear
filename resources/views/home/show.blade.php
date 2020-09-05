@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-	- {{ $product->slug }}
+	Shoes - {{ $product->slug }}
 @endsection
 
 @section('head')
@@ -86,7 +86,6 @@
 						      
 					    </div>
 
-					    <div class="swiper-pagination"></div>
 					</div>
 				@endif
 				
@@ -103,24 +102,41 @@
         </div> 
 
 
-        <div class="my-4">
+        <div 
+        	x-data="{tab:'details'}" class="my-6">
+	        <div class="flex items-center mb-4">
+	        	<h3 
+	        		x-on:click="tab = 'details'" 
+	        		class="text-md cursor-pointer font-semibold text-custom-light-black pr-4" :class="{'font-bold border-r border-custom-light-orange' : tab === 'details'}"
+	        		>Details</h3>
+	        	<h3 
+	        		x-on:click="tab = 'reviews'" 
+	        		class="text-md cursor-pointer font-semibold text-custom-light-black pr-4" :class="{'font-bold border-r border-custom-light-orange' : tab === 'reviews'}"
+	        		>Reviews
+	        	</h3>
+	        </div>
+
         	@if($product->description)
-	        	<div class="">
-	        		<h3 class="text-lg font-semibold text-custom-light-black mb-4">Details</h3>
-	        		<p class="w-full leading-relaxed">
-	        			{{ $product->description }}
-	        		</p>
-	        	</div>
+        	<div
+        		x-show.transition.60ms="tab === 'details'" 
+        		class="w-full leading-relaxed">
+    			{{ $product->description }}
+    		</div>
         	@endif
 
+    		<div
+        		x-show.transition.60ms="tab === 'reviews'" 
+        		class="w-full leading-relaxed">
+    			<!-- View Rating --->
+		        @if($auth)
+		        	<review :product="{{ $product }}" :auth="{{ $auth }}" /> 
+		        @else
+		        	<review :product="{{ $product }}"/> 
+		        @endif
+    		</div>
         </div>
 
-        <!-- View Rating --->
-        @if($auth)
-        	<review :product="{{ $product }}" :auth="{{ $auth }}" /> 
-        @else
-        	<review :product="{{ $product }}"/> 
-        @endif
+        
 
         <div class="my-8 {{ $similar_count ? 'swiper-container2' : ''  }} w-full relative overflow-hidden">
         	<h3 class="font-semibold text-lg mb-4 text-gray-800">Similar Products</h3>
@@ -186,10 +202,6 @@
 			      // init: false,
 			    lazy: true,
 	      		grabCursor: true,
-			    pagination: {
-			        el: '.swiper-pagination',
-			        clickable: true,
-			    },
 			    breakpoints: {
 			        300: {
 			          slidesPerView: 1,

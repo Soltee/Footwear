@@ -75,12 +75,6 @@
                                 <input v-model="code" type="text" class="focus:outline-none  w-full md:w-2/3 bg-white rounded-t md:rounded-t-none md:rounded-l px-6 py-2 sm:mb-0 border focus:border-custom-light-orange" placeholder="Enter Coupon..">
                                 <button type="submit" class="focus:outline-none w-full md:w-1/3  bg-custom-light-orange hover:opacity-75 rounded-b md:rounded-b-none md:rounded-r md:uppercase text-white font-bold md:tracking-wide py-2 px-3 md:px-6 text-center cursor-pointer">Apply</button>
                             </div>
-                            <!-- <div class="flex flex-col md:flex-row items-center">
-                                <input type="text" v-model="code" class="w-full md:w-auto px-4 py-3 border border-gray-300 rounded-t-lg md:rounded-l-lg">
-                                <button type="submit" class="w-full md:w-auto px-4 py-3 rounded-b-lg md:rounded-r-lg bg-custom-light-black hover:opacity-50 text-white font-bold text-lg">
-                                    Apply
-                                </button>
-                            </div> -->
                         </div>
                     </form>
                 </div>

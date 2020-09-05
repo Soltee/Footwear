@@ -149,15 +149,21 @@
                 </div>
             </div>
         </nav>
+
+        <!--Categories-->
+        <div v-if="name === 'welcome'">
+            <categories />
+        </div>
+
     </div>
 </template>
 <script>
 import Toast from '../helpers/Alert.js';
 import { eventBus } from '../../app.js';
-
+import categories from './Categories';
 export default {
     name: 'navmenu',
-    props: ['customer'],
+    props: ['customer', 'name'],
     directives: {
         focus: {
             // directive definition
@@ -167,7 +173,7 @@ export default {
         }
     },
     components: {
-        Toast
+        Toast, categories
     },
     data() {
         return {

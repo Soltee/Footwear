@@ -22,7 +22,9 @@ class CheckoutController extends Controller
         //     'publicKey' => config('services.braintree.publicKey'),
         //     'privateKey' => config('services.braintree.privateKey')
         // ]);
-
+        if(Cart::count() < 1){
+            return redirect('/shoes');
+        }
 
     	$products = Cart::content();
 		$totalQuantity = Cart::instance('default')->count();

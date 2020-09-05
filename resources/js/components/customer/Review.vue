@@ -34,7 +34,7 @@
                 </form>
             </div>
             <!--  If Not Logged in -->
-            <a v-else :href="`/login`" class="my-4 text-custom-light-black text-md border py-2">Login tor review</a>
+            <a v-else :href="`/login`" class="my-4 text-custom-light-black text-md border-b hover:border-custom-light-orange py-2">Login to review</a>
         </div>
         <div class="w-full md:w-1/2 mt-6 md:mt-0">
             <div class="flex flex-col md:flex-row md:items-start mb-4 w-full">

@@ -8,13 +8,14 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+    <link rel="icon" href="{{ asset('/img/logo.svg') }}">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body class="bg-gray h-screen antialiased leading-none ">
     <div id="app" class="min-h-screen bg-admin-bk  w-full">
         @auth('administrator')
-            <admin-bar  :admin="{{ json_encode(Auth::guard('administrator')->user()) }}"></admin-bar>
+            <admin-bar  :admin="{{ json_encode(Auth::guard('administrator')->user()) }}"></admin-bar :name="{{ Route::currentRouteName() }}">
         @endauth
         @include('sweetalert::alert')
         

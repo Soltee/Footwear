@@ -5953,12 +5953,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 
@@ -6257,17 +6251,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'main-categories',
+  name: 'categories',
   props: [],
   data: function data() {
     return {
-      categories: [],
       subcategories: [],
       csrf: document.head.querySelector('meta[name="csrf-token"]').content
     };
@@ -6281,12 +6271,8 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/categories').then(function (res) {
         if (res.status = 200) {
-          res.data.categories.forEach(function (c) {
-            _this.categories.push(c);
-
-            c.subcategories.forEach(function (s) {
-              _this.subcategories.push(s);
-            });
+          res.data.subcategories.forEach(function (s) {
+            _this.subcategories.push(s);
           });
         }
       })["catch"](function (err) {
@@ -7078,6 +7064,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _helpers_Alert_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/Alert.js */ "./resources/js/components/helpers/Alert.js");
 /* harmony import */ var _app_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../app.js */ "./resources/js/app.js");
+/* harmony import */ var _Categories__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Categories */ "./resources/js/components/customer/Categories.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -7237,11 +7224,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'navmenu',
-  props: ['customer'],
+  props: ['customer', 'name'],
   directives: {
     focus: {
       // directive definition
@@ -7251,7 +7245,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   components: {
-    Toast: _helpers_Alert_js__WEBPACK_IMPORTED_MODULE_1__["default"]
+    Toast: _helpers_Alert_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+    categories: _Categories__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
@@ -40480,33 +40475,22 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "flex flex-wrap items-center" },
-    [
-      _vm._l(_vm.categories, function(category) {
-        return _c(
-          "a",
-          {
-            staticClass:
-              "mr-4 mb-3 px-6 py-3 bg-custom-light-orange rounded text-white",
-            attrs: { href: "/shoes?category=" + category.slug }
-          },
-          [_vm._v("\n        " + _vm._s(category.name) + "\n    ")]
-        )
-      }),
-      _vm._v(" "),
-      _vm._l(_vm.subcategories, function(sub) {
-        return _c(
-          "a",
-          {
-            staticClass:
-              "mr-4 mb-3 px-6 py-3 bg-custom-light-orange rounded text-white",
-            attrs: { href: "/shoes?subcategory=" + sub.slug }
-          },
-          [_vm._v("\n        " + _vm._s(sub.name) + "\n    ")]
-        )
-      })
-    ],
-    2
+    {
+      staticClass:
+        "flex items-center w-auto overflow-x-scroll md:overflow-hidden mb-2   rounded pl-0"
+    },
+    _vm._l(_vm.subcategories, function(sub, index) {
+      return _c(
+        "a",
+        {
+          staticClass:
+            "mr-4 px-2 py-2  text-custom-light-orange border-r  border-transparent  hover:border-custom-light-orange hover:opacity-75",
+          attrs: { href: "/shoes?subcategory=" + sub.id }
+        },
+        [_vm._v("\n        " + _vm._s(sub.name) + "\n    ")]
+      )
+    }),
+    0
   )
 }
 var staticRenderFns = []
@@ -43155,7 +43139,9 @@ var render = function() {
               )
             : _vm._e()
         ]
-      )
+      ),
+      _vm._v(" "),
+      _vm.name === "welcome" ? _c("div", [_c("categories")], 1) : _vm._e()
     ]
   )
 }
@@ -43417,10 +43403,11 @@ var render = function() {
           : _c(
               "a",
               {
-                staticClass: "my-4 text-custom-light-black text-md border py-2",
+                staticClass:
+                  "my-4 text-custom-light-black text-md border-b hover:border-custom-light-orange py-2",
                 attrs: { href: "/login" }
               },
-              [_vm._v("Login tor review")]
+              [_vm._v("Login to review")]
             )
       ]),
       _vm._v(" "),

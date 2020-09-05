@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title' , '- Shop Page')
+@section('title' , 'Shop Page')
 
 @section('head')
   <link rel="stylesheet" href="http://meyerweb.com/eric/tools/css/reset/reset.css">
@@ -89,11 +89,11 @@
                     <span id="" class=" w-1/3 pr-2 text-sm text-custom-light-orange">
                       From
                     </span>
-                    <input  name="from" min="0" max="2000" type="range" value="{{ request()->from ?? '0' }}" class="slr w-2/3" id="myRange">
+                    <input  name="from" min="0" max="1000" type="range" value="{{ request()->from ?? '0' }}" class="slr w-2/3" id="myRange">
                   </div>
                   <div class="flex flex-row items-center mb-2">
                     <span id="" class=" w-1/3 pr-2 text-sm text-custom-light-orange">To</span>
-                    <input  name="to" min="0" max="2000" type="range" value="{{ request()->to ?? '0' }}" class="slr w-2/3" id="myRange">
+                    <input  name="to" min="0" max="1000" type="range" value="{{ request()->to ?? '0' }}" class="slr w-2/3" id="myRange">
                   </div>
                 </div>
            
@@ -103,39 +103,7 @@
                   <ul class="flex flex-row lg:flex-col items-left md:ml-2 mb-3">
 
                     @forelse($categories as $cat)
-                      {{-- @if($category)
-                        <label  class="custom_checkbox relative flex flex items-center">
-                          <div class="flex items-center border">
-                            <input class="hidden" class="roleCheckbox border border-custom-light-orange" type="radio"  
-                            name="category" value="{{ $cat->id }}" {{ ($cat->id == $category->id) ? 'checked' : '' }}>
-                            <svg class="check h-8 w-8 text-blue-900 border border-custom-light-orange rounded" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                          </div>
-
-                          <span  class="text checkbox_btn hover:text-blue-900 mr-2 px-5 py-2 rounded-lg  border-2 border-white text-gray-900 cursor-pointer hover:opacity-75 
-                          {{ ($category->id == $cat->id) ? 'text-custom-light-orange font-semibold' : '' }}
-                          "
-                          >
-                            {{ $cat->name }}
-                          </span>
-                          
-                        </label>    
-                      @else
-                        <label  class="custom_checkbox relative flex flex items-center">
-
-                          <div class="flex items-center border">
-                            <input class="hidden" class="roleCheckbox" type="radio"  
-                            name="category" value="{{ $cat->id }}">
-                            <svg class="check h-8 w-8 text-blue-900 border rounded" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                          </div>
-
-                          <span  class="text checkbox_btn hover:text-blue-900 mr-2 px-5 py-2 rounded-lg  border-2 border-white text-gray-900 cursor-pointer hover:font-bold
-                          "
-                          >
-                            {{ $cat->name }}
-                          </span>
-                          
-                        </label>  
-                      @endif --}}
+                    
                       <ul class="mt-2 flex flex-row lg:flex-col items-left ">
                         @forelse($cat->subcategories as $sub_cat)
                           @if($subcategory)
@@ -187,7 +155,7 @@
          </div>
 
           <!-- Shoes -->
-         <div class="flex-1  lg:mt-0">
+         <div class="mt-4 flex-1  lg:mt-0">
             <div class="flex flex-row justify-between mb-3">
               <div class="flex flex-row items-center">
                 <a href="/" class=" text-md md:text-lg  text-custom-light-black">Home</a>

@@ -25,7 +25,7 @@ class WelcomeController extends Controller
     }
 
     public function categories(){
-        return response()->json(['categories' => Category::orderBy('name')->with('subcategories')->get()], 200);
+        return response()->json(['subcategories' => Subcategory::orderBy('name')->take(6)->get()], 200);
     }
 
     public function searchShoes($key){
@@ -44,7 +44,13 @@ class WelcomeController extends Controller
         $sort        = request()->sort;
         $categories = Category::orderBy('name')->with('subcategories')->get();
 
-        $p = Product::latest();
+        $p = Product::latest()
+                        ->with([
+                            'reviews' => function($query)
+                                {
+                                    $query->select('rating', 'message');
+                                 }
+                            ]);
 
         if($category){
             $category      = Category::findOrfail($category);
@@ -73,7 +79,7 @@ class WelcomeController extends Controller
 
             // $p = $p->sort('price', [$from, $to]);
         } 
-        $paginate = $p->paginate(10);
+        $paginate = $p->paginate(9);
         $count = count($paginate);
 
         $products = $paginate->items();

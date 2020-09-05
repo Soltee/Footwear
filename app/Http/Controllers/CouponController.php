@@ -24,21 +24,6 @@ class CouponController extends Controller
                     'message' => 'Your coupon has already been redeemed.'
                 ], 200);
             }  else {
-                // $percent_off = ($coupon->percent / 100) * Cart::subTotal();///4 
-                // $request->session()->put('discount', $percent_off);
-                // $subAfterDis = (Cart::subTotal() - $percent_off);//6
-                // $request->session()->put('subAfterDis', $subAfterDis);
-                // $tax = Cart::tax();//2
-                // $grand = ($subAfterDis + Cart::tax());//8
-                // $request->session()->put('grand', $grand);  
-                // return response()->json([
-                //         'valid' => true,
-                //         'message' => 'Your coupon is successfully redeemed.',
-                //         'discount' => $percent_off, 
-                //         'subAfterDis' => $subAfterDis,
-                //         'tax' => $tax,
-                //         'grand' =>  $grand
-                //     ], 201);
 
                 $percent = $coupon->percent;
                 $request->session()->put('percent', $percent);

@@ -9,7 +9,6 @@
 @section('content')
     
     <div>
-        {{-- <main-categories /> --}}
 
         <div class="w-full relative pt-6 md:pt-2 pb-8   flex flex-col md:flex-row items-center justify-between py-2">
             <div class="w-full md:w-1/2 lg:w-2/3  h-full flex flex-col items-start justify-center  ">
@@ -34,25 +33,39 @@
             <div class="flex  items-center mb-6">
                 <span class="text-custom-light-black font-bold text-center  tracking-wider text-lg md:text-xl">RECOMMENDED</span>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 sm:gap-6">
                     @forelse($products as $product)
                     <div class="mb-6 w-full flex flex-col items-start  hover:shadow  transition-all">
                         <a href="shoes/{{ $product->id }}/{{ $product->slug }}">
                             
                             <img class="w-full rounded-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}" 
-                                onerror="this.src='https://via.placeholder.com/300'">
+                                onerror="this.src='https://via.placeholder.com/500'">
                         </a>
-                        <div class=" mt-6 mb-3  rounded-lg flex flex-row justify-between w-full items-center">
+                        <div class=" mt-6 mb-3  rounded-lg flex flex-col justify-between w-full">
+                            <div class="mb-2 rounded-lg flex flex-row justify-between w-full items-center">
 
-                            <h4 class="text-lg font-bold text-custom-light-black">{{ $product->name }}</h4>                    
-                            <h5 class="text-xl font-bold text-custom-light-black">$ {{ $product->price }}</h5>
+                                <h4 class="text-lg font-bold text-custom-light-black">{{ $product->name }}</h4>                    
+                                <h5 class="text-xl font-bold text-custom-light-black">$ {{ $product->price }}</h5>
+                            </div>
+                            <div class="flex items-center">
+                                @for ($i = 1; $i <= $product->average_rating; $i++)
+                                        <svg class=" h-6 w-6 text-yellow-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                @endfor
+
+                            </div>
                         </div>
                         
 
                     </div>
                     @empty
-                        <div class="alert alert-error">
-                            No products in the database.
+                        <div class="flex flex-col justify-center items-center ">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 md:h-24 md:w-24 text-red-500">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M16 16s-1.5-2-4-2-4 2-4 2"></path>
+                                <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                                <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                            </svg>
+                            <p class="text-sm font-semibold text-red-500 mt-4">No Products.</p>
                         </div>
                     @endforelse
 
@@ -64,7 +77,7 @@
                 <h3 class="text-3xl font-bold text-custom-light-black">Over hundreds of women shoes</h3>
                 <div class="text-lg font-bold flex flex-col  items-center text-custom-light-black mt-8">
                     <a href="/shoes?type=Women" class="mb-3 md:mb-0">
-                        <span class="opacity-75">Grab now to get</span> 
+                        <span class="opacity-75">Use CODE WOMEN20 to get</span> 
                     </a>
                     <a href="/shoes?type=Women" class="px-4 py-3 rounded-lg bg-custom-light-orange  text-white ml-6 opacity-100 hover:opacity-75">
                         20% off
@@ -86,18 +99,32 @@
                         <a href="shoes/{{ $product->id }}/{{ $product->slug }}">
                             
                             <img class="w-full rounded-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}" 
-                                onerror="this.src='https://via.placeholder.com/300'">
+                                onerror="this.src='https://via.placeholder.com/500'">
                         </a>
-                        <div class=" mt-6 mb-3  rounded-lg flex flex-row justify-between w-full items-center">
+                        <div class=" mt-6 mb-3  rounded-lg flex flex-col justify-between w-full">
+                            <div class="mb-2 rounded-lg flex flex-row justify-between w-full items-center">
 
-                            <h4 class="text-lg font-bold text-custom-light-black">{{ $product->name }}</h4>                    
-                            <h5 class="text-xl font-bold text-custom-light-black">$ {{ $product->price }}</h5>
+                                <h4 class="text-lg font-bold text-custom-light-black">{{ $product->name }}</h4>                    
+                                <h5 class="text-xl font-bold text-custom-light-black">$ {{ $product->price }}</h5>
+                            </div>
+                            <div class="flex items-center">
+                                @for ($i = 1; $i <= $product->average_rating; $i++)
+                                        <svg class=" h-6 w-6 text-yellow-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                @endfor
+
+                            </div>
                         </div>
                       
                     </div>
                     @empty
-                        <div class="alert alert-error">
-                            No products in the database.
+                        <div class="flex flex-col justify-center items-center ">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 md:h-24 md:w-24 text-red-500">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M16 16s-1.5-2-4-2-4 2-4 2"></path>
+                                <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                                <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                            </svg>
+                            <p class="text-sm font-semibold text-red-500 mt-4">No Products.</p>
                         </div>
                     @endforelse
 
@@ -107,42 +134,6 @@
         <subscribe />  
 
     </div>
-    {{-- <div class="mt-6 md:mt-0 py-6 md:py-10 w-full ">
-        <div class="flex justify-center items-center">
-            <span class="text-custom-light-black font-bold text-center text-lg tracking-wider md:text-xl my-6 ml-4">FEATURED</span>
-        </div>
 
-
-        <div class="flex flex-wrap justify-center">
-                @forelse($featured as $product)
-                <div class="p-4 rounded-lg hover:shadow-lg cursor-pointer m-2 w-full cm:w-auto hover:-mt-1 transition-all">
-                    <a href="shoes/{{ $product->id }}/{{ $product->slug }}">
-                        <h3 class="text-lg font-bold my-2 text-custom-light-black">{{ $product->name }}</h3>
-                        <img class="h-64 w-64 rounded-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}">
-                        
-                        
-                    </a>
-                    <div class=" my-2   rounded-lg flex flex-row justify-between w-full items-center">
-                            <h5 class="text-xl font-bold text-gray-800">$ {{ $product->price }}</h5>
-                            <add-to-cart :product="{{ $product }}"   /> 
-                        </div>
-
-                </div>
-                @empty
-                    
-                @endforelse
-
-        </div>
-    </div> --}}
-
-    {{-- <div class="relative w-full overflow-hidden md:px-12  flex flex-col md:flex-row justify-between items-center h-64 ">
-
-        <img class="hover:shadow-2xl h-full opacity-50 absolute inset-0  object-center object-cover w-full " src="{{ asset('/img/children.jpg') }}" alt="Women Shoes">
-        <div class="flex-1 flex flex-col justify-center text-center md:items-left py-6 md:py-0 z-20">
-            <a href="/shoes?type=Children"><h3 class="text-3xl font-bold text-custom-light-black cursor-pointer"> Shop shoes for children : Boys & Girls </h3>
-            </a>
-        </div>
-       
-    </div> --}}
 
 @endsection
