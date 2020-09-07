@@ -19,5 +19,7 @@ mix
     .options({
         processCssUrls: false,
         postCss: [tailwindcss('./tailwind.config.js')],
+    })
+    .purgeCss({
+        enabled: true,
     });
-// .purgeCss();
