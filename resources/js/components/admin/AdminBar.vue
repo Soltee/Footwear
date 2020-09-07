@@ -13,12 +13,12 @@
                             <line x1="3" y1="18" x2="21" y2="18"></line>
                         </svg>
                         <a :href="`/#`" class="ml-3 mt-0 md:-mt-1 md:ml-0 text-lg font-semibold text-gray-100 no-underline mr-3">
-                            <img class="h-12 w-12 text-custom-light-black" :src="`/img/shoe.svg`">
+                            <img class="h-12 w-12 text-custom-light-black" :src="`/img/logo.svg`">
                         </a>
                     </div>
                     <div class="relative flex flex-row items-center text-right">
                         <div class="flex items-center justify-around w-auto px-2 py-1 bg-custom-gray-lighter " :class="(status) ? 'rounded-t-lg' : 'rounded-full'">
-                            <img v-if="admin.avatar" :src="`/storage/${admin.avatar}`" class="w-8 h-8 rounded-full object-cover object-center">
+                            <img v-if="admin.avatar" :src="`/storage/${admin.avatar}`" class="w-8 h-8 rounded-full object-cover object-center" onerror="this.src='/img/placeholder.png'">
                             <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 rounded-full object-cover object-center">
                                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                 <circle cx="12" cy="7" r="4"></circle>
@@ -38,7 +38,7 @@
         </nav>
         <div v-if="logoutModal">
             <div class="fixed inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
-                <div class="h-full w-full bg-transparent" @click="logoutModal = false;">
+                <div class="h-full w-full bg-gray-300 opacity-75" @click="logoutModal = false;">
                 </div>
                 <div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30">
                     <div class="text-right">

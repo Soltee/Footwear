@@ -15,13 +15,12 @@
                     </svg>
                 </div>
             </div>
-            <a class="flex flex-row sm:items-center fixed bottom-0 right-0 mr-16 mb-16 h-16 w-16 p-3 text-white md:text-admin-btn bg-admin-btn rounded-full hover:opacity-75
+            <a class="flex flex-row sm:items-center fixed bottom-0 right-0 mr-16 mb-16  text-white md:text-admin-btn bg-admin-btn rounded-full hover:opacity-75
 " :href="`/admin/products/create`">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6  md:mr-3">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-12 h-12 text-white p-2">
                     <line x1="12" y1="5" x2="12" y2="19"></line>
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                 </svg>
-                <span class="hidden md:inline text-admin-btn text-lg font-semibold">New Product</span>
             </a>
         </div>
         <div>
@@ -38,9 +37,13 @@
                     <tbody>
                         <tr v-if="!searchStatus" v-for="p in productArray">
                             <td class="whitespace-no-wrap border px-4 py-2 text-gray-900 whitespace-no-wrap">
-                                <img class="h-16 w-16 md:h-24 md:w-24 rounded-full" :src="`/storage/${p.imageUrl}`">
+                                <a :href="`/admin/products/${p.id}/show`" class="text-blue-500 hover:text-blue-600">
+                                    <img class="h-16 w-16 md:h-24 md:w-24 rounded-full" :src="`/storage/${p.imageUrl}`" onerror="this.src='/img/placeholder.png'">
+                                </a>
                             </td>
-                            <td class="whitespace-no-wrap border px-4 py-2 text-gray-900 whitespace-no-wrap"><a :href="`/admin/products/${p.id}/show`" class="text-blue-500 hover:text-blue-600">{{ p.name }}</a></td>
+                            <td class="whitespace-no-wrap border px-4 py-2 text-gray-900 whitespace-no-wrap">
+                                <a :href="`/admin/products/${p.id}/show`" class="text-blue-500 hover:text-blue-600">{{ p.name }}</a>
+                            </td>
                             <td class="whitespace-no-wrap border px-4 py-2 text-gray-900 whitespace-no-wrap">Rs {{ p.price }}</td>
                             <td class="whitespace-no-wrap ">
                                 <div class="flex flex-row justify-around items-center">

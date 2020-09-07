@@ -1,6 +1,6 @@
 <template>
     <div class="fixed inset-0   rounded-lg flex flex-col  justify-center rounded-lg z-20">
-        <div class="h-full w-full bg-gray-300" @click="closeModal">
+        <div class="h-full w-full bg-gray-300 opacity-75" @click="closeModal">
         </div>
         <div class="absolute  bg-white left-0 right-0 mx-auto max-w-3xl shadow-lg rounded-lg p-3 ">
             <div class="mb-3 text-right">
@@ -41,8 +41,8 @@
                     </div>
                 </div>
                 <div class="overflow-x-scroll w-full">
-                    <div class="grid grid-cols-1 cm:grid-cols-2 md:grid-cols-4">
-                        <img v-for="image in images" class="w-full w-64 h-64 hover:shadow rounded-lg object-cover object-center" :src="`/storage/${image.thumbnail}`">
+                    <div class="grid grid-cols-1 cm:grid-cols-2 md:grid-cols-4 gap-3">
+                        <img v-for="image in images" class="w-full w-64 h-64 hover:shadow rounded-lg object-cover object-center" :src="`/storage/${image.thumbnail}`" onerror="this.src='/img/placeholder.png'" >
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
             <div v-if="type == 'customer'" class="overflow-y-scroll h-86">
                 <div class="flex flex-col md:flex-row justify-around items-center">
                     <div v-if="customer">
-                        <img :src="`/storage/${customer.avatar}`" class="w-40 h-40 rounded-full object-cover object-center">
+                        <img :src="`/storage/${customer.avatar}`" class="w-40 h-40 rounded-full object-cover object-center" onerror="this.src='/img/placeholder.png'">
                     </div>
                     <div v-else>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-40 h-40 rounded-full object-cover object-center">
@@ -82,7 +82,7 @@
             <div v-if="type == 'order'" class="overflow-y-scroll h-86">
                 <div class="flex flex-col md:flex-row justify-around items-center">
                     <div v-if="customer">
-                        <img :src="`/storage/${customer.avatar}`" class="w-40 h-40 rounded-full object-cover object-center">
+                        <img :src="`/storage/${customer.avatar}`" class="w-40 h-40 rounded-full object-cover object-center" onerror="this.src='/img/placeholder.png'">
                     </div>
                     <div v-else>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-40 h-40 rounded-full object-cover object-center">

@@ -183,7 +183,7 @@
                           
                       <a href="shoes/{{ $product->id }}/{{ $product->slug }}">   <img 
                             class="w-full h-64 rounded-t-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}"
-                            onerror="this.src='https://via.placeholder.com/300'">
+                            onerror="this.src='/img/placeholder.png'">
                       </a>
 
                       <div class="cartBtn absolute inset-0 flex justify-center items-center opacity-0">

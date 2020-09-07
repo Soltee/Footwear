@@ -43,7 +43,7 @@
             <h4 class="m-0 text-md font-bold mb-4">Images</h4>
 
             <div class="grid grid-cols-1 cm:grid-cols-2 md:grid-cols-4 gap-4">
-                <img v-for="image in images" class="w-full w-64 h-64 hover:shadow rounded-lg object-cover object-center" :src="`/storage/${image.thumbnail}`">
+                <img v-for="image in images" class="w-full w-64 h-64 hover:shadow rounded-lg object-cover object-center" :src="`/storage/${image.thumbnail}`" onerror="this.src='/img/placeholder.png'">
             </div>
         </div>
 
@@ -55,7 +55,7 @@
             <div v-if="reviews.length > 0" class="flex flex-col">
                 <div v-for="review in reviews" class="flex flex-row  mb-6">
                     <div class="flex flex-col mr-3 items-center ">
-                        <img v-if="review.customer.avatar" class="w-12 md:w-16 object-center object-cover rounded-full" :src="`/storage/customers/${review.customer.avatar}`">
+                        <img v-if="review.customer.avatar" class="w-12 md:w-16 object-center object-cover rounded-full" :src="`/storage/customers/${review.customer.avatar}`" onerror="this.src='/img/placeholder.png'">
                         <div v-else class="w-12 md:w-16  rounded-full text-transparent">ff</div>
                     </div>
                     <div class="flex flex-col ">

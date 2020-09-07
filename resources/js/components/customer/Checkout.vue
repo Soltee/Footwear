@@ -18,7 +18,7 @@
         <div v-if="successCharge" class="flex flex-col">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 items-center gap-4">
                 <a v-for="pro in otherProducts" class="mb-4 " :href="`/shoes/${ pro.id }/${ pro.slug }`">
-                    <img class="w-full object-cover  rounded-lg" :src="`/storage/${pro.imageUrl}`" onerror="this.src='https://via.placeholder.com/300'">
+                    <img class="w-full object-cover  rounded-lg" :src="`/storage/${pro.imageUrl}`" onerror="this.src='/img/placeholder.png'">
                 </a>
             </div>
             <a :href="`/shoes`" class="w-full mt-16  cursor-pointer text-center md:w-auto text-bold text-md bg-custom-light-orange hover:opacity-75 text-white px-6 py-4 rounded-lg">Shop more</a>
@@ -200,7 +200,7 @@
                         </div>
                         <div v-for="product in products" class="px-3 w-full flex flex-col justify-between mt-4">
                             <div class="flex flex-col md:flex-row justify-between md:items-center">
-                                <img class="h-40 w-full md:w-40 rounded-lg object-cover object-center" :src="`/storage/${product.options.imageUrl}`" onerror="this.src='https://via.placeholder.com/300'">
+                                <img class="h-40 w-full md:w-40 rounded-lg object-cover object-center" :src="`/storage/${product.options.imageUrl}`" onerror="this.src='/img/placeholder.png'">
                                 <div class="ml-3 flex-1 mt-3 md:mt-0 flex  flex-row md:flex-col">
                                     <h4>{{ product.name }}</h4>
                                     <h4>$ {{ product.price }}</h4>
@@ -298,7 +298,12 @@ export default {
     },
     mounted() {
         this.pushProducts();
-        (auth) ? (this.checkoutForm = true) : (this.checkoutForm = false);
+        if(this.auth){
+            this.checkoutForm = true;
+            this.firstname    = this.auth.first_name;
+            this.lastname     = this.auth.last_name;
+            this.email        = this.auth.email;
+        } 
     },
     methods: {
         pushProducts() {
@@ -312,75 +317,75 @@ export default {
             this.submitStatus = true;
 
             if (this.method === "stripe") {
-                // setTimeout(() => {
-                //     // Create a Stripe client.
-                //     // alert(process.env.MIX_STRIPE_APP_KEY);
-                //     let key = process.env.MIX_STRIPE_APP_KEY;
-                //     var stripe = Stripe(`${key}`);
+                setTimeout(() => {
+                    // Create a Stripe client.
+                    // alert(process.env.MIX_STRIPE_APP_KEY);
+                    let key = process.env.MIX_STRIPE_APP_KEY;
+                    var stripe = Stripe(`${key}`);
 
-                //     // Create an instance of Elements.
-                //     var elements = stripe.elements();
+                    // Create an instance of Elements.
+                    var elements = stripe.elements();
 
-                //     // Custom styling can be passed to options when creating an Element.
-                //     // (Note that this demo uses a wider set of styles than the guide below.)
-                //     var style = {
-                //         base: {
-                //             color: '#32325d',
-                //             fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-                //             fontSmoothing: 'antialiased',
-                //             fontSize: '16px',
-                //             '::placeholder': {
-                //                 color: '#aab7c4'
-                //             }
-                //         },
-                //         invalid: {
-                //             color: '#fa755a',
-                //             iconColor: '#fa755a'
-                //         }
-                //     };
+                    // Custom styling can be passed to options when creating an Element.
+                    // (Note that this demo uses a wider set of styles than the guide below.)
+                    var style = {
+                        base: {
+                            color: '#32325d',
+                            fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                            fontSmoothing: 'antialiased',
+                            fontSize: '16px',
+                            '::placeholder': {
+                                color: '#aab7c4'
+                            }
+                        },
+                        invalid: {
+                            color: '#fa755a',
+                            iconColor: '#fa755a'
+                        }
+                    };
 
-                    // // Create an instance of the card Element.
-                    // var card = elements.create('card', { style: style });
+                    // Create an instance of the card Element.
+                    var card = elements.create('card', { style: style });
 
-                    // // Add an instance of the card Element into the `card-element` <div>.
-                    // card.mount('#card-element');
+                    // Add an instance of the card Element into the `card-element` <div>.
+                    card.mount('#card-element');
 
-                    // // Handle real-time validation errors from the card Element.
-                    // card.addEventListener('change', function(event) {
-                    //     var displayError = document.getElementById('card-errors');
-                    //     if (event.error) {
-                    //         displayError.textContent = event.error.message;
-                    //     } else {
-                    //         displayError.textContent = '';
-                    //     }
-                    // });
+                    // Handle real-time validation errors from the card Element.
+                    card.addEventListener('change', function(event) {
+                        var displayError = document.getElementById('card-errors');
+                        if (event.error) {
+                            displayError.textContent = event.error.message;
+                        } else {
+                            displayError.textContent = '';
+                        }
+                    });
 
                     let component = this;
                     component.submitStatus = true;
-                    // this.stripeObj = stripe;
-                    // this.stripeCard = card;
+                    this.stripeObj = stripe;
+                    this.stripeCard = card;
                     document.getElementById('payment-form').addEventListener('submit', (e) => {
                         e.preventDefault();
 
-                        // stripe.createToken(card).then((result) => {
-                        //     if (result.error) {
-                        //         // Inform the user if there was an error.
-                        //         var errorElement = document.getElementById('card-errors');
-                        //         errorElement.textContent = result.error.message;
-                        //     } else {
-                                // eventBus.$emit('token-received', );
-                                // component.charge(result.token.id);
-                                component.charge('jjjjj');
+                        stripe.createToken(card).then((result) => {
+                            if (result.error) {
+                                // Inform the user if there was an error.
+                                var errorElement = document.getElementById('card-errors');
+                                errorElement.textContent = result.error.message;
+                            } else {
+                                eventBus.$emit('token-received', );
+                                component.charge(result.token.id);
+                                // component.charge('jjjjj');
 
                                 // data.append('secret_token', result.token.id);
                                 // Send the token to your server.
                                 // stripeTokenHandler(result.token);
                                 // this.submitPayment(result.token.id);
-                    //         }
-                    //     });
+                            }
+                        });
                     });
 
-                // }, 300);
+                }, 300);
 
             } else if (this.method === 'braintree') {
                 let component = this;

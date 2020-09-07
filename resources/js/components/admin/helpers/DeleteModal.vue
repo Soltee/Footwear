@@ -1,7 +1,7 @@
 <template>
 
     <div class="fixed inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
-        <div class="h-full w-full bg-gray-300" @click="closeModal">
+        <div class="h-full w-full bg-gray-300 opacity-75" @click="closeModal">
             
         </div>
         <div class="absolute  bg-white left-0 right-0  mx-auto  max-w-xl shadow-lg rounded-lg p-6 z-30">

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-	Shoes - {{ $product->slug }}
+	Shop - {{ $product->slug }}
 @endsection
 
 @section('head')
@@ -59,7 +59,7 @@
 					 ">
 					{{-- <figure class="zoomy"> --}}
 					<img id="featured" 
-					  class="focus-img  cursor-move grabbable featured w-full h-64 object-cover object-center rounded" src="/storage/{{ $product->imageUrl }}" onerror="this.src='https://via.placeholder.com/300'">
+					  class="focus-img  cursor-move grabbable featured w-full h-64 object-cover object-center rounded" src="/storage/{{ $product->imageUrl }}" onerror="this.src='/img/placeholder.png'">
 					{{-- </figure> --}}
 					
 					
@@ -72,7 +72,7 @@
 
 				      			<div class="swiper-slide swiper-zoom-container relative">
 						            <div class="">
-						              <img class="thumbnail w-24 h-24 cm:h-24 cm:w-24 rounded object-cover swiper-lazy cursor-pointer" src="/storage/{{ $image->imageUrl }}" onerror="this.src='https://via.placeholder.com/300'" />
+						              <img class="thumbnail w-24 h-24 cm:h-24 cm:w-24 rounded object-cover swiper-lazy cursor-pointer" src="/storage/{{ $image->imageUrl }}" onerror="this.src='/img/placeholder.png'" />
 						            </div>
 						            <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
 					          	</div>
@@ -144,7 +144,7 @@
 		    	@forelse($similar as $image)
 
 	      			<div class="swiper-slide relative bg-gray-400 rounded-lg w-full flex flex-col items-center">
-			            <a href="{{ url('images', $image->id . '-' . $image->slug)}}"><img data-src="/storage/{{$image->imageUrl}}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='https://via.placeholder.com/300'"></a>
+			            <a href="{{ url('images', $image->id . '-' . $image->slug)}}"><img data-src="/storage/{{$image->imageUrl}}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='/img/placeholder.png'"></a>
 			            <div class="mt-2 flex flex-col">
 					      	<span class="mb-2">{{ $image->name }}
 					      	</span>

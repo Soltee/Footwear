@@ -1,7 +1,10 @@
 <template>
 
-    <div class="fixed inset-0 flex flex-row justify-center z-20">
-       <div class="bg-white  shadow-lg rounded-lg p-3 ">
+    <div class="fixed inset-0  rounded-lg flex flex-col  justify-center rounded-lg z-20">
+        <div class="h-full w-full bg-gray-300 opacity-75" @click="closeModal">
+            
+        </div>
+        <div class="absolute  bg-white left-0 right-0  mx-auto  max-w-3xl shadow-lg rounded p-6 z-30">
             <div class="mb-3 text-right">
                 <button @click="closeModal" type="button" class="px-4 py-2 cursor-pointer" data-dismiss="modal" aria-label="Close">
                     <svg class="fill-current text-gray-900" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
@@ -18,7 +21,7 @@
                         Save
                     </button>
                 </div>
-                <div class="flex flex-col md:flex-row h-90 overflow-y-scroll">
+                <div class="flex flex-col lg:flex-row h-90 overflow-y-scroll">
                     <div class="w-full md:w-64  pl-2">
                         <h4 class="text-md font-semibold text-gray-800 my-2">Images</h4>
                         <div class="flex w-full items-center justify-center bg-grey-lighter mb-3">
@@ -47,16 +50,16 @@
                             </div>
                         </div>
                         <div v-for="image in images" :key="image.id">
-                            <img  :src="`/storage/${image.thumbnail}`">
+                            <img  :src="`/storage/${image.thumbnail}`" onerror="this.src='/img/placeholder.png'">
                             <svg @click="removeImage(image)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 md:mb-0 h-6 w-6 md:h-8 md:h-8 text-admin-red cursor-pointer"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
                         </div>
                     </div> 
-                    <div class="flex-1 pl-3">
+                    <div class="flex-1 px-3 md:px-0 md:pl-3">
                         <div class="flex flex-col  rounded-lg mb-3">
                             <label for="name" class=" px-2 py-3 text-gray-800 text-md font-semibold ">Name</label>
                             <input type="text" id="name" v-model="name" class="px-3 py-3 rounded-lg  bg-gray-300 text-gray-900">
                         </div>
-                        <div class="flex flex-row items-center justify-between mb-3">
+                        <div class="px-3 md:px-0 flex flex-row items-center justify-between mb-3">
                             <div class="flex-1 flex flex-col  rounded-lg mr-2">
                                 <label for="price" class=" px-2 py-3 text-gray-800 text-md font-semibold ">Price</label>
                                 <input type="text" id="price" v-model="price" class="px-3 py-3 rounded-lg  bg-gray-300 text-gray-900  w-full">
@@ -98,9 +101,6 @@
 
                         <div class="flex flex-col  rounded-lg mb-3">
                             <label for="description" class=" px-2 py-3 text-gray-800 text-md font-semibold ">Description</label>
-                          <!-- <textarea id="description" v-model="description" class="px-3 py-3 rounded-lg  bg-gray-300 text-gray-900 w-full h-24">
-                            </textarea>
- -->
                             <wysiwyg v-model="description" />
 
                         </div>

@@ -8,7 +8,7 @@
             
                 <div class="flex flex-col break-words bg-white border border-2 rounded shadow-md">
 
-                    <div class="font-semibold bg-gray-200 text-gray-700 py-3 px-6 mb-0 text-lg">
+                    <div class="font-semibold text-gray-700 py-5 text-center px-6 mb-0 text-lg">
                         {{ __('Dashboard Login') }}
                     </div>
 
@@ -16,7 +16,7 @@
                         @csrf
 
                         <div class="flex flex-wrap mb-6">
-                            <label for="email" class="block text-gray-700 text-sm font-bold mb-2">
+                            <label for="email" class="block text-gray-500 text-sm font-semibold mb-2">
                                 {{ __('E-Mail Address') }}:
                             </label>
 
@@ -30,7 +30,7 @@
                         </div>
 
                         <div class="flex flex-wrap mb-6">
-                            <label for="password" class="block text-gray-700 text-sm font-bold mb-2">
+                            <label for="password" class="block text-gray-500 text-sm font-semibold mb-2">
                                 {{ __('Password') }}:
                             </label>
 

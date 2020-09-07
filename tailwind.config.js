@@ -22,8 +22,8 @@ module.exports = {
                     'yellow' : '#FFD055'
                 },
                 admin: {
-                    'bk': '#c2c49f',
-                    'btn': '#191911',
+                    'bk': '#ffff',
+                    'btn': '#EE6425',
                     'btn-hover': '#6b6855',
                     'red': '#dd1515',
                     'green': '#159049',

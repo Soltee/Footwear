@@ -29,7 +29,7 @@
                         <tr v-if="searchStatus" v-for="customer in searchArray">
                             <td class="whitespace-no-wrap border px-4 py-2 text-gray-900">
                                 <div v-if="customer.avatar">
-                                    <img :src="`/storage/${customer.avatar}`" class="w-16 h-16 rounded-full object-cover object-center">
+                                    <img :src="`/storage/${customer.avatar}`" class="w-16 h-16 rounded-full object-cover object-center" onerror="this.src='/img/placeholder.png'">
                                 </div>
                                 <div v-else>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 rounded-full object-cover object-center">
@@ -57,7 +57,7 @@
                         <tr v-if="!searchStatus" v-for="customer in customerArray">
                             <td class="whitespace-no-wrap border px-4 py-2 text-gray-900">
                                 <div v-if="customer.avatar">
-                                    <img :src="`/storage/${customer.avatar}`" class="w-16 h-16 rounded-full object-cover object-center">
+                                    <img :src="`/storage/${customer.avatar}`" class="w-16 h-16 rounded-full object-cover object-center" onerror="this.src='/img/placeholder.png'">
                                 </div>
                                 <div v-else>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-16 h-16 rounded-full object-cover object-center">

@@ -78,6 +78,7 @@ export default {
         subscribe() {
             this.loading = true;
             let data = new FormData();
+            
             data.append('email', this.email);
 
             axios.post(`/newsletter/signup`, data)
@@ -101,13 +102,17 @@ export default {
                         });
                     }
                 }).catch(err => {
-                    swal({
-                        title: "Error!",
-                        text: "Server Error!",
-                        icon: "error",
-                        button: "Close",
-                    });
-                    this.loading = false;
+                    if(err.response.data.errors.email){
+
+                        swal({
+                            title: "Error!",
+                            text: `${err.response.data.errors.email[0]}`,
+                            icon: "error",
+                            button: "Close",
+                        });
+                        this.loading = false;
+
+                    }
                 })
         }
     }

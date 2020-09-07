@@ -39,7 +39,7 @@
                         <a href="shoes/{{ $product->id }}/{{ $product->slug }}">
                             
                             <img class="w-full rounded-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}" 
-                                onerror="this.src='https://via.placeholder.com/500'">
+                                onerror="this.src='/img/placeholder.png'">
                         </a>
                         <div class=" mt-6 mb-3  rounded-lg flex flex-col justify-between w-full">
                             <div class="mb-2 rounded-lg flex flex-row justify-between w-full items-center">
@@ -99,7 +99,7 @@
                         <a href="shoes/{{ $product->id }}/{{ $product->slug }}">
                             
                             <img class="w-full rounded-lg object-cover object-center" src="/storage/{{ $product->imageUrl }}" 
-                                onerror="this.src='https://via.placeholder.com/500'">
+                                onerror="this.src='/img/placeholder.png'">
                         </a>
                         <div class=" mt-6 mb-3  rounded-lg flex flex-col justify-between w-full">
                             <div class="mb-2 rounded-lg flex flex-row justify-between w-full items-center">

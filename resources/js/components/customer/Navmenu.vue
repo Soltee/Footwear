@@ -26,7 +26,7 @@
                 </li>
                 <li v-if="customer" class=" mb-4  ">
                     <a :href="`/dashboard`" class="mr-3">
-                        <img v-if="customer.avatar" :src="`/storage/${customer.avatar}`" class="w-10 h-10 rounded-full object-cover object-center">
+                        <img v-if="customer.avatar" :src="`/storage/${customer.avatar}`" class="w-10 h-10 rounded-full object-cover object-center" onerror="this.src='/img/placeholder.png'">
                         <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 rounded-full object-cover object-center text-white ">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
