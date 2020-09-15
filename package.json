@@ -33,6 +33,7 @@
         "vue-scrollto": "^2.18.2",
         "vue-star-rating": "^1.6.1",
         "vue-template-compiler": "^2.6.11",
+        "vue-tiny-tabs": "^1.0.5",
         "vue-wysiwyg": "^1.7.2",
         "vuelidate": "^0.7.5"
     },

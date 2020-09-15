@@ -63,6 +63,8 @@ Vue.component('cart-checkout', require('./components/customer/Checkout.vue').def
 Vue.component('cart-view', require('./components/customer/Cart.vue').default);
 Vue.component('add-cart', require('./components/customer/AddToCart.vue').default);
 Vue.component('review', require('./components/customer/Review.vue').default);
+Vue.component('privacy-policy', require('./components/customer/Privacy.vue').default);
+Vue.component('faq', require('./components/customer/Faqs.vue').default);
 
 /*Miscellaneous*/
 Vue.component('main-categories', require('./components/customer/Categories.vue').default);
