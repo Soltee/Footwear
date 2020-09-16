@@ -1,6 +1,33 @@
 @extends('layouts.app')
 
 @section('title', 'Profile')
+@section('head')
+    <style>
+        .inputfile {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
+
+        .inputfile + label {
+            font-size: 1.25em;
+            font-weight: 700;
+            color: white;
+            background-color: #EE6425;
+            display: inline-block;
+            cursor: pointer; /* "hand" cursor */
+        }
+
+        .inputfile:focus + label,
+        .inputfile + label:hover {
+            opacity: 0.7;
+        }
+
+    </style>
+@endsection
 @section('content')
     <div class="flex flex-row  items-center "> 
         @if (session('status'))
@@ -31,12 +58,17 @@
 	                                {{ __('Save Pic') }}
 	                        </button>
 		        		</div>
-			        		<div class="flex flex-row items-center 	rounded-lg mb-3">
-					        	<input type="file" id="avatar" name="avatar" class="px-2 py-2 rounded-r-lg  text-white cursor-pointer" required="">
-			        			@if($customer->avatar)
-			        			<img class="h-24 w-full rounded-lg object-cover object-center" src="/storage/{{ $customer->avatar }}">
-			        			@endif
-			        		</div>
+		        		<div class="flex flex-col mb-3">
+                            <div class="flex items-center mb-2">
+                                
+				        	   <input type="file" id="avatar" name="avatar" class="inputfile px-2 py-2 rounded-r-lg  text-white cursor-pointer mb-3" required="">
+                               <label for="file" class="px-2 py-2 rounded">Upload Profile</label>
+                            </div>
+
+		        			@if($customer->avatar)
+		        			<img class="h-24 w-full rounded-lg object-cover object-center" src="/storage/{{ $customer->avatar }}">
+		        			@endif
+		        		</div>
 			        </form>
 	        	</div>
 	        	<div class="flex-1 overflow-hidden px-4 md:pl-8   ">

@@ -19,9 +19,6 @@ use Illuminate\Support\Arr;
 
 $factory->define(Customer::class, function (Faker $faker) {
     return [
-        'avatar' => function(){
-            return '/customers/1.jpg';
-        },
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
