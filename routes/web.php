@@ -102,7 +102,7 @@ Route::prefix('admin')->group(function () {
 
 	
 	//ProductReview Api
-	Route::get('/reviews/{product}', 'ProductReviewController@index');	
+	Route::get('/reviews/{product}', 'Administrator\ProductReviewController@index');	
 	// Route::get('/reviews/{product}/get', 'ProductReviewController@getReviews');	
 	// Route::delete('/reviews/{product}', 'ProductReviewController@destroy');
 

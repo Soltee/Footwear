@@ -10,7 +10,7 @@
 	        </div>
 	        <div class="w-full md:flex-1 md:ml-48 md:px-6">
                 
-                <product-reviews :product="{{ $product }}"></product-reviews>
+                <product-reviews :images="{{ $images }}" :reviews="{{ $reviews }}" :product="{{ $product }}"></product-reviews>
 
 
 	        </div>

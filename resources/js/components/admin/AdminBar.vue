@@ -4,10 +4,10 @@
             <div class="md:px-0">
                 <div class="relative flex items-center justify-between">
                     <div v-if="expandMenu" class="absolute left-0 top-0 mt-16 w-full sm:w-40 md:hidden z-20  bg-admin-bk">
-                        <Menu></Menu>
+                        <Menu :route="route"></Menu>
                     </div>
                     <div class="mr-6 flex items-center justify-between">
-                        <svg @click="expandMenu = !expandMenu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="relative  md:hidden w-8 h-8 text-custom-light-black cursor-pointer hover:opacity-75">
+                        <svg @click="expandMenu = !expandMenu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="relative  md:hidden w-8 h-8 text-admin-btn cursor-pointer hover:opacity-75">
                             <line x1="3" y1="12" x2="21" y2="12"></line>
                             <line x1="3" y1="6" x2="21" y2="6"></line>
                             <line x1="3" y1="18" x2="21" y2="18"></line>
@@ -17,20 +17,20 @@
                         </a>
                     </div>
                     <div class="relative flex flex-row items-center text-right">
-                        <div class="flex items-center justify-around w-auto px-2 py-1 bg-custom-gray-lighter " :class="(status) ? 'rounded-t-lg' : 'rounded-full'">
+                        <div class="flex items-center justify-around w-auto px-2 py-1  " :class="(status) ? 'rounded-t-lg' : 'rounded-full'">
                             <img v-if="admin.avatar" :src="`/storage/${admin.avatar}`" class="w-8 h-8 rounded-full object-cover object-center" onerror="this.src='/img/placeholder.png'">
                             <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 rounded-full object-cover object-center">
                                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                 <circle cx="12" cy="7" r="4"></circle>
                             </svg>
-                            <svg v-if="status" @click="status = false" class="ml-2 h-8 w-8 text-custom-gray cursor-pointer hover:text-custom-gray-light" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <svg v-if="status" @click="status = false" class="ml-2 h-8 w-8 text-admin-btn cursor-pointer hover:opacity-75" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                 <path d="M10.707 7.05L10 6.343 4.343 12l1.414 1.414L10 9.172l4.243 4.242L15.657 12z" /></svg>
-                            <svg v-else @click="status = true" class="ml-2 h-8 w-8 text-custom-gray cursor-pointer hover:text-custom-gray-light" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <svg v-else @click="status = true" class="ml-2 h-8 w-8 text-admin-btn cursor-pointer hover:opacity-75" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                 <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
                         </div>
-                        <div v-if="status" class="absolute top-0 left-0 md:right-0 mt-10 bg-custom-gray-lighter px-2 py-1 rounded-b-lg w-full flex  flex-col border-gray-300 border-t-2 z-20">
-                            <a :href="`/admin/profile`" class="no-underline hover:underline text-white text-md  md:text-lg font-bold p-3">Profile</a>
-                            <a @click.prevent="toggleLogoutModel" :href="`/#`" class="no-underline hover:underline text-white text-md  md:text-lg font-bold p-3">Logout</a>
+                        <div v-if="status" class="absolute top-0 left-0 md:right-0 mt-10 bg-gray-100 px-2 py-1 rounded w-full flex  flex-col   z-20">
+                            <a :href="`/admin/profile`" class="no-underline hover:underline text-admin-btn text-md  md:text-lg font-bold p-3">Profile</a>
+                            <a @click.prevent="toggleLogoutModel" :href="`/#`" class="no-underline hover:underline text-admin-btn text-md  md:text-lg font-bold p-3">Logout</a>
                         </div>
                     </div>
                 </div>
@@ -69,9 +69,12 @@ export default {
     props: {
         admin: {
             type: Object,
-            required: true
+            required: true,
         },
-
+        route : {
+            type : String,
+            required : true
+        } 
     },
     components: {
         Menu

@@ -10,27 +10,27 @@
 	        </div>
 	        <div class="overflow-x-scroll w-500 md:w-auto md:overflow-hidden flex-1 md:px-6 pb-16">
 	        	<div class="flex flex-col">
-	        		<h3 class="font-md text-lg text-gray-800 my-3">Dashboard</h3>
+	        		<h3 class="font-bold text-lg text-gray-800 my-6">Dashboard</h3>
 	        		<div class="w-full flex flex-row items-center justify-between mb-3">
-	        			<div class="flex-1 px-3 py-3 rounded-lg bg-green-500 mr-2">
+	        			<div class="flex-1 px-6 py-6 rounded-lg bg-admin-light-green mr-2">
 	        				<h4 class="text-right pb-2">
-	        					<span class="font-semibold text-lg text-gray-300">Categories</span>
+	        					<span class="font-semibold text-lg text-white">Categories</span>
 	        				</h4>
 	        				<div class="text-left font-bold text-white">
 	        					{{$categories}}
 	        				</div>
 	        			</div>
-	        			<div class="flex-1 px-3 py-3 rounded-lg bg-green-500">
+	        			<div class="flex-1 px-6 py-6 rounded-lg bg-admin-light-green">
 	        				<h4 class="text-right pb-2">
-	        					<span class="font-semibold text-lg text-gray-300">Products</span>
+	        					<span class="font-semibold text-lg text-white">Products</span>
 	        				</h4>
 	        				<div class="text-left font-bold text-white">
 	        					{{$products}}
 	        				</div>
 	        			</div>
-	        			<div class="ml-2 flex-1 px-3 py-3 rounded-lg bg-green-500">
+	        			<div class="ml-2 flex-1 px-6 py-6 rounded-lg bg-admin-light-green">
 	        				<h4 class="text-right pb-2">
-	        					<span class="font-semibold text-lg text-gray-300">Customers</span>
+	        					<span class="font-semibold text-lg text-white">Customers</span>
 	        				</h4>
 	        				<div class="text-left font-bold text-white">
 	        					{{$customers}}
@@ -38,26 +38,26 @@
 	        			</div>
 	        		</div>
 	        		<div class="flex flex-row items-center justify-between mb-3">
-	        			<div class="flex-1 px-3 py-3 rounded-lg bg-green-500 mr-2">
+	        			<div class="flex-1 px-6 py-6 rounded-lg bg-admin-light-green mr-2">
 	        				<h4 class="text-right pb-2">
-	        					<span class="font-semibold text-lg text-gray-300">Sales</span>
+	        					<span class="font-semibold text-lg text-white">Sales</span>
 	        				</h4>
 	        				<div class="text-left font-bold text-white">
 	        					${{$sales}}
 	        				</div>
 	        			</div>
-	        			<div class="flex-1 px-3 py-3 rounded-lg bg-green-500">
+	        			<div class="flex-1 px-6 py-6 rounded-lg bg-admin-light-green">
 	        				<h4 class="text-right pb-2">
-	        					<span class="font-semibold text-lg text-gray-300">Orders</span>
+	        					<span class="font-semibold text-lg text-white">Orders</span>
 	        				</h4>
 	        				<div class="text-left font-bold text-white">
 	        					{{$orders}}
 	        				</div>
 	        			</div>
 
-	        			<div class="ml-2 flex-1 px-3 py-3 rounded-lg bg-green-500">
+	        			<div class="ml-2 flex-1 px-6 py-6 rounded-lg bg-admin-light-green">
 	        				<h4 class="text-right pb-2">
-	        					<span class="font-semibold text-lg text-gray-300">Order Items</span>
+	        					<span class="font-semibold text-lg text-white">Order Items</span>
 	        				</h4>
 	        				<div class="text-left font-bold text-white">
 	        					{{$items}}

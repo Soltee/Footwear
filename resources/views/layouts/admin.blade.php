@@ -15,12 +15,14 @@
 <body class="bg-gray h-screen antialiased leading-none ">
     <div id="app" class="min-h-screen bg-admin-bk  w-full">
         @auth('administrator')
-            <admin-bar  :admin="{{ json_encode(Auth::guard('administrator')->user()) }}"></admin-bar :name="{{ Route::currentRouteName() }}">
+            <admin-bar  :admin="{{ json_encode(Auth::guard('administrator')->user()) }}" route="{{ Route::currentRouteName() }}"></admin-bar >
         @endauth
         @include('sweetalert::alert')
         
 
-        @yield('content')
+        <div class="md:border-l md:border-custom-light-orange">    
+            @yield('content')
+        </div>
     </div>
 
     <!-- Scripts -->

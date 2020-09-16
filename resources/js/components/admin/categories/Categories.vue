@@ -22,18 +22,18 @@
                         <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
                     </svg>
                     <div class="relative flex items-center">
-                        <input v-model="category" @keyup="searchStatus = true; categoryStatus = true; getCategories();" class="relative w-40 md:w-32  block appearance-none rounded-full  bg-white border border-gray-400 hover:border-gray-500 pl-16 py-2 pr-8  shadow leading-tight focus:outline-none focus:shadow-outline" id="" type="text" name="name" placeholder="Search Table">
-                        <svg class="absolute left-0 top-0 mt-1 ml-2 h-8 w-8" viewBox="0 0 47 47" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M37.2309 30.1598C38.9903 27.1823 40 23.709 40 20C40 8.9543 31.0457 0 20 0C8.9543 0 0 8.9543 0 20C0 31.0457 8.9543 40 20 40C23.709 40 27.1823 38.9904 30.1598 37.2309L37.7487 44.8198C39.7014 46.7724 42.8672 46.7724 44.8198 44.8198C46.7724 42.8672 46.7724 39.7014 44.8198 37.7487L37.2309 30.1598Z" fill="#201E16" />
-                            <circle opacity="0.3" cx="20" cy="20" r="15" fill="white" />
-                        </svg>
+                        <input v-model="category" @keyup="searchStatus = true; categoryStatus = true; getCategories();" class="relative w-40 md:w-64  block appearance-none rounded-full  bg-white border border-gray-400 hover:border-gray-500 pl-16 py-2 pr-8  shadow leading-tight focus:outline-none focus:shadow-outline" id="" type="text" name="name" placeholder="Search Table">
+                        <svg class="absolute left-0 top-0 mt-1 ml-2 h-8 w-8 text-custom-light-orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                         <svg @click="searchStatus = false; category = '';" xmlns="http://www.w3.org/2000/svg" class="absolute right-0 top-0 mt-1 mr-2 h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
                             <line x1="6" y1="6" x2="18" y2="18"></line>
                         </svg>
                     </div>
+
                 </div>
             </div>
+
+            <!-- Category Table -->
             <div v-if="categoryStatus">
                 <div class="overflow-x-scroll w-full mt-6 md:overflow-hidden">
                     <table class="w-full table-auto">
@@ -45,6 +45,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <!--- Search Category -->
                             <tr v-if="searchStatus && (categorySearchArray.length > 0)" v-for="category in categorySearchArray" class="relative">
                                 <td class="whitespace-no-wrap border px-4 py-2 text-gray-900">{{ category.name }}</td>
                                 <td class="whitespace-no-wrap border px-4 py-2 text-gray-900">{{ format(category.created_at) }}</td>
@@ -64,11 +65,20 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr v-else>
-                                <td class="whitespace-no-wrap border px-4 py-2 text-gray-900">
-                                    No match found.
-                                </td>
+                            <tr v-if="searchStatus && (categorySearchArray.length < 1)">
+                                <div  class="flex items-center w-full flex-col">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 md:h-24 md:w-24 text-red-500">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <path d="M16 16s-1.5-2-4-2-4 2-4 2"></path>
+                                        <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                                        <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                                    </svg>
+                                    <p class="text-sm font-semibold text-red-500 mt-4">Category not match.</p>
+                                </div>
+
                             </tr>
+
+                            <!-- Default Category & Not found -->
                             <tr v-if="!searchStatus && (categoryArray.length > 0)" v-for="category in categoryArray">
                                 <td class="whitespace-no-wrap border px-4 py-2 text-gray-900">{{ category.name }}</td>
                                 <td class="whitespace-no-wrap border px-4 py-2 text-gray-900">{{ format(category.created_at) }}</td>
@@ -88,13 +98,23 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr v-else>
-                                <td class="whitespace-no-wrap border px-4 py-2 text-gray-900">
-                                    Empty.
-                                </td>
+
+                            <tr v-if="(categoryArray.length < 1)">
+                                <div  class="flex items-center w-full flex-col">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 md:h-24 md:w-24 text-red-500">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <path d="M16 16s-1.5-2-4-2-4 2-4 2"></path>
+                                        <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                                        <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                                    </svg>
+                                    <p class="text-sm font-semibold text-red-500 mt-4">Category not match.</p>
+                                </div>
+
                             </tr>
+                           
                         </tbody>
                     </table>
+
                     <!-- Paginaion -->
                     <div v-if="searchStatus && (categorySearchArray.length > 4)">
                         <div class="my-6 flex flex-col md:flex-row justify-between items-center" v-if="searchLinks">
@@ -153,18 +173,18 @@
                         <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
                     </svg>
                     <div class="relative flex items-center">
-                        <input v-model="subcategory" @keyup="subSearchStatus = true; getSubCategories();" class="relative w-40 md:w-32  block appearance-none rounded-full  bg-white border border-gray-400 hover:border-gray-500 pl-16 py-2 pr-8  shadow leading-tight focus:outline-none focus:shadow-outline" id="" type="text" name="name" placeholder="Search Table">
-                        <svg class="absolute left-0 top-0 mt-1 ml-2 h-8 w-8" viewBox="0 0 47 47" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M37.2309 30.1598C38.9903 27.1823 40 23.709 40 20C40 8.9543 31.0457 0 20 0C8.9543 0 0 8.9543 0 20C0 31.0457 8.9543 40 20 40C23.709 40 27.1823 38.9904 30.1598 37.2309L37.7487 44.8198C39.7014 46.7724 42.8672 46.7724 44.8198 44.8198C46.7724 42.8672 46.7724 39.7014 44.8198 37.7487L37.2309 30.1598Z" fill="#201E16" />
-                            <circle opacity="0.3" cx="20" cy="20" r="15" fill="white" />
-                        </svg>
+                        <input v-model="subcategory" @keyup="subSearchStatus = true; getSubCategories();" class="relative w-40 md:w-64  block appearance-none rounded-full  bg-white border border-gray-400 hover:border-gray-500 pl-16 py-2 pr-8  shadow leading-tight focus:outline-none focus:shadow-outline" id="" type="text" name="name" placeholder="Search Table">
+                        <svg class="absolute left-0 top-0 mt-1 ml-2 h-8 w-8 text-custom-light-orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                         <svg @click="subSearchStatus = false; subcategory = '';" xmlns="http://www.w3.org/2000/svg" class="absolute right-0 top-0 mt-1 mr-2 h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
                             <line x1="6" y1="6" x2="18" y2="18"></line>
                         </svg>
                     </div>
+                    
                 </div>
             </div>
+
+            <!-- SubCategory -->
             <div v-if="subcategoryStatus">
                 <div class="overflow-x-scroll w-full mt-6 md:overflow-hidden">
                     <table class="w-full table-auto">
@@ -193,11 +213,21 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr v-else>
-                                <td class="whitespace-no-wrap border px-4 py-2 text-gray-900">
-                                    No match found.
-                                </td>
+                            
+                            <tr v-if="subcategoryArray.length < 1">
+                                <div  class="flex items-center w-full flex-col">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 md:h-24 md:w-24 text-red-500">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <path d="M16 16s-1.5-2-4-2-4 2-4 2"></path>
+                                        <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                                        <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                                    </svg>
+                                    <p class="text-sm font-semibold text-red-500 mt-4">SubCategory not found.</p>
+                                </div>
+
                             </tr>
+
+                            <!--  --> 
                             <tr v-if="!subSearchStatus && (subcategoryArray.length > 0)" v-for="subcategory in subcategoryArray">
                                 <td class="whitespace-no-wrap border px-4 py-2 text-gray-900">{{ subcategory.name }}</td>
                                 <td class="whitespace-no-wrap border px-4 py-2 text-gray-900">{{ format(subcategory.created_at) }}</td>
@@ -215,10 +245,18 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr v-else>
-                                <td class="whitespace-no-wrap border px-4 py-2 text-gray-900">
-                                    Empty
-                                </td>
+
+                            <tr v-if="subSearchStatus && subcategorySearchArray.length < 1">
+                                <div  class="flex items-center w-full flex-col">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 md:h-24 md:w-24 text-red-500">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <path d="M16 16s-1.5-2-4-2-4 2-4 2"></path>
+                                        <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                                        <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                                    </svg>
+                                    <p class="text-sm font-semibold text-red-500 mt-4">Subcategory not match.</p>
+                                </div>
+
                             </tr>
                         </tbody>
                     </table>
@@ -239,7 +277,7 @@
                             </div>
                         </div>
                     </div>
-                    <div v-if="!subSearchStatus && (subcategoryArray.length > 4)">
+                    <div v-if="!subSearchStatus && (subcategoryArray.length > 0)">
                         <div class="my-6 flex flex-col md:flex-row justify-between items-center" v-if="sublinks">
                             <div class="flex flex-row items-center">
                                 <span class="px-4 py-3 text-gray-800 font-bold text-lg">{{ sublinks.first_item }} </span>
@@ -256,7 +294,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> 
+
         </div>
         <div v-if="deleteModal">
             <DeleteModal :type="selected"></DeleteModal>
@@ -300,6 +339,7 @@ export default {
                 name: 'Name'
             },
             type: "",
+            loading  : false,
             subcategoryStatus: true,
             subcategoryArray: [],
             sublinks: null,
@@ -333,6 +373,7 @@ export default {
     },
     methods: {
         getCategories() {
+            this.loading = true;
             let endpoint = '/admin/getCategories';
 
 
@@ -342,6 +383,7 @@ export default {
                     endpoint = `${this.page}&search=${this.category}`;
                 }
             } else {
+                this.searchStatus = false;
                 if (this.page) {
                     endpoint = this.page;
                 }
@@ -350,6 +392,7 @@ export default {
 
             axios.get(`${endpoint}`)
                 .then(res => {
+                    this.loading = false;
                     let data = res.data;
                     if (res.status == 200) {
                         if (this.searchStatus) {
@@ -370,6 +413,7 @@ export default {
 
                     }
                 }).catch(err => {
+                    this.loading = false;
                     Toast.fire({
                         icon: 'error',
                         title: 'Network Error!'
@@ -377,6 +421,7 @@ export default {
                 });
         },
         getSubCategories() {
+            this.loading = true;
             let endpoint = '/admin/getSubCategories';
 
             if (this.selectedCategory) {
@@ -389,6 +434,7 @@ export default {
                     endpoint = `${this.subpage}&search=${this.subcategory}`;
                 }
             } else {
+                this.subSearchStatus = false;
                 if (this.subpage) {
                     endpoint = this.subpage;
                 }
@@ -397,6 +443,7 @@ export default {
 
             axios.get(`${endpoint}`)
                 .then(res => {
+                    this.loading = false;
                     let data = res.data;
                     if (res.status == 200) {
                         if (this.selectedCategory) {
@@ -427,6 +474,7 @@ export default {
 
                     }
                 }).catch(err => {
+                    this.loading = false;
                     Toast.fire({
                         icon: 'error',
                         title: 'Network Error!'

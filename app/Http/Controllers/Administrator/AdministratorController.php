@@ -48,15 +48,15 @@ class AdministratorController extends Controller
         $chart = new GroupChart;
         $chart->labels(['10 days ago', '2 days ago', 'Yesterday', 'Today']);
         $chart->dataset('Customers', 'line', [$users_last_ten_days_ago, $users_2_days_ago, $yesterday_users, $today_users])->options([
-                'color' => '#000000',
+                'color' => '#18A52C',
             ]);;
 
         $chart->dataset('Products', 'line', [$products_last_ten_days_ago, $products_2_days_ago, $yesterday_products, $today_products])->options([
-                'color' => '#000000',
+                'color' => '#18A52C',
             ]);;
 
         $chart->dataset('Orders', 'line', [$orders_last_ten_days_ago, $orders_2_days_ago, $yesterday_orders, $today_orders])->options([
-                'color' => '#000000',
+                'color' => '#18A52C',
             ]);
 
         $categories   = $categories_query->count();

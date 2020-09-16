@@ -42,7 +42,7 @@
                 </div>
                 <div class="overflow-x-scroll w-full">
                     <div class="grid grid-cols-1 cm:grid-cols-2 md:grid-cols-4 gap-3">
-                        <img v-for="image in images" class="w-full w-64 h-64 hover:shadow rounded-lg object-cover object-center" :src="`/storage/${image.thumbnail}`" onerror="this.src='/img/placeholder.png'" >
+                        <img v-for="image in images" class="w-full w-64 h-64 hover:shadow rounded-lg object-cover object-center" :src="`/${image.thumbnail}`" onerror="this.src='/img/placeholder.png'" >
                     </div>
                 </div>
             </div>

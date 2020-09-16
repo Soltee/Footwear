@@ -36,7 +36,7 @@
             <div class="mt-2  w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse($products as $product)
                 <div class=" rounded-lg  cursor-pointer mb-6 hover:-mt-1  transition-all">
-                    <div class="cartBtnParent relative" >
+                    <div class=" relative" >
                           
                       <a href="shoes/{{ $product->id }}/{{ $product->slug }}">   
 
@@ -45,9 +45,7 @@
                             onerror="this.src='/img/placeholder.png'">
                       </a>
 
-                      <div class="cartBtn absolute inset-0 flex justify-center items-center opacity-0">
-                        <add-to-cart :product="{{ $product }}"   /> 
-                      </div>
+                      
 
                     </div>
                     <div class=" mt-6 mb-3  rounded-lg flex flex-col justify-between w-full">
@@ -106,7 +104,7 @@
             <div class="mt-2  w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse($featured as $product)
                 <div class=" rounded-lg  cursor-pointer mb-6 hover:-mt-1  transition-all">
-                    <div class="cartBtnParent relative" >
+                    <div class=" relative" >
                           
                       <a href="shoes/{{ $product->id }}/{{ $product->slug }}">   
 
@@ -115,9 +113,7 @@
                             onerror="this.src='/img/placeholder.png'">
                       </a>
 
-                      <div class="cartBtn absolute inset-0 flex justify-center items-center opacity-0">
-                        <add-to-cart :product="{{ $product }}"   /> 
-                      </div>
+                      
 
                     </div>
                     <div class=" mt-6 mb-3  rounded-lg flex flex-col justify-between w-full">

@@ -45,7 +45,7 @@
                 <div v-for="review in reviews" class="flex flex-row  mb-6">
                     <div class="flex flex-col mr-3 items-center ">
                         <img v-if="review.customer.avatar" class="w-12 md:w-16 object-center object-cover rounded-full" :src="`/storage/customers/${review.customer.avatar}`" onerror="this.src='/img/placeholder.png'">
-                        <div v-else class="w-12 md:w-16  rounded-full text-transparent">ff</div>
+                        <div v-else class="w-12 h-12 md:w-16 md:h-16 rounded-full text-transparent bg-gray-300">ff</div>
                     </div>
                     <div class="flex flex-col ">
                         <div class="flex flex-col items-start mb-4">

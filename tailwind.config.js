@@ -28,6 +28,10 @@ module.exports = {
                     'btn-hover': '#6b6855',
                     'red': '#dd1515',
                     'green': '#159049',
+                    'light-green' : '#18A52C',
+                    'dark-green'  : '#007000',
+                    'light-brown' : '#55433B',
+                    'lighter-brown' : '#BDA79E'
                 }
             },
             height: {

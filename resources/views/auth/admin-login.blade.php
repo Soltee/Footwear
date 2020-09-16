@@ -3,8 +3,8 @@
 @section('content')
     <div class="bg-white fixed inset-0 flex justify-center
      items-center flex-col">
-        <div class="  mx-auto max-w-md rounded-lg flex flex-col  justify-center rounded-lg">
-            <div class="w-full max-w-sm">
+        <div class="   rounded-lg flex flex-col  justify-center rounded-lg">
+            <div class="w-full mx-auto max-w-xl">
             
                 <div class="flex flex-col break-words bg-white border border-2 rounded shadow-md">
 
@@ -52,7 +52,7 @@
                         </div>
 
                         <div class="flex flex-wrap items-center">
-                            <button type="submit" class="bg-blue-500 w-full hover:bg-blue-700 text-gray-100 font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline">
+                            <button type="submit" class="bg-custom-light-orange hover:opacity-75 w-full  text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline">
                                 {{ __('Login') }}
                             </button>
 

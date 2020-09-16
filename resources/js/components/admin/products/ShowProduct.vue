@@ -9,7 +9,7 @@
                 </svg>
             </a>
             <h4 class="m-0 text-md font-bold ml-3">{{ product.name }} </h4>
-        </div>
+        </div>d
 
         <!-- Product Details -->
         <div class="flex flex-col mb-4">
@@ -43,7 +43,7 @@
             <h4 class="m-0 text-md font-bold mb-4">Images</h4>
 
             <div class="grid grid-cols-1 cm:grid-cols-2 md:grid-cols-4 gap-4">
-                <img v-for="image in images" class="w-full w-64 h-64 hover:shadow rounded-lg object-cover object-center" :src="`/storage/${image.thumbnail}`" onerror="this.src='/img/placeholder.png'">
+                <img v-for="image in images" class="w-full w-64 h-64 hover:shadow rounded-lg object-cover object-center" :src="`/${image.thumbnail}`" onerror="this.src='/img/placeholder.png'">
             </div>
         </div>
 

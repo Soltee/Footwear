@@ -141,7 +141,7 @@
                         <div class="h-86 my-3 overflow-y-scroll">
                             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 items-center gap-4">
                                 <a v-for="s in shoesArray" class="mb-4 " :href="`/shoes/${s.id}/${s.name}`">
-                                    <img class="w-full object-cover  rounded-lg" :src="`/storage/${s.imageUrl}`" onerror="this.src='https://via.placeholder.com/300'">
+                                    <img class="lozad w-full object-cover  rounded-lg" :src="`/${s.imageUrl}`" onerror="this.src='https://via.placeholder.com/300'">
                                 </a>
                             </div>
                         </div>

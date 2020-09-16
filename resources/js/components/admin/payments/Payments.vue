@@ -19,10 +19,8 @@
             </div>
             <div class="ml-3 relative flex items-center">
                 <input v-model="keyword" @keyup="searchStatus = true; getOrders();" class="relative w-40 md:w-64  block appearance-none rounded-full  bg-white border border-gray-400 hover:border-gray-500 pl-16 py-2 pr-8  shadow leading-tight focus:outline-none focus:shadow-outline" id="" type="text" name="name" placeholder="Search Table">
-                <svg class="absolute left-0 top-0 mt-1 ml-2 h-8 w-8" viewBox="0 0 47 47" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M37.2309 30.1598C38.9903 27.1823 40 23.709 40 20C40 8.9543 31.0457 0 20 0C8.9543 0 0 8.9543 0 20C0 31.0457 8.9543 40 20 40C23.709 40 27.1823 38.9904 30.1598 37.2309L37.7487 44.8198C39.7014 46.7724 42.8672 46.7724 44.8198 44.8198C46.7724 42.8672 46.7724 39.7014 44.8198 37.7487L37.2309 30.1598Z" fill="#201E16" />
-                    <circle opacity="0.3" cx="20" cy="20" r="15" fill="white" />
-                </svg>
+                <svg class="absolute left-0 top-0 mt-1 ml-2 h-8 w-8 text-custom-light-orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+
                 <svg @click="searchStatus = false; keyword = '';" xmlns="http://www.w3.org/2000/svg" class="absolute right-0 top-0 mt-1 mr-2 h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
                     <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -41,6 +39,23 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <!-- Loading State -->
+
+                        <div v-if="loading" class="fixed inset-0 z-40 bg-gray-300 flex justify-center items-center">
+                            <div class="sk-cube-grid">
+                                <div class="sk-cube sk-cube1"></div>
+                                <div class="sk-cube sk-cube2"></div>
+                                <div class="sk-cube sk-cube3"></div>
+                                <div class="sk-cube sk-cube4"></div>
+                                <div class="sk-cube sk-cube5"></div>
+                                <div class="sk-cube sk-cube6"></div>
+                                <div class="sk-cube sk-cube7"></div>
+                                <div class="sk-cube sk-cube8"></div>
+                                <div class="sk-cube sk-cube9"></div>
+                            </div>
+                        </div>
+
+                        <!-- Defualt Data -->
                         <tr v-if="!searchStatus" v-for="order in ordersArr">
                             <td class="whitespace-no-wrap border px-4 py-2 text-gray-900">{{ order.email }}</td>
                             <td class="whitespace-no-wrap border px-4 py-2 text-gray-900">{{ order.payment_method }}</td>
@@ -59,6 +74,8 @@
                                 </div>
                             </td>
                         </tr>
+
+                        <!-- Search Results -->
                         <tr v-if="searchStatus" v-for="order in searchArray">
                             <td class="whitespace-no-wrap border px-4 py-2 text-gray-900">{{ order.email }}</td>
                             <td class="whitespace-no-wrap border px-4 py-2 text-gray-900">{{ order.payment_method }}</td>
@@ -77,13 +94,12 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr v-if="loading">
-                            <td>Loading ..</td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
-            <div v-if="searchStatus">
+
+            <!-- Search Pagination -->
+            <div v-if="searchStatus && searchArray.length > 0">
                 <div class="my-6 flex flex-col md:flex-row justify-between items-center" v-if="searchLinks">
                     <div class="flex flex-row items-center">
                         <span class="px-4 py-3 text-gray-800 font-bold text-lg">{{ searchLinks.first_item }} </span>
@@ -99,7 +115,9 @@
                     </div>
                 </div>
             </div>
-            <div v-else>
+
+            <!-- Default Pagination -->
+            <div v-if="!searchStatus">
                 <div class="my-6 flex flex-col md:flex-row justify-between items-center" v-if="links">
                     <div class="flex flex-row items-center">
                         <span class="px-4 py-3 text-gray-800 font-bold text-lg">{{ links.first_item }} </span>
@@ -116,6 +134,8 @@
                 </div>
             </div>
         </div>
+        
+        <!--Modals -->
         <div v-if="deleteModal">
             <DeleteModal :type="selected"></DeleteModal>
         </div>
@@ -129,7 +149,6 @@ import { eventBus } from '../../../app.js';
 import Toast from '../../helpers/Alert';
 import DeleteModal from '../helpers/DeleteModal';
 import ViewModal from '../helpers/ViewModal';
-// import _ from 'lodash';
 
 export default {
     name: 'payments-view',
@@ -178,6 +197,7 @@ export default {
                     endpoint = `${this.page}&search=${this.keyword}`;
                 }
             } else {
+                this.searchStatus = false;
                 if (this.page) {
                     endpoint = this.page;
                 }
@@ -186,8 +206,8 @@ export default {
             axios.get(`${endpoint}`)
                 .then(res => {
                     let data = res.data;
+                    this.loading = false;
                     if (res.status == 200) {
-                        this.loading = false;
                         if (this.searchStatus) {
                             this.searchArray = [];
                             data.orders.forEach((order) => {
@@ -206,6 +226,7 @@ export default {
 
                     }
                 }).catch(err => {
+                    this.loading = false;
                     Toast.fire({
                         icon: 'error',
                         title: 'Network Error!'
