@@ -18,7 +18,7 @@
         <div v-if="successCharge" class="flex flex-col">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 items-center gap-4">
                 <a v-for="pro in otherProducts" class="mb-4 " :href="`/shoes/${ pro.id }/${ pro.slug }`">
-                    <img class="w-full object-cover  rounded-lg" :src="`/storage/${pro.imageUrl}`" onerror="this.src='/img/placeholder.png'">
+                    <img class="lozad w-full object-cover  rounded-lg" :src="`/${pro.imageUrl}`" onerror="this.src='/img/placeholder.png'">
                 </a>
             </div>
             <a :href="`/shoes`" class="w-full mt-16  cursor-pointer text-center md:w-auto text-bold text-md bg-custom-light-orange hover:opacity-75 text-white px-6 py-4 rounded-lg">Shop more</a>
@@ -141,7 +141,7 @@
                                             <div class="flex flex-col">
                                                 <div id="card-element" class="mb-3">
                                                 </div>
-                                                <div id="card-errors" role="alert"></div>
+                                                <div class="my-2 text-red-500" id="card-errors" role="alert"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -200,7 +200,7 @@
                         </div>
                         <div v-for="product in products" class="px-3 w-full flex flex-col justify-between mt-4">
                             <div class="flex flex-col md:flex-row justify-between md:items-center">
-                                <img class="h-40 w-full md:w-40 rounded-lg object-cover object-center" :src="`/storage/${product.options.imageUrl}`" onerror="this.src='/img/placeholder.png'">
+                                <img class="lozad h-40 w-full md:w-40 rounded-lg object-cover object-center" :src="`/${product.options.imageUrl}`" onerror="this.src='/img/placeholder.png'">
                                 <div class="ml-3 flex-1 mt-3 md:mt-0 flex  flex-row md:flex-col">
                                     <h4>{{ product.name }}</h4>
                                     <h4>$ {{ product.price }}</h4>
@@ -319,8 +319,9 @@ export default {
             if (this.method === "stripe") {
                 setTimeout(() => {
                     // Create a Stripe client.
-                    // alert(process.env.MIX_STRIPE_APP_KEY);
+                    // console.log(process.env.MIX_STRIPE_APP_KEY);
                     let key = process.env.MIX_STRIPE_APP_KEY;
+                    console.log(key);
                     var stripe = Stripe(`${key}`);
 
                     // Create an instance of Elements.

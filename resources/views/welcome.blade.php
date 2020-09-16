@@ -24,7 +24,7 @@
                 </div>
 
               </div>
-              <img src="{{ asset('/img/h.jpg') }}" class="hidden md:block object-bottom object-cover h-64 md:h-90 w-full md:w-1/2 lg:w-1/3 mt-4 md:mt-0 opacity-75 rounded transform ">
+              <img loading="lazy" src="{{ asset('/img/h.jpg') }}" class="hidden md:block object-bottom object-cover h-64 md:h-90 w-full md:w-1/2 lg:w-1/3 mt-4 md:mt-0 opacity-75 rounded transform ">
 
         </div>
 
@@ -40,8 +40,8 @@
                           
                       <a href="shoes/{{ $product->id }}/{{ $product->slug }}">   
 
-                        <img 
-                            class="w-full h-64 rounded-t-lg object-cover object-center" src="/{{ $product->imageUrl }}"
+                        <img loading="lazy" 
+                             class="lozad w-full h-64 rounded-t-lg object-cover object-center" data-src="/{{ $product->imageUrl }}"
                             onerror="this.src='/img/placeholder.png'">
                       </a>
 
@@ -94,7 +94,7 @@
                 </div>
             </div>
             <div class="absolute inset-0 opacity-25 md:opacity-100  md:static flex-1 mt-8 md:mt-0 w-full">
-                <img class="h-86 rounded-lg object-center object-cover w-full " src="{{ asset('/img/women.jpg') }}" alt="Women Shoes">
+                <img loading="lazy" class="lozad h-86 rounded-lg object-center object-cover w-full " src="{{ asset('/img/women.jpg') }}" alt="Women Shoes">
             </div>
         </div>
 
@@ -110,8 +110,8 @@
                           
                       <a href="shoes/{{ $product->id }}/{{ $product->slug }}">   
 
-                        <img 
-                            class="w-full h-64 rounded-t-lg object-cover object-center" src="/{{ $product->imageUrl }}"
+                        <img loading="lazy" 
+                            class="lozad w-full h-64 rounded-t-lg object-cover object-center" data-src="/{{ $product->imageUrl }}"
                             onerror="this.src='/img/placeholder.png'">
                       </a>
 

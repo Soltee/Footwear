@@ -11,7 +11,7 @@ class Order_Items extends Model
 	protected $table = 'order_items';
 	
     protected $fillable = [
-      'customer_id', 'orders_id',  'name', 'price', 'quantity',
+      'customer_id', 'orders_id', 'product_id', 'name', 'price', 'quantity',
     ];
 
     public function customer(){
@@ -20,5 +20,9 @@ class Order_Items extends Model
 
     public function order(){
     	return $this->belongsTo(Orders::class);
+    }
+
+    public function product(){
+        return $this->belongsTo(Product::class);
     }
 }

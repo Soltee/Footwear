@@ -183,8 +183,8 @@
                           
                       <a href="shoes/{{ $product->id }}/{{ $product->slug }}">   
 
-                        <img 
-                            class="w-full h-64 rounded-t-lg object-cover object-center" src="/{{ $product->imageUrl }}"
+                        <img loading="lazy"
+                            class="lozad w-full h-64 rounded-t-lg object-cover object-center" src="/{{ $product->imageUrl }}"
                             onerror="this.src='/img/placeholder.png'">
                       </a>
 

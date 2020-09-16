@@ -4,6 +4,7 @@
 
 use App\Orders;
 use App\Customer;
+use App\Product;
 use Faker\Generator as Faker;
 
 $factory->define(Orders::class, function (Faker $faker) {
@@ -44,6 +45,10 @@ $factory->define(App\Order_Items::class, function (Faker $faker) {
     		$orders = Orders::inRandomOrder()->pluck('id')->toArray();
     		return  Illuminate\Support\Arr::random($orders);
     	},
+        'product_id' => function(){
+            $product = Product::inRandomOrder()->pluck('id')->toArray();
+            return  Illuminate\Support\Arr::random($product);
+        },
     	'name' => function(){
     		$names = App\Product::inRandomOrder()->pluck('name')->toArray();
     		return  Illuminate\Support\Arr::random($names);

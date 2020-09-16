@@ -28,10 +28,20 @@ class HomeController extends Controller
     public function index()
     {
         $purchases    = Order_Items::latest();
-        $paginate     = $purchases->where('customer_id', $this->guard()->user()->id)->paginate(10);
+        $paginate     = $purchases
+                        ->where('customer_id', $this->guard()->user()->id)
+                        ->with([
+                            'product' => function($query)
+                                {
+                                    $query->select('id','name', 
+                                    'slug', 'imageUrl');
+                                 }
+                            ])
+                        ->paginate(10);
         $new          = Orders::where('customer_id', $this->guard()->user()->id)
                             ->where('completed', true)->count();
         $items        = $paginate->items();
+        // dd($items);
         $first        = $paginate->firstItem();
         $last         = $paginate->lastItem();
         $total        = $paginate->total();

@@ -1,15 +1,34 @@
-Laravel Shoe Store : Footwear
+##Laravel Shoe Store : Footwear
 
+Footwear 
 
-![](https://raw.githubusercontent.com/soltee/laravel-shop-with-admin-dashboard/master/public/img/landing.png)
+![](https://raw.githubusercontent.com/soltee/Footwear/master/public/images/welcome.png)
 
-![](https://raw.githubusercontent.com/soltee/laravel-shop-with-admin-dashboard/master/public/img/products.png)
-![](https://raw.githubusercontent.com/soltee/laravel-shop-with-admin-dashboard/master/public/img/login.png)
-![](https://raw.githubusercontent.com/soltee/laravel-shop-with-admin-dashboard/master/public/img/customer-dashboard.png)
+![](https://raw.githubusercontent.com/soltee/Footwear/master/public/images/shoes.png)
 
-Admin Designs
+![](https://raw.githubusercontent.com/soltee/Footwear/master/public/images/single-product.png)
 
-![](https://raw.githubusercontent.com/soltee/laravel-shop-with-admin-dashboard/master/public/img/admin-dashboard.png)
-![](https://raw.githubusercontent.com/soltee/laravel-shop-with-admin-dashboard/master/public/img/admin-products.png)
-![](https://raw.githubusercontent.com/soltee/laravel-shop-with-admin-dashboard/master/public/img/admin-users.png)
-![](https://raw.githubusercontent.com/soltee/laravel-shop-with-admin-dashboard/master/public/img/admin-logout.png)
+![](https://raw.githubusercontent.com/soltee/Footwear/master/public/images/cart.png)
+
+![](https://raw.githubusercontent.com/soltee/Footwear/master/public/images/checkout.png)
+
+![](https://raw.githubusercontent.com/soltee/Footwear/master/public/images/coupon.png)
+
+![](https://raw.githubusercontent.com/soltee/Footwear/master/public/images/login.png)
+![](https://raw.githubusercontent.com/soltee/Footwear/master/public/images/register.png)
+
+![](https://raw.githubusercontent.com/soltee/Footwear/master/public/images/customer-orders.png)
+
+![](https://raw.githubusercontent.com/soltee/Footwear/master/public/images/newsletter.png)
+
+![](https://raw.githubusercontent.com/soltee/Footwear/master/public/images/faqs.png)
+
+![](https://raw.githubusercontent.com/soltee/Footwear/master/public/images/privacy-policy.png)
+
+#Admin Designs
+
+![](https://raw.githubusercontent.com/soltee/Footwear/master/public/images/admin-dashboard.png)
+![](https://raw.githubusercontent.com/soltee/Footwear/master/public/images/admin-orders.png)
+![](https://raw.githubusercontent.com/soltee/Footwear/master/public/images/admin-products.png)
+![](https://raw.githubusercontent.com/soltee/Footwear/master/public/images/admin-customers.png)
+![](https://raw.githubusercontent.com/soltee/Footwear/master/public/images/admin-profile.png)

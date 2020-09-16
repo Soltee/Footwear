@@ -59,7 +59,7 @@
 					 ">
 					{{-- <figure class="zoomy"> --}}
 					<img id="featured" 
-					  class="focus-img  cursor-move grabbable featured w-full h-64 object-cover object-center rounded" src="/storage/{{ $product->imageUrl }}" onerror="this.src='/img/placeholder.png'">
+					  class="lozad focus-img  cursor-move grabbable featured w-full h-64 object-cover object-center rounded" data-src="/{{ $product->imageUrl }}" onerror="this.src='/img/placeholder.png'">
 					{{-- </figure> --}}
 					
 					
@@ -72,7 +72,7 @@
 
 				      			<div class="swiper-slide swiper-zoom-container relative">
 						            <div class="">
-						              <img class="thumbnail w-24 h-24 cm:h-24 cm:w-24 rounded object-cover swiper-lazy cursor-pointer" src="/storage/{{ $image->imageUrl }}" onerror="this.src='/img/placeholder.png'" />
+						              <img class="lozad thumbnail w-24 h-24 cm:h-24 cm:w-24 rounded object-cover swiper-lazy cursor-pointer" data-src="/{{ $image->imageUrl }}" onerror="this.src='/img/placeholder.png'" />
 						            </div>
 						            <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
 					          	</div>
@@ -93,6 +93,12 @@
 
             <div class="w-full md:w-1/2 md:pl-6 flex flex-col py-6 ">
                 <h3 class="text-3xl font-bold text-gray-900">{{ $product->name }}</h3>
+                 <div class="flex items-center mt-4">
+                    @for ($i = 1; $i <= $product->average_rating; $i++)
+                            <svg class=" h-6 w-6 text-yellow-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                    @endfor
+
+                    </div>
                 <h5 class="my-4 cm:my-0 text-xl font-bold text-gray-800">$ {{ $product->price }}</h5>
                 <div>
 			        <add-cart :product="{{ $product }}" /> 
@@ -103,29 +109,28 @@
 
 
         <div 
-        	x-data="{tab:'details'}" class="my-6">
-	        <div class="flex items-center mb-4">
+        	 class="my-6">
+	        <div clas="mb-4">
 	        	<h3 
-	        		x-on:click="tab = 'details'" 
-	        		class="text-md cursor-pointer font-semibold text-custom-light-black pr-4" :class="{'font-bold border-r border-custom-light-orange' : tab === 'details'}"
+	        		
+	        		class="text-md cursor-pointer font-semibold text-custom-light-black pr-4 mb-4" 
 	        		>Details</h3>
-	        	<h3 
-	        		x-on:click="tab = 'reviews'" 
-	        		class="text-md cursor-pointer font-semibold text-custom-light-black pr-4" :class="{'font-bold border-r border-custom-light-orange' : tab === 'reviews'}"
-	        		>Reviews
-	        	</h3>
+	        	@if($product->description)
+	        	<div
+	        		class="w-full leading-relaxed">
+	    			{{ $product->description }}
+	    		</div>
+	        	@endif
 	        </div>
 
-        	@if($product->description)
-        	<div
-        		x-show.transition.60ms="tab === 'details'" 
-        		class="w-full leading-relaxed">
-    			{{ $product->description }}
-    		</div>
-        	@endif
+	        <div class="my-4">
+
+	        	<h3 
+	        		class="text-md cursor-pointer font-semibold text-custom-light-black pr-4" 
+	        		>Reviews
+	        	</h3>
 
     		<div
-        		x-show.transition.60ms="tab === 'reviews'" 
         		class="w-full leading-relaxed">
     			<!-- View Rating --->
 		        @if($auth)
@@ -138,18 +143,32 @@
 
         
 
-        <div class="my-8 {{ $similar_count ? 'swiper-container2' : ''  }} w-full relative overflow-hidden">
+        <div class="my-8 {{ $similar_count ? 'swiper-container2 ' : ''  }} w-full relative overflow-hidden">
         	<h3 class="font-semibold text-lg mb-4 text-gray-800">Similar Products</h3>
 		    <div class="swiper-wrapper ">
 		    	@forelse($similar as $image)
 
-	      			<div class="swiper-slide relative bg-gray-400 rounded-lg w-full flex flex-col items-center">
-			            <a href="{{ url('images', $image->id . '-' . $image->slug)}}"><img data-src="/storage/{{$image->imageUrl}}" class="swiper-lazy w-full  rounded-lg" onerror="this.src='/img/placeholder.png'"></a>
+	      			<div class="swiper-slide relative bg-gray-400 rounded-lg w-full md:w-64 md:h-64 flex flex-col items-center">
+	      				<div class="cartBtnParent relative" >
+                          
+	                        <a href="{{ url('images', $image->id . '-' . $image->slug)}}">   
+
+	                            <img loading=""
+	                            class=" w-full h-64 rounded-t-lg object-cover object-center" src="/{{ $image->imageUrl }}"
+	                            onerror="this.src='/img/placeholder.png'">
+	                        </a>
+
+	                    </div>
 			            <div class="mt-2 flex flex-col">
 					      	<span class="mb-2">{{ $image->name }}
 					      	</span>
 					    </div>
-			            <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+					    <div class="flex items-center">
+	                        @for ($i = 1; $i <= $product->average_rating; $i++)
+	                                <svg class=" h-6 w-6 text-yellow-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+	                        @endfor
+
+	                    </div>
 		          	</div>
 		       
 
@@ -200,7 +219,7 @@
 			    slidesPerView: 1,
 			    spaceBetween: 10,
 			      // init: false,
-			    lazy: true,
+			    // lazy: true,
 	      		grabCursor: true,
 			    breakpoints: {
 			        300: {

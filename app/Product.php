@@ -37,6 +37,11 @@ class Product extends Model
         return $this->hasMany(Review::class);
     }
 
+    public function order_items()
+    {
+        return $this->hasMany(Order_items::class);
+    }
+
     public static function boot() {
         parent::boot();
 

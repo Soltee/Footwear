@@ -13,6 +13,9 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
+    <!-- Progressive Image Loading -->
+    <script src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
@@ -193,7 +196,11 @@
     <script src="{{ asset('js/app.js') }}"></script>
     @stack('scripts')
     <script>
-       
+        document.addEventListener('DOMContentLoaded', function(){
+            const observer = window.lozad();
+            observer.observe();
+
+        });
     </script>
 
 </body>
