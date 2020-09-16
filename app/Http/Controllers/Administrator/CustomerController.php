@@ -61,7 +61,8 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        return response()->json(['customer' => $customer], 200);
+        $orders = $customer->orders()->with('items')->get();
+        return response()->json(['customer' => $customer, 'orders' => $orders], 200);
     }
 
     /**

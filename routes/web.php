@@ -36,7 +36,6 @@ Route::get('/cart-details', 'CartController@show')->name('cart.show');
 Route::get('/checkout', 'CheckoutController@index')->name('cart.checkout');
 Route::post('/charge', 'CheckoutController@charge');
 Route::get('/aftercheckout', 'CheckoutController@sellmoreProduct');
-// Route::get('/thank-you', 'CheckoutController@thankyou')->name('thank-you');
 
 //Newsletter
 Route::post('/newsletter/signup', 'NewsletterController@store');

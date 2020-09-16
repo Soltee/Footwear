@@ -12,6 +12,10 @@ class Orders extends Model
       'customer_id', 'first_name', 'last_name', 'email', 'phoneNumber', 'city', 'street_address', 'payment_method', 'payment_id', 'subtotal', 'discount', 'subafterdiscount', 'tax', 'grand', 'completed'
     ];
 
+    public function customer(){
+    	return $this->belongsTo(Customer::class);
+    }
+
     public function items(){
     	return $this->hasMany(Order_Items::class);
     }
