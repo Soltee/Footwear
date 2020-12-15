@@ -26,6 +26,17 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
     	factory(Customer::class , 20)->create();
         factory(Administrator::class)->create(['last_name' => 'Munu','first_name' => 'Admin', 'email'=>'admin@example.com', 'email_verified_at' => now(), 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'remember_token' => Str::random()]);
+
+        // Administrator::create([
+        Customer::create([
+            'last_name' => 'Munu',
+            'first_name' => 'Admin', 
+            'email'=>'admin@example.com', 
+            'email_verified_at' => now(), 
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 
+            'remember_token' => '3RbW346H&#F#'
+        ]);
+
         factory(Customer::class)->create(['last_name' => 'Nari','first_name' => 'role', 'email'=>'customer@example.com', 'email_verified_at' => now(), 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'remember_token' => Str::random()]);
         factory(Administrator::class)->create();
 
