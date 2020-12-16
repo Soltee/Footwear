@@ -16,21 +16,22 @@ class CheckoutController extends Controller
 
     public function index(){
 
-        if(env('APP_ENV') !== 'local'){
-            $gateway = new \Braintree\Gateway([
-                'environment' => config('services.braintree.environment'),
-                'merchantId' => config('services.braintree.merchantId'),
-                
-                'publicKey' => config('services.braintree.publicKey'),
-                'privateKey' => config('services.braintree.privateKey')
-            ]);
-            
-            $token = $gateway->ClientToken()->generate();
-        }
 
         if(Cart::count() < 1){
             return redirect('/shoes');
         }
+
+        // $gateway = new \Braintree\Gateway([
+        //     'environment' => config('services.braintree.environment'),
+        //     'merchantId' => config('services.braintree.merchantId'),
+            
+        //     'publicKey' => config('services.braintree.publicKey'),
+        //     'privateKey' => config('services.braintree.privateKey')
+        // ]);
+        
+        // $token = $gateway->ClientToken()->generate();
+        $token = 'sdkflsakdf';
+        // dd($token);
 
     	$products = Cart::content();
 		$totalQuantity = Cart::instance('default')->count();
@@ -187,6 +188,22 @@ class CheckoutController extends Controller
         $products = Product::latest()->paginate(10);
         return response()->json(['success' => 'ok', 'products' => $products->items()], 200);
     }
+
+    /**Get Braintree PUBLIC TOKEN **/
+    public function getToken(){
+        $gateway = new \Braintree\Gateway([
+            'environment' => config('services.braintree.environment'),
+            'merchantId' => config('services.braintree.merchantId'),
+            
+            'publicKey' => config('services.braintree.publicKey'),
+            'privateKey' => config('services.braintree.privateKey')
+        ]);
+        
+        return response()->json([
+         'token' => $gateway->ClientToken()->generate()
+        ]);
+    }
+
     /**
 		* Returns the Authenticated USER via 'guard'
     */

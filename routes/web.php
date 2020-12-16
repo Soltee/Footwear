@@ -24,6 +24,8 @@ Route::get('/checkout', 'CheckoutController@index')->name('cart.checkout');
 Route::post('/charge', 'CheckoutController@charge');
 Route::get('/aftercheckout', 'CheckoutController@sellmoreProduct');
 
+Route::get('/token', 'CheckoutController@getToken');
+
 //Newsletter
 Route::post('/newsletter/signup', 'NewsletterController@store');
 

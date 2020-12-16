@@ -390,78 +390,88 @@ export default {
 
             } else if (this.method === 'braintree') {
                 let component = this;
-                braintree.client.create({
-                    authorization: `${this.token}`
-                }, function(clientErr, clientInstance) {
-                    if (clientErr) {
-                        Toast.fire({
-                            icon: 'error',
-                            title: `${clientErr}`
-                        });
-                        console.error(clientErr);
-                        return;
-                    }
-                    // This example shows Hosted Fields, but you can also use this
-                    // client instance to create additional components here, such as
-                    // PayPal or Data Collector.
-                    braintree.hostedFields.create({
-                        client: clientInstance,
-                        styles: {
-                            'input': {
-                                'font-size': '14px',
-                                'border': '2px solid gray'
-                            },
-                            'input.invalid': {
-                                'color': 'red'
-                            },
-                            'input.valid': {
-                                'color': 'green'
-                            }
-                        },
-                        fields: {
-                            number: {
-                                selector: '#card-number',
-                                placeholder: '4111 1111 1111 1111'
-                            },
-                            cvv: {
-                                selector: '#cvv',
-                                placeholder: '123'
-                            },
-                            expirationDate: {
-                                selector: '#expiration-date',
-                                placeholder: '10/2019'
-                            }
-                        }
-                    }, function(hostedFieldsErr, hostedFieldsInstance) {
-                        if (hostedFieldsErr) {
 
+                axios.get('/token').then(res => {                
+                    braintree.client.create({
+                        authorization: `${res.data.token}`
+                    }, function(clientErr, clientInstance) {
+                        if (clientErr) {
                             Toast.fire({
                                 icon: 'error',
-                                title: `There was some error. Please try again later.`
+                                title: `${clientErr}`
                             });
+                            console.error(clientErr);
+                            return;
                         }
-
-
-                        component.submitStatus = true;
-                        document.getElementById('payment-form').addEventListener('submit', (e) => {
-                            e.preventDefault();
-                            hostedFieldsInstance.tokenize(function(tokenizeErr, payload) {
-                                if (tokenizeErr) {
-                                    Toast.fire({
-                                        icon: 'error',
-                                        title: `Server error.`
-                                    });
+                        // This example shows Hosted Fields, but you can also use this
+                        // client instance to create additional components here, such as
+                        // PayPal or Data Collector.
+                        braintree.hostedFields.create({
+                            client: clientInstance,
+                            styles: {
+                                'input': {
+                                    'font-size': '14px',
+                                    'border': '2px solid gray'
+                                },
+                                'input.invalid': {
+                                    'color': 'red'
+                                },
+                                'input.valid': {
+                                    'color': 'green'
                                 }
+                            },
+                            fields: {
+                                number: {
+                                    selector: '#card-number',
+                                    placeholder: '4111 1111 1111 1111'
+                                },
+                                cvv: {
+                                    selector: '#cvv',
+                                    placeholder: '123'
+                                },
+                                expirationDate: {
+                                    selector: '#expiration-date',
+                                    placeholder: '10/2019'
+                                }
+                            }
+                        }, function(hostedFieldsErr, hostedFieldsInstance) {
+                            if (hostedFieldsErr) {
+
+                                Toast.fire({
+                                    icon: 'error',
+                                    title: `There was some error. Please try again later.`
+                                });
+                            }
 
 
-                                component.charge(payload.nonce);
+                            component.submitStatus = true;
+                            document.getElementById('payment-form').addEventListener('submit', (e) => {
+                                e.preventDefault();
+                                hostedFieldsInstance.tokenize(function(tokenizeErr, payload) {
+                                    if (tokenizeErr) {
+                                        Toast.fire({
+                                            icon: 'error',
+                                            title: `Server error.`
+                                        });
+                                    }
+
+
+                                    component.charge(payload.nonce);
+                                });
+
                             });
+
 
                         });
+                    });
 
-
+                }).catch(err => {
+                     Toast.fire({
+                        icon: 'error',
+                        title: `There was some error. Please try again later.`
                     });
                 });
+
 
             }
 
