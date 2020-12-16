@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    use UsesUuid;
+    // use UsesUuid;
     protected $fillable = [
        'name', 'slug'
     ];

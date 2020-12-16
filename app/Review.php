@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Review extends Model
 {
-    use UsesUuid;
+    // use UsesUuid;
 
     protected $fillable = [
       'customer_id', 'product_id', 'rating', 'message'

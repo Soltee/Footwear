@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    use UsesUuid;
+    // use UsesUuid;
     protected $fillable = [
       'category_id', 'subcategory_id', 'imageUrl', 'name', 'slug', 'price', 'qty', 'excerpt', 'average_rating', 'description', 'visible',
     ];

@@ -9,7 +9,7 @@ use  Illuminate\Support\Str;
 
 class Administrator extends Authenticatable
 {
-    use Notifiable, UsesUuid;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -38,23 +38,23 @@ class Administrator extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
+    // protected static function boot()
+    // {
+    //     parent::boot();
 
-        static::creating(function ($administrator) {
-            $administrator->{$administrator->getKeyName()} = (string) Str::uuid();
-        });
-    }
+    //     static::creating(function ($administrator) {
+    //         $administrator->{$administrator->getKeyName()} = (string) Str::uuid();
+    //     });
+    // }
 
 
-    public function getIncrementing()
-    {
-        return false;
-    }
+    // public function getIncrementing()
+    // {
+    //     return false;
+    // }
 
-    public function getKeyType()
-    {
-        return 'string';
-    }
+    // public function getKeyType()
+    // {
+    //     return 'string';
+    // }
 }

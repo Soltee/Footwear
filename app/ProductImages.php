@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductImages extends Model
 {
-	use UsesUuid;
+	// use UsesUuid;
 	
     protected $fillable = [
     	'product_id', 'imageUrl', 'thumbnail'

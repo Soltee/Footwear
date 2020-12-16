@@ -14,8 +14,8 @@ class CreateProductsTable extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            // $table->bigIncrements('id');
-            $table->uuid('id')->primary();
+            $table->id();
+            // $table->uuid('id')->primary();
             $table->foreignId('category_id');
             $table->foreignId('subcategory_id');
             $table->string('imageUrl')->nullable();

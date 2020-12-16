@@ -28,14 +28,14 @@ class DatabaseSeeder extends Seeder
         factory(Administrator::class)->create(['last_name' => 'Munu','first_name' => 'Admin', 'email'=>'admin@example.com', 'email_verified_at' => now(), 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'remember_token' => Str::random()]);
 
         // Customer::create([
-        Administrator::create([
-            'last_name' => 'Munu',
-            'first_name' => 'Admin', 
-            'email'=>'admin@example.com', 
-            'email_verified_at' => now(), 
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 
-            'remember_token' => '3RbW346H&#F#'
-        ]);
+        // Administrator::create([
+        //     'last_name' => 'Munu',
+        //     'first_name' => 'Admin', 
+        //     'email'=>'admin@example.com', 
+        //     'email_verified_at' => now(), 
+        //     'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 
+        //     'remember_token' => '3RbW346H&#F#'
+        // ]);
 
         factory(Customer::class)->create(['last_name' => 'Nari','first_name' => 'role', 'email'=>'customer@example.com', 'email_verified_at' => now(), 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'remember_token' => Str::random()]);
         factory(Administrator::class)->create();
