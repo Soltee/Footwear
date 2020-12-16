@@ -90,7 +90,7 @@ class CheckoutController extends Controller
                 ]);
                 if ($result->success) {
                     $transaction = $result->transaction;
-                    $this->store($data['firstname'], $data['lastname'], $data['email'], $data['city'], $data['address'], $data['method'], $transaction);
+                    $this->store($data['firstname'], $data['lastname'], $data['email'], $data['city'], $data['address'], $data['method'], $transaction->id);
                     return response()->json(['success' => 'ok'], 201);
                 } else {
                     $errorString = "";
