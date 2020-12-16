@@ -4,31 +4,18 @@
 Route::get('/', 'WelcomeController@index')->name('welcome');
 
 Route::get('/categories', 'WelcomeController@categories');
-Route::get('/searchShoes/{shoes}', 'WelcomeController@searchShoes');
 Route::get('/shoes', 'WelcomeController@shoes')->name('shoes');
-Route::get('/shoes/{product}/{slug}', 'WelcomeController@show')->name('show');
-Route::post('/add-cart/{products}', 'CartController@addProduct');
 
 //Cart
-Route::get('/add-to-cart/{products}', 'CartController@addProduct');
 Route::get('/getCartProducts', 'CartController@getCartProducts');
 Route::get('/getUpdatedData', 'CartController@getUpdatedData');
-Route::get('/is-already-added/{products}', 'CartController@isProductAlreadyAdded');
-Route::post('/clear-cart', 'CartController@clearCart');
-Route::post('/remove-from-cart/{products}', 'CartController@removeProduct');
-Route::post('/update-cart/{rowId}', 'CartController@updateProduct');
 Route::post('/coupon-redeem', 'CouponController@apply');
-
-//Review
-Route::get('/product/{product}/reviews', 'ProductReviewController@index');
-Route::post('/product/{product}/review', 'ProductReviewController@store');
+Route::post('/clear-cart', 'CartController@clearCart');
 
 //Customer
 Auth::routes();
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 Route::get('/customer-profile', 'HomeController@profile')->name('customer-profile');
-Route::patch('/customer-profile/{customer}', 'HomeController@updateProfile')->name('customer-update');
-Route::patch('/customer-pic/{customer}', 'HomeController@profilePic')->name('customer-pic');
 Route::post('/customer-logout', 'Auth\LoginController@logout')->name('customer-logout');
 
 //Customer Checkout Process 
@@ -45,6 +32,25 @@ Route::get('/faq', 'About\AboutController@faq')->name('faq');
 Route::get('/privacy-policy', 'About\AboutController@policy')->name('policy');
 Route::get('/sitemap', 'About\AboutController@sitemap')->name('sitemap');
 
+//Carrt
+Route::get('/add-to-cart/{products}', 'CartController@addProduct');
+Route::get('/is-already-added/{products}', 'CartController@isProductAlreadyAdded');
+Route::post('/remove-from-cart/{products}', 'CartController@removeProduct');
+Route::post('/update-cart/{rowId}', 'CartController@updateProduct');
+
+//Customer Profile
+Route::patch('/customer-profile/{customer}', 'HomeController@updateProfile')->name('customer-update');
+Route::patch('/customer-pic/{customer}', 'HomeController@profilePic')->name('customer-pic');
+
+//Review
+Route::get('/product/{product}/reviews', 'ProductReviewController@index');
+Route::post('/product/{product}/review', 'ProductReviewController@store');
+
+//General
+Route::get('/searchShoes/{shoes}', 'WelcomeController@searchShoes');
+Route::post('/add-cart/{products}', 'CartController@addProduct');
+Route::get('/shoes/{product}/{slug}', 'WelcomeController@show')->name('show');
+
 //Dashboard
 Route::prefix('admin')->group(function () {
 
@@ -55,8 +61,6 @@ Route::prefix('admin')->group(function () {
 	Route::get('/dashboard', 'Administrator\AdministratorController@index')->name('administrator-dashboard');
 	Route::get('/profile', 'Administrator\AdministratorController@profile')->name('administrator-profile');
 	Route::post('/administrator-logout', 'Administrator\AdminAuthController@logout')->name('administrator-logout');
-
-	Route::patch('/profile/{administrator}', 'Administrator\AdministratorController@update');
 
 	//Categories
 	Route::get('/categories', 'Administrator\CategoryController@index')->name('categories');
@@ -79,19 +83,40 @@ Route::prefix('admin')->group(function () {
 	
 	//CustomerApi
 	Route::get('/getCustomers', 'Administrator\CustomerController@get');
-	Route::get('/customers/{customer}', 'Administrator\CustomerController@show');
-	Route::delete('/customers/{customer}', 'Administrator\CustomerController@destroy');
 
 	//Prouducts 
 	Route::get('/products', 'Administrator\ProductController@index')->name('products');
-	Route::get('/products/{product}/show', 'Administrator\ProductController@show')->name('product.show');
 	Route::get('/products/create', 'Administrator\ProductController@create');
-	Route::get('/products-edit/{product}-{slug}', 'Administrator\ProductController@edit')->name('products.edit');
+
+	//Payments
+	Route::get('/payments', 'Administrator\PaymentController@index')->name('payments');
+
+	//Products 
+	Route::get('/getProducts', 'Administrator\Api\ProductController@getProducts');
+	Route::post('/products', 'Administrator\Api\ProductController@store');
+	
+
+	//Customer Api
+	Route::get('/customers/{customer}', 'Administrator\CustomerController@show');
+	Route::delete('/customers/{customer}', 'Administrator\CustomerController@destroy');
+
 
 	//Products Api
-	Route::get('/getProducts', 'Administrator\Api\ProductController@getProducts');
+	Route::get('/products/{product}/show', 'Administrator\ProductController@show')->name('product.show');
+	Route::get('/products-edit/{product}-{slug}', 'Administrator\ProductController@edit')->name('products.edit');
+
+
+	
+	//OrderApi
+	Route::get('/orders', 'Administrator\OrderController@index');
+	Route::get('/orders/{orders}', 'Administrator\OrderController@show');
+	Route::delete('/orders/{orders}', 'Administrator\OrderController@destroy');
+
+	//Profle
+	Route::patch('/profile/{administrator}', 'Administrator\AdministratorController@update');
+
+	//Products Api
 	Route::get('/products/{product}', 'Administrator\Api\ProductController@show');
-	Route::post('/products', 'Administrator\Api\ProductController@store');
 	Route::patch('/products/{product}', 'Administrator\Api\ProductController@update');
 	Route::delete('/products/{product}', 'Administrator\Api\ProductController@destroy');
 
@@ -99,19 +124,9 @@ Route::prefix('admin')->group(function () {
 	Route::get('/productsImage/{product}', 'ProductImagesController@index');	
 	Route::delete('/productsImage/{ProductImages}', 'ProductImagesController@destroy');
 
-	
-	//ProductReview Api
-	Route::get('/reviews/{product}', 'Administrator\ProductReviewController@index');	
-	// Route::get('/reviews/{product}/get', 'ProductReviewController@getReviews');	
-	// Route::delete('/reviews/{product}', 'ProductReviewController@destroy');
 
-	//Payments
-	Route::get('/payments', 'Administrator\PaymentController@index')->name('payments');
-	
-	//OrderApi
-	Route::get('/orders', 'Administrator\OrderController@index');
-	Route::get('/orders/{orders}', 'Administrator\OrderController@show');
-	Route::delete('/orders/{orders}', 'Administrator\OrderController@destroy');
+	//ProductReview Api
+	Route::get('/reviews/{product}', 'Administrator\ProductReviewController@index');
 
 	//Search
 	Route::get('/searchall/{param}', 'Administrator\SearchController@search');
