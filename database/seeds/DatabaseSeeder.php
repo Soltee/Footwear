@@ -28,14 +28,14 @@ class DatabaseSeeder extends Seeder
         factory(Administrator::class)->create(['last_name' => 'Munu','first_name' => 'Admin', 'email'=>'admin@example.com', 'email_verified_at' => now(), 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'remember_token' => Str::random()]);
 
         // Customer::create([
-        // Administrator::create([
-        //     'last_name' => 'Munu',
-        //     'first_name' => 'Admin', 
-        //     'email'=>'admin@example.com', 
-        //     'email_verified_at' => now(), 
-        //     'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 
-        //     'remember_token' => '3RbW346H&#F#'
-        // ]);
+        Administrator::create([
+            'last_name' => 'Munu',
+            'first_name' => 'Admin', 
+            'email'=>'admin@example.com', 
+            'email_verified_at' => now(), 
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 
+            'remember_token' => '3RbW346H&#F#'
+        ]);
 
         factory(Customer::class)->create(['last_name' => 'Nari','first_name' => 'role', 'email'=>'customer@example.com', 'email_verified_at' => now(), 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'remember_token' => Str::random()]);
         factory(Administrator::class)->create();
@@ -56,61 +56,6 @@ class DatabaseSeeder extends Seeder
 
 
         // factory(Product::class, 50)->create();
-        // for ($i=1; $i <= 30; $i++) {
-        //     Product::create([
-        //         'category_id'    => function(){ 
-        //             return Arr::random(Category::inRandomOrder()->pluck('id')->toArray());
-        //         },
-        //         'subcategory_id' => function(){
-        //             return Arr::random(Subcategory::inRandomOrder()->pluck('id')->toArray());
-        //         },
-        //         'imageUrl'       => function(){
-        //             return    Arr::random([
-        //                 'products/man1.jpg',
-        //                 'products/man2.jpg',
-        //                 'products/man3.jpg',
-        //                 'products/man4.jpg',
-        //                 'products/man5.jpg',
-        //                 'products/man6.jpg',
-        //                 'products/man.jpg',
-        //                 'products/baby.jpg',
-        //                 'products/baby1.jpg',
-        //                 'products/baby2.jpg',
-        //                 'products/woman.jpg',
-        //                 'products/woman1.jpg',
-        //                 'products/woman2.jpg',
-        //                 'products/woman3.jpg',
-        //                 'products/woman4.jpg',
-        //                 'products/woman5.jpg',
-        //                 'products/woman6.jpg',
-        //                 'products/woman7.jpg',
-        //                 'products/woman8.jpg',
-        //                 'products/woman9.jpg',
-        //                 'products/woman10.jpg',
-        //                 'products/woman11.jpg',
-        //                 'products/woman12.jpg'
-        //             ]);
-        //         },
-        //         'name'           => function(){
-        //             return $i .'Shoe';
-        //         },
-        //         'average_rating' => function(){
-        //             return Arr::random([1,2,3,4,5]);
-        //         },
-        //         'slug'           => function(){
-        //             return $i .'-Shoe';
-        //         },
-        //         'price'          => function(){
-        //             return Arr::random([99, 199, 299, 399, 499, 999, 1299, 2499]);
-        //         },
-        //         'qty'            => function(){
-        //             return Arr::random([0, 2, 4, 1, 5]);
-        //         },
-        //         'featured'       => function(){
-        //             return Arr::random([true, false]);
-        //         }
-        //     ]);
-        // }
         for ($i=1; $i <= 30; $i++) {
             Product::create([
                 'category_id'    => Arr::random(Category::inRandomOrder()->pluck('id')->toArray()),
@@ -240,6 +185,10 @@ class DatabaseSeeder extends Seeder
         factory(Order_Items::class, 100)->create();
 
         factory(Review::class, 100)->create();
+
+        Coupon::create([
+            'code' => 'WOMEN20', 'percent' => 20,'expires_on' => \Carbon\Carbon::yesterday()
+        ]);
 
         factory(Coupon::class)->create(['code' => 'WOMEN20', 'percent' => 20,'expires_on' => \Carbon\Carbon::yesterday()]);
         factory(Coupon::class)->create(['code' => 'CODE1', 'percent' => 2,'expires_on' => \Carbon\Carbon::yesterday()]);

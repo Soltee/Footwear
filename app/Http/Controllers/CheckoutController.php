@@ -16,7 +16,7 @@ class CheckoutController extends Controller
 
     public function index(){
 
-        if(env('APP_ENV') === 'production'){
+        if(env('APP_ENV') !== 'local'){
             $gateway = new \Braintree\Gateway([
                 'environment' => config('services.braintree.environment'),
                 'merchantId' => config('services.braintree.merchantId'),
