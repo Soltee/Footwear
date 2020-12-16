@@ -16,12 +16,18 @@ class CheckoutController extends Controller
 
     public function index(){
 
-        // $gateway = new \Braintree\Gateway([
-        //     'environment' => config('services.braintree.environment'),
-        //     'merchantId' => config('services.braintree.merchantId'),
-        //     'publicKey' => config('services.braintree.publicKey'),
-        //     'privateKey' => config('services.braintree.privateKey')
-        // ]);
+        if(env('APP_ENV') === 'production'){
+            $gateway = new \Braintree\Gateway([
+                'environment' => config('services.braintree.environment'),
+                'merchantId' => config('services.braintree.merchantId'),
+                
+                'publicKey' => config('services.braintree.publicKey'),
+                'privateKey' => config('services.braintree.privateKey')
+            ]);
+            
+            $token = $gateway->ClientToken()->generate();
+        }
+
         if(Cart::count() < 1){
             return redirect('/shoes');
         }
@@ -33,7 +39,6 @@ class CheckoutController extends Controller
         $subAfterDis = (session('subAfterDis'))?? 0;
         $tax = Cart::tax();
 		$grandTotal = (session('discount'))? session('grand') : Cart::total();
-        // $token = $gateway->ClientToken()->generate();
         $token = "someRandomCLientTOken";
 		return view('home.checkout', compact('products', 'totalQuantity', 'subTotal', 'discount', 'subAfterDis', 'tax', 'grandTotal', 'token'));
     }
@@ -58,7 +63,7 @@ class CheckoutController extends Controller
         ]);
         
         //JUst For Testing
-        return response()->json(['success' => 'ok'], 201);
+        // return response()->json(['success' => 'ok'], 201);
 
         
         $amt          = (session('discount'))? session('grand') : Cart::total();
@@ -118,7 +123,7 @@ class CheckoutController extends Controller
             } catch (CardErrorException $e) {
                 return response()->json(['success' => '', 'error' => 'ok'], 503);
 
-                // return back()->with('error', $e->getMessage());
+                return back()->with('error', $e->getMessage());
             }
         }  
        
@@ -138,8 +143,9 @@ class CheckoutController extends Controller
         $grandTotal = (session('discount'))? session('grand') : Cart::total();
         $Authenticated = ($this->guard()) ? $this->guard()->id : null;
         
-        $order = Orders::create([
-            'customer_id'   => $Authenticated,
+        $customerArray = ['customer_id'  => $Authenticated];
+
+        $order = Orders::create(array_merge([
             'first_name'   => $firstName,
             'last_name'    => $lastName, 
             'email'        => $email,
@@ -153,26 +159,27 @@ class CheckoutController extends Controller
             'subafterdiscount' => $subAfterDis, 
             'tax'         => $tax, 
             'grand'      => $grandTotal
-        ]);
+        ]), $customerArray ?? []);
 
         foreach(Cart::content() as $product){
-            Order_Items::create([
+            Order_Items::create(array_merge([
                 'customer_id' => $Authenticated,  
-                'orders_id' => $order->id,  
+                'orders_id'   => $order->id,  
+                'products_id' => $product->id,  
                 'name'     => $product->name, 
                 'price'    => $product->price, 
                 'quantity' => $product->qty
-            ]);
+            ]), $customerArray?? []);
 
-            $db_product = Product::findOrfail($product->rowId);
-            $db_product->qty = ($db_product->qty - $product->qty);
-            $db_product->save();
+            // $db_product = Product::findOrfail($product->rowId);
+            // $db_product->qty = ($db_product->qty - $product->qty);
+            // $db_product->save();
         }
-        // Cart::destroy();
-        // session()->forget('percent');
-        // session()->forget('discount');
-        // session()->forget('subAfterDis');
-        // session()->forget('grand');
+        Cart::destroy();
+        session()->forget('percent');
+        session()->forget('discount');
+        session()->forget('subAfterDis');
+        session()->forget('grand');
         return true;
     }
 

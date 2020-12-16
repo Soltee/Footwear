@@ -56,7 +56,101 @@ class DatabaseSeeder extends Seeder
 
 
         // factory(Product::class, 50)->create();
-        
+        // for ($i=1; $i <= 30; $i++) {
+        //     Product::create([
+        //         'category_id'    => function(){ 
+        //             return Arr::random(Category::inRandomOrder()->pluck('id')->toArray());
+        //         },
+        //         'subcategory_id' => function(){
+        //             return Arr::random(Subcategory::inRandomOrder()->pluck('id')->toArray());
+        //         },
+        //         'imageUrl'       => function(){
+        //             return    Arr::random([
+        //                 'products/man1.jpg',
+        //                 'products/man2.jpg',
+        //                 'products/man3.jpg',
+        //                 'products/man4.jpg',
+        //                 'products/man5.jpg',
+        //                 'products/man6.jpg',
+        //                 'products/man.jpg',
+        //                 'products/baby.jpg',
+        //                 'products/baby1.jpg',
+        //                 'products/baby2.jpg',
+        //                 'products/woman.jpg',
+        //                 'products/woman1.jpg',
+        //                 'products/woman2.jpg',
+        //                 'products/woman3.jpg',
+        //                 'products/woman4.jpg',
+        //                 'products/woman5.jpg',
+        //                 'products/woman6.jpg',
+        //                 'products/woman7.jpg',
+        //                 'products/woman8.jpg',
+        //                 'products/woman9.jpg',
+        //                 'products/woman10.jpg',
+        //                 'products/woman11.jpg',
+        //                 'products/woman12.jpg'
+        //             ]);
+        //         },
+        //         'name'           => function(){
+        //             return $i .'Shoe';
+        //         },
+        //         'average_rating' => function(){
+        //             return Arr::random([1,2,3,4,5]);
+        //         },
+        //         'slug'           => function(){
+        //             return $i .'-Shoe';
+        //         },
+        //         'price'          => function(){
+        //             return Arr::random([99, 199, 299, 399, 499, 999, 1299, 2499]);
+        //         },
+        //         'qty'            => function(){
+        //             return Arr::random([0, 2, 4, 1, 5]);
+        //         },
+        //         'featured'       => function(){
+        //             return Arr::random([true, false]);
+        //         }
+        //     ]);
+        // }
+        for ($i=1; $i <= 30; $i++) {
+            Product::create([
+                'category_id'    => Arr::random(Category::inRandomOrder()->pluck('id')->toArray()),
+                'subcategory_id' => Arr::random(Subcategory::inRandomOrder()->pluck('id')->toArray()),
+                'imageUrl'       => Arr::random([
+                    'products/man1.jpg',
+                    'products/man2.jpg',
+                    'products/man3.jpg',
+                    'products/man4.jpg',
+                    'products/man5.jpg',
+                    'products/man6.jpg',
+                    'products/man.jpg',
+                    'products/baby.jpg',
+                    'products/baby1.jpg',
+                    'products/baby2.jpg',
+                    'products/woman.jpg',
+                    'products/woman1.jpg',
+                    'products/woman2.jpg',
+                    'products/woman3.jpg',
+                    'products/woman4.jpg',
+                    'products/woman5.jpg',
+                    'products/woman6.jpg',
+                    'products/woman7.jpg',
+                    'products/woman8.jpg',
+                    'products/woman9.jpg',
+                    'products/woman10.jpg',
+                    'products/woman11.jpg',
+                    'products/woman12.jpg'
+                ]),
+                'name'           => $i .'Shoe',
+                'average_rating' => Arr::random([1,2,3,4,5]),
+                'slug'           => $i .'-Shoe',
+                'price'          => 
+                    Arr::random([99, 199, 299, 399, 499, 999, 1299, 2499]),
+                'qty'            => Arr::random([0, 2, 4, 1, 5]),
+                'featured'       => Arr::random([true, false])
+            ]);
+        }
+
+
         for ($i=1; $i < 40; $i++) {
 
             $category      = Arr::random(Category::inRandomOrder()->pluck('id')->toArray());
@@ -155,6 +249,6 @@ class DatabaseSeeder extends Seeder
         factory(Coupon::class)->create([ 'code' => 'CODE5', 'percent' => 5,'expires_on' => \Carbon\Carbon::now()->addDays(12)]);
         
         // Select random entries to be featured
-        Product::whereIn('id', [1, 12, 22, 31, 41, 43, 47, 51, 53,61, 69, 73, 80])->update(['featured' => true]);
+        Product::whereIn('id', [1, 3, 6,8,11,22,29])->update(['featured' => true]);
     }
 }
