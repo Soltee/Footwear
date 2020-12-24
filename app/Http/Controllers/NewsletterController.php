@@ -12,11 +12,11 @@ class NewsletterController extends Controller
     		'email' => 'required|email'
     	]);
 
-    	if($this->isSubscribed($data['email'])){
-    		return response()->json(['is_subscribed' => true], 200);
-    	}
+    	// if($this->isSubscribed($data['email'])){
+    	// 	return response()->json(['is_subscribed' => true], 200);
+    	// }
 
-    	Newsletter::subscribe($data['email']);
+    	// Newsletter::subscribe($data['email']);
 
     	return response()->json(['is_subscribed' => true], 201);    	
     }

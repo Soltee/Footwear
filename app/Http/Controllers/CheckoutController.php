@@ -155,7 +155,7 @@ class CheckoutController extends Controller
             'phoneNumber'    => 9838383838,
             'payment_method' => $paymentType, 
             'payment_id'    => $paymentId, 
-            'subtotal'    => $subTotal, 
+            'subtotal'      => $subTotal, 
             'discount'      => $discount, 
             'subafterdiscount' => $subAfterDis, 
             'tax'         => $tax, 
