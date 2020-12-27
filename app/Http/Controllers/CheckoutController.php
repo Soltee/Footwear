@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Cart;
 use App\Product;
-use App\Orders;
-use App\Order_Items;
+use App\Order;
+use App\Order_Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -21,17 +21,7 @@ class CheckoutController extends Controller
             return redirect('/shoes');
         }
 
-        // $gateway = new \Braintree\Gateway([
-        //     'environment' => config('services.braintree.environment'),
-        //     'merchantId' => config('services.braintree.merchantId'),
-            
-        //     'publicKey' => config('services.braintree.publicKey'),
-        //     'privateKey' => config('services.braintree.privateKey')
-        // ]);
-        
-        // $token = $gateway->ClientToken()->generate();
         $token = 'sdkflsakdf';
-        // dd($token);
 
     	$products = Cart::content();
 		$totalQuantity = Cart::instance('default')->count();
@@ -146,7 +136,7 @@ class CheckoutController extends Controller
         
         $customerArray = ['customer_id'  => $Authenticated];
 
-        $order = Orders::create(array_merge([
+        $order = Order::create(array_merge([
             'first_name'   => $firstName,
             'last_name'    => $lastName, 
             'email'        => $email,
@@ -163,25 +153,26 @@ class CheckoutController extends Controller
         ]), $customerArray ?? []);
 
         foreach(Cart::content() as $product){
-            Order_Items::create(array_merge([
+            Order_Item::create(array_merge([
                 'customer_id' => $Authenticated,  
-                'orders_id'   => $order->id,  
-                'products_id' => $product->id,  
+                'order_id'    => $order->id,  
+                'product_id' => $product->id,  
                 'name'     => $product->name, 
                 'price'    => $product->price, 
                 'quantity' => $product->qty
             ]), $customerArray?? []);
 
-            // $db_product = Product::findOrfail($product->rowId);
+            $db_product = Product::findOrfail($product->id)->decrement('qty');
             // $db_product->qty = ($db_product->qty - $product->qty);
             // $db_product->save();
         }
-        Cart::destroy();
-        session()->forget('percent');
-        session()->forget('discount');
-        session()->forget('subAfterDis');
-        session()->forget('grand');
-        return true;
+
+        // Cart::destroy();
+        // session()->forget('percent');
+        // session()->forget('discount');
+        // session()->forget('subAfterDis');
+        // session()->forget('grand');
+        // return true;
     }
 
     public function sellmoreProduct(){

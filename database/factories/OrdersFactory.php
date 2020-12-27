@@ -2,12 +2,12 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Orders;
+use App\Order;
 use App\Customer;
 use App\Product;
 use Faker\Generator as Faker;
 
-$factory->define(Orders::class, function (Faker $faker) {
+$factory->define(Order::class, function (Faker $faker) {
     return [
     	'customer_id' => function(){
     		$customers = App\Customer::inRandomOrder()->pluck('id')->toArray();
@@ -35,17 +35,17 @@ $factory->define(Orders::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\Order_Items::class, function (Faker $faker) {
+$factory->define(App\Order_Item::class, function (Faker $faker) {
     return [
     	'customer_id' => function(){
     		$customers = App\Customer::inRandomOrder()->pluck('id')->toArray();
     		return  Illuminate\Support\Arr::random($customers);
     	},
-    	'orders_id' => function(){
-    		$orders = Orders::inRandomOrder()->pluck('id')->toArray();
-    		return  Illuminate\Support\Arr::random($orders);
+    	'order_id' => function(){
+    		$order = Order::inRandomOrder()->pluck('id')->toArray();
+    		return  Illuminate\Support\Arr::random($order);
     	},
-        'products_id' => function(){
+        'product_id' => function(){
             $product = Product::inRandomOrder()->pluck('id')->toArray();
             return  Illuminate\Support\Arr::random($product);
         },

@@ -17,8 +17,8 @@ class CreateOrderItemsTable extends Migration
             $table->id();
             // $table->uuid('id')->primary();
             $table->foreignId('customer_id')->nullable();
-            $table->foreignId('orders_id');
-            $table->foreignId('products_id');
+            $table->foreignId('order_id');
+            $table->foreignId('product_id');
             $table->string('name');
             $table->integer('price');
             $table->integer('quantity');

@@ -39,7 +39,7 @@ class Product extends Model
 
     public function order_items()
     {
-        return $this->hasMany(Order_items::class);
+        return $this->hasMany(Order_item::class);
     }
 
     public static function boot() {

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Orders extends Model
+class Order extends Model
 {
     // use UsesUuid;
     
@@ -17,6 +17,6 @@ class Orders extends Model
     }
 
     public function items(){
-    	return $this->hasMany(Order_Items::class);
+    	return $this->hasMany(Order_Item::class);
     }
 }

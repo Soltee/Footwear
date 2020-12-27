@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
-use App\Order_Items;
-use App\Orders;
+use App\Order_Item;
+use App\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,7 +27,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $purchases    = Order_Items::latest();
+        $purchases    = Order_Item::latest();
         $paginate     = $purchases
                         ->where('customer_id', $this->guard()->user()->id)
                         ->with([
@@ -35,11 +35,13 @@ class HomeController extends Controller
                                 {
                                     $query->select('id','name', 
                                     'slug', 'imageUrl');
-                                 }
+                                },
+                            'order' => function($query)
+                                {
+                                    $query->select('id', 'first_name');
+                                },
                             ])
                         ->paginate(10);
-        $new          = Orders::where('customer_id', $this->guard()->user()->id)
-                            ->where('completed', true)->count();
         $items        = $paginate->items();
         // dd($items);
         $first        = $paginate->firstItem();
@@ -47,13 +49,17 @@ class HomeController extends Controller
         $total        = $paginate->total();
         $has_previous = $paginate->previousPageUrl();
         $has_next     = $paginate->nextPageUrl();
+        $new          = Order::where('customer_id', $this->guard()->user()->id)
+                            ->where('completed', true)->count();
+        // dd($total);
+        // dd($items[0]->product);
         return view('home.dashboard', compact('items', 'first', 'last', 'total', 'has_previous', 'new','has_next'));
     }
 
     public function profile()
     {
         $customer = $this->guard()->user();
-        $new      = Orders::where('customer_id', $customer->id)
+        $new      = Order::where('customer_id', $customer->id)
                             ->where('completed', true)->count();
         return view('home.profile', compact('customer', 'new'));
     }

@@ -49,10 +49,10 @@ class CartController extends Controller
 	*/
 	public function show(){
 		// Cart::destroy();
-        session()->forget('percent');
-        session()->forget('discount');
-        session()->forget('subAfterDis');
-        session()->forget('grand');
+        // session()->forget('percent');
+        // session()->forget('discount');
+        // session()->forget('subAfterDis');
+        // session()->forget('grand');
 		$products        = Cart::content();
 		$totalQuantity   = 	Cart::instance('default')->count();
 		$subTotal        = Cart::subtotal();
@@ -61,6 +61,24 @@ class CartController extends Controller
 		$subAfterDis     = (session('subAfterDis'))?? 0;
 		$tax             = Cart::tax();
 		$grandTotal      = (session('discount'))? session('grand') : Cart::total();
+
+		// foreach(Cart::content() as $product){
+
+		// 	dd($product->id);
+  //           Order_Items::create(array_merge([
+  //               'customer_id' => $Authenticated,  
+  //               'orders_id'   => $order->id,  
+  //               'products_id' => $product->id,  
+  //               'name'     => $product->name, 
+  //               'price'    => $product->price, 
+  //               'quantity' => $product->qty
+  //           ]), $customerArray?? []);
+
+  //           // $db_product = Product::findOrfail($product->rowId);
+  //           // $db_product->qty = ($db_product->qty - $product->qty);
+  //           // $db_product->save();
+  //       }
+
 		return view('home.cart', compact('products', 'totalQuantity', 'subTotal', 'discount', 'percent', 'subAfterDis', 'tax', 'grandTotal'));
 	}
 
