@@ -189,7 +189,15 @@
                       </a>
 
                       <div class="cartBtn absolute inset-0 flex justify-center items-center opacity-0">
-                        <add-to-cart :product="{{ $product }}"   /> 
+                        @if($product->qty)
+                          <add-to-cart :product="{{ $product }}"   /> 
+                        @else
+                          <span
+                              class="bg-custom-light-orange p-3  rounded-lg text-white text-md hover:opacity-75">
+                              Out of Stock
+                          </span>
+                        @endif
+
                       </div>
 
                     </div>
@@ -197,7 +205,10 @@
 
                         <a href="shoes/{{ $product->id }}/{{ $product->slug }}">
                           <h4 class="text-md font-semibold text-custom-light-black">{{ $product->name }}</h4>
-                        </a>                    
+                        </a>       
+                        
+                        {!! $product->stock_level () !!}
+             
                         <h5 class="text-md font-semibold text-custom-light-black">$ {{ $product->price }}</h5>
                     </div>
                     <div class="flex items-center">

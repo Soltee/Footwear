@@ -18,8 +18,12 @@ class WelcomeController extends Controller
     public function index(Request $request)
     {
     	
-        $products = Product::latest()->paginate(4);
-        $featured = Product::inRandomOrder()->where('featured', true)->paginate(4);
+        $products = Product::latest()
+                        ->where('qty', '<=', 1)
+                        ->paginate(4);
+        $featured = Product::inRandomOrder()
+                        ->where('qty', '<=', 1)
+                        ->where('featured', true)->paginate(4);
         return view('welcome', compact('products', 'featured'));
 
     }

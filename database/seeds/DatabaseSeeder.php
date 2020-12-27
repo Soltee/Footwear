@@ -201,6 +201,6 @@ class DatabaseSeeder extends Seeder
         
         
         // Select random entries to be featured
-        Product::whereIn('id', [1, 3, 6,8,11,22,29])->update(['featured' => true]);
+        Product::whereIn('id', [1, 3, 6,8,11,22,29, 30,33, 21,99])->update(['featured' => true]);
     }
 }

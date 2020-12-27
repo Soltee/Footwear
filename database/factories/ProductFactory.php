@@ -40,7 +40,7 @@ $factory->define(Product::class, function (Faker $faker) {
         'average_rating' => $faker->numberBetween(1, 5),
         'slug'           => $faker->title . '-shoe',
     	'price'          => $faker->unique(true)->numberBetween(100, 500),
-        'qty'            => $faker->unique(true)->numberBetween(1, 30),
+        'qty'            => $faker->unique(true)->numberBetween(0, 20),
         'description'    => $faker->text(200),
         'created_at'     => function(){
             $dates = [1,2,3,5,8, 10, 20];
