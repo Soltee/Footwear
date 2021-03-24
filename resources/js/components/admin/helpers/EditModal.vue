@@ -275,6 +275,7 @@ import Toast from '../../helpers/Alert';
                 });
             },
             updateProduct(){
+                this.fileErr = [];
                 let formData = new FormData();
                 if(this.files){
                     for( var i = 0; i < this.files.length; i++ ){
@@ -327,8 +328,9 @@ import Toast from '../../helpers/Alert';
                     this.priceErr    = [];
                     this.qtyErr      = [];
                     this.categoryErr = [];
+                    console.log(error.response);
                     if(error.response.status == 422){
-                        this.fileErr = ["File must be jpeg, png or gif"];
+                        this.fileErr = [error.response.data.message];
                     }
 
                     if(errors){

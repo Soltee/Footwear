@@ -153,7 +153,9 @@ class ProductController extends Controller
             'subcategory' => ['required', 'string', 'min:1'],
         ]);
 
-        if($request->hasFile('files')){
+        if((count($product->images) < 1) && !$request->hasFile('files')){
+            abort(422, 'Please select an image. All images has been deleted.');
+        } else {
 
             $allowedfileExtension = ['jpeg','jpg','png','gif'];
             $images      = $request->file('files'); 
@@ -163,19 +165,24 @@ class ProductController extends Controller
                 $extension = $file->getClientOriginalExtension();
 
                 $check = in_array($extension,$allowedfileExtension);
-                abort_if(!$check, 422);
+                abort_if(!$check, 422, 'File must be jpeg, png or gif');
             }
 
             foreach ($images as $image) {
                 $basename  = Str::random();
                 $original  = 'pd-' . $basename . '.' . $image->getClientOriginalExtension();
-                $paths[] = $image->storeAs('products', $original, 'public'); 
+                $image->storeAs('products', $original, 'public'); 
 
                 $paths[] =  [
                     'filename'  => $original,
                     'url'       => 'storage/products/' . $original
                 ];
+
             }
+
+            $firstImagePathArr = [
+                'imageUrl' => $paths[0]['url']
+            ];
 
             foreach ($paths as $path) {
                 ProductImages::create([
@@ -183,20 +190,28 @@ class ProductController extends Controller
                     'imageUrl'   => $path['url'],
                     'thumbnail'  => $path['filename']
                 ]);
+
             }
+
         }
+
+
+
         // dd($data['description']);
         $descriptionArray  = ['description' => $request->input('description')];
         $excerptArray      = ['excerpt' => $request->input('excerpt')];
         // dd($paths);
         $new_product = $product->update(array_merge([
-            'category_id'    => $data['category'],
-            'subcategory_id' => $data['subcategory'],
-            'name'           => $data['name'],
-            'slug'           => Str::slug($data['name'], '-'),
-            'price'          => $data['price'],
-            'qty'            => $data['qty']
-        ], ($excerptArray) ?? [], ($descriptionArray) ?? []));
+                'category_id'    => $data['category'],
+                'subcategory_id' => $data['subcategory'],
+                'name'           => $data['name'],
+                'slug'           => Str::slug($data['name'], '-'),
+                'price'          => $data['price'],
+                'qty'            => $data['qty']
+            ], 
+            ($firstImagePathArr)?? [],
+            ($excerptArray) ?? [], 
+            ($descriptionArray) ?? []));
 
         return response()->json(['success' => 'true'], 200);
     }
