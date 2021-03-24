@@ -85,6 +85,8 @@ class ProductController extends Controller
             $basename  = Str::random();
             $original  = 'pd-' . $basename . '.' . $image->getClientOriginalExtension();
             $paths[] = $image->storeAs('products', $original, 'public'); 
+
+            // $paths[] = $image->storeAs('products', $original, 'public'); 
         }
 
         $product = Product::create([
@@ -163,7 +165,9 @@ class ProductController extends Controller
             foreach ($images as $image) {
                 $basename  = Str::random();
                 $original  = 'pd-' . $basename . '.' . $image->getClientOriginalExtension();
-                $paths[] = $image->storeAs('products', $original, 'public'); 
+                // $paths[] = $image->storeAs('products', $original, 'public'); 
+
+                 $paths[] = $image->storeAs('products', $original, 'public'); 
             }
 
             foreach ($paths as $path) {

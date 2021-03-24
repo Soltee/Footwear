@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Administrator;
 
-use App\Orders;
+use App\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -11,7 +11,7 @@ class OrderController extends Controller
     public function index(){
     	$search = request()->search;
 
-        $query = Orders::latest();
+        $query = Order::latest();
         if($search){
             $query = $query->where('first_name', 'LIKE', '%'.$search.'%')
                             ->orWhere('last_name', 'LIKE', '%'.$search.'%')

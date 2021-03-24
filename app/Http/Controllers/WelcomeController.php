@@ -19,10 +19,10 @@ class WelcomeController extends Controller
     {
     	
         $products = Product::latest()
-                        ->where('qty', '<=', 1)
+                        // ->where('qty', '<=', 1)
                         ->paginate(4);
         $featured = Product::inRandomOrder()
-                        ->where('qty', '<=', 1)
+                        // ->where('qty', '<=', 1)
                         ->where('featured', true)->paginate(4);
         return view('welcome', compact('products', 'featured'));
 
@@ -32,6 +32,10 @@ class WelcomeController extends Controller
         return response()->json(['subcategories' => Subcategory::orderBy('name')->take(6)->get()], 200);
     }
 
+    /*
+        Search shoes 
+    */
+
     public function searchShoes($key){
         $shoes = Product::where('name', 'LIKE', $key . '%')->get();
         $count = $shoes->count();
@@ -39,6 +43,9 @@ class WelcomeController extends Controller
          return response()->json(['shoes' => $shoes, 'count' => $count, 'countResult' => $countResult], 200);
     }
 
+    /*
+    *   Shop or shoes Page
+    */
     public function shoes()
     {
         $category    = request()->category;
@@ -97,6 +104,9 @@ class WelcomeController extends Controller
         return view('home.shoes', compact('products', 'next', 'prev', 'current', 'categories','category', 'subcategory', 'count', 'first', 'last', 'total'));
     }
 
+    /*
+        * Single Product Show
+    */
     public function show($product, $slug)
     {   
         $product        = Product::findOrFail($product);

@@ -6,8 +6,8 @@ use App\Product;
 use App\Customer;
 use App\Category;
 use App\Review;
-use App\Orders;
-use App\Order_Items;
+use App\Order;
+use App\Order_Item;
 use App\Administrator;
 use App\Charts\GroupChart;
 use Illuminate\Http\Request;
@@ -26,8 +26,8 @@ class AdministratorController extends Controller
         $products_query      = Product::latest();
         $categories_query    = Category::latest();
         $customers_query     = Customer::latest();
-        $orders_query        = Orders::latest();
-        $order_items_query   = Order_Items::latest();
+        $orders_query        = Order::latest();
+        $order_items_query   = Order_Item::latest();
 
 
         $today_users      = Customer::whereDate('created_at', today())->count();
@@ -40,10 +40,10 @@ class AdministratorController extends Controller
         $products_2_days_ago = Product::whereDate('created_at', today()->subDays(2))->count();
         $products_last_ten_days_ago = Product::whereDate('created_at', '<=', today()->subDays(10))->count();
 
-        $today_orders      = Orders::whereDate('created_at', today())->count();
-        $yesterday_orders  = Orders::whereDate('created_at', today()->subDays(1))->count();
-        $orders_2_days_ago = Orders::whereDate('created_at', today()->subDays(2))->count();
-        $orders_last_ten_days_ago = Orders::whereDate('created_at', '<=', today()->subDays(10))->count();
+        $today_orders      = Order::whereDate('created_at', today())->count();
+        $yesterday_orders  = Order::whereDate('created_at', today()->subDays(1))->count();
+        $orders_2_days_ago = Order::whereDate('created_at', today()->subDays(2))->count();
+        $orders_last_ten_days_ago = Order::whereDate('created_at', '<=', today()->subDays(10))->count();
 
         $chart = new GroupChart;
         $chart->labels(['10 days ago', '2 days ago', 'Yesterday', 'Today']);
