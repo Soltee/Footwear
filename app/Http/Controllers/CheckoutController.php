@@ -133,7 +133,7 @@ class CheckoutController extends Controller
         $tax           = Cart::tax();
 
         $grandTotal         = (session('discount')) ?   session('grand') :  Cart::total();
-        $trimed_grand_total = str_replace([','], [''], $grandTotal);
+        $trimed_grand_total = str_replace(',', '', $grandTotal);
         $Authenticated      = ($this->guard()) ? $this->guard()->id : null;
         
         $customerArray      = ['customer_id'  => $Authenticated];
