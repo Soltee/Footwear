@@ -169,12 +169,12 @@ class CheckoutController extends Controller
             // $db_product->save();
         }
 
-        // Cart::destroy();
-        // session()->forget('percent');
-        // session()->forget('discount');
-        // session()->forget('subAfterDis');
-        // session()->forget('grand');
-        // return true;
+        Cart::destroy();
+        session()->forget('percent');
+        session()->forget('discount');
+        session()->forget('subAfterDis');
+        session()->forget('grand');
+        return true;
     }
 
     public function sellmoreProduct(){
