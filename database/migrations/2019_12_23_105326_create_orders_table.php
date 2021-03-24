@@ -26,11 +26,11 @@ class CreateOrdersTable extends Migration
             $table->string('payment_method');
             $table->string('payment_id');
             $table->boolean('completed')->default(false);
-            $table->integer('subtotal');
-            $table->integer('discount')->nullable();
-            $table->integer('subafterdiscount')->nullable();
-            $table->integer('tax');
-            $table->integer('grand');
+            $table->decimal('subtotal');
+            $table->decimal('discount')->nullable();
+            $table->decimal('subafterdiscount')->nullable();
+            $table->decimal('tax');
+            $table->decimal('grand');
             $table->timestamps();
         });
     }

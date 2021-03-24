@@ -162,7 +162,7 @@ class CheckoutController extends Controller
                 'quantity' => $product->qty
             ]), $customerArray?? []);
 
-            $db_product = Product::findOrfail($product->id)->decrement('qty');
+            // $db_product = Product::findOrfail($product->id)->decrement('qty');
             // $db_product->qty = ($db_product->qty - $product->qty);
             // $db_product->save();
         }

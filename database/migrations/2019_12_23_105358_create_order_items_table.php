@@ -20,7 +20,7 @@ class CreateOrderItemsTable extends Migration
             $table->foreignId('order_id');
             $table->foreignId('product_id');
             $table->string('name');
-            $table->integer('price');
+            $table->decimal('price');
             $table->integer('quantity');
             $table->timestamps();
         });
