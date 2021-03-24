@@ -24,6 +24,7 @@ class WelcomeController extends Controller
         $featured = Product::inRandomOrder()
                         // ->where('qty', '<=', 1)
                         ->where('featured', true)->paginate(4);
+        // dd($products);
         return view('welcome', compact('products', 'featured'));
 
     }

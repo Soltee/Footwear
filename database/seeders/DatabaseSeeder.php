@@ -88,7 +88,7 @@ class DatabaseSeeder extends Seeder
         //             'products/woman12.jpg'
         //         ]),
         //         'name'           => $i .'Shoe',
-        //         'average_rating' => Arr::random([1,2,3,4,5]),
+        // d        'average_rating' => Arr::random([1,2,3,4,5]),
         //         'slug'           => $i .'-Shoe',
         //         'price'          => 
         //             Arr::random([99, 199, 299, 399, 499, 999, 1299, 2499]),
@@ -97,91 +97,92 @@ class DatabaseSeeder extends Seeder
         //     ]);
         // }
 
+        //
+        factory(Product::class, 100)->create();
+        // for ($i=1; $i < 40; $i++) {
 
-        for ($i=1; $i < 40; $i++) {
+        //     $category      = Arr::random(Category::inRandomOrder()->pluck('id')->toArray());
+        //     $subcategory   = Arr::random(Subcategory::inRandomOrder()->pluck('id')->toArray());
+        //     $url    =  Arr::random([
+        //             'products/man1.jpg',
+        //             'products/man2.jpg',
+        //             'products/man3.jpg',
+        //             'products/man4.jpg',
+        //             'products/man5.jpg',
+        //             'products/man6.jpg',
+        //             'products/man.jpg',
+        //             'products/baby.jpg',
+        //             'products/baby1.jpg',
+        //             'products/baby2.jpg',
+        //             'products/woman.jpg',
+        //             'products/woman1.jpg',
+        //             'products/woman2.jpg',
+        //             'products/woman3.jpg',
+        //             'products/woman4.jpg',
+        //             'products/woman5.jpg',
+        //             'products/woman6.jpg',
+        //             'products/woman7.jpg',
+        //             'products/woman8.jpg',
+        //             'products/woman9.jpg',
+        //             'products/woman10.jpg',
+        //             'products/woman11.jpg',
+        //             'products/woman12.jpg'
+        //         ]);
 
-            $category      = Arr::random(Category::inRandomOrder()->pluck('id')->toArray());
-            $subcategory   = Arr::random(Subcategory::inRandomOrder()->pluck('id')->toArray());
-            $url    =  Arr::random([
-                    'products/man1.jpg',
-                    'products/man2.jpg',
-                    'products/man3.jpg',
-                    'products/man4.jpg',
-                    'products/man5.jpg',
-                    'products/man6.jpg',
-                    'products/man.jpg',
-                    'products/baby.jpg',
-                    'products/baby1.jpg',
-                    'products/baby2.jpg',
-                    'products/woman.jpg',
-                    'products/woman1.jpg',
-                    'products/woman2.jpg',
-                    'products/woman3.jpg',
-                    'products/woman4.jpg',
-                    'products/woman5.jpg',
-                    'products/woman6.jpg',
-                    'products/woman7.jpg',
-                    'products/woman8.jpg',
-                    'products/woman9.jpg',
-                    'products/woman10.jpg',
-                    'products/woman11.jpg',
-                    'products/woman12.jpg'
-                ]);
+        //     $faker = \Faker\Factory::create();
 
-            $faker = \Faker\Factory::create();
-
-            Product::create([
-                'category_id'    => $category1,
-                'subcategory_id' => $subcategory,
-                'imageUrl'       => $url,
-                'name'           => $faker->title,
-                'average_rating' => $faker->numberBetween(1, 5),
-                'slug'           => $faker->title . '-shoe',
-                'price'          => $faker->unique(true)->numberBetween(100, 500),
-                'qty'            => $faker->unique(true)->numberBetween(1, 30),
-                'description'    => $faker->text(200),
-                'created_at'     => Arr::random([1,2,3,5,8, 10, 20]),
-                'featured'       => Arr::random([true, false])
-            ]);
-        }
+        //     Product::create([
+        //         'category_id'    => $category1,
+        //         'subcategory_id' => $subcategory,
+        //         'imageUrl'       => $url,
+        //         'name'           => $faker->title,
+        //         'average_rating' => $faker->numberBetween(1, 5),
+        //         'slug'           => $faker->title . '-shoe',
+        //         'price'          => $faker->unique(true)->numberBetween(100, 500),
+        //         'qty'            => $faker->unique(true)->numberBetween(1, 30),
+        //         'description'    => $faker->text(200),
+        //         'created_at'     => Arr::random([1,2,3,5,8, 10, 20]),
+        //         'featured'       => Arr::random([true, false])
+        //     ]);
+        // }
 
         // factory(ProductImages::class, 100)->create();
-        for ($i=1; $i < 70; $i++) {
+        // for ($i=1; $i < 70; $i++) {
 
-            $product      = Arr::random(Product::inRandomOrder()->pluck('id')->toArray());
-            $url    =  Arr::random([
-                    'products/man1.jpg',
-                    'products/man2.jpg',
-                    'products/man3.jpg',
-                    'products/man4.jpg',
-                    'products/man5.jpg',
-                    'products/man6.jpg',
-                    'products/man.jpg',
-                    'products/baby.jpg',
-                    'products/baby1.jpg',
-                    'products/baby2.jpg',
-                    'products/woman.jpg',
-                    'products/woman1.jpg',
-                    'products/woman2.jpg',
-                    'products/woman3.jpg',
-                    'products/woman4.jpg',
-                    'products/woman5.jpg',
-                    'products/woman6.jpg',
-                    'products/woman7.jpg',
-                    'products/woman8.jpg',
-                    'products/woman9.jpg',
-                    'products/woman10.jpg',
-                    'products/woman11.jpg',
-                    'products/woman12.jpg'
-                ]);
+        //     $product      = Arr::random(Product::inRandomOrder()->pluck('id')->toArray());
+        //     $url    =  Arr::random([
+        //             'products/man1.jpg',
+        //             'products/man2.jpg',
+        //             'products/man3.jpg',
+        //             'products/man4.jpg',
+        //             'products/man5.jpg',
+        //             'products/man6.jpg',
+        //             'products/man.jpg',
+        //             'products/baby.jpg',
+        //             'products/baby1.jpg',
+        //             'products/baby2.jpg',
+        //             'products/woman.jpg',
+        //             'products/woman1.jpg',
+        //             'products/woman2.jpg',
+        //             'products/woman3.jpg',
+        //             'products/woman4.jpg',
+        //             'products/woman5.jpg',
+        //             'products/woman6.jpg',
+        //             'products/woman7.jpg',
+        //             'products/woman8.jpg',
+        //             'products/woman9.jpg',
+        //             'products/woman10.jpg',
+        //             'products/woman11.jpg',
+        //             'products/woman12.jpg'
+        //         ]);
 
-            $faker = \Faker\Factory::create();
-            ProductImages::create([
-                'product_id' => $product,
-                'imageUrl'   => $url,
-                'thumbnail'  => $url
-            ]);
-        }
+        //     $faker = \Faker\Factory::create();
+        //     ProductImages::create([
+        //         'product_id' => $product,
+        //         'imageUrl'   => $url,
+        //         'thumbnail'  => $url
+        //     ]);
+        // }
 
         factory(Order::class, 50)->create();
         factory(Order_Item::class, 100)->create();

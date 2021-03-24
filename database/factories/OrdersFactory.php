@@ -10,7 +10,7 @@ use Faker\Generator as Faker;
 $factory->define(Order::class, function (Faker $faker) {
     return [
     	'customer_id' => function(){
-    		$customers = App\Customer::inRandomOrder()->pluck('id')->toArray();
+    		$customers = Customer::inRandomOrder()->pluck('id')->toArray();
     		return  Illuminate\Support\Arr::random($customers);
     	},
     	'first_name' => $faker->firstName,

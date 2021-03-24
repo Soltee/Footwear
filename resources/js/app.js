@@ -6,19 +6,21 @@
 
 require('./bootstrap');
 
+import Vue from 'vue'
+import Vuelidate from 'vuelidate'
+import StarRating from 'vue-star-rating';
+import wysiwyg from "vue-wysiwyg";
 window.Vue = require('vue');
+
+Vue.use(Vuelidate);
+
 var VueScrollTo = require('vue-scrollto');
 Vue.use(VueScrollTo);
 
-import Vue from 'vue'
-import Vuelidate from 'vuelidate'
-Vue.use(Vuelidate);
 
-import StarRating from 'vue-star-rating';
 Vue.component('star-rating', StarRating);
 export const eventBus = new Vue();
 
-import wysiwyg from "vue-wysiwyg";
 Vue.use(wysiwyg, {}); // config is optional. more below
 /**
  * The following block of code may be used to automatically register your
