@@ -125,16 +125,18 @@ class CheckoutController extends Controller
         * After Successful payment, store data to database
     **/
     public function store($firstName, $lastName,  $email, $city, $address, $paymentType, $paymentId){
-        $products = Cart::content();
+        $products      = Cart::content();
         $totalQuantity = Cart::instance('default')->count();
-        $subTotal = Cart::subtotal();
-        $discount = (session('discount'))?? 0;
-        $subAfterDis = (session('subAfterDis'))?? 0;
-        $tax = Cart::tax();
-        $grandTotal = (session('discount')) ?  session('grand') :  Cart::total();
-        $Authenticated = ($this->guard()) ? $this->guard()->id : null;
+        $subTotal      = Cart::subtotal();
+        $discount      = (session('discount'))?? 0;
+        $subAfterDis   = (session('subAfterDis'))?? 0;
+        $tax           = Cart::tax();
+
+        $grandTotal         = (session('discount')) ?   session('grand') :  Cart::total();
+        $trimed_grand_total = str_replace([','], [''], $grandTotal);
+        $Authenticated      = ($this->guard()) ? $this->guard()->id : null;
         
-        $customerArray = ['customer_id'  => $Authenticated];
+        $customerArray      = ['customer_id'  => $Authenticated];
 
         $order = Order::create(array_merge([
             'first_name'   => $firstName,
@@ -149,7 +151,7 @@ class CheckoutController extends Controller
             'discount'      => $discount, 
             'subafterdiscount' => $subAfterDis, 
             'tax'         => $tax, 
-            'grand'      => $grandTotal
+            'grand'      => $trimed_grand_total
         ]), $customerArray ?? []);
 
         foreach(Cart::content() as $product){
