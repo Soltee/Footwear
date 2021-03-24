@@ -131,7 +131,7 @@ class CheckoutController extends Controller
         $discount = (session('discount'))?? 0;
         $subAfterDis = (session('subAfterDis'))?? 0;
         $tax = Cart::tax();
-        $grandTotal = (session('discount')) ? (int) session('grand') : (int) Cart::total();
+        $grandTotal = (session('discount')) ?  session('grand') :  Cart::total();
         $Authenticated = ($this->guard()) ? $this->guard()->id : null;
         
         $customerArray = ['customer_id'  => $Authenticated];
