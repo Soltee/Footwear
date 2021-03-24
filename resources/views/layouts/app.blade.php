@@ -27,26 +27,27 @@
 <body class="antialiased leading-none text-lg">
     <div id="app"  class="">
         
-        <div 
-            x-data="{visible:true}">
-            <div
-                x-show.transition.30ms="visible"
-                class="text-center px-4 py-4 bg-custom-light-orange flex items-center justify-center">
-
-                <p 
-                    class="text-white text-md leading-5">
-                    Discount on purchase of all shoes.</span> Use CODE <span class="font-semibold">SHOES20</span> to get 20% off
-                </p>
-                <svg x-on:click="visible = false;" class="ml-4 text-white hover:shadow cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-
-            </div>
-        </div>
 
         <!-- Header--> 
         @if(Route::currentRouteName() != 'cart.checkout')    
+            <div 
+                x-data="{visible:true}">
+                <div
+                    x-show.transition.30ms="visible"
+                    class="text-center px-4 py-4 bg-custom-light-orange flex items-center justify-center">
+
+                    <p 
+                        class="text-white text-md leading-5">
+                        Discount on purchase of all shoes.</span> Use CODE <span class="font-semibold">SHOES20</span> to get 20% off
+                    </p>
+                    <svg x-on:click="visible = false;" class="ml-4 text-white hover:shadow cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+
+                </div>
+            </div>
+            
             <navmenu :customer="{{ json_encode(Auth::guard('customer')->user()) }}" :name="{{ json_encode(Route::currentRouteName()) }}"></navmenu>
         @endif  
 
