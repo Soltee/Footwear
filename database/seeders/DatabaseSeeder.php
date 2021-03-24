@@ -192,7 +192,7 @@ class DatabaseSeeder extends Seeder
         //     'code' => 'WOMEN20', 'percent' => 20,'expires_on' => \Carbon\Carbon::yesterday()
         // ]);
 
-        factory(Coupon::class)->create(['code' => 'WOMEN20', 'percent' => 20,'expires_on' => \Carbon\Carbon::yesterday()]);
+        factory(Coupon::class)->create(['code' => 'SHOES20', 'percent' => 20,'expires_on' => \Carbon\Carbon::yesterday()]);
         factory(Coupon::class)->create(['code' => 'CODE1', 'percent' => 2,'expires_on' => \Carbon\Carbon::yesterday()]);
         factory(Coupon::class)->create(['code' => 'CODE2', 'percent' => 2,'expires_on' => \Carbon\Carbon::yesterday()]);
         factory(Coupon::class)->create([ 'code' => 'CODE3', 'percent' => 4,'expires_on' => \Carbon\Carbon::now()]);

@@ -84,7 +84,7 @@
                 <h3 class="text-3xl font-bold text-custom-light-black">Over hundreds of women shoes</h3>
                 <div class="text-lg font-bold flex flex-col  items-center text-custom-light-black mt-8">
                     <a href="/shoes?type=Women" class="mb-3 md:mb-0">
-                        <span class="opacity-75">Use CODE WOMEN20 to get</span> 
+                        <span class="opacity-75">Use CODE SHOES20 to get</span> 
                     </a>
                     <a href="/shoes?type=Women" class="px-4 py-3 rounded-lg bg-custom-light-orange  text-white ml-6 opacity-100 hover:opacity-75">
                         20% off
