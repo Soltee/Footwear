@@ -39,7 +39,7 @@
                 </div>
                 <div class=" w-full">
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
-                        <img v-for="image in images" class="w-full w-64 h-64 hover:shadow rounded-lg object-cover object-center" :src="`/${image.thumbnail}`" onerror="this.src='/img/placeholder.png'" >
+                        <img v-for="image in images" class="w-full w-64 h-64 hover:shadow rounded-lg object-cover object-center" :src="`/${image.imageUrl}`" onerror="this.src='/img/placeholder.png'" >
                     </div>
                 </div>
             </div>

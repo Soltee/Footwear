@@ -39122,7 +39122,7 @@ var render = function() {
                     staticClass:
                       "w-full w-64 h-64 hover:shadow rounded-lg object-cover object-center",
                     attrs: {
-                      src: "/" + image.thumbnail,
+                      src: "/" + image.imageUrl,
                       onerror: "this.src='/img/placeholder.png'"
                     }
                   })
@@ -42106,7 +42106,7 @@ var render = function() {
             staticClass:
               "w-full w-64 h-64 hover:shadow rounded-lg object-cover object-center",
             attrs: {
-              src: "/" + image.thumbnail,
+              src: "/" + image.imgUrl,
               onerror: "this.src='/img/placeholder.png'"
             }
           })

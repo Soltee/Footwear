@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -84,9 +85,12 @@ class ProductController extends Controller
         foreach ($images as $image) {
             $basename  = Str::random();
             $original  = 'pd-' . $basename . '.' . $image->getClientOriginalExtension();
-            $paths[] = $image->storeAs('products', $original, 'public'); 
+            $image->storeAs('products', $original, 'public'); 
 
-            // $paths[] = $image->storeAs('products', $original, 'public'); 
+            $paths[] =  [
+                'filename'  => $original,
+                'url'       => 'storage/products/' . $original
+            ];
         }
 
         $product = Product::create([
@@ -96,7 +100,7 @@ class ProductController extends Controller
             'slug' => Str::slug($data['name'], '-'),
             'price' => $data['price'],
             'qty' => $data['qty'],
-            'imageUrl' => $paths[0],
+            'imageUrl' => $paths[0]['url'],
             'excerpt' => ($request->input('excerpt')) ? $request->input('excerpt') : "" ,
             'description' => ($request->input('description')) ? $request->input('description') : "" 
         ]);
@@ -104,8 +108,8 @@ class ProductController extends Controller
         foreach ($paths as $path) {
             ProductImages::create([
                 'product_id' => $product->id,
-                'imageUrl'   => $path,
-                'thumbnail'  => $path
+                'imageUrl'   => $path['url'],
+                'thumbnail'  => $path['filename']
             ]);
         }
 
@@ -165,16 +169,19 @@ class ProductController extends Controller
             foreach ($images as $image) {
                 $basename  = Str::random();
                 $original  = 'pd-' . $basename . '.' . $image->getClientOriginalExtension();
-                // $paths[] = $image->storeAs('products', $original, 'public'); 
+                $paths[] = $image->storeAs('products', $original, 'public'); 
 
-                 $paths[] = $image->storeAs('products', $original, 'public'); 
+                $paths[] =  [
+                    'filename'  => $original,
+                    'url'       => 'storage/products/' . $original
+                ];
             }
 
             foreach ($paths as $path) {
                 ProductImages::create([
                     'product_id' => $product->id,
-                    'imageUrl'   => $path,
-                    'thumbnail'  => $path
+                    'imageUrl'   => $path['url'],
+                    'thumbnail'  => $path['filename']
                 ]);
             }
         }
@@ -202,9 +209,9 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        // dd(public_path('products/'));
         foreach ($product->images() as $image) {
-            File::delete(public_path('products/' . $image->imageUrl));
+            unlink($image->thumbnail);
+            // File::delete($image->thumbnail);
             $image->delete();
         }
 
