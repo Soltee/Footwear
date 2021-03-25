@@ -85,12 +85,25 @@ class ProductController extends Controller
         foreach ($images as $image) {
             $basename  = Str::random();
             $original  = 'pd-' . $basename . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('products', $original, 'public'); 
 
-            $paths[] =  [
-                'filename'  => $original,
-                'url'       => 'storage/products/' . $original
-            ];
+            if(env('APP_ENV') !== 'local')
+            {           
+                $image->move('products', $original);
+
+                $paths[] =  [
+                    'filename'  => $original,
+                    'url'       => 'products/' . $original
+                ];
+            } else {
+
+                $image->storeAs('products', $original, 'public'); 
+
+                $paths[] =  [
+                    'filename'  => $original,
+                    'url'       => 'storage/products/' . $original
+                ];
+
+            }
         }
 
         $product = Product::create([
@@ -171,12 +184,31 @@ class ProductController extends Controller
             foreach ($images as $image) {
                 $basename  = Str::random();
                 $original  = 'pd-' . $basename . '.' . $image->getClientOriginalExtension();
-                $image->storeAs('products', $original, 'public'); 
+                if(env('APP_ENV') !== 'local')
+                {           
+                    $image->move('products', $original);
 
-                $paths[] =  [
-                    'filename'  => $original,
-                    'url'       => 'storage/products/' . $original
-                ];
+                    $paths[] =  [
+                        'filename'  => $original,
+                        'url'       => 'products/' . $original
+                    ];
+                } else {
+
+                    $image->storeAs('products', $original, 'public'); 
+
+                    $paths[] =  [
+                        'filename'  => $original,
+                        'url'       => 'storage/products/' . $original
+                    ];
+
+                }
+            
+                // $image->storeAs('products', $original, 'public'); 
+
+                // $paths[] =  [
+                //     'filename'  => $original,
+                //     'url'       => 'storage/products/' . $original
+                // ];
 
             }
 

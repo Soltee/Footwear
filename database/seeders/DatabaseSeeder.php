@@ -37,6 +37,14 @@ class DatabaseSeeder extends Seeder
         //     'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 
         //     'remember_token' => '3RbW346H&#F#'
         // ]);
+        // Customer::create([
+        //     'last_name' => 'Test',
+        //     'first_name' => 'Testing', 
+        //     'email'=>'customer@example.com', 
+        //     'email_verified_at' => now(), 
+        //     'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 
+        //     'remember_token' => '3RbW34dsfsd6H&#F#'
+        // ]);
 
         // Heroku
         // \DB::table('coupons')->insert([
@@ -111,35 +119,33 @@ class DatabaseSeeder extends Seeder
         $ids = [1,2,56,78,90,23,4,90,88,112,113,116];
         Product::whereIn('id', $ids)->update(['featured' => true]);
 
-        // App\Product::findOrfail([1,2,56,78,90,23,4,90,88,112,113,116])->update(['featured' , 1]);
-
-        for ($i=1; $i < 20; $i++) {
+        for ($i=1; $i < 10; $i++) {
             $category      = Illuminate\Support\Arr::random(App\Category::inRandomOrder()->pluck('id')->toArray());
             $subcategory   = Illuminate\Support\Arr::random(App\Subcategory::inRandomOrder()->pluck('id')->toArray());
             $url    =  Illuminate\Support\Arr::random([
-                    'storage/products/man1.jpg',
-                    'storage/products/man2.jpg',
-                    'storage/products/man3.jpg',
-                    'storage/products/man4.jpg',
-                    'storage/products/man5.jpg',
-                    'storage/products/man6.jpg',
-                    'storage/products/man.jpg',
-                    'storage/products/baby.jpg',
-                    'storage/products/baby1.jpg',
-                    'storage/products/baby2.jpg',
-                    'storage/products/woman.jpg',
-                    'storage/products/woman1.jpg',
-                    'storage/products/woman2.jpg',
-                    'storage/products/woman3.jpg',
-                    'storage/products/woman4.jpg',
-                    'storage/products/woman5.jpg',
-                    'storage/products/woman6.jpg',
-                    'storage/products/woman7.jpg',
-                    'storage/products/woman8.jpg',
-                    'storage/products/woman9.jpg',
-                    'storage/products/woman10.jpg',
-                    'storage/products/woman11.jpg',
-                    'storage/products/woman12.jpg'
+                    'products/man1.jpg',
+                    'products/man2.jpg',
+                    'products/man3.jpg',
+                    'products/man4.jpg',
+                    'products/man5.jpg',
+                    'products/man6.jpg',
+                    'products/man.jpg',
+                    'products/baby.jpg',
+                    'products/baby1.jpg',
+                    'products/baby2.jpg',
+                    'products/woman.jpg',
+                    'products/woman1.jpg',
+                    'products/woman2.jpg',
+                    'products/woman3.jpg',
+                    'products/woman4.jpg',
+                    'products/woman5.jpg',
+                    'products/woman6.jpg',
+                    'products/woman7.jpg',
+                    'products/woman8.jpg',
+                    'products/woman9.jpg',
+                    'products/woman10.jpg',
+                    'products/woman11.jpg',
+                    'products/woman12.jpg'
                 ]);
 
 
@@ -158,8 +164,7 @@ class DatabaseSeeder extends Seeder
                 'slug'           => $name . '-shoe',
                 'price'          => $price,
                 'qty'            => $qty,
-                'created_at'     => $created,
-                'featured'       => 1
+                'created_at'     => $created
             ]);
         }
 
@@ -181,74 +186,74 @@ class DatabaseSeeder extends Seeder
 
 
 
-        factory(Product::class, 50)->create();
+        // factory(Product::class, 50)->create();
 
         // factory(ProductImages::class, 100)->create();
-        // for ($i=1; $i < 120; $i++) {
+        for ($i=1; $i < 120; $i++) {
 
-        //     $product      = Illuminate\Support\Arr::random(Product::inRandomOrder()->pluck('id')->toArray());
-        //     $url    =  Illuminate\Support\Arr::random([
-        //             'storage/products/man1.jpg',
-        //             'storage/products/man2.jpg',
-        //             'storage/products/man3.jpg',
-        //             'storage/products/man4.jpg',
-        //             'storage/products/man5.jpg',
-        //             'storage/products/man6.jpg',
-        //             'storage/products/man.jpg',
-        //             'storage/products/baby.jpg',
-        //             'storage/products/baby1.jpg',
-        //             'storage/products/baby2.jpg',
-        //             'storage/products/woman.jpg',
-        //             'storage/products/woman1.jpg',
-        //             'storage/products/woman2.jpg',
-        //             'storage/products/woman3.jpg',
-        //             'storage/products/woman4.jpg',
-        //             'storage/products/woman5.jpg',
-        //             'storage/products/woman6.jpg',
-        //             'storage/products/woman7.jpg',
-        //             'storage/products/woman8.jpg',
-        //             'storage/products/woman9.jpg',
-        //             'storage/products/woman10.jpg',
-        //             'storage/products/woman11.jpg',
-        //             'storage/products/woman12.jpg'
-        //         ]);
+            $product      = Illuminate\Support\Arr::random(Product::inRandomOrder()->pluck('id')->toArray());
+            $url    =  Illuminate\Support\Arr::random([
+                    'products/man1.jpg',
+                    'products/man2.jpg',
+                    'products/man3.jpg',
+                    'products/man4.jpg',
+                    'products/man5.jpg',
+                    'products/man6.jpg',
+                    'products/man.jpg',
+                    'products/baby.jpg',
+                    'products/baby1.jpg',
+                    'products/baby2.jpg',
+                    'products/woman.jpg',
+                    'products/woman1.jpg',
+                    'products/woman2.jpg',
+                    'products/woman3.jpg',
+                    'products/woman4.jpg',
+                    'products/woman5.jpg',
+                    'products/woman6.jpg',
+                    'products/woman7.jpg',
+                    'products/woman8.jpg',
+                    'products/woman9.jpg',
+                    'products/woman10.jpg',
+                    'products/woman11.jpg',
+                    'products/woman12.jpg'
+                ]);
 
-        //     $products    =  App\Product::inRandomOrder()->pluck('id')->toArray();
-        //     $product     = Illuminate\Support\Arr::random($products);
+            $products    =  App\Product::inRandomOrder()->pluck('id')->toArray();
+            $product     = Illuminate\Support\Arr::random($products);
 
-        //         $image    =  Illuminate\Support\Arr::random([
-        //             'man1.jpg',
-        //             'man2.jpg',
-        //             'man3.jpg',
-        //             'man4.jpg',
-        //             'man5.jpg',
-        //             'man6.jpg',
-        //             'man.jpg',
-        //             'baby.jpg',
-        //             'baby1.jpg',
-        //             'baby2.jpg',
-        //             'woman.jpg',
-        //             'woman1.jpg',
-        //             'woman2.jpg',
-        //             'woman3.jpg',
-        //             'woman4.jpg',
-        //             'woman5.jpg',
-        //             'woman6.jpg',
-        //             'woman7.jpg',
-        //             'woman8.jpg',
-        //             'woman9.jpg',
-        //             'woman10.jpg',
-        //             'woman11.jpg',
-        //             'woman12.jpg'
-        //         ]);
+                $image    =  Illuminate\Support\Arr::random([
+                    'man1.jpg',
+                    'man2.jpg',
+                    'man3.jpg',
+                    'man4.jpg',
+                    'man5.jpg',
+                    'man6.jpg',
+                    'man.jpg',
+                    'baby.jpg',
+                    'baby1.jpg',
+                    'baby2.jpg',
+                    'woman.jpg',
+                    'woman1.jpg',
+                    'woman2.jpg',
+                    'woman3.jpg',
+                    'woman4.jpg',
+                    'woman5.jpg',
+                    'woman6.jpg',
+                    'woman7.jpg',
+                    'woman8.jpg',
+                    'woman9.jpg',
+                    'woman10.jpg',
+                    'woman11.jpg',
+                    'woman12.jpg'
+                ]);
 
 
-        //     App\ProductImages::create([
-        //         'product_id' => $product,
-        //         'imageUrl'   => $url,
-        //         'thumbnail'  => $image
-        //     ]);
-        // }
+            App\ProductImages::create([
+                'product_id' => $product,
+                'imageUrl'   => $url,
+                'thumbnail'  => $image
+            ]);
+        }
 
         factory(Order::class, 50)->create();
         factory(Order_Item::class, 100)->create();
@@ -265,6 +270,6 @@ class DatabaseSeeder extends Seeder
         
         
         // Select random entries to be featured
-        Product::whereIn('id', [1, 3, 6,8,11,22,29, 30,33, 21,99])->update(['featured' => true]);
+        Product::whereIn('id', [1, 3, 6,8,11,22,29, 30,33, 21])->update(['featured' => true]);
     }
 }
