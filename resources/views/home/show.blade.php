@@ -151,7 +151,7 @@
 	      			<div class="swiper-slide relative bg-gray-400 rounded-lg w-full md:w-64 md:h-64 flex flex-col items-center">
 	      				<div class="cartBtnParent relative" >
                           
-	                        <a href="{{ url('images', $image->id . '-' . $image->slug)}}">   
+	                        <a href="/shoes/{{ $image->id }}/{{ $image->slug }}">   
 
 	                            <img loading=""
 	                            class=" w-full h-64 rounded-t-lg object-cover object-center" src="/{{ $image->imageUrl }}"
